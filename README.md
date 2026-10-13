@@ -5,6 +5,13 @@
 - 版本：**0.28.15**（versionCode 69）
 - 包名：`app.reticle`｜本机端口：`8770`｜运行目录：`/sdcard/Reticle`
 
+## 直接下载（不用编译）
+
+**不用编译：下载装上就能用。** 到本仓库 **Releases** 页取最新 APK，在手机上侧载安装。Google Play 目前不收这类「让 AI 驱动界面的应用」，**侧载是主渠道**。
+
+- 下载页：**https://github.com/Bumfuzzle-app/reticle/releases**
+- 当前包：**`app.reticle-0.28.15.apk`**（Android 11+）；**sha256 见 Release 页**，版本号与校验值都以 Release 页为准
+
 ## 需要什么
 
 | 条件 | 说明 |
@@ -50,7 +57,14 @@
 
 **安全漏洞上报**：请在仓库页 **Security → Report a vulnerability**（GitHub 私有漏洞上报）提交——报告者无需邮箱，作者也不必公开邮箱。不要开公开 issue。安全问题以外的功能建议，本仓库不受理。
 
-## 构建
+## 许可与致谢
+
+- 本项目：**Apache License 2.0**（见 `LICENSE`）。
+- 第三方组件与许可见 `NOTICE`；许可查证记录见 `docs/许可查证.md`。
+
+## 想自己构建
+
+**不用编译也能用**（见文首「直接下载」）；下面这一节只给想自己出包的人。**PC 构建路线本机没有实测过**——请当作「原理上可行」，不是「照抄必成」。
 
 - 源码：`src/`（Java，21 个文件）；资源：`res/`；清单：`AndroidManifest.xml`。
 - **`src/ManualDoc.java` 是《使用手册》的产物**（由 `docs/使用手册.md` 机械转换而来）：要改说明文字请改 md 再重新生成，**别手改这个文件**。
@@ -61,12 +75,6 @@
   - AndroidX / AppCompat / Material / Kotlin stdlib / Shizuku-API 等，按各自上游获取。
 - **fork 请改身份**，否则与原包撞名、覆盖安装：`AndroidManifest.xml` 的 `package`、`res/values/strings.xml`、`src/` 里 `app.reticle` 常量、端口 `8770`、目录 `/sdcard/Reticle`。`build/build2.sh` 里有一段「ID=B」的身份替换示例（把主包名/端口/目录换成副实例），可照着改成你自己的。
 - 本仓库**不是 Gradle 工程**：`AndroidManifest.xml` 里的 `package` 就是 applicationId；fork 时把它、端口、目录、`src/` 里的 `app.reticle` 常量一起改成你自己的，否则会与原包撞名、互相覆盖安装。
-
-## 许可与致谢
-
-- 本项目：**Apache License 2.0**（见 `LICENSE`）。
-- 第三方组件与许可见 `NOTICE`；许可查证记录见 `docs/许可查证.md`。
-
 ## 目录
 
 ```
