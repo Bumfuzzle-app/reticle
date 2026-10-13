@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Reticle</string>
+    <string name="a11y_desc">Reticle：截图 / 手势 / 任务网 / 离线认字。仅本机使用。</string>
+    <string name="a11y_summary">Reticle（截图 / 手势 / 任务网）</string>
+    <string name="fgs_watchdog_desc">无障碍看门狗：部分国产系统（实测于 vivo／一加）会自动关闭第三方无障碍服务；此服务用于保持看门狗运行，以便自动恢复被关闭的无障碍。</string>
+</resources>

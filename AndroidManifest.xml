@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="app.reticle"
+    android:versionCode="68"
+    android:versionName="0.28.14">
+    <uses-sdk android:minSdkVersion="30" android:targetSdkVersion="35"/>
+    <uses-permission android:name="moe.shizuku.manager.permission.API_V23"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE"/>
+    <uses-permission android:name="android.permission.POST_PROMOTED_NOTIFICATIONS"/>
+    <!-- 52 号单：开机自启（默认关）——开机广播收得到才谈得上恢复，所以先要这个权限 -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <!-- 28 号单：Android 11+ 包可见性 —— 不声明就"看不见" Shizuku（引导第 1 步要用） -->
+    <queries>
+        <package android:name="moe.shizuku.privileged.api"/>
+    </queries>
+    <application android:label="@string/app_name" android:icon="@mipmap/ic_launcher" android:roundIcon="@mipmap/ic_launcher_round" android:theme="@style/Theme.Reticle.Launch">
+        <activity android:name=".MainActivity" android:exported="true" android:configChanges="uiMode|orientation|screenSize|screenLayout|smallestScreenSize|keyboardHidden|density">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <!-- 28 号单：首次引导（只在没做过引导时出现；可跳过、不锁死） -->
+        <activity android:name=".OnboardActivity" android:launchMode="singleTop" android:exported="false" android:configChanges="uiMode|orientation|screenSize|screenLayout|smallestScreenSize|keyboardHidden|density"/>
+        <!-- 45 号单：详细说明页（主界面大标题右边的「?」；命令行直达：am start 带 ch 参数（见 45 单交工）） -->
+        <activity android:name=".ManualActivity" android:launchMode="singleTop" android:exported="true" android:configChanges="uiMode|orientation|screenSize|screenLayout|smallestScreenSize|keyboardHidden|density"/>
+        <!-- 38 号单：动作自测靶（只由 MCP acttest 打开，界面上无入口；对话框小窗，自证点击/输入） -->
+        <activity android:name=".SelfTestActivity" android:exported="false" android:excludeFromRecents="true" android:theme="@android:style/Theme.DeviceDefault.Light.Dialog" android:configChanges="uiMode|orientation|screenSize|screenLayout|smallestScreenSize|keyboardHidden|density"/>
+        <service android:name=".VeriService"
+            android:exported="true"
+            android:label="@string/a11y_summary"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
+            <intent-filter>
+                <action android:name="android.accessibilityservice.AccessibilityService"/>
+            </intent-filter>
+            <meta-data android:name="android.accessibilityservice" android:resource="@xml/accessibility_service_config"/>
+        </service>
+        <service android:name=".WatchdogService"
+            android:exported="false"
+            android:foregroundServiceType="specialUse">
+            <property android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+                android:value="@string/fgs_watchdog_desc" />
+        </service>
+        <meta-data android:name="moe.shizuku.client.V3_SUPPORT" android:value="true"/>
+        <provider
+            android:name="rikka.shizuku.ShizukuProvider"
+            android:authorities="app.reticle.shizuku"
+            android:enabled="true"
+            android:exported="true"
+            android:multiprocess="false"
+            android:permission="android.permission.INTERACT_ACROSS_USERS_FULL" />
+        <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version"/>
+        <activity android:name="com.google.android.gms.common.api.GoogleApiActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:exported="false" />
+        <provider
+            android:name="com.google.mlkit.common.internal.MlKitInitProvider"
+            android:authorities="app.reticle.mlkitinitprovider"
+            android:exported="false"
+            android:initOrder="99" />
+        <service
+            android:name="com.google.mlkit.common.internal.MlKitComponentDiscoveryService"
+            android:directBootAware="true"
+            android:exported="false" >
+            <meta-data
+                android:name="com.google.firebase.components:com.google.mlkit.common.internal.CommonComponentRegistrar"
+                android:value="com.google.firebase.components.ComponentRegistrar" />
+            <meta-data
+                android:name="com.google.firebase.components:com.google.mlkit.vision.common.internal.VisionCommonRegistrar"
+                android:value="com.google.firebase.components.ComponentRegistrar" />
+            <meta-data
+                android:name="com.google.firebase.components:com.google.mlkit.vision.text.internal.TextRegistrar"
+                android:value="com.google.firebase.components.ComponentRegistrar" />
+        </service>
+        <!-- 52 号单：开机自启接收器（开关默认关；exported 按本工程既有风格给 true ——
+             BOOT_COMPLETED 是受保护广播，第三方应用发不了；系统与 shell 要能投递） -->
+        <receiver android:name=".BootReceiver" android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.QUICKBOOT_POWERON"/>
+            </intent-filter>
+        </receiver>
+        <receiver android:name=".NotifyBridge" android:exported="true">
+            <intent-filter>
+                <action android:name="app.reticle.action.CHANNEL_IDLE_CLOSE"/>
+            </intent-filter>
+            <!-- 39 号单：覆盖安装后系统给「本包」发这条广播 → 借它把服务自己拉起来（装完不必用户动手） -->
+            <intent-filter>
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED"/>
+            </intent-filter>
+        </receiver>
+    </application>
+</manifest>

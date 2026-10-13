@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Reticle 图标前景（矢量源，108dp 网格，图案半径 32.4/54 ≈ 安全区 0.6）
+     规格：圆环 + 四个短刻度 + 中心实心点（单色，可被系统主题 tint）。
+     几何与 工具/图标生成器/ReticleIcon.java（PNG 导出）逐值一致。
+     ★57 号单第三轮（2026-10-13 用户定「回归原图标，只把线弄细一点」）：
+       回到 0.28.11 原几何，只改两处线宽——刻度 4.86 → 4.0、圆环 4.54 → 3.7（≈收细 17%）；
+       刻度内端 23.33／外端 32.4、圆环半径 14.9、中心点半径 5.51、圆头端帽、朝向、配色一律未动。 -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- 四个短刻度：内端 r=23.33，外端 r=32.4，线宽 4.0，圆头 -->
+    <path
+        android:pathData="M54,30.67 L54,21.6 M54,77.33 L54,86.4 M30.67,54 L21.6,54 M77.33,54 L86.4,54"
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="4.0"
+        android:strokeLineCap="round" />
+    <!-- 圆环：半径 14.9，线宽 3.7 -->
+    <path
+        android:pathData="M54,39.10 a14.9,14.9 0 1,0 0,29.8 a14.9,14.9 0 1,0 0,-29.8"
+        android:fillColor="#00000000"
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="3.7" />
+    <!-- 中心实心点：半径 5.51 -->
+    <path
+        android:pathData="M54,48.49 a5.51,5.51 0 1,0 0,11.02 a5.51,5.51 0 1,0 0,-11.02"
+        android:fillColor="#FFFFFF" />
+</vector>

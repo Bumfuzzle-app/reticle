@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 状态卡·Shizuku（终端命令）单色矢量，随主题 tint -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp" android:height="24dp"
+    android:viewportWidth="24" android:viewportHeight="24">
+  <path android:strokeColor="#FFFFFFFF" android:strokeWidth="2.1"
+      android:strokeLineCap="round" android:strokeLineJoin="round"
+      android:pathData="M4,6.5 L9.5,12 L4,17.5"/>
+  <path android:strokeColor="#FFFFFFFF" android:strokeWidth="2.1" android:strokeLineCap="round"
+      android:pathData="M12,17.5 H20"/>
+</vector>
