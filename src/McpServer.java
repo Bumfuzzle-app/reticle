@@ -531,22 +531,38 @@ public class McpServer {
                 }
                 if (name.equals("build")) {
                     String action = args.optString("action", "status");
+                    java.util.LinkedHashMap<String, String> cf = buildConf(ctx);
+                    String bsh = cf.get("BUILD_SH"), ish = cf.get("INSTALL_SH");
+                    String blog = pj(cf.get("TMP_DIR"), "build2.log"), ilog = pj(cf.get("TMP_DIR"), "install.log");
                     String bcmd;
                     if (action.equals("start")) {
-                        String miss = envMissing();
+                        String miss = envMissing(ctx);
                         if (miss.length() > 0) {
                             JSONObject mres = new JSONObject();
-                            mres.put("content", content(Words.RP_BUILD_MISSING + "\n" + miss));
+                            mres.put("content", content(Words.RP_BUILD_MISSING + "\n" + miss + Words.RP_BUILD_WHERE));
                             mres.put("isError", false);
                             return ok(id, mres);
                         }
-                        bcmd = "rm -f /data/local/tmp/build2.log; nohup sh '/sdcard/手机通道/通道三/工程/工具链/build2.sh' > /data/local/tmp/build2.log 2>&1 & echo " + Words.RP_BUILD_START + "（" + Words.RP_BUILD_ENVOK + "）";
+                        String benv = "SB='" + cf.get("PROJECT_DIR") + "' TC='" + cf.get("TOOLCHAIN_DIR") + "' KEEP='" + cf.get("MATERIAL_DIR") + "' ";
+                        bcmd = "rm -f " + blog + "; nohup " + benv + "sh '" + bsh + "' > " + blog + " 2>&1 & echo " + Words.RP_BUILD_START + "（" + Words.RP_BUILD_ENVOK + "）";
+                    } else if (action.equals("check")) {
+                        JSONObject cres = new JSONObject();
+                        cres.put("content", content(envReport(ctx)));
+                        cres.put("isError", false);
+                        return ok(id, cres);
                     } else if (action.equals("install")) {
-                        bcmd = "rm -f /sdcard/Reticle/logs/install-last.txt; nohup sh '/sdcard/手机通道/通道三/工程/工具/装工具.sh' > /data/local/tmp/install.log 2>&1 & echo " + Words.RP_INSTALL_NOTE;
+                        String imiss = installMissing(ctx);
+                        if (imiss.length() > 0) {
+                            JSONObject ires = new JSONObject();
+                            ires.put("content", content(Words.RP_INSTALL_MISSING + "\n" + imiss + Words.RP_BUILD_WHERE));
+                            ires.put("isError", false);
+                            return ok(id, ires);
+                        }
+                        bcmd = "rm -f /sdcard/Reticle/logs/install-last.txt; nohup sh '" + ish + "' > " + ilog + " 2>&1 & echo " + Words.RP_INSTALL_NOTE;
                     } else if (action.equals("help")) {
-                        bcmd = "echo '" + Words.RP_BUILD_HELP + "'; echo '" + Words.RP_BUILD_DIR + "/sdcard/手机通道/通道三/工程/工具链'; echo '" + Words.RP_BUILD_LOG + "/data/local/tmp/build2.log'";
+                        bcmd = "echo '" + Words.RP_BUILD_HELP + "'; echo '" + Words.RP_BUILD_DIR + cf.get("TOOLCHAIN_DIR") + "'; echo '" + Words.RP_BUILD_LOG + blog + "'";
                     } else {
-                        bcmd = "tail -n 40 /data/local/tmp/build2.log 2>/dev/null || echo '" + Words.RP_BUILD_NOLOG + "'";
+                        bcmd = "tail -n 40 " + blog + " 2>/dev/null || echo '" + Words.RP_BUILD_NOLOG + "'";
                     }
                     String br = execShell(ctx, bcmd);
                     JSONObject bres = new JSONObject();
@@ -974,23 +990,176 @@ public class McpServer {
         } catch (Throwable t) { return "（读日志失败）"; }
     }
 
-    /** 出包前环境自检：缺什么点名什么（空串＝齐）。 */
-    private static String envMissing() {
+    // ═══════════ 59 号单 · 构建路径配置（去作者环境假设） ═══════════
+    // 配置＝「运行目录/build.conf」（主包 /sdcard/Reticle/build.conf；副包自动指 ReticleB）。
+    // 行式「键=值」（也认全角＝）；# 或 // 起注释；值可引用 $PROJECT_DIR 等；同名环境变量优先。
+    // 未配置／缺省项＝内置默认（＝作者机原路径，作者机行为零变化）。
+    private static final String[] CONF_KEYS = new String[]{"PROJECT_DIR", "TOOLCHAIN_DIR", "MATERIAL_DIR", "BUILD_SH", "INSTALL_SH", "TMP_DIR"};
+
+    private static String confDefault(String k) {
+        if (k.equals("PROJECT_DIR")) return "/sdcard/手机通道/通道三/工程";
+        if (k.equals("TOOLCHAIN_DIR")) return "$PROJECT_DIR/工具链";
+        if (k.equals("MATERIAL_DIR")) return "$PROJECT_DIR/物料";
+        if (k.equals("BUILD_SH")) return "$PROJECT_DIR/工具链/build2.sh";
+        if (k.equals("INSTALL_SH")) return "$PROJECT_DIR/工具/装工具.sh";
+        if (k.equals("TMP_DIR")) return "/data/local/tmp";
+        return "";
+    }
+
+    private static String confFile(Context ctx) { return Home.get(ctx).getAbsolutePath() + "/build.conf"; }
+
+    /** 拼路径（去尾斜杠，防双斜杠）。 */
+    private static String pj(String a, String b) {
+        if (a == null) a = "";
+        while (a.length() > 1 && a.endsWith("/")) a = a.substring(0, a.length() - 1);
+        return a + "/" + b;
+    }
+
+    /** 逐行读 build.conf（行式 键=值）＋环境变量覆盖＋$引用展开。 */
+    private static java.util.LinkedHashMap<String, String> buildConf(Context ctx) {
+        java.util.LinkedHashMap<String, String> m = new java.util.LinkedHashMap<String, String>();
+        for (int i = 0; i < CONF_KEYS.length; i++) m.put(CONF_KEYS[i], confDefault(CONF_KEYS[i]));
+        try {
+            File f = new File(confFile(ctx));
+            if (f.exists()) {
+                byte[] b = new byte[(int) f.length()];
+                java.io.FileInputStream fi = new java.io.FileInputStream(f);
+                int off = 0, r;
+                while (off < b.length && (r = fi.read(b, off, b.length - off)) > 0) off += r;
+                fi.close();
+                String[] lines = new String(b, 0, off, StandardCharsets.UTF_8).split("\n");
+                for (int i = 0; i < lines.length; i++) {
+                    String ln = lines[i].trim();
+                    if (ln.length() == 0 || ln.startsWith("#") || ln.startsWith("//")) continue;
+                    int e = ln.indexOf('=');
+                    int e2 = ln.indexOf('＝');
+                    if (e2 >= 0 && (e < 0 || e2 < e)) e = e2;
+                    if (e <= 0) continue;
+                    String k = ln.substring(0, e).trim();
+                    String v = ln.substring(e + 1).trim();
+                    if (k.matches("[A-Za-z_][A-Za-z0-9_]*")) m.put(k, v);
+                }
+            }
+        } catch (Throwable t) { }
+        for (int i = 0; i < CONF_KEYS.length; i++) {
+            String ev = null;
+            try { ev = System.getenv(CONF_KEYS[i]); } catch (Throwable t) { }
+            if (ev != null && ev.length() > 0) m.put(CONF_KEYS[i], ev);
+        }
+        for (int round = 0; round < 3; round++) {
+            boolean changed = false;
+            java.util.Iterator<java.util.Map.Entry<String, String>> it = m.entrySet().iterator();
+            while (it.hasNext()) {
+                java.util.Map.Entry<String, String> en = it.next();
+                String nv = confExpand(en.getValue(), m);
+                if (!nv.equals(en.getValue())) { en.setValue(nv); changed = true; }
+            }
+            if (!changed) break;
+        }
+        return m;
+    }
+
+    /** $KEY／${KEY} → 配置值（键不存在则原样保留）。 */
+    private static String confExpand(String v, java.util.Map<String, String> m) {
         StringBuilder sb = new StringBuilder();
-        String base = "/sdcard/手机通道/通道三/工程";
+        int i = 0;
+        while (i < v.length()) {
+            char c = v.charAt(i);
+            if (c == '$' && i + 1 < v.length()) {
+                int j = i + 1;
+                if (v.charAt(j) == '{') {
+                    int k = v.indexOf('}', j);
+                    if (k > j) {
+                        String rv = m.get(v.substring(j + 1, k));
+                        if (rv != null) { sb.append(rv); i = k + 1; continue; }
+                    }
+                } else if (Character.isLetterOrDigit(v.charAt(j)) || v.charAt(j) == '_') {
+                    int k = j;
+                    while (k < v.length() && (Character.isLetterOrDigit(v.charAt(k)) || v.charAt(k) == '_')) k++;
+                    String rv = m.get(v.substring(j, k));
+                    if (rv != null) { sb.append(rv); i = k; continue; }
+                }
+            }
+            sb.append(c);
+            i++;
+        }
+        return sb.toString();
+    }
+
+    /** 出包前环境自检：缺什么点名什么（空串＝齐）。59 号单：全部来自 build.conf（默认＝作者机原路径）。 */
+    private static String envMissing(Context ctx) {
+        java.util.LinkedHashMap<String, String> m = buildConf(ctx);
+        String tc = m.get("TOOLCHAIN_DIR"), sb = m.get("PROJECT_DIR"), kp = m.get("MATERIAL_DIR");
+        StringBuilder miss = new StringBuilder();
         String[] must = new String[]{
-            base + "/工具链/bin/aapt2",
-            base + "/工具链/lib/android.jar",
-            base + "/工具链/dex/ecj.dex",
-            base + "/工具链/dex/d8.dex",
-            base + "/工具链/dex/d8-2.dex",
-            base + "/工具链/dex/apksigner.dex",
-            base + "/工具链/dex/buildtool.dex",
-            base + "/AndroidManifest.xml"
+            pj(tc, "bin/aapt2"),
+            pj(tc, "lib/android.jar"),
+            pj(tc, "dex/ecj.dex"),
+            pj(tc, "dex/d8.dex"),
+            pj(tc, "dex/d8-2.dex"),
+            pj(tc, "dex/apksigner.dex"),
+            pj(tc, "dex/buildtool.dex"),
+            pj(tc, "ecj-res"),
+            pj(sb, "AndroidManifest.xml"),
+            pj(sb, "src"),
+            pj(sb, "res")
         };
-        for (int i = 0; i < must.length; i++) { if (!new File(must[i]).exists()) sb.append("· ").append(must[i]).append("\n"); }
+        String[] hint = new String[]{
+            "工具链·aapt2（Termux 可装，需带同目录 lib*.so）",
+            "工具链·android.jar（SDK platform-35）",
+            "工具链·ECJ 3.13.x 转的 dex",
+            "工具链·d8（R8）转的 dex",
+            "工具链·d8 拆出的第二份 dex",
+            "工具链·apksigner.jar 转的 dex",
+            "工具链·工程自带 工具/BuildTool.java 编译转的 dex",
+            "工具链·ECJ 资源目录（properties／*.rsc）",
+            "源码树（build.conf 的 PROJECT_DIR= 指到你的）",
+            "源码树同上",
+            "源码树同上"
+        };
+        for (int i = 0; i < must.length; i++) { if (!new File(must[i]).exists()) miss.append("· 缺 ").append(must[i]).append("（").append(hint[i]).append("）\n"); }
+        String bsh = m.get("BUILD_SH");
+        if (!new File(bsh).exists()) miss.append("· 缺 出包脚本 ").append(bsh).append("（工程 工具链/build2.sh；路径可改 build.conf 的 BUILD_SH=）\n");
         String[] jars = new String[]{"core-1.9.0.jar", "appcompat-1.6.1.jar", "material-1.9.0.jar", "liquidglass-2.0.11.jar", "vision-common-17.3.0.jar", "play-services-tasks-18.2.0.jar", "kotlin-stdlib-2.0.21.jar"};
-        for (int i = 0; i < jars.length; i++) { if (!new File(base + "/物料/classes/" + jars[i]).exists()) sb.append("· ").append(base).append("/物料/classes/").append(jars[i]).append("\n"); }
+        for (int i = 0; i < jars.length; i++) {
+            String jp = pj(pj(kp, "classes"), jars[i]);
+            if (!new File(jp).exists()) miss.append("· 缺 ").append(jp).append("（第三方 jar，从各上游获取；见 BUILD.md 第 2 节）\n");
+        }
+        return miss.toString();
+    }
+
+    /** install 可用性：装机脚本在不在（不在＝明确不可用＋缺什么）。 */
+    private static String installMissing(Context ctx) {
+        java.util.LinkedHashMap<String, String> m = buildConf(ctx);
+        String ish = m.get("INSTALL_SH");
+        if (!new File(ish).exists()) return "· 缺 装机脚本 " + ish + "（工程 工具/装工具.sh；路径可改 build.conf 的 INSTALL_SH=）\n";
+        return "";
+    }
+
+    /** build action=check：一眼看清「就绪／缺哪几个／从哪拿」。 */
+    private static String envReport(Context ctx) {
+        StringBuilder sb = new StringBuilder();
+        java.util.LinkedHashMap<String, String> m = buildConf(ctx);
+        String f = confFile(ctx);
+        sb.append(Words.RP_CHK_HEAD).append("\n");
+        boolean hasConf = new File(f).exists();
+        sb.append(Words.RP_CHK_CONF).append(f).append(hasConf ? Words.RP_CHK_CONF_YES : Words.RP_CHK_CONF_NO).append("\n");
+        sb.append("  PROJECT_DIR=").append(m.get("PROJECT_DIR")).append("\n");
+        sb.append("  TOOLCHAIN_DIR=").append(m.get("TOOLCHAIN_DIR")).append("\n");
+        sb.append("  MATERIAL_DIR=").append(m.get("MATERIAL_DIR")).append("\n");
+        sb.append("  BUILD_SH=").append(m.get("BUILD_SH")).append("\n");
+        sb.append("  INSTALL_SH=").append(m.get("INSTALL_SH")).append("\n");
+        sb.append("  TMP_DIR=").append(m.get("TMP_DIR")).append("\n");
+        String miss = envMissing(ctx);
+        if (miss.length() == 0) sb.append(Words.RP_CHK_OK).append("\n");
+        else sb.append(Words.RP_CHK_MISS).append("\n").append(miss).append(Words.RP_BUILD_WHERE);
+        String imiss = installMissing(ctx);
+        if (imiss.length() == 0) sb.append(Words.RP_CHK_INSTALL_OK).append("\n");
+        else sb.append(Words.RP_CHK_INSTALL_MISS).append("\n").append(imiss).append(Words.RP_BUILD_WHERE);
+        for (int i = 0; i < CONF_KEYS.length; i++) {
+            String v = m.get(CONF_KEYS[i]);
+            if (v.indexOf('\'') >= 0 || v.indexOf('\n') >= 0) sb.append(String.format(java.util.Locale.ROOT, Words.RP_CHK_QUOTE, CONF_KEYS[i])).append("\n");
+        }
         return sb.toString();
     }
 

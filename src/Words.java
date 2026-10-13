@@ -354,7 +354,7 @@ public class Words {
     public static final String NT_TOOL_PING = "回铃";
 
     public static final String NT_BRIDGE_TITLE = "手机控制通道";
-    public static final String NT_BRIDGE_TEXT = "通道已自动关闭（长时间未使用）。需要时点击 Termux 图标即可恢复。";
+    public static final String NT_BRIDGE_TEXT = "通道已自动关闭（长时间未使用）。需要时重新启动通道服务即可恢复。";
 
     // ═══════════ 看门狗那一句（配置页显示） ═══════════
     public static final String WD_LINE_OFF = "看门狗：已关闭 —— 我们不碰系统设置。";
@@ -412,8 +412,8 @@ public class Words {
     public static final String TL_NOTIFY_PROMOTED = "1＝实况型通知试验（ProgressStyle）";
     public static final String TL_NOTIFY_PROGRESS = "实况进度 0~100（默认 60）";
     public static final String TL_NOTIFY_REPORT = "助手汇报文本：填了＝写进眼线那条通知的正文（不新建第二条）";
-    public static final String TL_BUILD = "构建安装包（Reticle 内置打包工具链，无需 Termux）。action：start＝开始构建（后台运行，约 1~3 分钟）；status＝查看进度（默认）；install＝安装已构建的包；help＝查看说明。";
-    public static final String TL_BUILD_ACTION = "start / status / install / help（默认 status）";
+    public static final String TL_BUILD = "构建安装包（用设备侧工具链；先 action=check 看环境是否就绪）。action：check＝环境自检（缺什么／从哪拿）；start＝开始构建（后台运行，约 1~3 分钟）；status＝查看进度（默认）；install＝安装已构建的包；help＝查看说明。";
+    public static final String TL_BUILD_ACTION = "check / start / status / install / help（默认 status）";
     public static final String TL_BUZZ = "震动提醒：使手机震动一次，表示「有消息找你」。仅震动——不发声、不弹出通知、不点亮屏幕。";
     public static final String TL_BUZZ_MS = "震动时长毫秒（可选，默认 300；上限 10000）";
     public static final String CF_LOG_SEC = " 秒前";
@@ -498,10 +498,10 @@ public class Words {
     // build（路径留在代码里，这里只放话）
     public static final String RP_BUILD_START = "已开始构建（约1~3分钟），用 action=status 看进度";
     public static final String RP_BUILD_INSTALL = "已开始安装（约半分钟），完成后 ping 验证版本";
-    public static final String RP_BUILD_HELP = "build：start=开始构建 / status=看进度 / install=装刚打好的包";
+    public static final String RP_BUILD_HELP = "build：check=环境自检 / start=开始构建 / status=看进度 / install=装刚打好的包";
     public static final String RP_BUILD_DIR = "工具链目录：";
     public static final String RP_BUILD_LOG = "构建日志：";
-    public static final String RP_BUILD_NOLOG = "还没有构建日志（先 action=start）";
+    public static final String RP_BUILD_NOLOG = "还没有构建日志（先 action=check 看环境，再 action=start）";
     // 注：清单 329「（还没有日志）」/ 330「（日志为空）」/ 331「（读日志失败）」＝界面用，已在上方 MA_LOG_NOFILE / MA_LOG_EMPTY / MA_LOG_ERR。
 
     // 找图 / 认数字（TaskEngine 的 num 那一套）
@@ -526,6 +526,18 @@ public class Words {
     public static final String RP_SHELL_TIMEOUT_FMT = "  timeout=1（%d 秒没跑完，进程已叫停）";
     public static final String RP_BUILD_MISSING = "缺件（补齐再出包）：";
     public static final String RP_BUILD_ENVOK = "环境齐 ✓（aapt2／android.jar／物料关键 jar 都在）";
+    /** 59 号单 · 构建配置与自检（给陌生人的指路）。 */
+    public static final String RP_BUILD_WHERE = "\n——缺什么／从哪拿／路径怎么配：见仓库 BUILD.md「路径与物料」一节；改完再跑一次 build action=check 复检。\n";
+    public static final String RP_INSTALL_MISSING = "装机不可用：";
+    public static final String RP_CHK_HEAD = "== 构建环境自检（build action=check）==";
+    public static final String RP_CHK_CONF = "配置文件：";
+    public static final String RP_CHK_CONF_YES = "（存在；下面是它生效后的值）";
+    public static final String RP_CHK_CONF_NO = "（不存在，全部用内置默认＝作者机路径；不是你的路径就照仓库 build/build.conf.example 写一份放到这里）";
+    public static final String RP_CHK_OK = "出包环境：就绪 ✓（start 可用）";
+    public static final String RP_CHK_MISS = "出包环境：不可用，缺件如下 ↓";
+    public static final String RP_CHK_INSTALL_OK = "装机环境：就绪 ✓（install 可用）";
+    public static final String RP_CHK_INSTALL_MISS = "装机环境：不可用，缺件如下 ↓";
+    public static final String RP_CHK_QUOTE = "⚠ 配置项 %s 含单引号或换行，会破坏脚本调用：请改掉";
     public static final String RP_INSTALL_NOTE = "正在替换 App：连接会断 1 秒级（通常一两秒、自己回来）；恢复后用 status 复查，或读 /sdcard/Reticle/logs/install-last.txt。安装已在后台开始。";
 
     /** 39 号单 · 断流人话（请求超时／服务端出意外时回给助手的那句，替代英文堆栈）。 */
@@ -610,7 +622,7 @@ public class Words {
     public static final String TL_HELP_TOOL = "工具名（可选）：填了＝只回这一个工具的详情；不填＝回目录";
     public static final String HP_INDEX_HEAD = "Reticle 工具（共 %d 个，一行一个）：\n";
     public static final String HP_INDEX_POINT = "某工具详情：help tool=<名字>（例 help tool=scroll_to_text）\n";
-    public static final String HP_INDEX_TAIL = "另：/selfcheck＝免 token 自检口（GET 127.0.0.1:8770/selfcheck）；槽位命令＝写 /sdcard/Reticle/in/slot_N.cmd（末行 z=1）→ out/，子命令 wd／front／a11ytest／mcptest。\n";
+    public static final String HP_INDEX_TAIL = "另：/selfcheck＝免 token 自检口（GET 127.0.0.1:<端口>/selfcheck；当前端口见 status）；槽位命令＝写 /sdcard/Reticle/in/slot_N.cmd（末行 z=1）→ out/，子命令 wd／front／a11ytest／mcptest。\n";
     public static final String HP_ITEM_LINE = "· %s —— %s\n";
     public static final String HP_TOOL_HEAD = "【%s】%s\n";
     public static final String HP_TOOL_ARGS = "参数：\n";

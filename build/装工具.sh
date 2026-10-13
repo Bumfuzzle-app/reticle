@@ -1,7 +1,7 @@
 #!/system/bin/sh
 # Reticle · 一键装/修复脚本（装 APK → 权限放行 → 恢复无障碍 → ping 自检）
 # 用法：sh 装工具.sh [APK路径]
-#   默认 APK = /sdcard/手机通道/通道三/工程/输出/reticle.apk
+#   默认 APK = /sdcard/手机通道/通道三/工程/输出/reticle.apk（也可用 APK=<路径> 环境变量、或第 1 个参数指定）
 # 24 号单（2026-10-07）口径：包名 app.reticle；运行目录 /sdcard/Reticle；MCP 端口 8770。
 #   ★ 旧包 com.mcp.shell 已于 2026-10-07 卸掉（退路＝备份 APK＋Reticle 旧版本包）——本脚本只动 app.reticle。
 # 场景：①首次安装 ②升级覆盖安装（保数据） ③无障碍被系统清掉后一键修复/自检
@@ -9,7 +9,7 @@
 PKG=app.reticle
 SVC="$PKG/$PKG.VeriService"
 D=/sdcard/Reticle
-APK="${1:-/sdcard/手机通道/通道三/工程/输出/reticle.apk}"
+APK="${1:-${APK:-/sdcard/手机通道/通道三/工程/输出/reticle.apk}}"
 TMP=/data/local/tmp/reticle-install.apk
 
 get_list() {

@@ -2,7 +2,7 @@
 
 **给 AI 助手配的一双手和一双眼睛。** Reticle 是一个 Android 应用：它在本机跑一个只监听 `127.0.0.1` 的 MCP 服务，把「截屏 / 读界面 / 认字 / 点按滑动 / 执行命令 / 下载 / 通知」这些能力以工具的形式交给 AI 客户端调用，AI 在对话里说什么，它就真的在屏幕上做出来。它自己不思考、不决定、不主动动手。
 
-- 版本：**0.28.14**（versionCode 68）
+- 版本：**0.28.15**（versionCode 69）
 - 包名：`app.reticle`｜本机端口：`8770`｜运行目录：`/sdcard/Reticle`
 
 ## 需要什么
@@ -54,7 +54,7 @@
 
 - 源码：`src/`（Java，21 个文件）；资源：`res/`；清单：`AndroidManifest.xml`。
 - **`src/ManualDoc.java` 是《使用手册》的产物**（由 `docs/使用手册.md` 机械转换而来）：要改说明文字请改 md 再重新生成，**别手改这个文件**。
-- 构建脚本见 `build/`（`build2.sh` 出包、`装工具.sh` 装机）：脚本默认路径指向原作者机器（`/sdcard/手机通道/…`），**陌生人从零到出包的命令级步骤、要自备什么、一定会卡在哪，都写在 [`BUILD.md`](BUILD.md)**。设备侧依赖 `aapt2`、ECJ、d8、apksigner、`android.jar`（API 35）等（用 `/system/bin/app_process` 跑预转 dex），另需第三方 jar（见下）。
+- 构建脚本见 `build/`（`build2.sh` 出包、`装工具.sh` 装机）：**脚本默认路径是我机器的，要指到你自己的**——① 出包/装机脚本开场先自检、缺件逐条点名（连「从哪拿」一起给）；② 应用内 `build` 工具 `action=check` 一条命令看「就绪／缺哪几个／从哪拿」；③ 路径还能写进 `build.conf`（示例见 `build/build.conf.example`）或用环境变量。**从零到出包的命令级步骤、要自备什么、每样东西从哪拿／放哪／怎么验，都在 [`BUILD.md`](BUILD.md) 与 [`docs/构建环境清单.md`](docs/构建环境清单.md)**。设备侧依赖 `aapt2`、ECJ、d8、apksigner、`android.jar`（API 35）等（用 `/system/bin/app_process` 跑预转 dex），另需第三方 jar（见下）。
 - **本仓库不含二进制依赖**：
   - `Liquid Glass for Android`（QWEA0/Liquid-Glass-Android，v2.0.11，MIT）：请自行获取 `liquidglass-2.0.11.jar` 放入 `物料/classes/`；
   - `Google ML Kit`（text-recognition 中文 bundled 模型）：受 ML Kit 条款约束，不能再分发，请自行添加依赖；
@@ -74,8 +74,8 @@ src/            21 个 Java 源文件（含 ManualDoc.java＝手册产物）
 res/            资源（strings/themes/图标/无障碍配置）
 AndroidManifest.xml
 BUILD.md        陌生人构建指引（自备什么／敲什么命令／卡在哪）
-docs/           使用手册、支持范围、换机自测清单、许可查证
-build/          出包与装机脚本（路径需按环境修改）
+docs/           使用手册、支持范围、换机自测清单、许可查证、构建环境清单
+build/          出包与装机脚本（路径可配）＋构建配置示例 build.conf.example
 LICENSE         Apache-2.0 全文
 NOTICE          第三方组件与许可
 ```

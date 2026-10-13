@@ -3,7 +3,7 @@
 # 39 号单 · 加 ID 参数：ID=B 出「副实例」包（包名 app.reticle.b / MCP 8771 / 目录 /sdcard/ReticleB）
 # 用法：sh /sdcard/手机通道/通道三/工程/工具链/build2.sh         → 主包 输出/reticle.apk
 #       ID=B sh /sdcard/手机通道/通道三/工程/工具链/build2.sh    → 副包 输出/reticle-b.apk
-#   身份替换只在临时工作区做，正本源码一个字节都不动。
+#   身份替换只在临时工作区做，正本源码一个字节都不动；路径可换（环境变量优先，默认＝本机原路径）：SB=源码树 TC=工具链 KEEP=物料 KS/KD/KA=签名
 # 产物：通道三/工程/输出/*.apk（release 签名；钥匙与口令见 备份/Reticle-签名/）
 set -e
 SB="${SB:-/sdcard/手机通道/通道三/工程}"   # 源码树（可用环境变量指向自己的路径）
@@ -38,23 +38,27 @@ D8M="com.android.tools.r8.D8"
 SIGN="com.android.apksigner.ApkSignerTool"
 
 echo "== 0) 准备 $(date '+%H:%M:%S') ==  身份=$ID 包名=$PKG 端口=$PORT 目录=$RDIR 产物=$OUTNAME"
-rm -rf $W; mkdir -p $W/bin $W/classes $W/dex $W/gen $W/reszip $W/out
-cp $TC/bin/* $W/bin/ 2>/dev/null || true
-chmod 755 $W/bin/aapt2
-LL=$W/bin
-# 38 号单：出包前环境自检（缺件就点名，别再让后面静默失败）
+# 59 号单：先做缺件自检（缺件先点名再退；旧顺序里会被下面的 chmod 撞死、看不到这份清单）
 MISS=""
-[ -f $TC/bin/aapt2 ] || MISS="$MISS 工具链/bin/aapt2"
-[ -f $JAR ] || MISS="$MISS 工具链/lib/android.jar"
+[ -f $TC/bin/aapt2 ] || MISS="$MISS 工具链/bin/aapt2（Termux可装；连同目录lib*.so）"
+[ -f $JAR ] || MISS="$MISS 工具链/lib/android.jar（SDK-platform-35）"
 for d in ecj d8 d8-2 apksigner buildtool; do [ -f $TC/dex/$d.dex ] || MISS="$MISS 工具链/dex/$d.dex"; done
+[ -d $TC/ecj-res ] || MISS="$MISS 工具链/ecj-res（ECJ资源目录）"
 for j in core-1.9.0.jar appcompat-1.6.1.jar material-1.9.0.jar liquidglass-2.0.11.jar vision-common-17.3.0.jar play-services-tasks-18.2.0.jar kotlin-stdlib-2.0.21.jar; do [ -f "$KEEP/classes/$j" ] || MISS="$MISS 物料/classes/$j"; done
+[ -f $MANIFEST ] || MISS="$MISS $MANIFEST（改SB=指到你的源码树）"
+[ -d $SRCDIR ] || MISS="$MISS $SRCDIR（改SB=指到你的源码树）"
+[ -d $RESDIR ] || MISS="$MISS $RESDIR（改SB=指到你的源码树）"
 if [ -n "$MISS" ]; then
   echo "！缺件（补齐再出包）："
   for m in $MISS; do echo "   · $m"; done
-  echo "   （可从 备份/24-改前-2026-10-07/工程/ 原样恢复）"
+  echo "   ——要什么／从哪拿／路径怎么配：见仓库 BUILD.md「路径与物料」一节；应用内可 build action=check 复检。"
   exit 4
 fi
 echo "   环境自检：齐 ✓"
+rm -rf $W; mkdir -p $W/bin $W/classes $W/dex $W/gen $W/reszip $W/out
+cp $TC/bin/* $W/bin/
+chmod 755 $W/bin/aapt2
+LL=$W/bin
 
 # ── 39 号单：身份参数化（ID=B 时；只在临时工作区替换，正本不动）──
 if [ "$ID" = "B" ]; then
