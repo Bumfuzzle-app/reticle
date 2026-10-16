@@ -1,8 +1,1 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- 引导·通过了 单色矢量（颜色由代码给） -->
-<vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="24dp" android:height="24dp"
-    android:viewportWidth="24" android:viewportHeight="24">
-  <path android:fillColor="#FFFFFFFF"
-      android:pathData="M12,2C6.48,2 2,6.48 2,12s4.48,10 10,10 10,-4.48 10,-10S17.52,2 12,2zM10,17l-5,-5 1.41,-1.41L10,14.17l7.59,-7.59L19,8l-9,9z"/>
-</vector>
+PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSDlvJXlr7zCt+mAmui/h+S6hiDljZXoibLnn6Lph4/vvIjpopzoibLnlLHku6PnoIHnu5nvvIkgLS0+Cjx2ZWN0b3IgeG1sbnM6YW5kcm9pZD0iaHR0cDovL3NjaGVtYXMuYW5kcm9pZC5jb20vYXBrL3Jlcy9hbmRyb2lkIgogICAgYW5kcm9pZDp3aWR0aD0iMjRkcCIgYW5kcm9pZDpoZWlnaHQ9IjI0ZHAiCiAgICBhbmRyb2lkOnZpZXdwb3J0V2lkdGg9IjI0IiBhbmRyb2lkOnZpZXdwb3J0SGVpZ2h0PSIyNCI+CiAgPHBhdGggYW5kcm9pZDpmaWxsQ29sb3I9IiNGRkZGRkZGRiIKICAgICAgYW5kcm9pZDpwYXRoRGF0YT0iTTEyLDJDNi40OCwyIDIsNi40OCAyLDEyczQuNDgsMTAgMTAsMTAgMTAsLTQuNDggMTAsLTEwUzE3LjUyLDIgMTIsMnpNMTAsMTdsLTUsLTUgMS40MSwtMS40MUwxMCwxNC4xN2w3LjU5LC03LjU5TDE5LDhsLTksOXoiLz4KPC92ZWN0b3I+Cg==

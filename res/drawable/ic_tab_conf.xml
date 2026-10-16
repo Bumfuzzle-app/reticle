@@ -1,14 +1,1 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- 33 探路：配置（滑块）——静态加粗版（线宽 2→2.8，圆点半径 +0.35） -->
-<vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="24dp" android:height="24dp"
-    android:viewportWidth="24" android:viewportHeight="24">
-  <path android:strokeColor="#FFFFFFFF" android:strokeWidth="2.8" android:strokeLineCap="round"
-      android:pathData="M4,7H20 M4,12H20 M4,17H20"/>
-  <path android:fillColor="#FFFFFFFF" android:strokeColor="#FFFFFFFF" android:strokeWidth="0.7"
-      android:pathData="M15,4.4 a2.6,2.6 0 1,0 0,5.2 a2.6,2.6 0 1,0 0,-5.2"/>
-  <path android:fillColor="#FFFFFFFF" android:strokeColor="#FFFFFFFF" android:strokeWidth="0.7"
-      android:pathData="M9,9.4 a2.6,2.6 0 1,0 0,5.2 a2.6,2.6 0 1,0 0,-5.2"/>
-  <path android:fillColor="#FFFFFFFF" android:strokeColor="#FFFFFFFF" android:strokeWidth="0.7"
-      android:pathData="M17,14.4 a2.6,2.6 0 1,0 0,5.2 a2.6,2.6 0 1,0 0,-5.2"/>
-</vector>
+PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSAzMyDmjqLot6/vvJrphY3nva7vvIjmu5HlnZfvvInigJTigJTpnZnmgIHliqDnspfniYjvvIjnur/lrr0gMuKGkjIuOO+8jOWchueCueWNiuW+hCArMC4zNe+8iSAtLT4KPHZlY3RvciB4bWxuczphbmRyb2lkPSJodHRwOi8vc2NoZW1hcy5hbmRyb2lkLmNvbS9hcGsvcmVzL2FuZHJvaWQiCiAgICBhbmRyb2lkOndpZHRoPSIyNGRwIiBhbmRyb2lkOmhlaWdodD0iMjRkcCIKICAgIGFuZHJvaWQ6dmlld3BvcnRXaWR0aD0iMjQiIGFuZHJvaWQ6dmlld3BvcnRIZWlnaHQ9IjI0Ij4KICA8cGF0aCBhbmRyb2lkOnN0cm9rZUNvbG9yPSIjRkZGRkZGRkYiIGFuZHJvaWQ6c3Ryb2tlV2lkdGg9IjIuOCIgYW5kcm9pZDpzdHJva2VMaW5lQ2FwPSJyb3VuZCIKICAgICAgYW5kcm9pZDpwYXRoRGF0YT0iTTQsN0gyMCBNNCwxMkgyMCBNNCwxN0gyMCIvPgogIDxwYXRoIGFuZHJvaWQ6ZmlsbENvbG9yPSIjRkZGRkZGRkYiIGFuZHJvaWQ6c3Ryb2tlQ29sb3I9IiNGRkZGRkZGRiIgYW5kcm9pZDpzdHJva2VXaWR0aD0iMC43IgogICAgICBhbmRyb2lkOnBhdGhEYXRhPSJNMTUsNC40IGEyLjYsMi42IDAgMSwwIDAsNS4yIGEyLjYsMi42IDAgMSwwIDAsLTUuMiIvPgogIDxwYXRoIGFuZHJvaWQ6ZmlsbENvbG9yPSIjRkZGRkZGRkYiIGFuZHJvaWQ6c3Ryb2tlQ29sb3I9IiNGRkZGRkZGRiIgYW5kcm9pZDpzdHJva2VXaWR0aD0iMC43IgogICAgICBhbmRyb2lkOnBhdGhEYXRhPSJNOSw5LjQgYTIuNiwyLjYgMCAxLDAgMCw1LjIgYTIuNiwyLjYgMCAxLDAgMCwtNS4yIi8+CiAgPHBhdGggYW5kcm9pZDpmaWxsQ29sb3I9IiNGRkZGRkZGRiIgYW5kcm9pZDpzdHJva2VDb2xvcj0iI0ZGRkZGRkZGIiBhbmRyb2lkOnN0cm9rZVdpZHRoPSIwLjciCiAgICAgIGFuZHJvaWQ6cGF0aERhdGE9Ik0xNywxNC40IGEyLjYsMi42IDAgMSwwIDAsNS4yIGEyLjYsMi42IDAgMSwwIDAsLTUuMiIvPgo8L3ZlY3Rvcj4K

@@ -1,11 +1,1 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- 状态卡·Shizuku（终端命令）单色矢量，随主题 tint -->
-<vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="24dp" android:height="24dp"
-    android:viewportWidth="24" android:viewportHeight="24">
-  <path android:strokeColor="#FFFFFFFF" android:strokeWidth="2.1"
-      android:strokeLineCap="round" android:strokeLineJoin="round"
-      android:pathData="M4,6.5 L9.5,12 L4,17.5"/>
-  <path android:strokeColor="#FFFFFFFF" android:strokeWidth="2.1" android:strokeLineCap="round"
-      android:pathData="M12,17.5 H20"/>
-</vector>
+PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSDnirbmgIHljaHCt1NoaXp1a3XvvIjnu4jnq6/lkb3ku6TvvInljZXoibLnn6Lph4/vvIzpmo/kuLvpopggdGludCAtLT4KPHZlY3RvciB4bWxuczphbmRyb2lkPSJodHRwOi8vc2NoZW1hcy5hbmRyb2lkLmNvbS9hcGsvcmVzL2FuZHJvaWQiCiAgICBhbmRyb2lkOndpZHRoPSIyNGRwIiBhbmRyb2lkOmhlaWdodD0iMjRkcCIKICAgIGFuZHJvaWQ6dmlld3BvcnRXaWR0aD0iMjQiIGFuZHJvaWQ6dmlld3BvcnRIZWlnaHQ9IjI0Ij4KICA8cGF0aCBhbmRyb2lkOnN0cm9rZUNvbG9yPSIjRkZGRkZGRkYiIGFuZHJvaWQ6c3Ryb2tlV2lkdGg9IjIuMSIKICAgICAgYW5kcm9pZDpzdHJva2VMaW5lQ2FwPSJyb3VuZCIgYW5kcm9pZDpzdHJva2VMaW5lSm9pbj0icm91bmQiCiAgICAgIGFuZHJvaWQ6cGF0aERhdGE9Ik00LDYuNSBMOS41LDEyIEw0LDE3LjUiLz4KICA8cGF0aCBhbmRyb2lkOnN0cm9rZUNvbG9yPSIjRkZGRkZGRkYiIGFuZHJvaWQ6c3Ryb2tlV2lkdGg9IjIuMSIgYW5kcm9pZDpzdHJva2VMaW5lQ2FwPSJyb3VuZCIKICAgICAgYW5kcm9pZDpwYXRoRGF0YT0iTTEyLDE3LjUgSDIwIi8+CjwvdmVjdG9yPgo=
