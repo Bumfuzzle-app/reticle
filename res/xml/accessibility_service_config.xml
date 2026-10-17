@@ -1,11 +1,1 @@
-<?xml version="1.0" encoding="utf-8"?>
-<accessibility-service xmlns:android="http://schemas.android.com/apk/res/android"
-    android:description="@string/a11y_desc"
-    android:summary="@string/a11y_summary"
-    android:accessibilityEventTypes="typeWindowStateChanged"
-    android:accessibilityFeedbackType="feedbackGeneric"
-    android:accessibilityFlags="flagReportViewIds|flagRetrieveInteractiveWindows"
-    android:canPerformGestures="true"
-    android:canRetrieveWindowContent="true"
-    android:canTakeScreenshot="true"
-    android:notificationTimeout="100" />
+PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPGFjY2Vzc2liaWxpdHktc2VydmljZSB4bWxuczphbmRyb2lkPSJodHRwOi8vc2NoZW1hcy5hbmRyb2lkLmNvbS9hcGsvcmVzL2FuZHJvaWQiCiAgICBhbmRyb2lkOmRlc2NyaXB0aW9uPSJAc3RyaW5nL2ExMXlfZGVzYyIKICAgIGFuZHJvaWQ6c3VtbWFyeT0iQHN0cmluZy9hMTF5X3N1bW1hcnkiCiAgICBhbmRyb2lkOmFjY2Vzc2liaWxpdHlFdmVudFR5cGVzPSJ0eXBlV2luZG93U3RhdGVDaGFuZ2VkIgogICAgYW5kcm9pZDphY2Nlc3NpYmlsaXR5RmVlZGJhY2tUeXBlPSJmZWVkYmFja0dlbmVyaWMiCiAgICBhbmRyb2lkOmFjY2Vzc2liaWxpdHlGbGFncz0iZmxhZ1JlcG9ydFZpZXdJZHN8ZmxhZ1JldHJpZXZlSW50ZXJhY3RpdmVXaW5kb3dzIgogICAgYW5kcm9pZDpjYW5QZXJmb3JtR2VzdHVyZXM9InRydWUiCiAgICBhbmRyb2lkOmNhblJldHJpZXZlV2luZG93Q29udGVudD0idHJ1ZSIKICAgIGFuZHJvaWQ6Y2FuVGFrZVNjcmVlbnNob3Q9InRydWUiCiAgICBhbmRyb2lkOm5vdGlmaWNhdGlvblRpbWVvdXQ9IjEwMCIgLz4K

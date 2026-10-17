@@ -1,16 +1,1 @@
-Reticle
-Copyright 2026 Bumfuzzle
-
-本产品包含或依赖以下第三方组件：
-
-1) Shizuku API（RikkaApps/Shizuku-API）— MIT License
-   本仓库不含 Shizuku 本体；用户需自行安装 Shizuku（其许可为 Apache-2.0，且不得使用其名称、包名与图标）。
-
-2) Liquid Glass for Android（QWEA0/Liquid-Glass-Android，v2.0.11）— MIT License
-   本仓库不含其二进制 jar；构建时需自行获取并放入 物料/classes/。
-
-3) Google ML Kit（text-recognition，bundled 版）— Google ML Kit Terms of Service（非开源）
-   模型与 .so 属 Google 条款约束的 "related software"，不得逆向或提取再分发，故本仓库不含任何 ML Kit 二进制；
-   构建时需自行添加依赖（bundled text-recognition 中文模型）。
-
-4) AndroidX / AppCompat / Material Components / Kotlin stdlib / Shizuku（运行时依赖）— Apache-2.0 等，详见各自项目。
+UmV0aWNsZQpDb3B5cmlnaHQgMjAyNiBCdW1mdXp6bGUKCuacrOS6p+WTgeWMheWQq+aIluS+nei1luS7peS4i+esrOS4ieaWuee7hOS7tu+8mgoKMSkgU2hpenVrdSBBUEnvvIhSaWtrYUFwcHMvU2hpenVrdS1BUEnvvInigJQgTUlUIExpY2Vuc2UKICAg5pys5LuT5bqT5LiN5ZCrIFNoaXp1a3Ug5pys5L2T77yb55So5oi36ZyA6Ieq6KGM5a6J6KOFIFNoaXp1a3XvvIjlhbborrjlj6/kuLogQXBhY2hlLTIuMO+8jOS4lOS4jeW+l+S9v+eUqOWFtuWQjeensOOAgeWMheWQjeS4juWbvuagh++8ieOAggoKMikgTGlxdWlkIEdsYXNzIGZvciBBbmRyb2lk77yIUVdFQTAvTGlxdWlkLUdsYXNzLUFuZHJvaWTvvIx2Mi4wLjEx77yJ4oCUIE1JVCBMaWNlbnNlCiAgIOacrOS7k+W6k+S4jeWQq+WFtuS6jOi/m+WItiBqYXLvvJvmnoTlu7rml7bpnIDoh6rooYzojrflj5blubbmlL7lhaUg54mp5paZL2NsYXNzZXMv44CCCgozKSBHb29nbGUgTUwgS2l077yIdGV4dC1yZWNvZ25pdGlvbu+8jGJ1bmRsZWQg54mI77yJ4oCUIEdvb2dsZSBNTCBLaXQgVGVybXMgb2YgU2VydmljZe+8iOmdnuW8gOa6kO+8iQogICDmqKHlnovkuI4gLnNvIOWxniBHb29nbGUg5p2h5qy+57qm5p2f55qEICJyZWxhdGVkIHNvZnR3YXJlIu+8jOS4jeW+l+mAhuWQkeaIluaPkOWPluWGjeWIhuWPke+8jOaVheacrOS7k+W6k+S4jeWQq+S7u+S9lSBNTCBLaXQg5LqM6L+b5Yi277ybCiAgIOaehOW7uuaXtumcgOiHquihjOa3u+WKoOS+nei1lu+8iGJ1bmRsZWQgdGV4dC1yZWNvZ25pdGlvbiDkuK3mlofmqKHlnovvvInjgIIKCjQpIEFuZHJvaWRYIC8gQXBwQ29tcGF0IC8gTWF0ZXJpYWwgQ29tcG9uZW50cyAvIEtvdGxpbiBzdGRsaWIgLyBTaGl6dWt177yI6L+Q6KGM5pe25L6d6LWW77yJ4oCUIEFwYWNoZS0yLjAg562J77yM6K+m6KeB5ZCE6Ieq6aG555uu44CCCg==
