@@ -1,1 +1,117 @@
-cGFja2FnZSBhcHAucmV0aWNsZTsKCmltcG9ydCBhbmRyb2lkLmNvbnRlbnQuQnJvYWRjYXN0UmVjZWl2ZXI7CmltcG9ydCBhbmRyb2lkLmNvbnRlbnQuQ29tcG9uZW50TmFtZTsKaW1wb3J0IGFuZHJvaWQuY29udGVudC5Db250ZXh0OwppbXBvcnQgYW5kcm9pZC5jb250ZW50LkludGVudDsKaW1wb3J0IGFuZHJvaWQubmV0LlVyaTsKaW1wb3J0IGFuZHJvaWQucHJvdmlkZXIuU2V0dGluZ3M7CgovKioKICogNTIg5Y+35Y2VIMK3IOW8gOacuuiHquWQr++8iOm7mOiupOWFs++8jOW8gOWFs+WcqOOAjOmFjee9riDihpIg5peg6Zqc56KN55yL6Zeo54uX44CN6YKj5LiA5q6177yJCiAqCiAqIOW5suS7gOS5iO+8muaJi+acuuW8gOacuuWQju+8jOiLpeW8gOWFs+aYr+W8gOeahOKAlOKAlOKRoCDmiormnKzlupTnlKjnmoTml6Dpmpznoo3lhpnlm57ns7vnu5/lnKjlhozliJfooajvvIjlpI3nlKjnjrDmiJDnmoQKICogQTExeVdhdGNoZG9nLnRpY2vvvInvvJvikaEg5bmC562J5ouJ6LW3IFdhdGNoZG9nU2VydmljZe+8iE1DUCDpmo/kuYvlkK/liqjvvInjgIIKICoKICog4piF5LiJ5Liq5aaC5a6e5YmN5o+Q77yI6YCJ6aG55peB5Lmf5YaZ5LqG77yJ77yaCiAqICAg4pGgIOi/meWKn+iDvSoq5L6d6LWW57O757uf5p2D6ZmQKirvvIhXUklURV9TRUNVUkVfU0VUVElOR1PvvI9TaGl6dWt177yJ4oCU4oCUQW5kcm9pZCDkuI3lhYHorrjlupTnlKjoh6rlt7EKICogICAgICDlkK/nlKjml6Dpmpznoo3vvIzmsqHmnInov5nmnaHmnYPpmZDlj6rog73mj5DnpLrnlKjmiLfmiYvliqjljrvlvIDvvJsKICogICDikaEg5Zu95LqnIFJPTe+8iHZpdm8g562J77yJ6L+Y5pyJ56ys5LqM6YGT6Ze477ya6KaB5Zyo57O757uf6YeM5pS+6KGM44CM6Ieq5ZCv5Yqo77yP5YWB6K645ZCO5Y+w6L+Q6KGM44CN77yMCiAqICAgICAg5ZCm5YiZ6L+Z5p2h5byA5py65bm/5pKtKirmoLnmnKzmlLbkuI3liLAqKu+8iOaJgOS7pemhuuaJi+e7meS6huOAjOWOu+ezu+e7n+iHquWQr+WKqOiuvue9ruOAjeeahOWFpeWPo++8ie+8mwogKiAgIOKRoiDnlKjmiLfoi6Xmm77ku47mnIDov5Hku7vliqHph4wqKuWIkuaOiSoq6L+HIFJldGljbGXvvIjvvJ3mmI7noa7ooajnpLoi5YGc5LqGIu+8ie+8jOW8gOacuioq5Lmf5LiN6KaG55uWKirlroPjgIIKICoKICog4piF5byA5py65pe25LiN6K645by555WM6Z2i77yIQW5kcm9pZCAxMCsg5ZCO5Y+w56aB5ZCvIEFjdGl2aXR577yJ4oCU4oCU5pys57G75Y+q6LW35pyN5Yqh44CB5Y+q5YaZ6K6+572u77yM5LiN5by556qX44CB5LiN5oqi5YmN5Y+w44CCCiAqIOKYheS4jeaUueS7u+S9lSLnlKjmiLflt7LlgZwi5Lul5aSW55qE54q25oCB77yb5byA5YWz5piv5YWz55qEIOKHkiDku4DkuYjpg73kuI3lgZrvvIjlj6rlhpnkuIDooYzml6Xlv5fvvInjgIIKICovCnB1YmxpYyBjbGFzcyBCb290UmVjZWl2ZXIgZXh0ZW5kcyBCcm9hZGNhc3RSZWNlaXZlciB7CgogICAgcHJpdmF0ZSBzdGF0aWMgZmluYWwgU3RyaW5nIFBSRUZTID0gInNldHRpbmdzIjsKICAgIHByaXZhdGUgc3RhdGljIGZpbmFsIFN0cmluZyBLRVlfQk9PVCA9ICJib290X2F1dG9zdGFydCI7CgogICAgLyoqIOW8gOWFs++8iOm7mOiupOWFs++8mueUqOaIt+aLjeeahOWPo+W+hO+8ieOAgiAqLwogICAgcHVibGljIHN0YXRpYyBib29sZWFuIGlzT24oQ29udGV4dCBjKSB7CiAgICAgICAgdHJ5IHsgcmV0dXJuIGMuZ2V0U2hhcmVkUHJlZmVyZW5jZXMoUFJFRlMsIENvbnRleHQuTU9ERV9QUklWQVRFKS5nZXRCb29sZWFuKEtFWV9CT09ULCBmYWxzZSk7IH0KICAgICAgICBjYXRjaCAoVGhyb3dhYmxlIHQpIHsgcmV0dXJuIGZhbHNlOyB9CiAgICB9CgogICAgcHVibGljIHN0YXRpYyB2b2lkIHNldE9uKENvbnRleHQgYywgYm9vbGVhbiB2KSB7CiAgICAgICAgdHJ5IHsgYy5nZXRTaGFyZWRQcmVmZXJlbmNlcyhQUkVGUywgQ29udGV4dC5NT0RFX1BSSVZBVEUpLmVkaXQoKS5wdXRCb29sZWFuKEtFWV9CT09ULCB2KS5hcHBseSgpOyB9IGNhdGNoIChUaHJvd2FibGUgdCkgeyB9CiAgICB9CgogICAgQE92ZXJyaWRlIHB1YmxpYyB2b2lkIG9uUmVjZWl2ZShDb250ZXh0IGN0eCwgSW50ZW50IGl0KSB7CiAgICAgICAgaWYgKGN0eCA9PSBudWxsKSByZXR1cm47CiAgICAgICAgZmluYWwgQ29udGV4dCBjID0gY3R4LmdldEFwcGxpY2F0aW9uQ29udGV4dCgpOwogICAgICAgIGZpbmFsIFN0cmluZyBhY3QgPSAoaXQgPT0gbnVsbCB8fCBpdC5nZXRBY3Rpb24oKSA9PSBudWxsKSA/ICIiIDogaXQuZ2V0QWN0aW9uKCk7CiAgICAgICAgLy8gdGljaygpIOmHjOimgSBzbGVlcCDnrYnlhpnlm57okL3lnLDvvIgxfjMg56eS77yJ77yM5LiN6IO95Y2g552AIG9uUmVjZWl2ZSDnmoTkuLvnur/nqIsg4oaSIGdvQXN5bmMg5oyq5Yiw5ZCO5Y+w57q/56iL44CCCiAgICAgICAgZmluYWwgUGVuZGluZ1Jlc3VsdCBwciA9IGdvQXN5bmMoKTsKICAgICAgICBUaHJlYWQgdCA9IG5ldyBUaHJlYWQobmV3IFJ1bm5hYmxlKCkgewogICAgICAgICAgICBwdWJsaWMgdm9pZCBydW4oKSB7CiAgICAgICAgICAgICAgICB0cnkgeyB3b3JrKGMsIGFjdCk7IH0gY2F0Y2ggKFRocm93YWJsZSB0KSB7IGxvZyhjLCAi5byA5py66Ieq5ZCv5Ye66ZSZ77yaIiArIHQpOyB9CiAgICAgICAgICAgICAgICBmaW5hbGx5IHsgdHJ5IHsgcHIuZmluaXNoKCk7IH0gY2F0Y2ggKFRocm93YWJsZSB0KSB7IH0gfQogICAgICAgICAgICB9CiAgICAgICAgfSk7CiAgICAgICAgdC5zZXREYWVtb24odHJ1ZSk7CiAgICAgICAgdC5zdGFydCgpOwogICAgfQoKICAgIHByaXZhdGUgdm9pZCB3b3JrKENvbnRleHQgYywgU3RyaW5nIGFjdCkgewogICAgICAgIGlmIChXYXRjaGRvZ1NlcnZpY2UuaXNVc2VyU3RvcHBlZChjKSkgewogICAgICAgICAgICBsb2coYywgIuW8gOacuuW5v+aSre+8iCIgKyBhY3QgKyAi77yJ77ya55So5oi35q2k5YmN5LuO5pyA6L+R5Lu75Yqh6YeM5YGc6L+HIFJldGljbGUg4oeSIOS4jeWKqOS9nO+8iOaJi+WKqOaJk+W8gCBBcHAg5omN5oGi5aSN77yJIik7CiAgICAgICAgICAgIHJldHVybjsKICAgICAgICB9CiAgICAgICAgaWYgKCFpc09uKGMpKSB7CiAgICAgICAgICAgIGxvZyhjLCAi5byA5py65bm/5pKt77yIIiArIGFjdCArICLvvInvvJrlvIDmnLroh6rlkK/lvIDlhbPmmK/lhbPnmoQg4oeSIOS4jeWKqOS9nCIpOwogICAgICAgICAgICByZXR1cm47CiAgICAgICAgfQogICAgICAgIGxvZyhjLCAi5byA5py65bm/5pKt77yIIiArIGFjdCArICLvvInvvJrlvIDlhbPmmK/lvIDnmoQg4oeSIOW8gOWni+aBouWkjSIpOwogICAgICAgIFN0cmluZyByOwogICAgICAgIHRyeSB7IHIgPSBBMTF5V2F0Y2hkb2cudGljayhjLCBmYWxzZSk7IH0gY2F0Y2ggKFRocm93YWJsZSB0KSB7IHIgPSAi5byC5bi477yaIiArIHQ7IH0KICAgICAgICBsb2coYywgIuW8gOacuu+8muaXoOmanOeijeWGmeWbniDihpIgIiArIHIpOwogICAgICAgIHRyeSB7IFdhdGNoZG9nU2VydmljZS5lbnN1cmUoYyk7IGxvZyhjLCAi5byA5py677ya5bey5ouJ6LW35YmN5Y+w5pyN5Yqh77yITUNQIOmaj+S5i+WQr+WKqO+8iSIpOyB9CiAgICAgICAgY2F0Y2ggKFRocm93YWJsZSB0KSB7IGxvZyhjLCAi5byA5py677ya5ouJ6LW35YmN5Y+w5pyN5Yqh5aSx6LSl77yaIiArIHQpOyB9CiAgICB9CgogICAgLyoqCiAgICAgKiDjgIzljrvns7vnu5/oh6rlkK/liqjorr7nva7jgI3lhaXlj6PvvJrmjInlt7Lnn6XnmoTljoLllYbpobXpnaLkvp3mrKHor5XvvIh2aXZv77yP5Y2O5Li677yPT1BQT++8j+Wwj+exs++8j+S4ieaYn++8ie+8jAogICAgICog6YO95LiN6KGM5bCx6YCA5Zue44CM5pys5bqU55So55qE5bqU55So6K+m5oOF6aG144CN44CC5Y+q6LSf6LSjKirmiorpobXpnaLmiZPlvIAqKu+8jOeCueS4jeeCueOAgeaAjuS5iOiuvueUseeUqOaIt+iHquW3seWGs+WumgogICAgICog77yI57qi57q/77ya5LiN5pu/55So5oi354K56K6+572u77yJ44CCCiAgICAgKi8KICAgIHB1YmxpYyBzdGF0aWMgYm9vbGVhbiBvcGVuQXV0b1N0YXJ0KENvbnRleHQgYykgewogICAgICAgIFN0cmluZ1tdW10gbGlzdCA9IG5ldyBTdHJpbmdbXVtdewogICAgICAgICAgICB7ImNvbS52aXZvLnBlcm1pc3Npb25tYW5hZ2VyIiwgImNvbS52aXZvLnBlcm1pc3Npb25tYW5hZ2VyLmFjdGl2aXR5LkJnU3RhcnRVcE1hbmFnZXJBY3Rpdml0eSJ9LAogICAgICAgICAgICB7ImNvbS5pcW9vLnNlY3VyZSIsICJjb20uaXFvby5zZWN1cmUudWkucGhvbmVvcHRpbWl6ZS5BZGRXaGl0ZUxpc3RBY3Rpdml0eSJ9LAogICAgICAgICAgICB7ImNvbS5pcW9vLnNlY3VyZSIsICJjb20uaXFvby5zZWN1cmUudWkucGhvbmVvcHRpbWl6ZS5CZ1N0YXJ0VXBNYW5hZ2VyIn0sCiAgICAgICAgICAgIHsiY29tLnZpdm8ucGVybWlzc2lvbm1hbmFnZXIiLCAiY29tLnZpdm8ucGVybWlzc2lvbm1hbmFnZXIuYWN0aXZpdHkuUHVydmlld1RhYkFjdGl2aXR5In0sCiAgICAgICAgICAgIHsiY29tLmh1YXdlaS5zeXN0ZW1tYW5hZ2VyIiwgImNvbS5odWF3ZWkuc3lzdGVtbWFuYWdlci5zdGFydHVwbWdyLnVpLlN0YXJ0dXBOb3JtYWxBcHBMaXN0QWN0aXZpdHkifSwKICAgICAgICAgICAgeyJjb20uaHVhd2VpLnN5c3RlbW1hbmFnZXIiLCAiY29tLmh1YXdlaS5zeXN0ZW1tYW5hZ2VyLmFwcGNvbnRyb2wuYWN0aXZpdHkuU3RhcnR1cEFwcENvbnRyb2xBY3Rpdml0eSJ9LAogICAgICAgICAgICB7ImNvbS5jb2xvcm9zLnNhZmVjZW50ZXIiLCAiY29tLmNvbG9yb3Muc2FmZWNlbnRlci5wZXJtaXNzaW9uLnN0YXJ0dXAuU3RhcnR1cEFwcExpc3RBY3Rpdml0eSJ9LAogICAgICAgICAgICB7ImNvbS5jb2xvcm9zLnNhZmVjZW50ZXIiLCAiY29tLmNvbG9yb3Muc2FmZWNlbnRlci5zdGFydHVwYXBwLlN0YXJ0dXBBcHBMaXN0QWN0aXZpdHkifSwKICAgICAgICAgICAgeyJjb20ubWl1aS5zZWN1cml0eWNlbnRlciIsICJjb20ubWl1aS5wZXJtY2VudGVyLmF1dG9zdGFydC5BdXRvU3RhcnRNYW5hZ2VtZW50QWN0aXZpdHkifSwKICAgICAgICAgICAgeyJjb20ubGV0di5hbmRyb2lkLmxldHZzYWZlIiwgImNvbS5sZXR2LmFuZHJvaWQubGV0dnNhZmUuQXV0b2Jvb3RNYW5hZ2VBY3Rpdml0eSJ9LAogICAgICAgICAgICB7ImNvbS5zYW1zdW5nLmFuZHJvaWQubG9vbCIsICJjb20uc2Ftc3VuZy5hbmRyb2lkLnNtLnVpLmJhdHRlcnkuQmF0dGVyeUFjdGl2aXR5In0sCiAgICAgICAgfTsKICAgICAgICBmb3IgKGludCBpID0gMDsgaSA8IGxpc3QubGVuZ3RoOyBpKyspIHsKICAgICAgICAgICAgdHJ5IHsKICAgICAgICAgICAgICAgIEludGVudCB4ID0gbmV3IEludGVudCgpOwogICAgICAgICAgICAgICAgeC5zZXRDb21wb25lbnQobmV3IENvbXBvbmVudE5hbWUobGlzdFtpXVswXSwgbGlzdFtpXVsxXSkpOwogICAgICAgICAgICAgICAgeC5hZGRGbGFncyhJbnRlbnQuRkxBR19BQ1RJVklUWV9ORVdfVEFTSyk7CiAgICAgICAgICAgICAgICBjLnN0YXJ0QWN0aXZpdHkoeCk7CiAgICAgICAgICAgICAgICBsb2coYywgIuaJk+W8gOiHquWQr+WKqOiuvue9rumhte+8miIgKyBsaXN0W2ldWzBdICsgIi8iICsgbGlzdFtpXVsxXSk7CiAgICAgICAgICAgICAgICByZXR1cm4gdHJ1ZTsKICAgICAgICAgICAgfSBjYXRjaCAoVGhyb3dhYmxlIHQpIHsgfQogICAgICAgIH0KICAgICAgICB0cnkgewogICAgICAgICAgICBJbnRlbnQgeCA9IG5ldyBJbnRlbnQoU2V0dGluZ3MuQUNUSU9OX0FQUExJQ0FUSU9OX0RFVEFJTFNfU0VUVElOR1MpOwogICAgICAgICAgICB4LnNldERhdGEoVXJpLmZyb21QYXJ0cygicGFja2FnZSIsIGMuZ2V0UGFja2FnZU5hbWUoKSwgbnVsbCkpOwogICAgICAgICAgICB4LmFkZEZsYWdzKEludGVudC5GTEFHX0FDVElWSVRZX05FV19UQVNLKTsKICAgICAgICAgICAgYy5zdGFydEFjdGl2aXR5KHgpOwogICAgICAgICAgICBsb2coYywgIuayoeaJvuWIsOiHquWQr+WKqOiuvue9rumhtSDih5Ig5omT5byA5pys5bqU55So55qE5bqU55So6K+m5oOF6aG1Iik7CiAgICAgICAgICAgIHJldHVybiB0cnVlOwogICAgICAgIH0gY2F0Y2ggKFRocm93YWJsZSB0KSB7IH0KICAgICAgICByZXR1cm4gZmFsc2U7CiAgICB9CgogICAgcHJpdmF0ZSBzdGF0aWMgdm9pZCBsb2coQ29udGV4dCBjLCBTdHJpbmcgcykgewogICAgICAgIHRyeSB7IEExMXlXYXRjaGRvZy5sb2coYywgIuW8gOacuuiHquWQr++9nCIgKyBzKTsgfSBjYXRjaCAoVGhyb3dhYmxlIHQpIHsgfQogICAgfQp9Cg==
+package app.reticle;
+
+import android.content.BroadcastReceiver;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
+import android.provider.Settings;
+
+/**
+ * 52 号单 · 开机自启（默认关，开关在「配置 → 无障碍看门狗」那一段）
+ *
+ * 干什么：手机开机后，若开关是开的——① 把本应用的无障碍写回系统在册列表（复用现成的
+ * A11yWatchdog.tick）；② 幂等拉起 WatchdogService（MCP 随之启动）。
+ *
+ * ★三个如实前提（选项旁也写了）：
+ *   ① 这功能**依赖系统权限**（WRITE_SECURE_SETTINGS／Shizuku）——Android 不允许应用自己
+ *      启用无障碍，没有这条权限只能提示用户手动去开；
+ *   ② 国产 ROM（vivo 等）还有第二道闸：要在系统里放行「自启动／允许后台运行」，
+ *      否则这条开机广播**根本收不到**（所以顺手给了「去系统自启动设置」的入口）；
+ *   ③ 用户若曾从最近任务里**划掉**过 Reticle（＝明确表示"停了"），开机**也不覆盖**它。
+ *
+ * ★开机时不许弹界面（Android 10+ 后台禁启 Activity）——本类只起服务、只写设置，不弹窗、不抢前台。
+ * ★不改任何"用户已停"以外的状态；开关是关的 ⇒ 什么都不做（只写一行日志）。
+ */
+public class BootReceiver extends BroadcastReceiver {
+
+    private static final String PREFS = "settings";
+    private static final String KEY_BOOT = "boot_autostart";
+
+    /** 开关（默认关：用户拍的口径）。 */
+    public static boolean isOn(Context c) {
+        try { return c.getSharedPreferences(PREFS, Context.MODE_PRIVATE).getBoolean(KEY_BOOT, false); }
+        catch (Throwable t) { return false; }
+    }
+
+    public static void setOn(Context c, boolean v) {
+        try { c.getSharedPreferences(PREFS, Context.MODE_PRIVATE).edit().putBoolean(KEY_BOOT, v).apply(); } catch (Throwable t) { }
+    }
+
+    @Override public void onReceive(Context ctx, Intent it) {
+        if (ctx == null) return;
+        final Context c = ctx.getApplicationContext();
+        final String act = (it == null || it.getAction() == null) ? "" : it.getAction();
+        // tick() 里要 sleep 等写回落地（1~3 秒），不能占着 onReceive 的主线程 → goAsync 挪到后台线程。
+        final PendingResult pr = goAsync();
+        Thread t = new Thread(new Runnable() {
+            public void run() {
+                try { work(c, act); } catch (Throwable t) { log(c, "开机自启出错：" + t); }
+                finally { try { pr.finish(); } catch (Throwable t) { } }
+            }
+        });
+        t.setDaemon(true);
+        t.start();
+    }
+
+    private void work(Context c, String act) {
+        if (WatchdogService.isUserStopped(c)) {
+            log(c, "开机广播（" + act + "）：用户此前从最近任务里停过 Reticle ⇒ 不动作（手动打开 App 才恢复）");
+            return;
+        }
+        if (!isOn(c)) {
+            log(c, "开机广播（" + act + "）：开机自启开关是关的 ⇒ 不动作");
+            return;
+        }
+        log(c, "开机广播（" + act + "）：开关是开的 ⇒ 开始恢复");
+        String r;
+        try { r = A11yWatchdog.tick(c, false); } catch (Throwable t) { r = "异常：" + t; }
+        log(c, "开机：无障碍写回 → " + r);
+        try { WatchdogService.ensure(c); log(c, "开机：已拉起前台服务（MCP 随之启动）"); }
+        catch (Throwable t) { log(c, "开机：拉起前台服务失败：" + t); }
+    }
+
+    /**
+     * 「去系统自启动设置」入口：按已知的厂商页面依次试（vivo／华为／OPPO／小米／三星），
+     * 都不行就退回「本应用的应用详情页」。只负责**把页面打开**，点不点、怎么设由用户自己决定
+     * （红线：不替用户点设置）。
+     */
+    public static boolean openAutoStart(Context c) {
+        String[][] list = new String[][]{
+            {"com.vivo.permissionmanager", "com.vivo.permissionmanager.activity.BgStartUpManagerActivity"},
+            {"com.iqoo.secure", "com.iqoo.secure.ui.phoneoptimize.AddWhiteListActivity"},
+            {"com.iqoo.secure", "com.iqoo.secure.ui.phoneoptimize.BgStartUpManager"},
+            {"com.vivo.permissionmanager", "com.vivo.permissionmanager.activity.PurviewTabActivity"},
+            {"com.huawei.systemmanager", "com.huawei.systemmanager.startupmgr.ui.StartupNormalAppListActivity"},
+            {"com.huawei.systemmanager", "com.huawei.systemmanager.appcontrol.activity.StartupAppControlActivity"},
+            {"com.coloros.safecenter", "com.coloros.safecenter.permission.startup.StartupAppListActivity"},
+            {"com.coloros.safecenter", "com.coloros.safecenter.startupapp.StartupAppListActivity"},
+            {"com.miui.securitycenter", "com.miui.permcenter.autostart.AutoStartManagementActivity"},
+            {"com.letv.android.letvsafe", "com.letv.android.letvsafe.AutobootManageActivity"},
+            {"com.samsung.android.lool", "com.samsung.android.sm.ui.battery.BatteryActivity"},
+        };
+        for (int i = 0; i < list.length; i++) {
+            try {
+                Intent x = new Intent();
+                x.setComponent(new ComponentName(list[i][0], list[i][1]));
+                x.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                c.startActivity(x);
+                log(c, "打开自启动设置页：" + list[i][0] + "/" + list[i][1]);
+                return true;
+            } catch (Throwable t) { }
+        }
+        try {
+            Intent x = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+            x.setData(Uri.fromParts("package", c.getPackageName(), null));
+            x.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            c.startActivity(x);
+            log(c, "没找到自启动设置页 ⇒ 打开本应用的应用详情页");
+            return true;
+        } catch (Throwable t) { }
+        return false;
+    }
+
+    private static void log(Context c, String s) {
+        try { A11yWatchdog.log(c, "开机自启｜" + s); } catch (Throwable t) { }
+    }
+}

@@ -1,1 +1,8 @@
-PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPHJlc291cmNlcz4KICAgIDxjb2xvciBuYW1lPSJpY19sYXVuY2hlcl9iYWNrZ3JvdW5kIj4jMEYxMTE1PC9jb2xvcj4KICAgIDwhLS0gNzMg5Y+35Y2V77ya6aKE572u5Zu+5qCH56ys5LqMfuWbm+asvueahOW6leiJsu+8iOesrOS4gOasvu+8neS4iumdoueahOm7mOiupOasvu+8jOWHoOS9leS4jumFjeiJsuS4gOW+i+ayoeWKqO+8iSAtLT4KICAgIDxjb2xvciBuYW1lPSJpY19sYXVuY2hlcl9iYWNrZ3JvdW5kXzIiPiMwNzIxMUY8L2NvbG9yPgogICAgPGNvbG9yIG5hbWU9ImljX2xhdW5jaGVyX2JhY2tncm91bmRfMyI+IzBGMTExNTwvY29sb3I+CiAgICA8Y29sb3IgbmFtZT0iaWNfbGF1bmNoZXJfYmFja2dyb3VuZF80Ij4jMjQxMzEwPC9jb2xvcj4KPC9yZXNvdXJjZXM+Cg==
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="ic_launcher_background">#0F1115</color>
+    <!-- 73 号单：预置图标第二~四款的底色（第一款＝上面的默认款，几何与配色一律没动） -->
+    <color name="ic_launcher_background_2">#07211F</color>
+    <color name="ic_launcher_background_3">#0F1115</color>
+    <color name="ic_launcher_background_4">#241310</color>
+</resources>

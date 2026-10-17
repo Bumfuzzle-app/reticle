@@ -1,1 +1,9 @@
-PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSAzMyDmjqLot6/vvJrpq5jnuqfvvIjlm5vop5LmmJ/vvInigJTigJTpnZnmgIHliqDnspfniYjvvIhmaWxsICsgc3Ryb2tlIDEuM++8jOWchuinkui/nuaOpe+8iSAtLT4KPHZlY3RvciB4bWxuczphbmRyb2lkPSJodHRwOi8vc2NoZW1hcy5hbmRyb2lkLmNvbS9hcGsvcmVzL2FuZHJvaWQiCiAgICBhbmRyb2lkOndpZHRoPSIyNGRwIiBhbmRyb2lkOmhlaWdodD0iMjRkcCIKICAgIGFuZHJvaWQ6dmlld3BvcnRXaWR0aD0iMjQiIGFuZHJvaWQ6dmlld3BvcnRIZWlnaHQ9IjI0Ij4KICA8cGF0aCBhbmRyb2lkOmZpbGxDb2xvcj0iI0ZGRkZGRkZGIiBhbmRyb2lkOnN0cm9rZUNvbG9yPSIjRkZGRkZGRkYiIGFuZHJvaWQ6c3Ryb2tlV2lkdGg9IjEuMyIKICAgICAgYW5kcm9pZDpzdHJva2VMaW5lSm9pbj0icm91bmQiCiAgICAgIGFuZHJvaWQ6cGF0aERhdGE9Ik0xMiwyIEwxNC4yLDkuOCBMMjIsMTIgTDE0LjIsMTQuMiBMMTIsMjIgTDkuOCwxNC4yIEwyLDEyIEw5LjgsOS44IFoiLz4KPC92ZWN0b3I+Cg==
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 33 探路：高级（四角星）——静态加粗版（fill + stroke 1.3，圆角连接） -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp" android:height="24dp"
+    android:viewportWidth="24" android:viewportHeight="24">
+  <path android:fillColor="#FFFFFFFF" android:strokeColor="#FFFFFFFF" android:strokeWidth="1.3"
+      android:strokeLineJoin="round"
+      android:pathData="M12,2 L14.2,9.8 L22,12 L14.2,14.2 L12,22 L9.8,14.2 L2,12 L9.8,9.8 Z"/>
+</vector>

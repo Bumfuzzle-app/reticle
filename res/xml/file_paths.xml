@@ -1,1 +1,6 @@
-PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSA3OSDlj7fljZXvvJrlj6rmiorjgIzmm7TmlrDljIXkuIvovb3nm67lvZXjgI3lvIDnu5nns7vnu5/lronoo4XlmajvvIzliKvnmoTnm67lvZXkuIDkuKrpg73kuI3lvIAgLS0+CjxwYXRocyB4bWxuczphbmRyb2lkPSJodHRwOi8vc2NoZW1hcy5hbmRyb2lkLmNvbS9hcGsvcmVzL2FuZHJvaWQiPgogICAgPGV4dGVybmFsLXBhdGggbmFtZT0iZGwiIHBhdGg9IlJldGljbGUvZGwvIi8+CiAgICA8ZXh0ZXJuYWwtZmlsZXMtcGF0aCBuYW1lPSJhcHBkbCIgcGF0aD0iZGwvIi8+CjwvcGF0aHM+Cg==
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 79 号单：只把「更新包下载目录」开给系统安装器，别的目录一个都不开 -->
+<paths xmlns:android="http://schemas.android.com/apk/res/android">
+    <external-path name="dl" path="Reticle/dl/"/>
+    <external-files-path name="appdl" path="dl/"/>
+</paths>

@@ -1,1 +1,8 @@
-PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSDlvJXlr7zCt+iupOWtl++8iOaWh+Wtl+Wdl++8ieWNleiJsuefoumHj++8jOmaj+S4u+mimCB0aW50IC0tPgo8dmVjdG9yIHhtbG5zOmFuZHJvaWQ9Imh0dHA6Ly9zY2hlbWFzLmFuZHJvaWQuY29tL2Fway9yZXMvYW5kcm9pZCIKICAgIGFuZHJvaWQ6d2lkdGg9IjI0ZHAiIGFuZHJvaWQ6aGVpZ2h0PSIyNGRwIgogICAgYW5kcm9pZDp2aWV3cG9ydFdpZHRoPSIyNCIgYW5kcm9pZDp2aWV3cG9ydEhlaWdodD0iMjQiPgogIDxwYXRoIGFuZHJvaWQ6c3Ryb2tlQ29sb3I9IiNGRkZGRkZGRiIgYW5kcm9pZDpzdHJva2VXaWR0aD0iMS45IiBhbmRyb2lkOnN0cm9rZUxpbmVDYXA9InJvdW5kIgogICAgICBhbmRyb2lkOnBhdGhEYXRhPSJNNSw2LjUgSDE5IE01LDExLjUgSDE5IE01LDE2LjUgSDEzIi8+CjwvdmVjdG9yPgo=
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 引导·认字（文字块）单色矢量，随主题 tint -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp" android:height="24dp"
+    android:viewportWidth="24" android:viewportHeight="24">
+  <path android:strokeColor="#FFFFFFFF" android:strokeWidth="1.9" android:strokeLineCap="round"
+      android:pathData="M5,6.5 H19 M5,11.5 H19 M5,16.5 H13"/>
+</vector>

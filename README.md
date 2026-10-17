@@ -1,1 +1,102 @@
-IyBSZXRpY2xlCgoqKue7mSBBSSDliqnmiYvphY3nmoTkuIDlj4zmiYvlkozkuIDlj4znnLznnZvjgIIqKiBSZXRpY2xlIOaYr+S4gOS4qiBBbmRyb2lkIOW6lOeUqO+8muWug+WcqOacrOacuui3keS4gOS4quWPquebkeWQrCBgMTI3LjAuMC4xYCDnmoQgTUNQIOacjeWKoe+8jOaKiuOAjOaIquWxjyAvIOivu+eVjOmdoiAvIOiupOWtlyAvIOeCueaMiea7keWKqCAvIOaJp+ihjOWRveS7pCAvIOS4i+i9vSAvIOmAmuefpeOAjei/meS6m+iDveWKm+S7peW3peWFt+eahOW9ouW8j+S6pOe7mSBBSSDlrqLmiLfnq6/osIPnlKjvvIxBSSDlnKjlr7nor53ph4zor7Tku4DkuYjvvIzlroPlsLHnnJ/nmoTlnKjlsY/luZXkuIrlgZrlh7rmnaXjgILlroPoh6rlt7HkuI3mgJ3ogIPjgIHkuI3lhrPlrprjgIHkuI3kuLvliqjliqjmiYvjgIIKCi0g54mI5pys77yaKiowLjI4LjMxKirvvIh2ZXJzaW9uQ29kZSA4Ne+8iQotIOWMheWQje+8mmBhcHAucmV0aWNsZWDvvZzmnKzmnLrnq6/lj6PvvJpgODc3MGDvvZzov5DooYznm67lvZXvvJpgL3NkY2FyZC9SZXRpY2xlYAoKIyMg55u05o6l5LiL6L2977yI5LiN55So57yW6K+R77yJCgoqKuS4jeeUqOe8luivke+8muS4i+i9veijheS4iuWwseiDveeUqOOAgioqIOWIsOacrOS7k+W6kyAqKlJlbGVhc2VzKiog6aG15Y+W5pyA5pawIEFQS++8jOWcqOaJi+acuuS4iuS+p+i9veWuieijheOAgkdvb2dsZSBQbGF5IOebruWJjeS4jeaUtui/meexu+OAjOiuqSBBSSDpqbHliqjnlYzpnaLnmoTlupTnlKjjgI3vvIwqKuS+p+i9veaYr+S4u+a4oOmBkyoq44CCCgotIOS4i+i9vemhte+8mioqaHR0cHM6Ly9naXRodWIuY29tL0J1bWZ1enpsZS1hcHAvcmV0aWNsZS9yZWxlYXNlcyoqCi0g5b2T5YmN5YyF77yaKipgYXBwLnJldGljbGUtMC4yOC4zMS5hcGtgKirvvIhBbmRyb2lkIDExK++8ie+8myoqc2hhMjU2IOingSBSZWxlYXNlIOmhtSoq77yM54mI5pys5Y+35LiO5qCh6aqM5YC86YO95LulIFJlbGVhc2Ug6aG15Li65YeGCgojIyDov5nkuIDniYjvvIgwLjI4LjMx77yJ5pyJ5LuA5LmI5paw55qECgoxLiAqKuS4jeWGjeWNoOeUqOezu+e7n+WqkuS9k+mAmumBkyoq77ya5Lul5YmN5ZCO5Y+w5bi46am75LiA5p2h44CM5q2j5Zyo5pKt5pS+44CN55qE5aqS5L2T5Lya6K+d77yI54G15Yqo5bKb77yP5o6n5Yi25Lit5b+D55yL552A5YOP5Zyo5pS+6Z+z5LmQ77yM6L+Y5Y+v6IO95oqi6ICz5py65LiO6JOd54mZ55qE5pKt5pS+6ZSu77yJ4oCU4oCUKirlt7LmlbTmnaHnoI3mjokqKuOAggoyLiAqKuahjOmdouWbvuagh+iDveiHquW3semAiSoq77yaNCDmrL7pooTnva7ngrnkuIDkuIvljbPmjaLvvIjmoYzpnaLkuI7mnIDov5Hku7vliqHnnJ/nmoTlj5jvvInvvJvkuZ/lj6/ku6XnlKjkvaDoh6rlt7HnmoTlm77nlJ/miJDkuIDkuKrmoYzpnaLlm77moIfvvIjopoHov4fns7vnu5/jgIzmt7vliqDliLDkuLvlsY/luZXjgI3noa7orqTvvInjgILimIXlupTnlKjlm77moIfmnKzouqvlsZ7kuo7lronoo4XljIXvvIzopoHph43mlrDmiZPljIXmiY3og73mjaLigJTigJTov5nmmK/ns7vnu5/op4Tnn6njgIIKMy4gKirmiYvmnLrkuIrlsLHog73nvJYgQXBwIOS6hu+8iOacrOeJiOacgOWkp+eahOS4gOatpe+8iSoq77ya5bqU55So5YaF572u5p6E5bu65bel5YW36ZO+77yb56ys5LiA5qyh55So5pe25LiA6ZSu5LuO5a6Y5pa55rqQ5LiL6L29IGBhbmRyb2lkLmphcmDvvIjnuqYgMjYgTULvvIzpgJDkuKogc2hhMjU2IOagoemqjO+8ieOAgueVjOmdouWcqOOAjOmrmOe6pyDihpIg5omT5YyFIEFwcOOAje+8jOe8uuS7tuaXtuaVtOewh+WPmOeBsOW5tuWGmea4heWOn+WboOOAguWunua1i++8mueCueOAjOaJk+WMhSBBcHDjgI3ihpIg5Ye65YyFICoq57qmIDUg56eSKiog4oaSIOWPr+ebtOaOpeijheOAgeiDvei1t+adpeOAggoKIyMg6ZyA6KaB5LuA5LmICgp8IOadoeS7tiB8IOivtOaYjiB8CnwtLS18LS0tfAp8ICoqQW5kcm9pZCAxMSDmiJbmm7Tpq5gqKiB8ICoq56Gs6KaB5rGCKirjgILml6Dpmpznoo3miKrlsY/mjqXlj6Pku44gQW5kcm9pZCAxMe+8iEFQSSAzMO+8ieaJjeacie+8jOS9juS6jui/meS4queJiOacrCoq6KOF5LiN5LiKKirjgIIgfAp8IOS4gOS4quiDveiHquWhqyBNQ1Ag5pyN5Yqh5Zmo5Zyw5Z2A55qEIEFJIOWuouaIt+erryB8IOWPqumAgumFjei/hyAqKlJpa2thSHViKirvvIhodHRwczovL3Jpa2thLWFpLmNvbe+8ie+8m+WFtuS7luWuouaIt+err+eQhuiuuuS4iuWPr+eUqOOAgeacquWunua1i+OAgiB8CnwgU2hpenVrdSB8IOeUqOS6juS7pSBzaGVsbCDouqvku73miafooYzlkb3ku6TjgILpnIDlhYjnlKjjgIzml6Dnur/osIPor5XjgI3miJbnlLXohJHlkK/liqjmnI3liqHvvJsqKuacrOS7k+W6ky/mnKzlupTnlKjkuI3lkKsgU2hpenVrdSDmnKzkvZMqKu+8jOivt+iHquihjOWuieijheOAgiB8Cnwg5peg6Zqc56KN5pyN5YqhIHwg5oiq5bGP44CB6K+755WM6Z2i44CB5qih5ouf6Kem5o6n5YWo6Z2g5a6D77yI5Zyo57O757uf6K6+572u6YeM5omL5Yqo5omT5byA77yJ44CCIHwKfCDmiYDmnInmlofku7borr/pl64gfCDor7vlhpkgYC9zZGNhcmQvUmV0aWNsZWDvvIjmiKrlm77jgIHkuIvovb3jgIHml6Xlv5fvvInjgIIgfAp8IOmAmuefpeadg+mZkO+8iEFuZHJvaWQgMTMr77yJIHwg5bi46am754q25oCB6YCa55+l44CCIHwKCjMwIOenkuiHquafpe+8muijheWlveWQjuaMiSBgZG9jcy/mjaLmnLroh6rmtYvmuIXljZUubWRgIOi1sOS4gOmBjeOAguWujOaVtOeUqOazleingSBgZG9jcy/kvb/nlKjmiYvlhowubWRg77yI5bqU55So5YaF44CM6K+05piO44CN6aG15LiO5a6D5ZCM5rqQ77yJ44CCCgojIyDlronoo4XvvIjmgI7kuYjoo4XvvIkKCjEuIOWIsOacrOS7k+W6kyAqKlJlbGVhc2VzKiog6aG15LiL6L295pyA5pawIGBhcHAucmV0aWNsZS14Lnkuei0qLmFwa2DvvIhBbmRyb2lkIDExK++8ie+8jOebtOaOpeWcqOaJi+acuuS4iuS+p+i9veWuieijheKAlOKAlEdvb2dsZSBQbGF5IOebruWJjeS4jeaUtui/meexu+OAjOiuqSBBSSDpqbHliqjnlYzpnaLnmoTlupTnlKjjgI3vvIwqKuS+p+i9veaYr+S4u+a4oOmBkyoq44CCCjIuIOmmluasoeaJk+W8gOaMieeVjOmdouaPkOekuui1sO+8muaJk+W8gOaXoOmanOeijeacjeWKoSDihpIg5YWB6K6444CM5omA5pyJ5paH5Lu26K6/6Zeu44CNIOKGkiDlhYHorrjpgJrnn6XvvJvopoHnlKggc2hlbGwg5ZG95Luk5YaN6Ieq6KGM6KOFIFNoaXp1a3XjgIIKMy4g6KOF5a6M54WnIGBkb2NzL+aNouacuuiHqua1i+a4heWNlS5tZGAg6LWw5LiA6YGN77yI57qmIDMwIOenku+8ie+8jOehruiupOaIquWxj++8j+ivu+Wxj++8j+eCueaMiemDvemAmuOAggo0LiDljYfnuqfvvJ3kuIvovb3mlrAgQVBLIOimhuebluWuieijheWNs+WPr++8iOWMheWQjeS4jeWPmO+8jOmFjee9ruS4juS7pOeJjOS/neeVme+8ieOAggoKIyMg5pSv5oyB6IyD5Zu0Cgrlrp7mtYvnjq/looPvvJrkuIDlj7AgKipBbmRyb2lkIDE3Kiog5omL5py6IO+8iyAqKlJpa2thSHViKiog5a6i5oi356uv44CC5Luj56CB6YeM5rKh5pyJ5Lu75L2V5Y6C5ZWG5LiT5bGe5o6l5Y+j5L6d6LWW77yM5YW85a655oCn5beu5byC6YO95Zyo44CM6KGM5Li644CN5bGC6Z2i77yI5Y6C5ZWG5ZCO5Y+w566h5o6n44CB6Ieq5ZCv5Yqo5pS+6KGM562J77yJ44CC5a6M5pW05aOw5piO6KeBICoqYGRvY3Mv5pSv5oyB6IyD5Zu0Lm1kYCoq77yM6KaB54K577yaCgotIOaIquWbvuS4juaXoOmanOeijeivu+Wxj+mcgOimgSBBbmRyb2lkIDExK++8mwotIOOAjOWOn+WtkOWym+OAjeOAjOWunuWGtemAmuefpeOAjSoq5pqC5pegKirvvIjml6nlhYjpgqPmnaHlqpLkvZPmoLflvI/ot6/nur/lt7LmlbTkvZPnp7vpmaTvvIznjrDlnKjlj6rmnInmma7pgJrpgJrnn6XvvInvvJsKLSDpg6jliIblm73kuqfns7vnu5/kvJrlrprmnJ/oh6rliqjlhbPpl63nrKzkuInmlrnml6Dpmpznoo3mnI3liqHvvJvooqvns7vnu5/lm57mlLbmiJbku47lkI7lj7DliJLmjonlkI7vvIwqKuWkmuaVsOaDheWGteS4i+S4jeS8muiHquW3semHjeWQryoq77yI5LiN5ZCM5py65Z6L5Y+v6IO95LiN5ZCM77yJ77ybCi0g5rKh5pyJIEdvb2dsZSDmnI3liqHnmoTmnLrlmajvvJroo4UgU2hpenVrdSDpgqPkuIDmraXnmoTllYblupfpk77mjqXmiZPkuI3lvIDvvJtSZXRpY2xlIOacrOi6q+S4juaWh+Wtl+ivhuWIq+aooeWei+mDveS4jeS+nei1liBHb29nbGUg5pyN5Yqh44CCCgojIyDkuI3lgZrku4DkuYjvvIjliLvmhI/kuI3lgZrvvIzliKvlvZMgaXNzdWUg5o+Q77yJCgotICoq5LiN5YGa5pWP5oSf6aG15a6I5Y2rKirvvJrkuI3liIbmnpDjgIHkuI3mi6bmiKrmlK/ku5gv5a+G56CBL+mqjOivgeeggemhtemdouOAguWxj+W5leWGheWuueS8muS6pOe7meS9oOiHquW3semAieeahOaooeWei++8jOmjjumZqeiHquaLheKAlOKAlOOAjOWIq+iuqeWug+aIquaVj+aEn+eUu+mdouOAjeavlOS7u+S9leW8gOWFs+mDveWPr+mdoOOAggotICoq5LiN5YGa5oCl5YGc5oyJ6ZKuKirvvJrlupTnlKjlhoXjgIzkuIDplK7lgZzmraLmiYDmnInlip/og73liJ3lp4vljJbjgI3lsLHmmK/lgZzmiYvlhaXlj6PvvJvku47lkI7lj7DliJLmjonkuZ/og73lgZzvvIzkvYbpgqPmmK/ns7vnu5/ooYzkuLrjgIHkuI3kv53or4HjgIIKLSAqKuS4jeWBmuiHquaEiCoq77ya6KKr5pW06L+b56iL5p2A5o6J5ZCO5LiN5Lya6Ieq5bex6YeN5ZCv77yI5Y+v5LuO5a+56K+d6YeM5Y+R5LiA5p2h5L+u5aSN5bm/5pKt5oqK5Ya35ZCv5Yqo5Y+r5Zue5p2l77yJ44CCCi0gKirnu7TmiqTogIXkuI3kv53or4Hlm57lpI0qKu+8muacrOS7k+W6k+aMieS9nOiAheiHquW3seeahOiKguWlj+i1sO+8jGlzc3Vl77yPUFIg5Y+v6IO96ZW/5pyf5rKh5Lq65aSE55CG77yI5YWI5L6L77yaUmlra2FIdWIg5ZCM5qC35LiN5pS2IFBS77yJ77yM6K+35Yir562J44CC5pyJ5oOz5rOV5qyi6L+O6Ieq5bexIGZvcmsg5LiA5Lu95pS544CCCgojIyDlronlhajkuI7pmpDnp4EKCi0gTUNQIOacjeWKoSoq5Y+q55uR5ZCsIGAxMjcuMC4wLjFgKirvvIzlkIwgV2ktRmkg55qE5YW25LuW6K6+5aSH5Lmf6L+e5LiN5LiK77yb5q+P5qyh6LCD55So5b+F6aG75bim5Luk54mM77yI5Zyo5bqU55So44CM6YWN572uIOKGkiDku6TniYzkuI7lnLDlnYDjgI3ph4znrqHnkIbvvIzlj6/kuIDplK7ph43nlJ/miJDvvInjgIIKLSDlsY/luZXlhoXlrrnkuI7nlYzpnaLkv6Hmga/lj6rkuqTnu5kqKuS9oOiHquW3semFjee9rueahOmCo+S4qiBBSSDlrqLmiLfnq68qKu+8jOS5i+WQjuaYr+WQpuWHuue9keWPluWGs+S6juS9oOmAieeahOaooeWei+S4jue6v+i3r++8m1JldGljbGUg5pys6Lqr5LiN5LiK5Lyg5Lu75L2V5Lic6KW/44CC5ZSv5LiA55qE5Li75Yqo6IGU572R6KGM5Li65piv44CM5LiL6L295paH5Lu244CN77yI5oyJ57uZ5a6aIFVSTCDlj5bvvInjgIIKLSDlrqHorqHml6Xlv5flhpnlnKggYC9zZGNhcmQvUmV0aWNsZS9sb2dzL2F1ZGl0LVlZWVlNTURELmxvZ2DvvIjkuI3orrDlvZXku6TniYzvvInjgIIKLSDku6TniYzlj6rlrZjlnKjmnKzmnLrphY3nva7ph4zvvJvmnKzku5PlupPkuI3lkKvku7vkvZXlr4bpkqXjgIHlj6Pku6TmiJbnrb7lkI3mlofku7bjgIIKCioq5a6J5YWo5ryP5rSe5LiK5oqlKirvvJror7flnKjku5PlupPpobUgKipTZWN1cml0eSDihpIgUmVwb3J0IGEgdnVsbmVyYWJpbGl0eSoq77yIR2l0SHViIOengeaciea8j+a0nuS4iuaKpe+8ieaPkOS6pOKAlOKAlOaKpeWRiuiAheaXoOmcgOmCrueuse+8jOS9nOiAheS5n+S4jeW/heWFrOW8gOmCrueuseOAguS4jeimgeW8gOWFrOW8gCBpc3N1ZeOAguWuieWFqOmXrumimOS7peWklueahOWKn+iDveW7uuiuru+8jOacrOS7k+W6k+S4jeWPl+eQhuOAggoKIyMg6K645Y+v5LiO6Ie06LCiCgotIOacrOmhueebru+8mioqQXBhY2hlIExpY2Vuc2UgMi4wKirvvIjop4EgYExJQ0VOU0Vg77yJ44CCCi0g56ys5LiJ5pa557uE5Lu25LiO6K645Y+v6KeBIGBOT1RJQ0Vg77yb6K645Y+v5p+l6K+B6K6w5b2V6KeBIGBkb2NzL+iuuOWPr+afpeivgS5tZGDjgIIKCiMjIOaDs+iHquW3seaehOW7ugoKKirkuI3nlKjnvJbor5HkuZ/og73nlKgqKu+8iOingeaWh+mmluOAjOebtOaOpeS4i+i9veOAje+8ie+8m+S4i+mdoui/meS4gOiKguWPque7meaDs+iHquW3seWHuuWMheeahOS6uuOAgioqUEMg5p6E5bu66Lev57q/5pys5py65rKh5pyJ5a6e5rWL6L+HKirigJTigJTor7flvZPkvZzjgIzljp/nkIbkuIrlj6/ooYzjgI3vvIzkuI3mmK/jgIznhafmioTlv4XmiJDjgI3jgIIKCi0g5rqQ56CB77yaYHNyYy9g77yISmF2Ye+8jDI4IOS4quaWh+S7tu+8ie+8m+i1hOa6kO+8mmByZXMvYO+8m+a4heWNle+8mmBBbmRyb2lkTWFuaWZlc3QueG1sYOOAggotICoqYHNyYy9NYW51YWxEb2MuamF2YWAg5piv44CK5L2/55So5omL5YaM44CL55qE5Lqn54mpKirvvIjnlLEgYGRvY3Mv5L2/55So5omL5YaMLm1kYCDmnLrmorDovazmjaLogIzmnaXvvInvvJropoHmlLnor7TmmI7mloflrZfor7fmlLkgbWQg5YaN6YeN5paw55Sf5oiQ77yMKirliKvmiYvmlLnov5nkuKrmlofku7YqKuOAggotIOaehOW7uuiEmuacrOingSBgYnVpbGQvYO+8iGBidWlsZDIuc2hgIOWHuuWMheOAgWDoo4Xlt6Xlhbcuc2hgIOijheacuu+8ie+8mioq6buY6K6k6Lev5b6E5oyH5ZCR5pys5py66L+Q6KGM55uu5b2V77yM6KaB5oyH5Yiw5L2g6Ieq5bex55qEKirigJTigJTikaAg5Ye65YyFL+ijheacuuiEmuacrOW8gOWcuuWFiOiHquajgOOAgee8uuS7tumAkOadoeeCueWQje+8iOi/nuOAjOS7juWTquaLv+OAjeS4gOi1t+e7me+8ie+8m+KRoSDlupTnlKjlhoUgYGJ1aWxkYCDlt6XlhbcgYGFjdGlvbj1jaGVja2Ag5LiA5p2h5ZG95Luk55yL44CM5bCx57uq77yP57y65ZOq5Yeg5Liq77yP5LuO5ZOq5ou/44CN77yb4pGiIOi3r+W+hOi/mOiDveWGmei/myBgYnVpbGQuY29uZmDvvIjnpLrkvovop4EgYGJ1aWxkL2J1aWxkLmNvbmYuZXhhbXBsZWDvvInmiJbnlKjnjq/looPlj5jph4/jgIIqKuS7jumbtuWIsOWHuuWMheeahOWRveS7pOe6p+atpemqpOOAgeimgeiHquWkh+S7gOS5iOOAgeavj+agt+S4nOilv+S7juWTquaLv++8j+aUvuWTqu+8j+aAjuS5iOmqjO+8jOmDveWcqCBbYEJVSUxELm1kYF0oQlVJTEQubWQpIOS4jiBbYGRvY3Mv5p6E5bu6546v5aKD5riF5Y2VLm1kYF0oZG9jcy/mnoTlu7rnjq/looPmuIXljZUubWQpKirjgILorr7lpIfkvqfkvp3otZYgYGFhcHQyYOOAgUVDSuOAgWQ444CBYXBrc2lnbmVy44CBYGFuZHJvaWQuamFyYO+8iEFQSSAzNe+8ieetie+8iOeUqCBgL3N5c3RlbS9iaW4vYXBwX3Byb2Nlc3NgIOi3kemihOi9rCBkZXjvvInvvIzlj6bpnIDnrKzkuInmlrkgamFy77yI6KeB5LiL77yJ44CCCi0gKirmnKzku5PlupPkuI3lkKvkuozov5vliLbkvp3otZYqKu+8mgogIC0gYExpcXVpZCBHbGFzcyBmb3IgQW5kcm9pZGDvvIhRV0VBMC9MaXF1aWQtR2xhc3MtQW5kcm9pZO+8jHYyLjAuMTHvvIxNSVTvvInvvJror7foh6rooYzojrflj5YgYGxpcXVpZGdsYXNzLTIuMC4xMS5qYXJgIOaUvuWFpSBg54mp5paZL2NsYXNzZXMvYO+8mwogIC0gYEdvb2dsZSBNTCBLaXRg77yIdGV4dC1yZWNvZ25pdGlvbiDkuK3mlocgYnVuZGxlZCDmqKHlnovvvInvvJrlj5cgTUwgS2l0IOadoeasvue6puadn++8jOS4jeiDveWGjeWIhuWPke+8jOivt+iHquihjOa3u+WKoOS+nei1lu+8mwogIC0gQW5kcm9pZFggLyBBcHBDb21wYXQgLyBNYXRlcmlhbCAvIEtvdGxpbiBzdGRsaWIgLyBTaGl6dWt1LUFQSSDnrYnvvIzmjInlkIToh6rkuIrmuLjojrflj5bjgIIKLSAqKmZvcmsg6K+35pS56Lqr5Lu9KirvvIzlkKbliJnkuI7ljp/ljIXmkp7lkI3jgIHopobnm5blronoo4XvvJpgQW5kcm9pZE1hbmlmZXN0LnhtbGAg55qEIGBwYWNrYWdlYOOAgWByZXMvdmFsdWVzL3N0cmluZ3MueG1sYOOAgWBzcmMvYCDph4wgYGFwcC5yZXRpY2xlYCDluLjph4/jgIHnq6/lj6MgYDg3NzBg44CB55uu5b2VIGAvc2RjYXJkL1JldGljbGVg44CCYGJ1aWxkL2J1aWxkMi5zaGAg6YeM5pyJ5LiA5q6144CMSUQ9QuOAjeeahOi6q+S7veabv+aNouekuuS+i++8iOaKiuS4u+WMheWQjS/nq6/lj6Mv55uu5b2V5o2i5oiQ5Ymv5a6e5L6L77yJ77yM5Y+v54Wn552A5pS55oiQ5L2g6Ieq5bex55qE44CCCi0g5pys5LuT5bqTKirkuI3mmK8gR3JhZGxlIOW3peeoiyoq77yaYEFuZHJvaWRNYW5pZmVzdC54bWxgIOmHjOeahCBgcGFja2FnZWAg5bCx5pivIGFwcGxpY2F0aW9uSWTvvJtmb3JrIOaXtuaKiuWug+OAgeerr+WPo+OAgeebruW9leOAgWBzcmMvYCDph4znmoQgYGFwcC5yZXRpY2xlYCDluLjph4/kuIDotbfmlLnmiJDkvaDoh6rlt7HnmoTvvIzlkKbliJnkvJrkuI7ljp/ljIXmkp7lkI3jgIHkupLnm7jopobnm5blronoo4XjgIIKIyMg55uu5b2VCgpgYGAKc3JjLyAgICAgICAgICAgIDI4IOS4qiBKYXZhIOa6kOaWh+S7tu+8iOWQqyBNYW51YWxEb2MuamF2Ye+8neaJi+WGjOS6p+eJqe+8iQpyZXMvICAgICAgICAgICAg6LWE5rqQ77yIc3RyaW5ncy90aGVtZXMv5Zu+5qCHL+aXoOmanOeijemFjee9ru+8iQpBbmRyb2lkTWFuaWZlc3QueG1sCkJVSUxELm1kICAgICAgICDpmYznlJ/kurrmnoTlu7rmjIflvJXvvIjoh6rlpIfku4DkuYjvvI/mlbLku4DkuYjlkb3ku6TvvI/ljaHlnKjlk6rvvIkKZG9jcy8gICAgICAgICAgIOS9v+eUqOaJi+WGjOOAgeaUr+aMgeiMg+WbtOOAgeaNouacuuiHqua1i+a4heWNleOAgeiuuOWPr+afpeivgeOAgeaehOW7uueOr+Wig+a4heWNlQpidWlsZC8gICAgICAgICAg5Ye65YyF5LiO6KOF5py66ISa5pys77yI6Lev5b6E5Y+v6YWN77yJ77yL5p6E5bu66YWN572u56S65L6LIGJ1aWxkLmNvbmYuZXhhbXBsZQpMSUNFTlNFICAgICAgICAgQXBhY2hlLTIuMCDlhajmlocKTk9USUNFICAgICAgICAgIOesrOS4ieaWuee7hOS7tuS4juiuuOWPrwpgYGAK
+# Reticle
+
+**给 AI 助手配的一双手和一双眼睛。** Reticle 是一个 Android 应用：它在本机跑一个只监听 `127.0.0.1` 的 MCP 服务，把「截屏 / 读界面 / 认字 / 点按滑动 / 执行命令 / 下载 / 通知」这些能力以工具的形式交给 AI 客户端调用，AI 在对话里说什么，它就真的在屏幕上做出来。它自己不思考、不决定、不主动动手。
+
+- 版本：**0.28.50**（versionCode 104）
+- 包名：`app.reticle`｜本机端口：`8770`｜运行目录：`/sdcard/Reticle`
+
+## 直接下载（不用编译）
+
+**不用编译：下载装上就能用。** 到本仓库 **Releases** 页取最新 APK，在手机上侧载安装。Google Play 目前不收这类「让 AI 驱动界面的应用」，**侧载是主渠道**。
+
+- 下载页：**https://github.com/Bumfuzzle-app/reticle/releases**
+- 当前包：**`app.reticle-0.28.50.apk`**（Android 11+）；**sha256 见 Release 页**，版本号与校验值都以 Release 页为准
+
+## 这一版（0.28.50）有什么新的
+
+1. **应用自己会检查更新**：每次打开问一句有没有新版；有就弹窗，窗口里带这次更新的说明（纯文本、长了可滚），两个按钮「立即更新」「不再提示」；首页同时多一行。下载显示百分比、速度与还剩多久，断网会自己重试并接着上次的进度继续下（断点续传）。下完核对完整性，再交给系统安装器。
+2. **装包走系统安装器**：下载好的新版本、或助手在本机跑出来的包，都交给你手机的系统安装器，你点一次「安装」才装——不静默安装、不绕过系统。
+3. **配置页分块折叠**：整行可点、右侧箭头 ∨／∧、默认收起，收起时标题右边常显关键状态（如「更新 · 上次检查 15:31」）。
+4. **工具返回更像人话**：截图、认字、点击、输入、下载、打包这些动作都补了一句「刚才发生了什么」；失败一律说清原因与下一步。
+
+0.28.37～0.28.49 是内部迭代，未单独发布。
+
+1. **不再占用系统媒体通道**：以前后台常驻一条「正在播放」的媒体会话（灵动岛／控制中心看着像在放音乐，还可能抢耳机与蓝牙的播放键）——**已整条砍掉**。
+2. **桌面图标能自己选**：4 款预置点一下即换（桌面与最近任务真的变）；也可以用你自己的图生成一个桌面图标（要过系统「添加到主屏幕」确认）。★应用图标本身属于安装包，要重新打包才能换——这是系统规矩。
+3. **手机上就能编 App 了（本版最大的一步）**：应用内置构建工具链；第一次用时一键从官方源下载 `android.jar`（约 26 MB，逐个 sha256 校验）。界面在「高级 → 打包 App」，缺件时整簇变灰并写清原因。实测：点「打包 App」→ 出包 **约 5 秒** → 可直接装、能起来。
+
+## 需要什么
+
+| 条件 | 说明 |
+|---|---|
+| **Android 11 或更高** | **硬要求**。无障碍截屏接口从 Android 11（API 30）才有，低于这个版本**装不上**。 |
+| 一个能自填 MCP 服务器地址的 AI 客户端 | 只适配过 **RikkaHub**（https://rikka-ai.com）；其他客户端理论上可用、未实测。 |
+| Shizuku | 用于以 shell 身份执行命令。需先用「无线调试」或电脑启动服务；**本仓库/本应用不含 Shizuku 本体**，请自行安装。 |
+| 无障碍服务 | 截屏、读界面、模拟触控全靠它（在系统设置里手动打开）。 |
+| 所有文件访问 | 读写 `/sdcard/Reticle`（截图、下载、日志）。 |
+| 通知权限（Android 13+） | 常驻状态通知。 |
+
+30 秒自查：装好后按 `docs/换机自测清单.md` 走一遍。完整用法见 `docs/使用手册.md`（应用内「说明」页与它同源）。
+
+## 安装（怎么装）
+
+1. 到本仓库 **Releases** 页下载最新 `app.reticle-x.y.z-*.apk`（Android 11+），直接在手机上侧载安装——Google Play 目前不收这类「让 AI 驱动界面的应用」，**侧载是主渠道**。
+2. 首次打开按界面提示走：打开无障碍服务 → 允许「所有文件访问」 → 允许通知；要用 shell 命令再自行装 Shizuku。
+3. 装完照 `docs/换机自测清单.md` 走一遍（约 30 秒），确认截屏／读屏／点按都通。
+4. 升级＝下载新 APK 覆盖安装即可（包名不变，配置与令牌保留）。
+
+## 支持范围
+
+实测环境：一台 **Android 17** 手机 ＋ **RikkaHub** 客户端。代码里没有任何厂商专属接口依赖，兼容性差异都在「行为」层面（厂商后台管控、自启动放行等）。完整声明见 **`docs/支持范围.md`**，要点：
+
+- 截图与无障碍读屏需要 Android 11+；
+- 「原子岛」「实况通知」**暂无**（早先那条媒体样式路线已整体移除，现在只有普通通知）；
+- 部分国产系统会定期自动关闭第三方无障碍服务；被系统回收或从后台划掉后，**多数情况下不会自己重启**（不同机型可能不同）；
+- 没有 Google 服务的机器：装 Shizuku 那一步的商店链接打不开；Reticle 本身与文字识别模型都不依赖 Google 服务。
+
+## 不做什么（刻意不做，别当 issue 提）
+
+- **不做敏感页守卫**：不分析、不拦截支付/密码/验证码页面。屏幕内容会交给你自己选的模型，风险自担——「别让它截敏感画面」比任何开关都可靠。
+- **不做急停按钮**：应用内「一键停止所有功能初始化」就是停手入口；从后台划掉也能停，但那是系统行为、不保证。
+- **不做自愈**：被整进程杀掉后不会自己重启（可从对话里发一条修复广播把冷启动叫回来）。
+- **维护者不保证回复**：本仓库按作者自己的节奏走，issue／PR 可能长期没人处理（先例：RikkaHub 同样不收 PR），请别等。有想法欢迎自己 fork 一份改。
+
+## 安全与隐私
+
+- MCP 服务**只监听 `127.0.0.1`**，同 Wi-Fi 的其他设备也连不上；每次调用必须带令牌（在应用「配置 → 令牌与地址」里管理，可一键重生成）。
+- 屏幕内容与界面信息只交给**你自己配置的那个 AI 客户端**，之后是否出网取决于你选的模型与线路；Reticle 本身不上传任何东西。主动联网只有两处：「下载文件」（按给定 URL 取）与「检查更新」（匿名 GET 发布页，最多 10 分钟一次，可在配置里关掉）。
+- 审计日志写在 `/sdcard/Reticle/logs/audit-YYYYMMDD.log`（不记录令牌）。
+- 令牌只存在本机配置里；本仓库不含任何密钥、口令或签名文件。
+
+**安全漏洞上报**：请在仓库页 **Security → Report a vulnerability**（GitHub 私有漏洞上报）提交——报告者无需邮箱，作者也不必公开邮箱。不要开公开 issue。安全问题以外的功能建议，本仓库不受理。
+
+## 许可与致谢
+
+- 本项目：**Apache License 2.0**（见 `LICENSE`）。
+- 第三方组件与许可见 `NOTICE`；许可查证记录见 `docs/许可查证.md`。
+
+## 想自己构建
+
+**不用编译也能用**（见文首「直接下载」）；下面这一节只给想自己出包的人。**PC 构建路线本机没有实测过**——请当作「原理上可行」，不是「照抄必成」。
+
+- 源码：`src/`（Java，29 个文件）；资源：`res/`；清单：`AndroidManifest.xml`。
+- **`src/ManualDoc.java` 是《使用手册》的产物**（由 `docs/使用手册.md` 机械转换而来）：要改说明文字请改 md 再重新生成，**别手改这个文件**。
+- 构建脚本见 `build/`（`build2.sh` 出包、`装工具.sh` 装机）：**默认路径指向本机运行目录，要指到你自己的**——① 出包/装机脚本开场先自检、缺件逐条点名（连「从哪拿」一起给）；② 应用内 `build` 工具 `action=check` 一条命令看「就绪／缺哪几个／从哪拿」；③ 路径还能写进 `build.conf`（示例见 `build/build.conf.example`）或用环境变量。**从零到出包的命令级步骤、要自备什么、每样东西从哪拿／放哪／怎么验，都在 [`BUILD.md`](BUILD.md) 与 [`docs/构建环境清单.md`](docs/构建环境清单.md)**。设备侧依赖 `aapt2`、ECJ、d8、apksigner、`android.jar`（API 35）等（用 `/system/bin/app_process` 跑预转 dex），另需第三方 jar（见下）。
+- **本仓库不含二进制依赖**：
+  - `Liquid Glass for Android`（QWEA0/Liquid-Glass-Android，v2.0.11，MIT）：请自行获取 `liquidglass-2.0.11.jar` 放入 `物料/classes/`；
+  - `Google ML Kit`（text-recognition 中文 bundled 模型）：受 ML Kit 条款约束，不能再分发，请自行添加依赖；
+  - AndroidX / AppCompat / Material / Kotlin stdlib / Shizuku-API 等，按各自上游获取。
+- **fork 请改身份**，否则与原包撞名、覆盖安装：`AndroidManifest.xml` 的 `package`、`res/values/strings.xml`、`src/` 里 `app.reticle` 常量、端口 `8770`、目录 `/sdcard/Reticle`。`build/build2.sh` 里有一段「ID=B」的身份替换示例（把主包名/端口/目录换成副实例），可照着改成你自己的。
+- 本仓库**不是 Gradle 工程**：`AndroidManifest.xml` 里的 `package` 就是 applicationId；fork 时把它、端口、目录、`src/` 里的 `app.reticle` 常量一起改成你自己的，否则会与原包撞名、互相覆盖安装。
+## 目录
+
+```
+src/            29 个 Java 源文件（含 ManualDoc.java＝手册产物）
+res/            资源（strings/themes/图标/无障碍配置）
+AndroidManifest.xml
+BUILD.md        陌生人构建指引（自备什么／敲什么命令／卡在哪）
+docs/           使用手册、支持范围、换机自测清单、许可查证、构建环境清单
+build/          出包与装机脚本（路径可配）＋构建配置示例 build.conf.example
+LICENSE         Apache-2.0 全文
+NOTICE          第三方组件与许可
+```

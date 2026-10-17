@@ -1,1 +1,428 @@
-IyEvc3lzdGVtL2Jpbi9zaAojIDI0IOWPt+WNlSDCtyDorr7lpIfkvqfmnoTlu7rohJrmnKwgdjLvvIjkuI3pnIDopoEgVGVybXV477yb55SoIHNoZWxsIOi6q+S7vei3ke+8iQojIDM5IOWPt+WNlSDCtyDliqAgSUQg5Y+C5pWw77yaSUQ9QiDlh7rjgIzlia/lrp7kvovjgI3ljIXvvIjljIXlkI0gYXBwLnJldGljbGUuYiAvIE1DUCA4NzcxIC8g55uu5b2VIC9zZGNhcmQvUmV0aWNsZULvvIkKIyA3OCDlj7fljZXvvIgyMDI2LTEwLTE377yJwrcg5aKe6YeP57yW6K+RICsg5omL5YqoIGphci9BQVIKIyAgIOeUqOazle+8iOWutueJiO+8ie+8mnNoIC9zZGNhcmQvd29ya2JlbmNoL+aehOW7ui9idWlsZDIuc2ggICAgICAgIOKGkiDovpPlh7ovcmV0aWNsZS5hcGvvvIjlop7ph4/vvIkKIyAgICAgICAgICAgICAgICAgSUQ9QiBzaCAvc2RjYXJkL3dvcmtiZW5jaC/mnoTlu7ovYnVpbGQyLnNoICAg4oaSIOi+k+WHui9yZXRpY2xlLWIuYXBrCiMgICAgICAgICAgICAgICAgIE5PSU5DUj0xIHNoIC4uLiAgICAgICAgICAgICAgICAgICAgICAgICAgICDihpIg5by65Yi25YWo6YeP77yI5a+554WnL+aOkumUme+8iQojICAg5aKe6YeP5oCO5LmI5Yik77yI57yT5a2Y55uu5b2VICRXLWNhY2hl77yM5LiO5q+P5qyh5riF56m655qEICRXIOWIhuW8gO+8ie+8mgojICAgICDCtyDotYTmupDmuIXljZXvvIjot6/lvoQr5aSn5bCPK+aUueWKqOaXtuWIu++8ieayoeWPmCDih5Ig6LezIGFhcHQyIGNvbXBpbGUKIyAgICAgwrcg6LWE5rqQK21hbmlmZXN0K+S+nei1luWMheWQjSthc3NldHMg5rKh5Y+YIOKHkiDot7MgYWFwdDIgbGlua++8iOWkjeeUqCBiYXNlLmFwayDkuI4gUiDnsbvvvIkKIyAgICAgwrcgamF2YS9nZW4g5riF5Y2V5rKh5Y+YIOKHkiDot7MgRUNK77yb5Y+Y5LqGIOKHkiDlj6rph43nvJbjgIzlj5jljJbmlofku7bmiYDlnKjljIXjgI3vvIjljIXnuqflop7ph4/vvIkKIyAgICAgwrcg5L6d6LWWIGphciDmuIXljZXmsqHlj5gg4oeSIOi3s+S+nei1lumDqOWIhiBkOO+8m+W3peeoiyBjbGFzcyDmuIXljZXmsqHlj5gg4oeSIOi3s+W3peeoi+mDqOWIhiBkOAojICAgICDCtyDmlLkgamF2YSDih5Ig6K+l5YyF6YeN57yW77yb5pS5IG1hbmlmZXN0L+WMheWQjS/kvp3otZYg4oeSIGxpbmsg57yT5a2Y6ZSu5Y+Y77yM5LiN5Lya6K+v55So5pen57yT5a2YCiMgICDmiYvliqjkvp3otZbvvJrlt6XnqIsgbGlicy8qLmphciDihpIgY2xhc3NwYXRoIOS4jiBkZXjvvJtsaWJzLyouYWFyIOKGkiBjbGFzc2VzLmphciArIHJlcyArIGFzc2V0cyArIGpuae+8iOS7jeS4jee7mSBHcmFkbGXvvIkKIyDkuqfnianvvJovc2RjYXJkL3dvcmtiZW5jaC/mnoTlu7ov6L6T5Ye6LyouYXBr77yIcmVsZWFzZSDnrb7lkI3vvJvpkqXljJnkuI7lj6Pku6Top4Hml6flrrYg5aSH5Lu9L1JldGljbGUt562+5ZCNL++8iQpzZXQgLWUKU0I9IiR7U0I6LS9zZGNhcmQv5omL5py66YCa6YGTL+mAmumBk+S4iS/lt6XnqIt9IiAgICMg5rqQ56CB5qCR77yI546v5aKD5Y+Y6YeP5LyY5YWI77yb5LuT5bqTIEJVSUxELm1kIOacieivtOaYju+8iQpUQz0iJHtUQzotL3NkY2FyZC93b3JrYmVuY2gv5p6E5bu6L+W3peWFt+mTvn0iICAjIOaehOW7uuW3peWFt+mTvu+8iOS7k+W6k+S4jeWQq++8jOmcgOiHquWkh++8iQpJRD0iJHtJRDotfSIKaWYgWyAiJElEIiA9ICJCIiBdOyB0aGVuCiAgVz0vZGF0YS9sb2NhbC90bXAvcmV0aWNsZS1idWlsZC1iCiAgUEtHPWFwcC5yZXRpY2xlLmIKICBQT1JUPTg3NzEKICBSRElSPS9zZGNhcmQvUmV0aWNsZUIKICBPVVROQU1FPXJldGljbGUtYi5hcGsKZWxzZQogIFc9L2RhdGEvbG9jYWwvdG1wL3JldGljbGUtYnVpbGQKICBQS0c9YXBwLnJldGljbGUKICBQT1JUPTg3NzAKICBSRElSPS9zZGNhcmQvUmV0aWNsZQogIE9VVE5BTUU9cmV0aWNsZS5hcGsKZmkKQ0FDSEU9IiR7Q0FDSEU6LSRXLWNhY2hlfSIgICAgICAgICAgICAgICAgIyDlop7ph4/nvJPlrZjvvIjni6znq4vkuo4gJFfvvJvmuIXkuobvvJ3kuIvmrKHoh6rliqjlhajph4/vvIkKSkFSPSRUQy9saWIvYW5kcm9pZC5qYXIKS0VFUD0iJHtLRUVQOi0vc2RjYXJkL3dvcmtiZW5jaC/mnoTlu7ov54mp5paZfSIKU1JDRElSPSRTQi9zcmMKUkVTRElSPSRTQi9yZXMKTUFOSUZFU1Q9JFNCL0FuZHJvaWRNYW5pZmVzdC54bWwKTElCUz0kU0IvbGlicwpOT0lOQ1I9IiR7Tk9JTkNSOi0wfSIKCiMgMjkg5Y+35Y2V77ya5ray5oCB546755KD5bqT6KaBIGtvdGxpbi1zdGRsaWIgMi4wLjIxIC8gY29yZS1rdHggMS4xMy4x77yM5pen5ZCM5ZCN5bqT5Lya6YCg5oiQ6YeN5aSN57G7IOKHkiDmmL7lvI/mjpLpmaQKRVhDTD0iIGtvdGxpbi1zdGRsaWItMS43LjEwLmphciBrb3RsaW4tc3RkbGliLWNvbW1vbi0xLjcuMTAuamFyIGtvdGxpbi1zdGRsaWItamRrNy0xLjYuMC5qYXIga290bGluLXN0ZGxpYi1qZGs4LTEuNi4wLmphciBjb3JlLWt0eC0xLjguMC5qYXIgIgpza2lwX2phcigpIHsgY2FzZSAiJEVYQ0wiIGluICoiICQxICIqKSByZXR1cm4gMCA7OyBlc2FjOyByZXR1cm4gMTsgfQpBUFA9L3N5c3RlbS9iaW4vYXBwX3Byb2Nlc3MKRUNKPSJvcmcuZWNsaXBzZS5qZHQuaW50ZXJuYWwuY29tcGlsZXIuYmF0Y2guTWFpbiIKRDhNPSJjb20uYW5kcm9pZC50b29scy5yOC5EOCIKU0lHTj0iY29tLmFuZHJvaWQuYXBrc2lnbmVyLkFwa1NpZ25lclRvb2wiCgpUMD0kKGRhdGUgKyVzKQpzdGVwKCkgeyBlY2hvICI9PSAkKiBAJChkYXRlICcrJUg6JU06JVMnKe+8iOe0r+iuoSAkKCggJChkYXRlICslcykgLSBUMCApKXPvvIkiOyB9ClNLSVA9IiIKc2tpcHBlZCgpIHsgU0tJUD0iJFNLSVAgJDEiOyB9CgojIOaMh+e6ue+8mui3r+W+hCArIOWkp+WwjyArIOaUueWKqOaXtuWIu++8iOenku+8ieS4ieWFg+e7hO+8m+ebruW9lemAkuW9kuOAgeaWh+S7tuacrOS9k+OAguaUueS6huWGheWuuS/mjaLlkI0v5aKe5Yig6YO95Lya5Y+Y44CCCmZwKCkgewogICMgNzjvvJrlhoXlrrnnuqfmjIfnurnvvIhzaGEyNTbvvInigJTigJTmr5QgbXRpbWUg5YeG77yabXRpbWUg5Y+Y5LqG5YaF5a655rKh5Y+Y5LiN566X5Y+Y44CB5L+d55WZIG10aW1lIOimhuebluWGheWuueS5n+S8muiiq+iupOWHuuadpQogIGZvciBwIGluICIkQCI7IGRvCiAgICBbIC1lICIkcCIgXSB8fCBjb250aW51ZQogICAgaWYgWyAtZCAiJHAiIF07IHRoZW4gZmluZCAiJHAiIC10eXBlIGYgLWV4ZWMgc2hhMjU2c3VtIHt9ICsgMj4vZGV2L251bGwKICAgIGVsc2UgZmluZCAiJHAiIC1tYXhkZXB0aCAxIC1leGVjIHNoYTI1NnN1bSB7fSArIDI+L2Rldi9udWxsOyBmaQogIGRvbmUgfCBzb3J0IHwgc2hhMjU2c3VtIHwgY3V0IC1jMS0xNgp9CgpzdGVwICIwKSDlh4blpIciCmVjaG8gIiAgIOi6q+S7vT0kSUQg5YyF5ZCNPSRQS0cg56uv5Y+jPSRQT1JUIOebruW9lT0kUkRJUiDkuqfniak9JE9VVE5BTUUiClsgIiROT0lOQ1IiID0gIjEiIF0gJiYgZWNobyAiICAgTk9JTkNSPTHvvJrmnKzmrKHlvLrliLblhajph4/vvIjkuI3or7vnvJPlrZjvvIkiCk1JU1M9IiIKWyAtZiAkVEMvYmluL2FhcHQyIF0gfHwgTUlTUz0iJE1JU1Mg5bel5YW36ZO+L2Jpbi9hYXB0Mu+8iFRlcm11eOWPr+ijhe+8m+i/nuWQjOebruW9lWxpYiouc2/vvIkiClsgLWYgJEpBUiBdIHx8IE1JU1M9IiRNSVNTIOW3peWFt+mTvi9saWIvYW5kcm9pZC5qYXLvvIhTREstcGxhdGZvcm0tMzXvvIkiCmZvciBkIGluIGVjaiBkOCBkOC0yIGFwa3NpZ25lciBidWlsZHRvb2w7IGRvIFsgLWYgJFRDL2RleC8kZC5kZXggXSB8fCBNSVNTPSIkTUlTUyDlt6Xlhbfpk74vZGV4LyRkLmRleCI7IGRvbmUKWyAtZCAkVEMvZWNqLXJlcyBdIHx8IE1JU1M9IiRNSVNTIOW3peWFt+mTvi9lY2otcmVz77yIRUNK6LWE5rqQ55uu5b2V77yJIgpmb3IgaiBpbiBjb3JlLTEuOS4wLmphciBhcHBjb21wYXQtMS42LjEuamFyIG1hdGVyaWFsLTEuOS4wLmphciBsaXF1aWRnbGFzcy0yLjAuMTEuamFyIHZpc2lvbi1jb21tb24tMTcuMy4wLmphciBwbGF5LXNlcnZpY2VzLXRhc2tzLTE4LjIuMC5qYXIga290bGluLXN0ZGxpYi0yLjAuMjEuamFyOyBkbyBbIC1mICIkS0VFUC9jbGFzc2VzLyRqIiBdIHx8IE1JU1M9IiRNSVNTIOeJqeaWmS9jbGFzc2VzLyRqIjsgZG9uZQpbIC1mICRNQU5JRkVTVCBdIHx8IE1JU1M9IiRNSVNTICRNQU5JRkVTVO+8iOaUuVNCPeaMh+WIsOS9oOeahOa6kOeggeagke+8iSIKWyAtZCAkU1JDRElSIF0gfHwgTUlTUz0iJE1JU1MgJFNSQ0RJUu+8iOaUuVNCPeaMh+WIsOS9oOeahOa6kOeggeagke+8iSIKWyAtZCAkUkVTRElSIF0gfHwgTUlTUz0iJE1JU1MgJFJFU0RJUu+8iOaUuVNCPeaMh+WIsOS9oOeahOa6kOeggeagke+8iSIKaWYgWyAtbiAiJE1JU1MiIF07IHRoZW4KICBlY2hvICLvvIHnvLrku7bvvIjooaXpvZDlho3lh7rljIXvvInvvJoiCiAgZm9yIG0gaW4gJE1JU1M7IGRvIGVjaG8gIiAgIMK3ICRtIjsgZG9uZQogIGVjaG8gIiAgIOKAlOKAlOimgeS7gOS5iO+8j+S7juWTquaLv++8j+i3r+W+hOaAjuS5iOmFje+8muingeS7k+W6kyBCVUlMRC5tZOOAjOi3r+W+hOS4jueJqeaWmeOAjeS4gOiKgu+8m+W6lOeUqOWGheWPryBidWlsZCBhY3Rpb249Y2hlY2sg5aSN5qOA44CCIgogIGV4aXQgNApmaQplY2hvICIgICDnjq/looPoh6rmo4DvvJrpvZAg4pyTIgpta2RpciAtcCAiJENBQ0hFIgpybSAtcmYgIiRXIgpta2RpciAtcCAiJFcvY2xhc3NlcyIgIiRXL2RleCIgIiRXL2RleGFwcCIgIiRXL2dlbiIgIiRXL3Jlc3ppcCIKCiMg5bel5YW36ZO+IGJpbu+8iDEyTULvvInkuI3lv4Xmr4/mrKHku44gL3NkY2FyZCDlpI3liLbvvJrnvJPlrZjliLAgJENBQ0hFL2JpbgpCSU5LPSQoZnAgIiRUQy9iaW4iKQppZiBbICIkTk9JTkNSIiAhPSAiMSIgXSAmJiBbIC14ICIkQ0FDSEUvYmluL2FhcHQyIiBdICYmIFsgIiQoY2F0ICIkQ0FDSEUvYmluLy5rZXkiIDI+L2Rldi9udWxsKSIgPSAiJEJJTksiIF07IHRoZW4KICBlY2hvICIgICDlt6Xlhbfpk74gYmlu77ya55So57yT5a2Y77yIJENBQ0hFL2Jpbu+8iSIKZWxzZQogIHJtIC1yZiAiJENBQ0hFL2JpbiI7IG1rZGlyIC1wICIkQ0FDSEUvYmluIgogIGNwICIkVEMvYmluIi8qICIkQ0FDSEUvYmluLyIgMj4vZGV2L251bGwgfHwgdHJ1ZQogIGNobW9kIDc1NSAiJENBQ0hFL2Jpbi9hYXB0MiIKICBlY2hvICIkQklOSyIgPiAiJENBQ0hFL2Jpbi8ua2V5IgogIGVjaG8gIiAgIOW3peWFt+mTviBiaW7vvJrku44gJFRDL2JpbiDlpI3liLbliLDnvJPlrZgiCmZpCkxMPSIkQ0FDSEUvYmluIgoKIyDilIDilIAgMzkg5Y+35Y2V77ya6Lqr5Lu95Y+C5pWw5YyW77yI5Y+q5Zyo5Li05pe25bel5L2c5Yy65pu/5o2i77yM5q2j5pys5rqQ56CB5LiA5Liq5a2X6IqC6YO95LiN5Yqo77yJ4pSA4pSACmlmIFsgIiRJRCIgPSAiQiIgXTsgdGhlbgogIHN0ZXAgIjBiKSDouqvku73lj4LmlbDljJbvvIjkuLTml7blia/mnKzvvIkiCiAgbWtkaXIgLXAgJFcvc3JjOyBjcCAtcCAkU0Ivc3JjLyouamF2YSAkVy9zcmMvCiAgY3AgLXJwICRTQi9yZXMgJFcvcmVzCiAgY3AgLXAgJFNCL0FuZHJvaWRNYW5pZmVzdC54bWwgJFcvQW5kcm9pZE1hbmlmZXN0LnhtbAogIFNSQ0RJUj0kVy9zcmMKICBSRVNESVI9JFcvcmVzCiAgTUFOSUZFU1Q9JFcvQW5kcm9pZE1hbmlmZXN0LnhtbAogIGZvciBmIGluICRXL0FuZHJvaWRNYW5pZmVzdC54bWwgJFcvcmVzL3ZhbHVlcy9zdHJpbmdzLnhtbCAkVy9yZXMveG1sL2FjY2Vzc2liaWxpdHlfc2VydmljZV9jb25maWcueG1sOyBkbwogICAgWyAtZiAiJGYiIF0gfHwgY29udGludWUKICAgIHNlZCAtaSAic3xhcHBcLnJldGljbGV8JFBLR3xnIiAiJGYiCiAgZG9uZQogIHNlZCAtaSAnc3w+UmV0aWNsZTx8PlJldGljbGUgQjx8JyAkVy9yZXMvdmFsdWVzL3N0cmluZ3MueG1sCiAgc2VkIC1pICdzfD5SZXRpY2xl77yIfD5SZXRpY2xlIELvvIh8JyAkVy9yZXMvdmFsdWVzL3N0cmluZ3MueG1sCiAgZm9yIGYgaW4gJChmaW5kICRXL3NyYyAtbmFtZSAnKi5qYXZhJyk7IGRvCiAgICBzZWQgLWkgInN8L3NkY2FyZC9SZXRpY2xlfCRSRElSfGciICIkZiIKICAgIHNlZCAtaSAic3xhcHBcLnJldGljbGV8JFBLR3xnIiAiJGYiCiAgICBzZWQgLWkgInN8ODc3MHwkUE9SVHxnIiAiJGYiCiAgICBzZWQgLWkgInN85bel5YW36ZO+L2J1aWxkMi5zaHzlt6Xlhbfpk74vYnVpbGQyYi5zaHxnIiAiJGYiCiAgICBzZWQgLWkgInN85bel5YW3L+ijheW3peWFty5zaHzlt6Xlhbcv6KOF5bel5YW3Qi5zaHxnIiAiJGYiCiAgICBzZWQgLWkgInN8cHVibGljIHN0YXRpYyBmaW5hbCBpbnQgREVGX0lEID0gMTt8cHVibGljIHN0YXRpYyBmaW5hbCBpbnQgREVGX0lEID0gMTAxO3wiICIkZiIKICAgIHNlZCAtaSAic3xwdWJsaWMgc3RhdGljIGZpbmFsIGludCBOSUQgPSAyO3xwdWJsaWMgc3RhdGljIGZpbmFsIGludCBOSUQgPSAxMDI7fCIgIiRmIgogIGRvbmUKICBSMT0kKGdyZXAgLXJFYyAiYXBwXC5yZXRpY2xlOyIgJFcvc3JjICRXL0FuZHJvaWRNYW5pZmVzdC54bWwgfCBhd2sgLUY6ICd7cys9JDJ9IEVORHtwcmludCBzKzB9JykKICBSMj0kKGdyZXAgLXJFYyAiODc3MCIgJFcvc3JjICRXL0FuZHJvaWRNYW5pZmVzdC54bWwgfCBhd2sgLUY6ICd7cys9JDJ9IEVORHtwcmludCBzKzB9JykKICBSMz0kKGdyZXAgLXJFYyAiL3NkY2FyZC9SZXRpY2xlKCR8W15CXSkiICRXL3NyYyB8IGF3ayAtRjogJ3tzKz0kMn0gRU5Ee3ByaW50IHMrMH0nKQogIGVjaG8gIiAgIOaui+eVmeajgOafpe+8muaXp+WMheWQjSAkUjEg5aSE772c5pen56uv5Y+jICRSMiDlpITvvZzml6fnm67lvZUgJFIzIOWkhO+8iOW6lOWFqCAw77yJIgogIGlmIFsgIiRSMSIgIT0gIjAiIF0gfHwgWyAiJFIyIiAhPSAiMCIgXSB8fCBbICIkUjMiICE9ICIwIiBdOyB0aGVuCiAgICBlY2hvICLvvIHlj4LmlbDljJboh6rmo4DkuI3ov4fvvJoiCiAgICBncmVwIC1yRW4gImFwcFwucmV0aWNsZTt8ODc3MHwvc2RjYXJkL1JldGljbGUoJHxbXkJdKSIgJFcvc3JjICRXL0FuZHJvaWRNYW5pZmVzdC54bWwgfCBoZWFkIC0yMAogICAgZXhpdCA4CiAgZmkKICBlY2hvICIgICDouqvku73oh6rmo4DvvJrov4cg4pyT77yI5YyF5ZCNICQoZ3JlcCAtbTEgJ3BhY2thZ2U9JyAkVy9BbmRyb2lkTWFuaWZlc3QueG1sIHwgc2VkICdzLy4qcGFja2FnZT0iLy87IHMvIi4qLy8nKe+8iSIKZmkKCiMg4pSA4pSAIDc4IOWPt+WNle+8muW3peeoiyBsaWJz77yI5omL5YqoIGphciAvIEFBUu+8ieKUgOKUgApzdGVwICIxKSDlt6XnqIsgbGlic++8iGphciAvIEFBUu+8iSIKTElCSkFSUz0iIgpBQVJSRVM9IiIKQUFSUEtTPSIiCkFBUkFTU0VUUz0iIgpBQVJKTkk9IiIKaWYgWyAtZCAiJExJQlMiIF07IHRoZW4KICBmb3IgaiBpbiAiJExJQlMiLyouamFyOyBkbwogICAgWyAtZSAiJGoiIF0gfHwgY29udGludWUKICAgIExJQkpBUlM9IiRMSUJKQVJTICRqIgogICAgZWNobyAiICAgamFy77yaJChiYXNlbmFtZSAiJGoiKe+8iOi/myBjbGFzc3BhdGgg5LiOIGRleO+8iSIKICBkb25lCiAgZm9yIGEgaW4gIiRMSUJTIi8qLmFhcjsgZG8KICAgIFsgLWUgIiRhIiBdIHx8IGNvbnRpbnVlCiAgICBuPSQoYmFzZW5hbWUgIiRhIiAuYWFyKQogICAgRD0iJENBQ0hFL2Fhci8kbiIKICAgIEs9JChmcCAiJGEiKQogICAgaWYgWyAiJE5PSU5DUiIgPSAiMSIgXSB8fCBbICEgLWYgIiRELy5rZXkiIF0gfHwgWyAiJChjYXQgIiRELy5rZXkiIDI+L2Rldi9udWxsKSIgIT0gIiRLIiBdOyB0aGVuCiAgICAgIHJtIC1yZiAiJEQiOyBta2RpciAtcCAiJEQiCiAgICAgIHVuemlwIC1vIC1xICIkYSIgLWQgIiREIiB8fCB7IGVjaG8gIu+8gUFBUiDop6PkuI3lvIDvvJokYSI7IGV4aXQgNDsgfQogICAgICBlY2hvICIkSyIgPiAiJEQvLmtleSIKICAgIGZpCiAgICBbIC1mICIkRC9jbGFzc2VzLmphciIgXSAmJiBMSUJKQVJTPSIkTElCSkFSUyAkRC9jbGFzc2VzLmphciIKICAgIGlmIFsgLWQgIiREL3JlcyIgXTsgdGhlbgogICAgICBSSz0kKGZwICIkRC9yZXMiKQogICAgICBpZiBbICEgLWYgIiREL3Jlcy56aXAiIF0gfHwgWyAiJChjYXQgIiRELy5yZXNrZXkiIDI+L2Rldi9udWxsKSIgIT0gIiRSSyIgXTsgdGhlbgogICAgICAgIExEX0xJQlJBUllfUEFUSD0iJExMIiAiJExML2FhcHQyIiBjb21waWxlIC0tZGlyICIkRC9yZXMiIC1vICIkRC9yZXMuemlwIiB8fCB7IGVjaG8gIu+8gUFBUiDotYTmupDnvJbor5HlpLHotKXvvJokYSI7IGV4aXQgNTsgfQogICAgICAgIGVjaG8gIiRSSyIgPiAiJEQvLnJlc2tleSIKICAgICAgZmkKICAgICAgQUFSUkVTPSIkQUFSUkVTICREL3Jlcy56aXAiCiAgICBmaQogICAgaWYgWyAtZiAiJEQvQW5kcm9pZE1hbmlmZXN0LnhtbCIgXTsgdGhlbgogICAgICBBUD0kKGdyZXAgLW0xIC1vICdwYWNrYWdlPSJbXiJdKiInICIkRC9BbmRyb2lkTWFuaWZlc3QueG1sIiB8IHNlZCAncy9wYWNrYWdlPSIvLzsgcy8iLy8nKSB8fCB0cnVlCiAgICAgIFsgLW4gIiRBUCIgXSAmJiBBQVJQS1M9IiRBQVJQS1M6JEFQIgogICAgZmkKICAgIFsgLWQgIiREL2Fzc2V0cyIgXSAmJiBBQVJBU1NFVFM9IiRBQVJBU1NFVFMgJEQiCiAgICBbIC1kICIkRC9qbmkiIF0gJiYgQUFSSk5JPSIkQUFSSk5JICREIgogICAgZWNobyAiICAgYWFy77yaJChiYXNlbmFtZSAiJGEiKe+8iGNsYXNzZXMuamFyJChbIC1kICIkRC9yZXMiIF0gJiYgZWNobyAiIO+8iyDotYTmupAiKSQoWyAtZCAiJEQvYXNzZXRzIiBdICYmIGVjaG8gIiDvvIsgYXNzZXRzIikkKFsgLWQgIiREL2puaSIgXSAmJiBlY2hvICIg77yLIGpuaSIp77yJIgogIGRvbmUKICBbIC16ICIkTElCSkFSUyRBQVJSRVMkQUFSQVNTRVRTJEFBUkpOSSIgXSAmJiBlY2hvICIgICBsaWJzLyDph4zmsqHmnIkgamFy77yPQUFS77yI6Lez6L+H77yJIgplbHNlCiAgZWNobyAiICAg77yI5bel56iL5rKh5pyJIGxpYnMv77ya6Lez6L+H77yJIgpmaQoKIyDilIDilIAgYWFwdDIgY29tcGlsZe+8iOi1hOa6kOayoeWPmOWwsei3s++8ieKUgOKUgApzdGVwICIyKSBhYXB0MiBjb21waWxlIgpSRVNLPSQoZnAgIiRSRVNESVIiICIkS0VFUC9yZXMtemlwcyIpCmlmIFsgIiROT0lOQ1IiICE9ICIxIiBdICYmIFsgLWYgIiRDQUNIRS9hcHAuemlwIiBdICYmIFsgIiQoY2F0ICIkQ0FDSEUvcmVzLmtleSIgMj4vZGV2L251bGwpIiA9ICIkUkVTSyIgXTsgdGhlbgogIGVjaG8gIiAgIOi1hOa6kOayoeWPmCDihpIg6Lez6L+HIGFhcHQyIGNvbXBpbGXvvIjlpI3nlKjnvJPlrZggYXBwLnppcO+8iSIKICBjcCAtcCAiJENBQ0hFL2FwcC56aXAiICIkVy9yZXN6aXAvYXBwLnppcCIKICBza2lwcGVkICJhYXB0Mi1jb21waWxlIgplbHNlCiAgTERfTElCUkFSWV9QQVRIPSIkTEwiICIkTEwvYWFwdDIiIGNvbXBpbGUgLS1kaXIgIiRSRVNESVIiIC1vICIkVy9yZXN6aXAvYXBwLnppcCIKICBjcCAiJFcvcmVzemlwL2FwcC56aXAiICIkQ0FDSEUvYXBwLnppcCIKICBlY2hvICIkUkVTSyIgPiAiJENBQ0hFL3Jlcy5rZXkiCiAgZWNobyAiICAg57yW6K+R5a6M5oiQ77yI5bey5YWl57yT5a2Y77yJIgpmaQpSRVNBUkdTPSItUiAkVy9yZXN6aXAvYXBwLnppcCIKZm9yIHogaW4gIiRLRUVQIi9yZXMtemlwcy8qLnppcDsgZG8gWyAtZSAiJHoiIF0gfHwgY29udGludWU7IFJFU0FSR1M9IiRSRVNBUkdTIC1SICR6IjsgZG9uZQpmb3IgeiBpbiAkQUFSUkVTOyBkbyBSRVNBUkdTPSIkUkVTQVJHUyAtUiAkeiI7IGRvbmUKCiMgYXNzZXRz77yI56ys5LiJ5pa5IO+8iyDlt6XnqIsg77yLIEFBUu+8jOimgeWQiOW5tuaIkOS4gOS4quebruW9leaXtuaJjeWQiOW5tu+8iQpBU1NFVFNSQz0iIgpbIC1kICIkS0VFUC9hc3NldHMiIF0gJiYgQVNTRVRTUkM9IiRBU1NFVFNSQyAkS0VFUC9hc3NldHMiClsgLWQgIiRTQi9hc3NldHMiIF0gJiYgQVNTRVRTUkM9IiRBU1NFVFNSQyAkU0IvYXNzZXRzIgpmb3IgZCBpbiAkQUFSQVNTRVRTOyBkbyBBU1NFVFNSQz0iJEFTU0VUU1JDICRkL2Fzc2V0cyI7IGRvbmUKQUFTU0VUPSIiCmlmIFsgLW4gIiRBQVJBU1NFVFMiIF0gfHwgeyBbIC1kICIkU0IvYXNzZXRzIiBdICYmIFsgLWQgIiRLRUVQL2Fzc2V0cyIgXTsgfTsgdGhlbgogIG1rZGlyIC1wICIkVy9hYXNzZXRzIgogIGZvciBkIGluICRBU1NFVFNSQzsgZG8gY3AgLXJwICIkZC8uIiAiJFcvYWFzc2V0cy8iIDI+L2Rldi9udWxsIHx8IHRydWU7IGRvbmUKICBBQVNTRVQ9Ii1BICRXL2Fhc3NldHMiCiAgZWNobyAiICAgYXNzZXRz77ya5bey5ZCI5bm2ICQoZWNobyAkQVNTRVRTUkMgfCB3YyAtdykg5aSEIOKGkiDkuLTml7bnm67lvZUiCmVsaWYgWyAtZCAiJEtFRVAvYXNzZXRzIiBdOyB0aGVuCiAgQUFTU0VUPSItQSAkS0VFUC9hc3NldHMiCmZpCgojIOesrOS4ieaWueW6kyBSIOexu+WMheWQjQpQS0dTPSQoZ3JlcCAtaCAtbyAncGFja2FnZT0iW14iXSoiJyAiJEtFRVAiL21hbmlmZXN056KO54mHLyoueG1sIDI+L2Rldi9udWxsIHwgc2VkICdzL3BhY2thZ2U9Ii8vOyBzLyIvLycgfCBzb3J0IC11IHwgdHIgJ1xuJyAnOicgfCBzZWQgJ3MvOiQvLycpIHx8IHRydWUKUEtHUz0iJFBLR1MkQUFSUEtTIgpQS0dTPSQocHJpbnRmICclcycgIiRQS0dTIiB8IHNlZCAncy9eOi8vJykKRVhUUkE9IiIKWyAtbiAiJFBLR1MiIF0gJiYgRVhUUkE9Ii0tZXh0cmEtcGFja2FnZXMgJFBLR1MiCmVjaG8gIiAgIFIg57G75YyF5ZCNICQocHJpbnRmICclcycgIiRQS0dTIiB8IHRyICc6JyAnXG4nIHwgZ3JlcCAtYyAuIHx8IHRydWUpIOS4qiIKCiMg4pSA4pSAIGFhcHQyIGxpbmvvvIjplK7msqHlj5jlsLHot7PvvInilIDilIAKc3RlcCAiMykgYWFwdDIgbGluayIKTElOS0tFWT0iJChmcCAiJE1BTklGRVNUIiAiJENBQ0hFL2FwcC56aXAiICIkS0VFUC9yZXMtemlwcyIgIiRKQVIiICRBQVJSRVMgJEFTU0VUU1JDKS0kKHByaW50ZiAnJXMnICIkRVhUUkEiIHwgc2hhMjU2c3VtIHwgY3V0IC1jMS04KSIKaWYgWyAiJE5PSU5DUiIgIT0gIjEiIF0gJiYgWyAtZiAiJENBQ0hFL2Jhc2UuYXBrIiBdICYmIFsgLWQgIiRDQUNIRS9nZW4iIF0gJiYgWyAiJChjYXQgIiRDQUNIRS9saW5rLmtleSIgMj4vZGV2L251bGwpIiA9ICIkTElOS0tFWSIgXTsgdGhlbgogIGVjaG8gIiAgIOi1hOa6kO+8j21hbmlmZXN077yP5L6d6LWW5YyF5ZCN77yPYXNzZXRzIOmDveayoeWPmCDihpIg6Lez6L+HIGFhcHQyIGxpbmvvvIjlpI3nlKggYmFzZS5hcGsg5LiOIFIg57G777yJIgogIGNwICIkQ0FDSEUvYmFzZS5hcGsiICIkVy9iYXNlLmFwayIKICBjcCAtcnAgIiRDQUNIRS9nZW4vLiIgIiRXL2dlbi8iIDI+L2Rldi9udWxsIHx8IHRydWUKICBza2lwcGVkICJhYXB0Mi1saW5rIgplbHNlCiAgTERfTElCUkFSWV9QQVRIPSIkTEwiICIkTEwvYWFwdDIiIGxpbmsgLW8gIiRXL2Jhc2UuYXBrIiAtLW1hbmlmZXN0ICIkTUFOSUZFU1QiIC1JICIkSkFSIiBcCiAgICAtLW1pbi1zZGstdmVyc2lvbiAzMCAtLXRhcmdldC1zZGstdmVyc2lvbiAzNSAtLWphdmEgJFcvZ2VuICRFWFRSQSAkUkVTQVJHUyAkQUFTU0VUIC0tYXV0by1hZGQtb3ZlcmxheSA+ICRXL2FhcHQybGluay5sb2cgMj4mMSB8fCB7IGVjaG8gIu+8gWFhcHQyIGxpbmsg5aSx6LSl77yI5pyr5bC+IDMwIOihjO+8ie+8miI7IHRhaWwgLW4gMzAgJFcvYWFwdDJsaW5rLmxvZzsgZXhpdCA1OyB9CiAgbHMgLWwgJFcvYmFzZS5hcGsKICBjcCAiJFcvYmFzZS5hcGsiICIkQ0FDSEUvYmFzZS5hcGsiCiAgcm0gLXJmICIkQ0FDSEUvZ2VuIjsgbWtkaXIgLXAgIiRDQUNIRS9nZW4iOyBjcCAtcnAgIiRXL2dlbi8uIiAiJENBQ0hFL2dlbi8iIDI+L2Rldi9udWxsIHx8IHRydWUKICBlY2hvICIkTElOS0tFWSIgPiAiJENBQ0hFL2xpbmsua2V5IgogIGVjaG8gIiAgIO+8iOW3suWFpee8k+WtmO+8mmJhc2UuYXBrIO+8iyBSIOexu++8iSIKZmkKCiMg4pSA4pSAIEVDSu+8iGphdmEg5rKh5Y+Y5bCx6Lez77yb5Y+Y5LqG5Y+q6YeN57yW5Y+Y5YyW5paH5Lu25omA5Zyo5YyF77yJ4pSA4pSACnN0ZXAgIjQpIEVDSiDnvJbor5EiCkNQPSIkSkFSIgpmb3IgaiBpbiAiJEtFRVAiL2NsYXNzZXMvKi5qYXI7IGRvIFsgLWUgIiRqIiBdIHx8IGNvbnRpbnVlOyBiPSQoYmFzZW5hbWUgIiRqIik7IHNraXBfamFyICIkYiIgJiYgY29udGludWU7IENQPSIkQ1A6JGoiOyBkb25lCmZvciBqIGluICRMSUJKQVJTOyBkbyBDUD0iJENQOiRqIjsgZG9uZQpDVVI9IiRXL3NyYy5jdXIiCiAgeyBmaW5kICIkU1JDRElSIiAtbmFtZSAnKi5qYXZhJyAtcHJpbnRmICclcCAlcyAlVEBcbicgMj4vZGV2L251bGwKICAgIGZpbmQgIiRXL2dlbiIgLW5hbWUgJyouamF2YScgLWV4ZWMgc2hhMjU2c3VtIHt9ICsgMj4vZGV2L251bGwgfCBhd2sgJ3twcmludCAkMiwgJDF9JyB8IHNvcnQKICB9IHwgc29ydCA+ICIkQ1VSIgpBTExKPSQoZmluZCAiJFNSQ0RJUiIgIiRXL2dlbiIgLW5hbWUgJyouamF2YScgfCB3YyAtbCkKQ0hBTkdFRD0iIgppZiBbICIkTk9JTkNSIiAhPSAiMSIgXSAmJiBbIC1kICIkQ0FDSEUvY2xhc3NlcyIgXSAmJiBbIC1mICIkQ0FDSEUvc3JjLmxpc3QiIF07IHRoZW4KICBDSEFOR0VEPSQoZGlmZiAiJENBQ0hFL3NyYy5saXN0IiAiJENVUiIgfCBhd2sgJy9eWy0rXS97cD1zdWJzdHIoJDEsMik7IGlmIChwIH4gL15cLy8pIHByaW50IHB9JyB8IHNvcnQgLXUpIHx8IHRydWUKZmkKQ0hOPSQocHJpbnRmICclc1xuJyAiJENIQU5HRUQiIHwgZ3JlcCAtYyAuIHx8IHRydWUpCkZVTExFQ0o9MApbICIkTk9JTkNSIiA9ICIxIiBdICYmIEZVTExFQ0o9MQpbICEgLWQgIiRDQUNIRS9jbGFzc2VzIiBdICYmIEZVTExFQ0o9MQpbICIkQ0hOIiAtZ3QgMCBdICYmIFsgIiQoKENITiAqIDUpKSIgLWd0ICIkKChBTExKICogMykpIiBdICYmIEZVTExFQ0o9MSAgICMg5Y+Y5aSq5aSa77yIPjYwJe+8ieS4jeWmguWFqOmHjwppZiBbICIkRlVMTEVDSiIgPSAiMCIgXSAmJiBbICIkQ0hOIiA9ICIwIiBdOyB0aGVuCiAgZWNobyAiICAgamF2Ye+8j1Ig57G76YO95rKh5Y+YIOKGkiDot7Pov4cgRUNK77yI5aSN55So57yT5a2YICRBTExKIOS4qiBjbGFzc++8iSIKICBjcCAtcnAgIiRDQUNIRS9jbGFzc2VzLy4iICIkVy9jbGFzc2VzLyIgMj4vZGV2L251bGwgfHwgdHJ1ZQogIHNraXBwZWQgIkVDSiIKZWxzZQogICMg5YyF5ZCN5pig5bCE77yI5LiA5qyhIGF3ayDmiavlhajpg6ggamF2Ye+8iQogIGZpbmQgIiRTUkNESVIiICIkVy9nZW4iIC1uYW1lICcqLmphdmEnID4gIiRXL2FsbGphdmEubGlzdCIKICBhd2sgJ0ZOUj09MXtmPUZJTEVOQU1FfSAvXnBhY2thZ2UgL3tpZighKGYgaW4gc2Vlbikpe3NlZW5bZl09MTsgc3ViKC9ecGFja2FnZSAvLCIiKTsgc3ViKC87LiovLCIiKTsgcHJpbnQgZiIgIiQwfX0nICQoY2F0ICIkVy9hbGxqYXZhLmxpc3QiKSA+ICIkVy9wa2dtYXAiCiAgaWYgWyAiJEZVTExFQ0oiID0gIjEiIF07IHRoZW4KICAgIGVjaG8gIiAgIOWFqOmHj+e8luivke+8iCRBTExKIOS4qiBqYXZh77yb5Y+Y5YyWICRDSE4g5LiqJChbICIkTk9JTkNSIiA9ICIxIiBdICYmIGVjaG8gIu+8j05PSU5DUiIp77yJIgogICAgU1JDUz0iIgogICAgZm9yIGYgaW4gJChmaW5kICIkU1JDRElSIiAtbmFtZSAnKi5qYXZhJyk7IGRvIFNSQ1M9IiRTUkNTICRmIjsgZG9uZQogICAgR0VOPSIiCiAgICBmb3IgZiBpbiAkKGZpbmQgIiRXL2dlbiIgLW5hbWUgJyouamF2YScpOyBkbyBHRU49IiRHRU4gJGYiOyBkb25lCiAgICBybSAtcmYgIiRXL2NsYXNzZXMiOyBta2RpciAtcCAiJFcvY2xhc3NlcyIKICAgIENMQVNTUEFUSD0kVEMvZGV4L2Vjai5kZXg6JFRDL2Vjai1yZXMgJEFQUCAvc3lzdGVtL2JpbiAkRUNKIFwKICAgICAgLXNvdXJjZSAxLjggLXRhcmdldCAxLjggLW5vd2FybiAtcHJvYzpub25lIC1kICRXL2NsYXNzZXMgLWNsYXNzcGF0aCAiJENQIiAkU1JDUyAkR0VOID4gJFcvZWNqLmxvZyAyPiYxIHx8IHsgZWNobyAi77yBRUNKIOe8luivkeWksei0pe+8iOacq+WwviAzMCDooYzvvInvvJoiOyB0YWlsIC1uIDMwICRXL2Vjai5sb2c7IGV4aXQgNzsgfQogIGVsc2UKICAgICMg5YyF57qn5aKe6YeP77ya5Y+Y5YyW5paH5Lu25omA5Zyo5YyF55qE5YWo6YOoIGphdmEg5LiA6LW357yW77yI5bi46YeP5YaF6IGU5aSa5pWw5Y+R55Sf5Zyo5YyF5YaF77yJCiAgICBwcmludGYgJyVzXG4nICIkQ0hBTkdFRCIgfCBncmVwICdcLmphdmEkJyA+ICIkVy9jaGcubGlzdCIgfHwgdHJ1ZQogICAgIyA3OO+8muWFiOWIpOiDveS4jeiDveOAjOWPque8luWPmOWMlueahOaWh+S7tuOAjeKAlOKAlOWPmOWMluihjOmHjOWHuueOsCBzdGF0aWMgZmluYWzvvIjnvJbor5HmnJ/luLjph4/kvJrooqvliKvnmoTnsbvlhoXogZTvvIkKICAgICMgICAgIOaIliBnZW4g55qEIFIg57G75Y+Y5LqG77yIUiDluLjph4/lkIznkIbvvInih5Ig5L+d5a6I6YCA5Zue44CM5pW05YyF44CN77yb5ZCm5YiZ5Y+q6YeN57yW5Y+Y5YyW5paH5Lu277yI5b+r5b6X5aSa77yJCiAgICBORUVEUEtHPTAKICAgIEZBU1RTUkM9IiIKICAgIHdoaWxlIHJlYWQgZjsgZG8KICAgICAgWyAtbiAiJGYiIF0gfHwgY29udGludWUKICAgICAgY2FzZSAiJGYiIGluCiAgICAgICAgIiRTUkNESVIiLyopCiAgICAgICAgICByZWw9JHtmIyRTUkNESVIvfQogICAgICAgICAgb2xkPSIkQ0FDSEUvc3JjcHJldi8kcmVsIgogICAgICAgICAgaWYgWyAtZiAiJG9sZCIgXTsgdGhlbgogICAgICAgICAgICBkbD0kKGRpZmYgIiRvbGQiICIkZiIgfCBncmVwIC1FICJeWy0rXVteLStdIiB8fCB0cnVlKQogICAgICAgICAgICBwcmludGYgJyVzJyAiJGRsIiB8IGdyZXAgLXFFICJzdGF0aWNbWzpzcGFjZTpdXStmaW5hbCIgJiYgTkVFRFBLRz0xCiAgICAgICAgICBmaQogICAgICAgICAgRkFTVFNSQz0iJEZBU1RTUkMgJGYiCiAgICAgICAgICA7OwogICAgICAgICopIE5FRURQS0c9MSA7OwogICAgICBlc2FjCiAgICBkb25lIDwgIiRXL2NoZy5saXN0IgogICAgaWYgWyAiJE5FRURQS0ciID0gIjAiIF07IHRoZW4KICAgICAgcHJpbnRmICclc1xuJyAiJEZBU1RTUkMiIHwgdHIgJyAnICdcbicgfCBncmVwIC4gPiAiJFcvaW5jc3JjLmxpc3QiCiAgICAgIGVjaG8gIiAgIOaWh+S7tue6p+WinumHj++8muWPmOWMliAkQ0hOIOS4qiBqYXZhIOKGkiDlj6rph43nvJYgJCh3YyAtbCA8ICIkVy9pbmNzcmMubGlzdCIpIOS4qu+8iOWPmOWMluihjOmHjOayoeaciSBzdGF0aWMgZmluYWwg5bi46YeP44CBUiDnsbvmsqHlj5jvvIkiCiAgICBlbHNlCiAgICAgIGlmIFsgLXMgIiRXL2NoZy5saXN0IiBdOyB0aGVuCiAgICAgICAgYXdrICdOUj09Rk5Se2NoZ1skMV09MTtuZXh0fSAoJDEgaW4gY2hnKXtwcmludCAkMn0nICIkVy9jaGcubGlzdCIgIiRXL3BrZ21hcCIgfCBzb3J0IC11ID4gIiRXL3BrZ3MubGlzdCIKICAgICAgZWxzZQogICAgICAgIDogPiAiJFcvcGtncy5saXN0IgogICAgICBmaQogICAgICBhd2sgJ05SPT1GTlJ7cGtbJDFdPTE7bmV4dH0gKCQyIGluIHBrKXtwcmludCAkMX0nICIkVy9wa2dzLmxpc3QiICIkVy9wa2dtYXAiID4gIiRXL2luY3NyYy5saXN0IgogICAgICBlY2hvICIgICDljIXnuqflop7ph4/vvJrlj5jljJYgJENITiDkuKogamF2Ye+8jyQoKCAkKHdjIC1sIDwgIiRXL3BrZ3MubGlzdCIpICkpIOS4quWMhSDihpIg6YeN57yWICQod2MgLWwgPCAiJFcvaW5jc3JjLmxpc3QiKSDkuKogamF2Ye+8iOWOn+WboO+8muWPmOWMlumHjOaciSBzdGF0aWMgZmluYWwg5bi46YeP5oiWIFIg57G75Y+Y5LqG77yJIgogICAgZmkKICAgIElOQz0kKHdjIC1sIDwgIiRXL2luY3NyYy5saXN0IikKICAgIFsgIiRJTkMiID0gIjAiIF0gJiYgeyBlY2hvICLvvIHlop7ph4/muIXljZXmmK/nqbrnmoTvvIjlj5jljJYgJENITiDkuKogamF2YSDljbTmsqHnrpflh7ror6XnvJbosIHvvInihpIg5YGc5LiL77yM5LiN5Lqn5pen5YyFIjsgZXhpdCA3OyB9CiAgICBjcCAtcnAgIiRDQUNIRS9jbGFzc2VzLy4iICIkVy9jbGFzc2VzLyIgMj4vZGV2L251bGwgfHwgdHJ1ZQogICAgIyDmupDmlofku7booqvliKAg4oeSIOmhuuaJi+a4heaOieWug+eahCBjbGFzc++8iOWIq+eVmeaXp+eahO+8iQogICAgZGlmZiAiJENBQ0hFL3NyYy5saXN0IiAiJENVUiIgfCBhd2sgJy9eLS97cD1zdWJzdHIoJDEsMik7IGlmIChwIH4gL15cLy4qXC5qYXZhJC8pIHByaW50IHB9JyA+ICIkVy9nb25lLmxpc3QiIHx8IHRydWUKICAgIHdoaWxlIHJlYWQgZjsgZG8KICAgICAgWyAtbiAiJGYiIF0gfHwgY29udGludWUKICAgICAgbj0kKGJhc2VuYW1lICIkZiIgLmphdmEpCiAgICAgIGZpbmQgIiRXL2NsYXNzZXMiIC1uYW1lICIkbiouY2xhc3MiIC1leGVjIHJtIC1mIHt9ICsgMj4vZGV2L251bGwgfHwgdHJ1ZQogICAgZG9uZSA8ICIkVy9nb25lLmxpc3QiCiAgICBDTEFTU1BBVEg9JFRDL2RleC9lY2ouZGV4OiRUQy9lY2otcmVzICRBUFAgL3N5c3RlbS9iaW4gJEVDSiBcCiAgICAgIC1zb3VyY2UgMS44IC10YXJnZXQgMS44IC1ub3dhcm4gLXByb2M6bm9uZSAtZCAkVy9jbGFzc2VzIC1jbGFzc3BhdGggIiRDUDokQ0FDSEUvY2xhc3NlcyIgJChjYXQgIiRXL2luY3NyYy5saXN0IikgPiAkVy9lY2oubG9nIDI+JjEgfHwgeyBlY2hvICLvvIFFQ0og57yW6K+R5aSx6LSl77yI5pyr5bC+IDMwIOihjO+8ie+8miI7IHRhaWwgLW4gMzAgJFcvZWNqLmxvZzsgZXhpdCA3OyB9CiAgZmkKICBlY2hvICIgICBqYXZhYyhFQ0opIG9rOiAkKGZpbmQgJFcvY2xhc3NlcyAtbmFtZSAnKi5jbGFzcycgfCB3YyAtbCkg5LiqIGNsYXNzIgogIHJtIC1yZiAiJENBQ0hFL2NsYXNzZXMiOyBta2RpciAtcCAiJENBQ0hFL2NsYXNzZXMiOyBjcCAtcnAgIiRXL2NsYXNzZXMvLiIgIiRDQUNIRS9jbGFzc2VzLyIKICBjcCAiJENVUiIgIiRDQUNIRS9zcmMubGlzdCIKICAjIDc477ya55WZ5LiA5Lu95rqQ56CB5b+r54Wn77yI5LiL5qyh5Yik44CM5Y+Y5YyW6KGM6YeM5pyJ5rKh5pyJIHN0YXRpYyBmaW5hbOOAjeeUqO+8m+e8luivkeaIkOWKn+aJjeabtOaWsO+8iQogIHJtIC1yZiAiJENBQ0hFL3NyY3ByZXYiOyBta2RpciAtcCAiJENBQ0hFL3NyY3ByZXYiCiAgZm9yIGYgaW4gJChmaW5kICIkU1JDRElSIiAtbmFtZSAnKi5qYXZhJyk7IGRvCiAgICByZWw9JHtmIyRTUkNESVIvfQogICAgbWtkaXIgLXAgIiRDQUNIRS9zcmNwcmV2LyQoZGlybmFtZSAiJHJlbCIpIgogICAgY3AgLXAgIiRmIiAiJENBQ0hFL3NyY3ByZXYvJHJlbCIKICBkb25lCmZpCgojIOKUgOKUgCBkOO+8muS+nei1lumDqOWIhuS4juW3peeoi+mDqOWIhuWIhuW8gO+8jOWQhOiHque8k+WtmCDilIDilIAKc3RlcCAiNSkgZDgiCkxJQkpBUkxJU1Q9IiIKZm9yIGogaW4gIiRLRUVQIi9jbGFzc2VzLyouamFyOyBkbyBbIC1lICIkaiIgXSB8fCBjb250aW51ZTsgYj0kKGJhc2VuYW1lICIkaiIpOyBza2lwX2phciAiJGIiICYmIGNvbnRpbnVlOyBMSUJKQVJMSVNUPSIkTElCSkFSTElTVCAkaiI7IGRvbmUKTElCSkFSTElTVD0iJExJQkpBUkxJU1QgJExJQkpBUlMiCkxJQktFWT0iJChmcCAkTElCSkFSTElTVCAiJEpBUiIpLSQocHJpbnRmICclcycgIiRLRUVQIiB8IHNoYTI1NnN1bSB8IGN1dCAtYzEtNikiCmlmIFsgIiROT0lOQ1IiICE9ICIxIiBdICYmIFsgLWYgIiRDQUNIRS9kZXhsaWIvLmtleSIgXSAmJiBbICIkKGNhdCAiJENBQ0hFL2RleGxpYi8ua2V5IiAyPi9kZXYvbnVsbCkiID0gIiRMSUJLRVkiIF0gJiYgWyAtZiAiJENBQ0hFL2RleGxpYi9jbGFzc2VzLmRleCIgXTsgdGhlbgogIGVjaG8gIiAgIOS+nei1liBqYXIg5rKh5Y+YIOKGkiDot7Pov4fkvp3otZbpg6jliIYgZDjvvIjlpI3nlKggJChscyAiJENBQ0hFL2RleGxpYiIvY2xhc3NlcyouZGV4IHwgd2MgLWwpIOS4qiBkZXjvvIkiCiAgc2tpcHBlZCAiZDgt5L6d6LWWIgplbHNlCiAgcm0gLXJmICIkQ0FDSEUvZGV4bGliIjsgbWtkaXIgLXAgIiRDQUNIRS9kZXhsaWIiCiAgQ0xBU1NQQVRIPSRUQy9kZXgvZDguZGV4OiRUQy9kZXgvZDgtMi5kZXggJEFQUCAtWG14MTUzNm0gL3N5c3RlbS9iaW4gJEQ4TSBcCiAgICAtLW1pbi1hcGkgMzAgLS1saWIgIiRKQVIiIC0tb3V0cHV0ICIkQ0FDSEUvZGV4bGliIiAkTElCSkFSTElTVCA+ICRXL2Q4bGliLmxvZyAyPiYxIHx8IHsgZWNobyAi77yBZDjvvIjkvp3otZbvvInlpLHotKXvvIjmnKvlsL4gNDAg6KGM77yJ77yaIjsgdGFpbCAtbiA0MCAkVy9kOGxpYi5sb2c7IGV4aXQgNjsgfQogIGVjaG8gIiRMSUJLRVkiID4gIiRDQUNIRS9kZXhsaWIvLmtleSIKICBlY2hvICIgICDkvp3otZbpg6jliIYgZGV477yaJChscyAiJENBQ0hFL2RleGxpYiIvY2xhc3NlcyouZGV4IHwgd2MgLWwpIOS4qu+8iOW3suWFpee8k+WtmO+8iSIKZmkKQ0xTSz0kKGZwICIkVy9jbGFzc2VzIikKaWYgWyAiJE5PSU5DUiIgIT0gIjEiIF0gJiYgWyAtZiAiJENBQ0hFL2RleGFwcC8ua2V5IiBdICYmIFsgIiQoY2F0ICIkQ0FDSEUvZGV4YXBwLy5rZXkiIDI+L2Rldi9udWxsKSIgPSAiJENMU0siIF0gJiYgWyAtZiAiJENBQ0hFL2RleGFwcC9jbGFzc2VzLmRleCIgXTsgdGhlbgogIGVjaG8gIiAgIOW3peeoiyBjbGFzcyDmsqHlj5gg4oaSIOi3s+i/h+W3peeoi+mDqOWIhiBkOCIKICBza2lwcGVkICJkOC3lt6XnqIsiCmVsc2UKICBybSAtcmYgIiRDQUNIRS9kZXhhcHAiOyBta2RpciAtcCAiJENBQ0hFL2RleGFwcCIKICBEOElOPSIiCiAgZm9yIGYgaW4gJChmaW5kICRXL2NsYXNzZXMgLW5hbWUgJyouY2xhc3MnKTsgZG8gRDhJTj0iJEQ4SU4gJGYiOyBkb25lCiAgTElCT1BUPSIiCiAgIyA3OO+8mmFwcCDnu4QgZDgg5LiN5YaN5oqK5L6d6LWWIGphciDlvZMgLS1saWIg5Lyg77yI6K+7IDYwIOS4qiBqYXIg55qE57G75Z6L5L+h5oGv5pyA5oWi77yJ77ybbWluLWFwaSAzMCDkuIvnvLrnsbvlnovlj6rmmK8gd2FybmluZwogIENMQVNTUEFUSD0kVEMvZGV4L2Q4LmRleDokVEMvZGV4L2Q4LTIuZGV4ICRBUFAgLVhteDE1MzZtIC9zeXN0ZW0vYmluICREOE0gXAogICAgLS1taW4tYXBpIDMwIC0tbGliICIkSkFSIiAkTElCT1BUIC0tb3V0cHV0ICIkQ0FDSEUvZGV4YXBwIiAkRDhJTiA+ICRXL2Q4YXBwLmxvZyAyPiYxIHx8IHsgZWNobyAi77yBZDjvvIjlt6XnqIvvvInlpLHotKXvvIjmnKvlsL4gNDAg6KGM77yJ77yaIjsgdGFpbCAtbiA0MCAkVy9kOGFwcC5sb2c7IGV4aXQgNjsgfQogIGVjaG8gIiRDTFNLIiA+ICIkQ0FDSEUvZGV4YXBwLy5rZXkiCiAgZWNobyAiICAg5bel56iL6YOo5YiGIGRleO+8miQobHMgIiRDQUNIRS9kZXhhcHAiL2NsYXNzZXMqLmRleCB8IHdjIC1sKSDkuKrvvIjlt7LlhaXnvJPlrZjvvIkiCmZpCgojIOKUgOKUgCDnu4Too4XvvJrlt6XnqIsgZGV4IOWcqOWJje+8iOS4uyBkZXgg6KaB5ZCrIG1hbmlmZXN0IOe7hOS7tu+8ie+8jOS+nei1liBkZXgg57ut5Y+3IOKUgOKUgApzdGVwICI2KSDnu4Too4UiCnJtIC1yZiAiJFcvZGV4IjsgbWtkaXIgLXAgIiRXL2RleCIKQT0wCmZvciBmIGluICIkQ0FDSEUvZGV4YXBwIi9jbGFzc2VzKi5kZXg7IGRvCiAgWyAtZSAiJGYiIF0gfHwgY29udGludWUKICBBPSQoKEEgKyAxKSkKICBpZiBbICIkQSIgPSAiMSIgXTsgdGhlbiBsbiAtc2YgIiRmIiAiJFcvZGV4L2NsYXNzZXMuZGV4IjsgZWxzZSBsbiAtc2YgIiRmIiAiJFcvZGV4L2NsYXNzZXMkQS5kZXgiOyBmaQpkb25lCks9MApmb3IgZiBpbiAiJENBQ0hFL2RleGxpYiIvY2xhc3NlcyouZGV4OyBkbwogIFsgLWUgIiRmIiBdIHx8IGNvbnRpbnVlCiAgSz0kKChLICsgMSkpOyBOPSQoKEEgKyBLKSkKICBsbiAtc2YgIiRmIiAiJFcvZGV4L2NsYXNzZXMkTi5kZXgiCmRvbmUKZWNobyAiICAgZGV477ya5bel56iLICRBIOS4qiDvvIsg5L6d6LWWICRLIOS4qu+8iGNsYXNzZXMuZGV4IOi1t+i/nue7ree8luWPt++8iSIKREVYQ1NWPSIiCmZvciBmIGluICRXL2RleC9jbGFzc2VzKi5kZXg7IGRvIERFWENTVj0iJERFWENTViwkZiI7IGRvbmUKREVYQ1NWPSR7REVYQ1NWIyx9CkpOST0iLSIKWyAtZCAiJEtFRVAvam5pIiBdICYmIEpOST0iJEtFRVAvam5pIgpbIC1kICIkU0Ivam5pIiBdICYmIEpOST0iJFNCL2puaSIKaWYgWyAtbiAiJEFBUkpOSSIgXSB8fCBbIC1kICIkU0Ivam5pIiBdOyB0aGVuCiAgbWtkaXIgLXAgIiRXL2FsaWJzIgogIFsgLWQgIiRLRUVQL2puaSIgXSAmJiBjcCAtcnAgIiRLRUVQL2puaS8uIiAiJFcvYWxpYnMvIgogIFsgLWQgIiRTQi9qbmkiIF0gJiYgY3AgLXJwICIkU0Ivam5pLy4iICIkVy9hbGlicy8iCiAgZm9yIGQgaW4gJEFBUkpOSTsgZG8gbWtkaXIgLXAgIiRXL2FsaWJzL2xpYiI7IGNwIC1ycCAiJGQvam5pLy4iICIkVy9hbGlicy9saWIvIiAyPi9kZXYvbnVsbCB8fCB0cnVlOyBkb25lCiAgSk5JPSIkVy9hbGlicyIKICBlY2hvICIgICBqbmnvvJrlt7LlkIjlubbvvIgkSk5J77yJIgpmaQpDTEFTU1BBVEg9JFRDL2RleC9idWlsZHRvb2wuZGV4ICRBUFAgL3N5c3RlbS9iaW4gQnVpbGRUb29sICRXL2Jhc2UuYXBrICRXL3Vuc2lnbmVkLmFwayAiJERFWENTViIgIiRKTkkiCmxzIC1sICRXL3Vuc2lnbmVkLmFwawoKIyDilIDilIAg562+5ZCNIOKUgOKUgApzdGVwICI3KSDnrb7lkI3vvIhyZWxlYXNl77yJIgpLUz0iJHtLUzotL3NkY2FyZC/miYvmnLrpgJrpgZMv5aSH5Lu9L1JldGljbGUt562+5ZCNL3JldGljbGUtcmVsZWFzZS5wMTJ9IgpLRD0iJHtLRDotL3NkY2FyZC/miYvmnLrpgJrpgZMv5aSH5Lu9L1JldGljbGUt562+5ZCNL+mSpeWMmeivtOaYji50eHR9IgpLQT0iJHtLQTotcmV0aWNsZX0iCktQPSIke0tQOi0kKGdyZXAgLW0xICde5Y+j5LukPScgIiRLRCIgMj4vZGV2L251bGwgfCBjdXQgLWQ9IC1mMi0pfSIKaWYgWyAtbiAiJEtQIiBdICYmIFsgLWYgIiRLUyIgXTsgdGhlbgogIGVjaG8gIiAgICDnlKggcmVsZWFzZSDpkqXljJnvvJokS1MiCiAgQ0xBU1NQQVRIPSRUQy9kZXgvYXBrc2lnbmVyLmRleCAkQVBQIC9zeXN0ZW0vYmluICRTSUdOIHNpZ24gXAogICAgLS1rcyAiJEtTIiAtLWtzLXR5cGUgUEtDUzEyIC0ta3Mta2V5LWFsaWFzICIkS0EiIFwKICAgIC0ta3MtcGFzcyAicGFzczokS1AiIC0ta2V5LXBhc3MgInBhc3M6JEtQIiBcCiAgICAtLW91dCAkVy9zaWduZWQuYXBrICRXL3Vuc2lnbmVkLmFwawplbHNlCiAgZWNobyAiICAgIO+8geaJvuS4jeWIsCByZWxlYXNlIOmSpeWMmeaIluWPo+S7pCDihpIg5Zue6YCAIGRlYnVnIOetvuWQje+8iOato+W8j+WPkeW4g+WIq+i/meagt++8iSIKICBDTEFTU1BBVEg9JFRDL2RleC9hcGtzaWduZXIuZGV4ICRBUFAgL3N5c3RlbS9iaW4gJFNJR04gc2lnbiBcCiAgICAtLWtzICIke0RFQlVHX0tTOi0kVEMvZGVidWcucDEyfSIgLS1rcy10eXBlIFBLQ1MxMiAtLWtzLXBhc3MgcGFzczphbmRyb2lkIC0ta2V5LXBhc3MgcGFzczphbmRyb2lkIFwKICAgIC0tb3V0ICRXL3NpZ25lZC5hcGsgJFcvdW5zaWduZWQuYXBrCmZpCmxzIC1sICRXL3NpZ25lZC5hcGsKCnN0ZXAgIjdiKSDoh6ror4HvvJphcGtzaWduZXIgdmVyaWZ5IgpDTEFTU1BBVEg9JFRDL2RleC9hcGtzaWduZXIuZGV4ICRBUFAgL3N5c3RlbS9iaW4gJFNJR04gdmVyaWZ5IC0tcHJpbnQtY2VydHMgJFcvc2lnbmVkLmFwawoKc3RlcCAiOCkg5Lqn54mpIgpta2RpciAtcCAvc2RjYXJkL3dvcmtiZW5jaC/mnoTlu7ov6L6T5Ye6OyBjcCAkVy9zaWduZWQuYXBrICIvc2RjYXJkL3dvcmtiZW5jaC/mnoTlu7ov6L6T5Ye6LyRPVVROQU1FIgpscyAtbCAiL3NkY2FyZC93b3JrYmVuY2gv5p6E5bu6L+i+k+WHui8kT1VUTkFNRSI7IHNoYTI1NnN1bSAiL3NkY2FyZC93b3JrYmVuY2gv5p6E5bu6L+i+k+WHui8kT1VUTkFNRSIKZWNobyAiPT0g5a6MICQoZGF0ZSAnKyVIOiVNOiVTJykg5oC7ICQoKCAkKGRhdGUgKyVzKSAtIFQwICkpcyA9PSIKWyAtbiAiJFNLSVAiIF0gJiYgZWNobyAiICAg5pys5qyh6Lez6L+H77yaJFNLSVAiCmV4aXQgMAo=
+#!/system/bin/sh
+# 24 号单 · 设备侧构建脚本 v2（不需要 Termux；用 shell 身份跑）
+# 39 号单 · 加 ID 参数：ID=B 出「副实例」包（包名 app.reticle.b / MCP 8771 / 目录 /sdcard/ReticleB）
+# 78 号单（2026-10-17）· 增量编译 + 手动 jar/AAR
+#   用法（家版）：sh /sdcard/workbench/构建/build2.sh        → 输出/reticle.apk（增量）
+#                 ID=B sh /sdcard/workbench/构建/build2.sh   → 输出/reticle-b.apk
+#                 NOINCR=1 sh ...                            → 强制全量（对照/排错）
+#   增量怎么判（缓存目录 $W-cache，与每次清空的 $W 分开）：
+#     · 资源清单（路径+大小+改动时刻）没变 ⇒ 跳 aapt2 compile
+#     · 资源+manifest+依赖包名+assets 没变 ⇒ 跳 aapt2 link（复用 base.apk 与 R 类）
+#     · java/gen 清单没变 ⇒ 跳 ECJ；变了 ⇒ 只重编「变化文件所在包」（包级增量）
+#     · 依赖 jar 清单没变 ⇒ 跳依赖部分 d8；工程 class 清单没变 ⇒ 跳工程部分 d8
+#     · 改 java ⇒ 该包重编；改 manifest/包名/依赖 ⇒ link 缓存键变，不会误用旧缓存
+#   手动依赖：工程 libs/*.jar → classpath 与 dex；libs/*.aar → classes.jar + res + assets + jni（仍不给 Gradle）
+# 产物：/sdcard/workbench/构建/输出/*.apk（release 签名；钥匙与口令见旧家 备份/Reticle-签名/）
+set -e
+SB="${SB:-/sdcard/手机通道/通道三/工程}"   # 源码树（环境变量优先；仓库 BUILD.md 有说明）
+TC="${TC:-/sdcard/workbench/构建/工具链}"  # 构建工具链（仓库不含，需自备）
+ID="${ID:-}"
+if [ "$ID" = "B" ]; then
+  W=/data/local/tmp/reticle-build-b
+  PKG=app.reticle.b
+  PORT=8771
+  RDIR=/sdcard/ReticleB
+  OUTNAME=reticle-b.apk
+else
+  W=/data/local/tmp/reticle-build
+  PKG=app.reticle
+  PORT=8770
+  RDIR=/sdcard/Reticle
+  OUTNAME=reticle.apk
+fi
+CACHE="${CACHE:-$W-cache}"                # 增量缓存（独立于 $W；清了＝下次自动全量）
+JAR=$TC/lib/android.jar
+KEEP="${KEEP:-/sdcard/workbench/构建/物料}"
+SRCDIR=$SB/src
+RESDIR=$SB/res
+MANIFEST=$SB/AndroidManifest.xml
+LIBS=$SB/libs
+NOINCR="${NOINCR:-0}"
+
+# 29 号单：液态玻璃库要 kotlin-stdlib 2.0.21 / core-ktx 1.13.1，旧同名库会造成重复类 ⇒ 显式排除
+EXCL=" kotlin-stdlib-1.7.10.jar kotlin-stdlib-common-1.7.10.jar kotlin-stdlib-jdk7-1.6.0.jar kotlin-stdlib-jdk8-1.6.0.jar core-ktx-1.8.0.jar "
+skip_jar() { case "$EXCL" in *" $1 "*) return 0 ;; esac; return 1; }
+APP=/system/bin/app_process
+ECJ="org.eclipse.jdt.internal.compiler.batch.Main"
+D8M="com.android.tools.r8.D8"
+SIGN="com.android.apksigner.ApkSignerTool"
+
+T0=$(date +%s)
+step() { echo "== $* @$(date '+%H:%M:%S')（累计 $(( $(date +%s) - T0 ))s）"; }
+SKIP=""
+skipped() { SKIP="$SKIP $1"; }
+
+# 指纹：路径 + 大小 + 改动时刻（秒）三元组；目录递归、文件本体。改了内容/换名/增删都会变。
+fp() {
+  # 78：内容级指纹（sha256）——比 mtime 准：mtime 变了内容没变不算变、保留 mtime 覆盖内容也会被认出来
+  for p in "$@"; do
+    [ -e "$p" ] || continue
+    if [ -d "$p" ]; then find "$p" -type f -exec sha256sum {} + 2>/dev/null
+    else find "$p" -maxdepth 1 -exec sha256sum {} + 2>/dev/null; fi
+  done | sort | sha256sum | cut -c1-16
+}
+
+step "0) 准备"
+echo "   身份=$ID 包名=$PKG 端口=$PORT 目录=$RDIR 产物=$OUTNAME"
+[ "$NOINCR" = "1" ] && echo "   NOINCR=1：本次强制全量（不读缓存）"
+MISS=""
+[ -f $TC/bin/aapt2 ] || MISS="$MISS 工具链/bin/aapt2（Termux可装；连同目录lib*.so）"
+[ -f $JAR ] || MISS="$MISS 工具链/lib/android.jar（SDK-platform-35）"
+for d in ecj d8 d8-2 apksigner buildtool; do [ -f $TC/dex/$d.dex ] || MISS="$MISS 工具链/dex/$d.dex"; done
+[ -d $TC/ecj-res ] || MISS="$MISS 工具链/ecj-res（ECJ资源目录）"
+for j in core-1.9.0.jar appcompat-1.6.1.jar material-1.9.0.jar liquidglass-2.0.11.jar vision-common-17.3.0.jar play-services-tasks-18.2.0.jar kotlin-stdlib-2.0.21.jar; do [ -f "$KEEP/classes/$j" ] || MISS="$MISS 物料/classes/$j"; done
+[ -f $MANIFEST ] || MISS="$MISS $MANIFEST（改SB=指到你的源码树）"
+[ -d $SRCDIR ] || MISS="$MISS $SRCDIR（改SB=指到你的源码树）"
+[ -d $RESDIR ] || MISS="$MISS $RESDIR（改SB=指到你的源码树）"
+if [ -n "$MISS" ]; then
+  echo "！缺件（补齐再出包）："
+  for m in $MISS; do echo "   · $m"; done
+  echo "   ——要什么／从哪拿／路径怎么配：见仓库 BUILD.md「路径与物料」一节；应用内可 build action=check 复检。"
+  exit 4
+fi
+echo "   环境自检：齐 ✓"
+mkdir -p "$CACHE"
+rm -rf "$W"
+mkdir -p "$W/classes" "$W/dex" "$W/dexapp" "$W/gen" "$W/reszip"
+
+# 工具链 bin（12MB）不必每次从 /sdcard 复制：缓存到 $CACHE/bin
+BINK=$(fp "$TC/bin")
+if [ "$NOINCR" != "1" ] && [ -x "$CACHE/bin/aapt2" ] && [ "$(cat "$CACHE/bin/.key" 2>/dev/null)" = "$BINK" ]; then
+  echo "   工具链 bin：用缓存（$CACHE/bin）"
+else
+  rm -rf "$CACHE/bin"; mkdir -p "$CACHE/bin"
+  cp "$TC/bin"/* "$CACHE/bin/" 2>/dev/null || true
+  chmod 755 "$CACHE/bin/aapt2"
+  echo "$BINK" > "$CACHE/bin/.key"
+  echo "   工具链 bin：从 $TC/bin 复制到缓存"
+fi
+LL="$CACHE/bin"
+
+# ── 39 号单：身份参数化（只在临时工作区替换，正本源码一个字节都不动）──
+if [ "$ID" = "B" ]; then
+  step "0b) 身份参数化（临时副本）"
+  mkdir -p $W/src; cp -p $SB/src/*.java $W/src/
+  cp -rp $SB/res $W/res
+  cp -p $SB/AndroidManifest.xml $W/AndroidManifest.xml
+  SRCDIR=$W/src
+  RESDIR=$W/res
+  MANIFEST=$W/AndroidManifest.xml
+  for f in $W/AndroidManifest.xml $W/res/values/strings.xml $W/res/xml/accessibility_service_config.xml; do
+    [ -f "$f" ] || continue
+    sed -i "s|app\.reticle|$PKG|g" "$f"
+  done
+  sed -i 's|>Reticle<|>Reticle B<|' $W/res/values/strings.xml
+  sed -i 's|>Reticle（|>Reticle B（|' $W/res/values/strings.xml
+  for f in $(find $W/src -name '*.java'); do
+    sed -i "s|/sdcard/Reticle|$RDIR|g" "$f"
+    sed -i "s|app\.reticle|$PKG|g" "$f"
+    sed -i "s|8770|$PORT|g" "$f"
+    sed -i "s|工具链/build2.sh|工具链/build2b.sh|g" "$f"
+    sed -i "s|工具/装工具.sh|工具/装工具B.sh|g" "$f"
+    sed -i "s|public static final int DEF_ID = 1;|public static final int DEF_ID = 101;|" "$f"
+    sed -i "s|public static final int NID = 2;|public static final int NID = 102;|" "$f"
+  done
+  R1=$(grep -rEc "app\.reticle;" $W/src $W/AndroidManifest.xml | awk -F: '{s+=$2} END{print s+0}')
+  R2=$(grep -rEc "8770" $W/src $W/AndroidManifest.xml | awk -F: '{s+=$2} END{print s+0}')
+  R3=$(grep -rEc "/sdcard/Reticle($|[^B])" $W/src | awk -F: '{s+=$2} END{print s+0}')
+  echo "   残留检查：旧包名 $R1 处｜旧端口 $R2 处｜旧目录 $R3 处（应全 0）"
+  if [ "$R1" != "0" ] || [ "$R2" != "0" ] || [ "$R3" != "0" ]; then
+    echo "！参数化自检不过："
+    grep -rEn "app\.reticle;|8770|/sdcard/Reticle($|[^B])" $W/src $W/AndroidManifest.xml | head -20
+    exit 8
+  fi
+  echo "   身份自检：过 ✓（包名 $(grep -m1 'package=' $W/AndroidManifest.xml | sed 's/.*package="//; s/".*//')）"
+fi
+
+# ── 78 号单：工程 libs（手动 jar / AAR）──
+step "1) 工程 libs（jar / AAR）"
+LIBJARS=""
+AARRES=""
+AARPKS=""
+AARASSETS=""
+AARJNI=""
+if [ -d "$LIBS" ]; then
+  for j in "$LIBS"/*.jar; do
+    [ -e "$j" ] || continue
+    LIBJARS="$LIBJARS $j"
+    echo "   jar：$(basename "$j")（进 classpath 与 dex）"
+  done
+  for a in "$LIBS"/*.aar; do
+    [ -e "$a" ] || continue
+    n=$(basename "$a" .aar)
+    D="$CACHE/aar/$n"
+    K=$(fp "$a")
+    if [ "$NOINCR" = "1" ] || [ ! -f "$D/.key" ] || [ "$(cat "$D/.key" 2>/dev/null)" != "$K" ]; then
+      rm -rf "$D"; mkdir -p "$D"
+      unzip -o -q "$a" -d "$D" || { echo "！AAR 解不开：$a"; exit 4; }
+      echo "$K" > "$D/.key"
+    fi
+    [ -f "$D/classes.jar" ] && LIBJARS="$LIBJARS $D/classes.jar"
+    if [ -d "$D/res" ]; then
+      RK=$(fp "$D/res")
+      if [ ! -f "$D/res.zip" ] || [ "$(cat "$D/.reskey" 2>/dev/null)" != "$RK" ]; then
+        LD_LIBRARY_PATH="$LL" "$LL/aapt2" compile --dir "$D/res" -o "$D/res.zip" || { echo "！AAR 资源编译失败：$a"; exit 5; }
+        echo "$RK" > "$D/.reskey"
+      fi
+      AARRES="$AARRES $D/res.zip"
+    fi
+    if [ -f "$D/AndroidManifest.xml" ]; then
+      AP=$(grep -m1 -o 'package="[^"]*"' "$D/AndroidManifest.xml" | sed 's/package="//; s/"//') || true
+      [ -n "$AP" ] && AARPKS="$AARPKS:$AP"
+    fi
+    [ -d "$D/assets" ] && AARASSETS="$AARASSETS $D"
+    [ -d "$D/jni" ] && AARJNI="$AARJNI $D"
+    echo "   aar：$(basename "$a")（classes.jar$([ -d "$D/res" ] && echo " ＋ 资源")$([ -d "$D/assets" ] && echo " ＋ assets")$([ -d "$D/jni" ] && echo " ＋ jni")）"
+  done
+  [ -z "$LIBJARS$AARRES$AARASSETS$AARJNI" ] && echo "   libs/ 里没有 jar／AAR（跳过）"
+else
+  echo "   （工程没有 libs/：跳过）"
+fi
+
+# ── aapt2 compile（资源没变就跳）──
+step "2) aapt2 compile"
+RESK=$(fp "$RESDIR" "$KEEP/res-zips")
+if [ "$NOINCR" != "1" ] && [ -f "$CACHE/app.zip" ] && [ "$(cat "$CACHE/res.key" 2>/dev/null)" = "$RESK" ]; then
+  echo "   资源没变 → 跳过 aapt2 compile（复用缓存 app.zip）"
+  cp -p "$CACHE/app.zip" "$W/reszip/app.zip"
+  skipped "aapt2-compile"
+else
+  LD_LIBRARY_PATH="$LL" "$LL/aapt2" compile --dir "$RESDIR" -o "$W/reszip/app.zip"
+  cp "$W/reszip/app.zip" "$CACHE/app.zip"
+  echo "$RESK" > "$CACHE/res.key"
+  echo "   编译完成（已入缓存）"
+fi
+RESARGS="-R $W/reszip/app.zip"
+for z in "$KEEP"/res-zips/*.zip; do [ -e "$z" ] || continue; RESARGS="$RESARGS -R $z"; done
+for z in $AARRES; do RESARGS="$RESARGS -R $z"; done
+
+# assets（第三方 ＋ 工程 ＋ AAR，要合并成一个目录时才合并）
+ASSETSRC=""
+[ -d "$KEEP/assets" ] && ASSETSRC="$ASSETSRC $KEEP/assets"
+[ -d "$SB/assets" ] && ASSETSRC="$ASSETSRC $SB/assets"
+for d in $AARASSETS; do ASSETSRC="$ASSETSRC $d/assets"; done
+AASSET=""
+if [ -n "$AARASSETS" ] || { [ -d "$SB/assets" ] && [ -d "$KEEP/assets" ]; }; then
+  mkdir -p "$W/aassets"
+  for d in $ASSETSRC; do cp -rp "$d/." "$W/aassets/" 2>/dev/null || true; done
+  AASSET="-A $W/aassets"
+  echo "   assets：已合并 $(echo $ASSETSRC | wc -w) 处 → 临时目录"
+elif [ -d "$KEEP/assets" ]; then
+  AASSET="-A $KEEP/assets"
+fi
+
+# 第三方库 R 类包名
+PKGS=$(grep -h -o 'package="[^"]*"' "$KEEP"/manifest碎片/*.xml 2>/dev/null | sed 's/package="//; s/"//' | sort -u | tr '\n' ':' | sed 's/:$//') || true
+PKGS="$PKGS$AARPKS"
+PKGS=$(printf '%s' "$PKGS" | sed 's/^://')
+EXTRA=""
+[ -n "$PKGS" ] && EXTRA="--extra-packages $PKGS"
+echo "   R 类包名 $(printf '%s' "$PKGS" | tr ':' '\n' | grep -c . || true) 个"
+
+# ── aapt2 link（键没变就跳）──
+step "3) aapt2 link"
+LINKKEY="$(fp "$MANIFEST" "$CACHE/app.zip" "$KEEP/res-zips" "$JAR" $AARRES $ASSETSRC)-$(printf '%s' "$EXTRA" | sha256sum | cut -c1-8)"
+if [ "$NOINCR" != "1" ] && [ -f "$CACHE/base.apk" ] && [ -d "$CACHE/gen" ] && [ "$(cat "$CACHE/link.key" 2>/dev/null)" = "$LINKKEY" ]; then
+  echo "   资源／manifest／依赖包名／assets 都没变 → 跳过 aapt2 link（复用 base.apk 与 R 类）"
+  cp "$CACHE/base.apk" "$W/base.apk"
+  cp -rp "$CACHE/gen/." "$W/gen/" 2>/dev/null || true
+  skipped "aapt2-link"
+else
+  LD_LIBRARY_PATH="$LL" "$LL/aapt2" link -o "$W/base.apk" --manifest "$MANIFEST" -I "$JAR" \
+    --min-sdk-version 30 --target-sdk-version 35 --java $W/gen $EXTRA $RESARGS $AASSET --auto-add-overlay > $W/aapt2link.log 2>&1 || { echo "！aapt2 link 失败（末尾 30 行）："; tail -n 30 $W/aapt2link.log; exit 5; }
+  ls -l $W/base.apk
+  cp "$W/base.apk" "$CACHE/base.apk"
+  rm -rf "$CACHE/gen"; mkdir -p "$CACHE/gen"; cp -rp "$W/gen/." "$CACHE/gen/" 2>/dev/null || true
+  echo "$LINKKEY" > "$CACHE/link.key"
+  echo "   （已入缓存：base.apk ＋ R 类）"
+fi
+
+# ── ECJ（java 没变就跳；变了只重编变化文件所在包）──
+step "4) ECJ 编译"
+CP="$JAR"
+for j in "$KEEP"/classes/*.jar; do [ -e "$j" ] || continue; b=$(basename "$j"); skip_jar "$b" && continue; CP="$CP:$j"; done
+for j in $LIBJARS; do CP="$CP:$j"; done
+CUR="$W/src.cur"
+  { find "$SRCDIR" -name '*.java' -printf '%p %s %T@\n' 2>/dev/null
+    find "$W/gen" -name '*.java' -exec sha256sum {} + 2>/dev/null | awk '{print $2, $1}' | sort
+  } | sort > "$CUR"
+ALLJ=$(find "$SRCDIR" "$W/gen" -name '*.java' | wc -l)
+CHANGED=""
+if [ "$NOINCR" != "1" ] && [ -d "$CACHE/classes" ] && [ -f "$CACHE/src.list" ]; then
+  CHANGED=$(diff "$CACHE/src.list" "$CUR" | awk '/^[-+]/{p=substr($1,2); if (p ~ /^\//) print p}' | sort -u) || true
+fi
+CHN=$(printf '%s\n' "$CHANGED" | grep -c . || true)
+FULLECJ=0
+[ "$NOINCR" = "1" ] && FULLECJ=1
+[ ! -d "$CACHE/classes" ] && FULLECJ=1
+[ "$CHN" -gt 0 ] && [ "$((CHN * 5))" -gt "$((ALLJ * 3))" ] && FULLECJ=1   # 变太多（>60%）不如全量
+if [ "$FULLECJ" = "0" ] && [ "$CHN" = "0" ]; then
+  echo "   java／R 类都没变 → 跳过 ECJ（复用缓存 $ALLJ 个 class）"
+  cp -rp "$CACHE/classes/." "$W/classes/" 2>/dev/null || true
+  skipped "ECJ"
+else
+  # 包名映射（一次 awk 扫全部 java）
+  find "$SRCDIR" "$W/gen" -name '*.java' > "$W/alljava.list"
+  awk 'FNR==1{f=FILENAME} /^package /{if(!(f in seen)){seen[f]=1; sub(/^package /,""); sub(/;.*/,""); print f" "$0}}' $(cat "$W/alljava.list") > "$W/pkgmap"
+  if [ "$FULLECJ" = "1" ]; then
+    echo "   全量编译（$ALLJ 个 java；变化 $CHN 个$([ "$NOINCR" = "1" ] && echo "／NOINCR")）"
+    SRCS=""
+    for f in $(find "$SRCDIR" -name '*.java'); do SRCS="$SRCS $f"; done
+    GEN=""
+    for f in $(find "$W/gen" -name '*.java'); do GEN="$GEN $f"; done
+    rm -rf "$W/classes"; mkdir -p "$W/classes"
+    CLASSPATH=$TC/dex/ecj.dex:$TC/ecj-res $APP /system/bin $ECJ \
+      -source 1.8 -target 1.8 -nowarn -proc:none -d $W/classes -classpath "$CP" $SRCS $GEN > $W/ecj.log 2>&1 || { echo "！ECJ 编译失败（末尾 30 行）："; tail -n 30 $W/ecj.log; exit 7; }
+  else
+    # 包级增量：变化文件所在包的全部 java 一起编（常量内联多数发生在包内）
+    printf '%s\n' "$CHANGED" | grep '\.java$' > "$W/chg.list" || true
+    # 78：先判能不能「只编变化的文件」——变化行里出现 static final（编译期常量会被别的类内联）
+    #     或 gen 的 R 类变了（R 常量同理）⇒ 保守退回「整包」；否则只重编变化文件（快得多）
+    NEEDPKG=0
+    FASTSRC=""
+    while read f; do
+      [ -n "$f" ] || continue
+      case "$f" in
+        "$SRCDIR"/*)
+          rel=${f#$SRCDIR/}
+          old="$CACHE/srcprev/$rel"
+          if [ -f "$old" ]; then
+            dl=$(diff "$old" "$f" | grep -E "^[-+][^-+]" || true)
+            printf '%s' "$dl" | grep -qE "static[[:space:]]+final" && NEEDPKG=1
+          fi
+          FASTSRC="$FASTSRC $f"
+          ;;
+        *) NEEDPKG=1 ;;
+      esac
+    done < "$W/chg.list"
+    if [ "$NEEDPKG" = "0" ]; then
+      printf '%s\n' "$FASTSRC" | tr ' ' '\n' | grep . > "$W/incsrc.list"
+      echo "   文件级增量：变化 $CHN 个 java → 只重编 $(wc -l < "$W/incsrc.list") 个（变化行里没有 static final 常量、R 类没变）"
+    else
+      if [ -s "$W/chg.list" ]; then
+        awk 'NR==FNR{chg[$1]=1;next} ($1 in chg){print $2}' "$W/chg.list" "$W/pkgmap" | sort -u > "$W/pkgs.list"
+      else
+        : > "$W/pkgs.list"
+      fi
+      awk 'NR==FNR{pk[$1]=1;next} ($2 in pk){print $1}' "$W/pkgs.list" "$W/pkgmap" > "$W/incsrc.list"
+      echo "   包级增量：变化 $CHN 个 java／$(( $(wc -l < "$W/pkgs.list") )) 个包 → 重编 $(wc -l < "$W/incsrc.list") 个 java（原因：变化里有 static final 常量或 R 类变了）"
+    fi
+    INC=$(wc -l < "$W/incsrc.list")
+    [ "$INC" = "0" ] && { echo "！增量清单是空的（变化 $CHN 个 java 却没算出该编谁）→ 停下，不产旧包"; exit 7; }
+    cp -rp "$CACHE/classes/." "$W/classes/" 2>/dev/null || true
+    # 源文件被删 ⇒ 顺手清掉它的 class（别留旧的）
+    diff "$CACHE/src.list" "$CUR" | awk '/^-/{p=substr($1,2); if (p ~ /^\/.*\.java$/) print p}' > "$W/gone.list" || true
+    while read f; do
+      [ -n "$f" ] || continue
+      n=$(basename "$f" .java)
+      find "$W/classes" -name "$n*.class" -exec rm -f {} + 2>/dev/null || true
+    done < "$W/gone.list"
+    CLASSPATH=$TC/dex/ecj.dex:$TC/ecj-res $APP /system/bin $ECJ \
+      -source 1.8 -target 1.8 -nowarn -proc:none -d $W/classes -classpath "$CP:$CACHE/classes" $(cat "$W/incsrc.list") > $W/ecj.log 2>&1 || { echo "！ECJ 编译失败（末尾 30 行）："; tail -n 30 $W/ecj.log; exit 7; }
+  fi
+  echo "   javac(ECJ) ok: $(find $W/classes -name '*.class' | wc -l) 个 class"
+  rm -rf "$CACHE/classes"; mkdir -p "$CACHE/classes"; cp -rp "$W/classes/." "$CACHE/classes/"
+  cp "$CUR" "$CACHE/src.list"
+  # 78：留一份源码快照（下次判「变化行里有没有 static final」用；编译成功才更新）
+  rm -rf "$CACHE/srcprev"; mkdir -p "$CACHE/srcprev"
+  for f in $(find "$SRCDIR" -name '*.java'); do
+    rel=${f#$SRCDIR/}
+    mkdir -p "$CACHE/srcprev/$(dirname "$rel")"
+    cp -p "$f" "$CACHE/srcprev/$rel"
+  done
+fi
+
+# ── d8：依赖部分与工程部分分开，各自缓存 ──
+step "5) d8"
+LIBJARLIST=""
+for j in "$KEEP"/classes/*.jar; do [ -e "$j" ] || continue; b=$(basename "$j"); skip_jar "$b" && continue; LIBJARLIST="$LIBJARLIST $j"; done
+LIBJARLIST="$LIBJARLIST $LIBJARS"
+LIBKEY="$(fp $LIBJARLIST "$JAR")-$(printf '%s' "$KEEP" | sha256sum | cut -c1-6)"
+if [ "$NOINCR" != "1" ] && [ -f "$CACHE/dexlib/.key" ] && [ "$(cat "$CACHE/dexlib/.key" 2>/dev/null)" = "$LIBKEY" ] && [ -f "$CACHE/dexlib/classes.dex" ]; then
+  echo "   依赖 jar 没变 → 跳过依赖部分 d8（复用 $(ls "$CACHE/dexlib"/classes*.dex | wc -l) 个 dex）"
+  skipped "d8-依赖"
+else
+  rm -rf "$CACHE/dexlib"; mkdir -p "$CACHE/dexlib"
+  CLASSPATH=$TC/dex/d8.dex:$TC/dex/d8-2.dex $APP -Xmx1536m /system/bin $D8M \
+    --min-api 30 --lib "$JAR" --output "$CACHE/dexlib" $LIBJARLIST > $W/d8lib.log 2>&1 || { echo "！d8（依赖）失败（末尾 40 行）："; tail -n 40 $W/d8lib.log; exit 6; }
+  echo "$LIBKEY" > "$CACHE/dexlib/.key"
+  echo "   依赖部分 dex：$(ls "$CACHE/dexlib"/classes*.dex | wc -l) 个（已入缓存）"
+fi
+CLSK=$(fp "$W/classes")
+if [ "$NOINCR" != "1" ] && [ -f "$CACHE/dexapp/.key" ] && [ "$(cat "$CACHE/dexapp/.key" 2>/dev/null)" = "$CLSK" ] && [ -f "$CACHE/dexapp/classes.dex" ]; then
+  echo "   工程 class 没变 → 跳过工程部分 d8"
+  skipped "d8-工程"
+else
+  rm -rf "$CACHE/dexapp"; mkdir -p "$CACHE/dexapp"
+  D8IN=""
+  for f in $(find $W/classes -name '*.class'); do D8IN="$D8IN $f"; done
+  LIBOPT=""
+  # 78：app 组 d8 不再把依赖 jar 当 --lib 传（读 60 个 jar 的类型信息最慢）；min-api 30 下缺类型只是 warning
+  CLASSPATH=$TC/dex/d8.dex:$TC/dex/d8-2.dex $APP -Xmx1536m /system/bin $D8M \
+    --min-api 30 --lib "$JAR" $LIBOPT --output "$CACHE/dexapp" $D8IN > $W/d8app.log 2>&1 || { echo "！d8（工程）失败（末尾 40 行）："; tail -n 40 $W/d8app.log; exit 6; }
+  echo "$CLSK" > "$CACHE/dexapp/.key"
+  echo "   工程部分 dex：$(ls "$CACHE/dexapp"/classes*.dex | wc -l) 个（已入缓存）"
+fi
+
+# ── 组装：工程 dex 在前（主 dex 要含 manifest 组件），依赖 dex 续号 ──
+step "6) 组装"
+rm -rf "$W/dex"; mkdir -p "$W/dex"
+A=0
+for f in "$CACHE/dexapp"/classes*.dex; do
+  [ -e "$f" ] || continue
+  A=$((A + 1))
+  if [ "$A" = "1" ]; then ln -sf "$f" "$W/dex/classes.dex"; else ln -sf "$f" "$W/dex/classes$A.dex"; fi
+done
+K=0
+for f in "$CACHE/dexlib"/classes*.dex; do
+  [ -e "$f" ] || continue
+  K=$((K + 1)); N=$((A + K))
+  ln -sf "$f" "$W/dex/classes$N.dex"
+done
+echo "   dex：工程 $A 个 ＋ 依赖 $K 个（classes.dex 起连续编号）"
+DEXCSV=""
+for f in $W/dex/classes*.dex; do DEXCSV="$DEXCSV,$f"; done
+DEXCSV=${DEXCSV#,}
+JNI="-"
+[ -d "$KEEP/jni" ] && JNI="$KEEP/jni"
+[ -d "$SB/jni" ] && JNI="$SB/jni"
+if [ -n "$AARJNI" ] || [ -d "$SB/jni" ]; then
+  mkdir -p "$W/alibs"
+  [ -d "$KEEP/jni" ] && cp -rp "$KEEP/jni/." "$W/alibs/"
+  [ -d "$SB/jni" ] && cp -rp "$SB/jni/." "$W/alibs/"
+  for d in $AARJNI; do mkdir -p "$W/alibs/lib"; cp -rp "$d/jni/." "$W/alibs/lib/" 2>/dev/null || true; done
+  JNI="$W/alibs"
+  echo "   jni：已合并（$JNI）"
+fi
+CLASSPATH=$TC/dex/buildtool.dex $APP /system/bin BuildTool $W/base.apk $W/unsigned.apk "$DEXCSV" "$JNI"
+ls -l $W/unsigned.apk
+
+# ── 签名 ──
+step "7) 签名（release）"
+KS="${KS:-/sdcard/手机通道/备份/Reticle-签名/reticle-release.p12}"
+KD="${KD:-/sdcard/手机通道/备份/Reticle-签名/钥匙说明.txt}"
+KA="${KA:-reticle}"
+KP="${KP:-$(grep -m1 '^口令=' "$KD" 2>/dev/null | cut -d= -f2-)}"
+if [ -n "$KP" ] && [ -f "$KS" ]; then
+  echo "    用 release 钥匙：$KS"
+  CLASSPATH=$TC/dex/apksigner.dex $APP /system/bin $SIGN sign \
+    --ks "$KS" --ks-type PKCS12 --ks-key-alias "$KA" \
+    --ks-pass "pass:$KP" --key-pass "pass:$KP" \
+    --out $W/signed.apk $W/unsigned.apk
+else
+  echo "    ！找不到 release 钥匙或口令 → 回退 debug 签名（正式发布别这样）"
+  CLASSPATH=$TC/dex/apksigner.dex $APP /system/bin $SIGN sign \
+    --ks "${DEBUG_KS:-$TC/debug.p12}" --ks-type PKCS12 --ks-pass pass:android --key-pass pass:android \
+    --out $W/signed.apk $W/unsigned.apk
+fi
+ls -l $W/signed.apk
+
+step "7b) 自证：apksigner verify"
+CLASSPATH=$TC/dex/apksigner.dex $APP /system/bin $SIGN verify --print-certs $W/signed.apk
+
+step "8) 产物"
+mkdir -p /sdcard/workbench/构建/输出; cp $W/signed.apk "/sdcard/workbench/构建/输出/$OUTNAME"
+ls -l "/sdcard/workbench/构建/输出/$OUTNAME"; sha256sum "/sdcard/workbench/构建/输出/$OUTNAME"
+echo "== 完 $(date '+%H:%M:%S') 总 $(( $(date +%s) - T0 ))s =="
+[ -n "$SKIP" ] && echo "   本次跳过：$SKIP"
+exit 0

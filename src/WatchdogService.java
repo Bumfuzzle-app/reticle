@@ -1,1 +1,175 @@
-cGFja2FnZSBhcHAucmV0aWNsZTsKCmltcG9ydCBhbmRyb2lkLmFwcC5Ob3RpZmljYXRpb247CmltcG9ydCBhbmRyb2lkLmFwcC5Ob3RpZmljYXRpb25DaGFubmVsOwppbXBvcnQgYW5kcm9pZC5hcHAuTm90aWZpY2F0aW9uTWFuYWdlcjsKaW1wb3J0IGFuZHJvaWQuYXBwLlBlbmRpbmdJbnRlbnQ7CmltcG9ydCBhbmRyb2lkLmFwcC5TZXJ2aWNlOwppbXBvcnQgYW5kcm9pZC5jb250ZW50LkNvbnRleHQ7CmltcG9ydCBhbmRyb2lkLmNvbnRlbnQuSW50ZW50OwppbXBvcnQgYW5kcm9pZC5vcy5CdWlsZDsKaW1wb3J0IGFuZHJvaWQub3MuSUJpbmRlcjsKCi8qKgogKiAyNyDlj7fljZUgwrcg55yL6Zeo54uX5YmN5Y+w5pyN5YqhCiAqCiAqIOS4uuS7gOS5iOmcgOimgeWug++8iDIwMjYtMTAtMDcg5a6e5rWL5pWZ6K6t77yJ77yaCiAqIOaXoOmanOeijeacjeWKoeS4gOiiq+ezu+e7n+aRmOaOie+8jFJldGljbGUg6L+Z5Liq6L+b56iL5bCx5LuO44CM5pyN5Yqh6L+b56iL44CN5o6J5oiQ44CM56m66L+b56iL44CN77yM5LyY5YWI57qn5LiA6JC977yMCiAqIOezu+e7n+WcqOS4gOWIhumSn+WGheWwseaKiuWug+aUtui1sOKAlOKAlOeci+mXqOeLl++8iOWQjOS4gOS4qui/m+eoi+mHjOeahOe6v+eoi++8iemaj+S5i+atu+aOie+8jOS6juaYr+OAjOeci+edgOiHquW3seiiq+WFs++8jAogKiDljbTmnaXkuI3lj4rljrvlvIDjgI3jgILmjILkuIrliY3lj7DmnI3liqHlkI7vvIzov5vnqIvkvJjlhYjnuqfmjqXov5HliY3lj7DlupTnlKjvvIznnIvpl6jni5fog73mkpHliLDkuIvkuIDova7mo4Dmn6XvvIwKICog5oqK5peg6Zqc56KN5byA5Zue5p2l44CCCiAqCiAqIOWPquWBmuS4gOS7tuS6i++8muiuqeeci+mXqOeLl+a0u+edgO+8iOWJjeWPsOmAmuefpSArIEExMXlXYXRjaGRvZy5zdGFydO+8ie+8m+S4jeeisOWIq+eahOiuvue9ruOAggogKgogKiA1MiDlj7fljZXliqDkuoblm5vku7bkuovvvIjpg73lnKjkuIvpnaLmoIfkuoYgNTLvvInvvJoKICogICDikaAg44CM55So5oi35Li75Yqo5YiS5o6JIO+8nSDlgZzjgI3vvJpvblRhc2tSZW1vdmVk77yI5Y+q5pyJ5LuO5pyA6L+R5Lu75Yqh5YiS5o6J5omN5Zue6LCD77yJ4oaSIOe9ruOAjOeUqOaIt+W3suWBnOOAjQogKiAgICAgIO+8i+S4u+WKqOWBnOaJi++8i3N0b3BTZWxm77yMKirkuI3lho3oh6rliqjlm57mnaUqKu+8iOW8gOacuuiHquWQr+S5n+S4jeimhuebluWug++8ie+8jOebtOWIsOeUqOaIt+aJi+WKqOaJk+W8gCBBcHDvvJsKICogICDikaEg44CM6KKr57O757uf5Zue5pS2IO+8nSDoh6rmhIjjgI3vvJrov5nmnaHot6/kuI3otbAgb25UYXNrUmVtb3ZlZO+8jOeFp+aXp+mdoCBTVEFSVF9TVElDS1kg5Zue5p2l77ybCiAqICAg4pGiIG9uVHJpbU1lbW9yeSDovazlj5Hnu5kgTWVtR3VhcmTvvIjlhoXlrZjoh6rkv53nmoTkuLvmjqXlhaXngrnvvJrns7vnu5/kuLvliqjlloror53vvIzmnIDlh4bmnIDnnIHnlLXvvInvvJsKICogICDikaMg5YmN5Y+w6YCa55+l5q2j5paH5bim5LiA5Y+l5YaF5a2Y5qGj5L2N77yI6K6pIuWug+WcqOiuqei3ryLov5nku7bkuovnnIvlvpfop4HvvInjgIIKICovCnB1YmxpYyBjbGFzcyBXYXRjaGRvZ1NlcnZpY2UgZXh0ZW5kcyBTZXJ2aWNlIHsKCiAgICAvKiog5YmN5Y+w6YCa55+l57yW5Y+377yI5LiO44CM55y857q/44CN6YKj5p2hIDEg5Y+36YCa55+l5YiG5byA77yM5YWN5b6X5LqS55u455uW77yJ44CCICovCiAgICBwdWJsaWMgc3RhdGljIGZpbmFsIGludCBOSUQgPSAyOwoKICAgIC8qKiAzNyDlj7fljZXvvJrkuIrnur/pgqPmnaHml6Xlv5flj6rlnKjnirbmgIHlj5jljJbml7blhpnkuIDmrKHvvIjlkIzkuIDlrp7kvovlj6rlhpnkuIDmnaHvvInvvIzlhY3lvpfliLflsY/jgIIgKi8KICAgIHByaXZhdGUgc3RhdGljIHZvbGF0aWxlIGJvb2xlYW4gdXBMb2dnZWQgPSBmYWxzZTsKCiAgICAvKiogNTIg5Y+35Y2V77ya5qGj5L2N5Y+Y5LqG6KaB5Yi35YmN5Y+w6YCa55+l77yM5omA5Lul55WZ5L2P5a6e5L6L44CCICovCiAgICBzdGF0aWMgdm9sYXRpbGUgV2F0Y2hkb2dTZXJ2aWNlIElOU1RBTkNFID0gbnVsbDsKCiAgICAvLyDilIDilIDilIDilIDilIDilIDilIDilIDilIAgNTIg5Y+35Y2VIMK3IOOAjOeUqOaIt+W3suWBnOOAjeagh+W/l++8iOWtmCBTUO+8mui/m+eoi+atu+S6huS5n+iusOW+l++8iSDilIDilIDilIDilIDilIDilIDilIDilIDilIAKICAgIHByaXZhdGUgc3RhdGljIGZpbmFsIFN0cmluZyBQUkVGUyA9ICJzZXR0aW5ncyI7CiAgICBwcml2YXRlIHN0YXRpYyBmaW5hbCBTdHJpbmcgS0VZX1VTRVJfU1RPUFBFRCA9ICJ1c2VyX3N0b3BwZWQiOwoKICAgIC8qKiDnlKjmiLfmmK/lkKblt7Lnu4/mmI7noa7lgZzov4fvvIjku47mnIDov5Hku7vliqHliJLmjonvvInjgIIgKi8KICAgIHB1YmxpYyBzdGF0aWMgYm9vbGVhbiBpc1VzZXJTdG9wcGVkKENvbnRleHQgYykgewogICAgICAgIHRyeSB7IHJldHVybiBjLmdldFNoYXJlZFByZWZlcmVuY2VzKFBSRUZTLCBDb250ZXh0Lk1PREVfUFJJVkFURSkuZ2V0Qm9vbGVhbihLRVlfVVNFUl9TVE9QUEVELCBmYWxzZSk7IH0KICAgICAgICBjYXRjaCAoVGhyb3dhYmxlIHQpIHsgcmV0dXJuIGZhbHNlOyB9CiAgICB9CgogICAgLyoqIOe9ru+8j+a4heOAjOeUqOaIt+W3suWBnOOAje+8mue9ruS4iu+8neS4jeWGjeiHquWKqOWbnuadpe+8m+a4heaOie+8neaJi+WKqOaJk+W8gCBBcHAg5LmL5ZCO5oGi5aSN44CCICovCiAgICBwdWJsaWMgc3RhdGljIHZvaWQgc2V0VXNlclN0b3BwZWQoQ29udGV4dCBjLCBib29sZWFuIHYpIHsKICAgICAgICB0cnkgeyBjLmdldFNoYXJlZFByZWZlcmVuY2VzKFBSRUZTLCBDb250ZXh0Lk1PREVfUFJJVkFURSkuZWRpdCgpLnB1dEJvb2xlYW4oS0VZX1VTRVJfU1RPUFBFRCwgdikuYXBwbHkoKTsgfQogICAgICAgIGNhdGNoIChUaHJvd2FibGUgdCkgeyB9CiAgICB9CgogICAgLyoqIOW5guetieaLiei1t++8mkFuZHJvaWQgOCsg6LWwIHN0YXJ0Rm9yZWdyb3VuZFNlcnZpY2XvvJvlpLHotKXvvIjlpoLlkI7lj7DpmZDliLbvvInpgIDljJbkuLrmma7pgJrmnI3liqHjgIIKICAgICAqICA1MiDlj7fljZXvvJrjgIznlKjmiLflt7LlgZzjgI3mnJ/pl7TkuIDlvovkuI3mi4nvvIjlvIDmnLroh6rlkK/jgIHoo4XljIXlm57osIPpg73otbDov5nph4zvvIzkuIDlubbmjKHkvY/vvInjgIIgKi8KICAgIHB1YmxpYyBzdGF0aWMgdm9pZCBlbnN1cmUoQ29udGV4dCBjKSB7CiAgICAgICAgdHJ5IHsgaWYgKGlzVXNlclN0b3BwZWQoYykpIHJldHVybjsgfSBjYXRjaCAoVGhyb3dhYmxlIHQpIHsgfQogICAgICAgIHRyeSB7CiAgICAgICAgICAgIEludGVudCBpID0gbmV3IEludGVudChjLCBXYXRjaGRvZ1NlcnZpY2UuY2xhc3MpOwogICAgICAgICAgICBpZiAoQnVpbGQuVkVSU0lPTi5TREtfSU5UID49IDI2KSBjLnN0YXJ0Rm9yZWdyb3VuZFNlcnZpY2UoaSk7IGVsc2UgYy5zdGFydFNlcnZpY2UoaSk7CiAgICAgICAgfSBjYXRjaCAoVGhyb3dhYmxlIHQpIHsKICAgICAgICAgICAgdHJ5IHsgYy5zdGFydFNlcnZpY2UobmV3IEludGVudChjLCBXYXRjaGRvZ1NlcnZpY2UuY2xhc3MpKTsgfSBjYXRjaCAoVGhyb3dhYmxlIHQyKSB7IH0KICAgICAgICB9CiAgICB9CgogICAgLyoqIDI4IOWPt+WNlSDCtyDkuIDplK7lgZzmnLrnlKjvvJrmiorliY3lj7DlrojmiqTmnI3liqHlgZzmjokgKi8KICAgIHB1YmxpYyBzdGF0aWMgdm9pZCBzdG9wKENvbnRleHQgYykgewogICAgICAgIHRyeSB7IGMuc3RvcFNlcnZpY2UobmV3IEludGVudChjLCBXYXRjaGRvZ1NlcnZpY2UuY2xhc3MpKTsgfSBjYXRjaCAoVGhyb3dhYmxlIHQpIHsgfQogICAgfQoKICAgIEBPdmVycmlkZSBwdWJsaWMgdm9pZCBvbkNyZWF0ZSgpIHsKICAgICAgICBzdXBlci5vbkNyZWF0ZSgpOwogICAgICAgIElOU1RBTkNFID0gdGhpczsKICAgICAgICB0cnkgeyBOb3RpZmllci5wdXJnZUxlZ2FjeU1lZGlhKHRoaXMpOyB9IGNhdGNoIChUaHJvd2FibGUgdCkgeyB9ICAgLy8gNzIg5Y+35Y2V77ya5ZCv5Yqo5riF5o6J5pen5aqS5L2T6YKj5p2h77yIaWQ9Oe+8ie+8i+aXp+a4oOmBkyB5aXRvbmdfbWVkaWEKICAgICAgICB1cCgpOwogICAgfQoKICAgIEBPdmVycmlkZSBwdWJsaWMgaW50IG9uU3RhcnRDb21tYW5kKEludGVudCBpbnRlbnQsIGludCBmbGFncywgaW50IHN0YXJ0SWQpIHsKICAgICAgICB1cCgpOwogICAgICAgIHJldHVybiBTVEFSVF9TVElDS1k7CiAgICB9CgogICAgQE92ZXJyaWRlIHB1YmxpYyBJQmluZGVyIG9uQmluZChJbnRlbnQgaW50ZW50KSB7IHJldHVybiBudWxsOyB9CgogICAgQE92ZXJyaWRlIHB1YmxpYyB2b2lkIG9uRGVzdHJveSgpIHsgdXBMb2dnZWQgPSBmYWxzZTsgSU5TVEFOQ0UgPSBudWxsOyBzdXBlci5vbkRlc3Ryb3koKTsgfQoKICAgIC8qKgogICAgICogNTIg5Y+35Y2VIOKRoO+8muOAjOeUqOaIt+S4u+WKqOWIkuaOiSDvvJ0g5YGc44CN44CC5Y+q5pyJIuS7juacgOi/keS7u+WKoemHjOWIkuaOieacrOW6lOeUqCLmiY3kvJrlm57osIPov5nph4zvvIwKICAgICAqIOiiq+ezu+e7n+WGheWtmOWbnuaUtuS4jei1sOi/meadoei3r++8iOmCo+adoeS7jemdoCBTVEFSVF9TVElDS1kg6Ieq5oSI77yJ44CCCiAgICAgKi8KICAgIEBPdmVycmlkZSBwdWJsaWMgdm9pZCBvblRhc2tSZW1vdmVkKEludGVudCByb290SW50ZW50KSB7CiAgICAgICAgdHJ5IHsKICAgICAgICAgICAgc2V0VXNlclN0b3BwZWQodGhpcywgdHJ1ZSk7CiAgICAgICAgICAgIEExMXlXYXRjaGRvZy5sb2codGhpcywgIueUqOaIt+WcqOacgOi/keS7u+WKoemHjOWIkuaOieS6hiBSZXRpY2xlIOKHkiDlhajpg6jlgZzmiYsiCiAgICAgICAgICAgICAgICAgICAgKyAi77yI55yL6Zeo54uX77yP5YaF5a2Y6Ieq5L+d77yP5pys5Zyw5pyN5Yqh6YO95YGc77yb5byA5py66Ieq5ZCv5Lmf5LiN6KaG55uW77yM5omL5Yqo5omT5byAIEFwcCDmiY3mgaLlpI3vvIkiKTsKICAgICAgICAgICAgdHJ5IHsgQTExeVdhdGNoZG9nLnN0b3BMb29wKHRoaXMpOyB9IGNhdGNoIChUaHJvd2FibGUgdCkgeyB9CiAgICAgICAgICAgIHRyeSB7IE1lbUd1YXJkLnN0b3BMb29wKHRoaXMpOyB9IGNhdGNoIChUaHJvd2FibGUgdCkgeyB9CiAgICAgICAgICAgIHRyeSB7IE1jcFNlcnZlci5zdG9wKHRoaXMpOyB9IGNhdGNoIChUaHJvd2FibGUgdCkgeyB9CiAgICAgICAgICAgIHRyeSB7IHN0b3BGb3JlZ3JvdW5kKHRydWUpOyB9IGNhdGNoIChUaHJvd2FibGUgdCkgeyB9CiAgICAgICAgfSBjYXRjaCAoVGhyb3dhYmxlIHQpIHsgfQogICAgICAgIHRyeSB7IHN0b3BTZWxmKCk7IH0gY2F0Y2ggKFRocm93YWJsZSB0KSB7IH0KICAgICAgICBzdXBlci5vblRhc2tSZW1vdmVkKHJvb3RJbnRlbnQpOwogICAgfQoKICAgIC8qKiA1MiDlj7fljZUg4pGi77ya5YaF5a2Y6Ieq5L+d55qE5Li75o6l5YWl54K54oCU4oCU57O757uf5Li75Yqo5ZaK6K+d77yM6L2s57uZIE1lbUd1YXJk44CCICovCiAgICBAT3ZlcnJpZGUgcHVibGljIHZvaWQgb25UcmltTWVtb3J5KGludCBsZXZlbCkgewogICAgICAgIHN1cGVyLm9uVHJpbU1lbW9yeShsZXZlbCk7CiAgICAgICAgdHJ5IHsgTWVtR3VhcmQub25UcmltKHRoaXMsIGxldmVsKTsgfSBjYXRjaCAoVGhyb3dhYmxlIHQpIHsgfQogICAgfQoKICAgIHByaXZhdGUgdm9pZCB1cCgpIHsKICAgICAgICAvLyA1MiDlj7fljZXvvJror7Tov4ci5YGcIuWwseS4jeWGjei1t+adpe+8iHN0aWNreSDooqvns7vnu5/mi4notbfjgIHmiJbliKvlpITosIMgZW5zdXJlIOaXtumDvei1sOi/meWEv+aMoeS4gOmBk++8ieOAggogICAgICAgIGlmIChpc1VzZXJTdG9wcGVkKHRoaXMpKSB7CiAgICAgICAgICAgIHRyeSB7IEExMXlXYXRjaGRvZy5sb2codGhpcywgIuacjeWKoeiiq+aLiei1t++8jOS9huOAjOeUqOaIt+W3suWBnOOAjeKHkiDnq4vliLvpgIDkuIvvvIjkuI3oh6rliqjlm57mnaXvvIkiKTsgfSBjYXRjaCAoVGhyb3dhYmxlIHQpIHsgfQogICAgICAgICAgICB0cnkgeyBzdG9wU2VsZigpOyB9IGNhdGNoIChUaHJvd2FibGUgdCkgeyB9CiAgICAgICAgICAgIHJldHVybjsKICAgICAgICB9CiAgICAgICAgdHJ5IHsgY2hhbm5lbCgpOyB9IGNhdGNoIChUaHJvd2FibGUgdCkgeyB9CiAgICAgICAgdHJ5IHsKICAgICAgICAgICAgc3RhcnRGb3JlZ3JvdW5kKE5JRCwgYnVpbGROb3RlKCkpOwogICAgICAgICAgICBpZiAoIXVwTG9nZ2VkKSB7IHVwTG9nZ2VkID0gdHJ1ZTsgQTExeVdhdGNoZG9nLmxvZyh0aGlzLCAi5YmN5Y+w5pyN5Yqh5bey5LiK57q/77yI6YCa55+lICIgKyBOSUQgKyAi77yJIik7IH0KICAgICAgICB9IGNhdGNoIChUaHJvd2FibGUgdCkgewogICAgICAgICAgICBBMTF5V2F0Y2hkb2cubG9nKHRoaXMsICLliY3lj7DmnI3liqHlkK/liqjlpLHotKXvvJoiICsgdCk7CiAgICAgICAgfQogICAgICAgIHRyeSB7IEExMXlXYXRjaGRvZy5zdGFydCh0aGlzKTsgfSBjYXRjaCAoVGhyb3dhYmxlIHQpIHsgfQogICAgICAgIHRyeSB7IE1lbUd1YXJkLnN0YXJ0KHRoaXMpOyB9IGNhdGNoIChUaHJvd2FibGUgdCkgeyB9CiAgICAgICAgdHJ5IHsgTWNwU2VydmVyLnN0YXJ0KHRoaXMpOyB9IGNhdGNoIChUaHJvd2FibGUgdCkgeyB9CiAgICB9CgogICAgLyoqIDUyIOWPt+WNlSDikaPvvJrpgJrnn6XmraPmlofvvJ3luLjmgIHpgqPlj6Ug77yL77yI6K6p6Lev5qGj5pe277yJ5LiA5Y+l5Lq66K+d44CCICovCiAgICBwcml2YXRlIE5vdGlmaWNhdGlvbiBidWlsZE5vdGUoKSB7CiAgICAgICAgTm90aWZpY2F0aW9uLkJ1aWxkZXIgYiA9IChCdWlsZC5WRVJTSU9OLlNES19JTlQgPj0gMjYpCiAgICAgICAgICAgICAgICA/IG5ldyBOb3RpZmljYXRpb24uQnVpbGRlcih0aGlzLCBOb3RpZmllci5DSF9TVEFUKSA6IG5ldyBOb3RpZmljYXRpb24uQnVpbGRlcih0aGlzKTsKICAgICAgICBiLnNldFNtYWxsSWNvbihSLmRyYXdhYmxlLmljX3N0YXRfbm90aWZ5KTsKICAgICAgICBiLnNldENvbnRlbnRUaXRsZShXb3Jkcy5OVF9ERUZfVElUTEUpOwogICAgICAgIFN0cmluZyB0eHQgPSBXb3Jkcy5OVF9XRF9URVhUOwogICAgICAgIHRyeSB7IHR4dCA9IHR4dCArIE1lbUd1YXJkLm5vdGVTdWZmaXgoKTsgfSBjYXRjaCAoVGhyb3dhYmxlIHQpIHsgfQogICAgICAgIGIuc2V0Q29udGVudFRleHQodHh0KTsKICAgICAgICBiLnNldE9uZ29pbmcodHJ1ZSk7CiAgICAgICAgYi5zZXRTaG93V2hlbihmYWxzZSk7CiAgICAgICAgYi5zZXRPbmx5QWxlcnRPbmNlKHRydWUpOwogICAgICAgIHRyeSB7CiAgICAgICAgICAgIEludGVudCBpdCA9IG5ldyBJbnRlbnQodGhpcywgTWFpbkFjdGl2aXR5LmNsYXNzKTsKICAgICAgICAgICAgaXQuYWRkRmxhZ3MoSW50ZW50LkZMQUdfQUNUSVZJVFlfTkVXX1RBU0spOwogICAgICAgICAgICBpbnQgZmwgPSBQZW5kaW5nSW50ZW50LkZMQUdfVVBEQVRFX0NVUlJFTlQ7CiAgICAgICAgICAgIGlmIChCdWlsZC5WRVJTSU9OLlNES19JTlQgPj0gMjMpIGZsIHw9IFBlbmRpbmdJbnRlbnQuRkxBR19JTU1VVEFCTEU7CiAgICAgICAgICAgIGIuc2V0Q29udGVudEludGVudChQZW5kaW5nSW50ZW50LmdldEFjdGl2aXR5KHRoaXMsIDAsIGl0LCBmbCkpOwogICAgICAgIH0gY2F0Y2ggKFRocm93YWJsZSB0KSB7IH0KICAgICAgICByZXR1cm4gYi5idWlsZCgpOwogICAgfQoKICAgIC8qKiA1MiDlj7fljZXvvJrlhoXlrZjmoaPkvY3lj5jkuoYg4oaSIOWPquWIt+WJjeWPsOmCo+adoemAmuefpeeahOato+aWh++8iOS4jeaWsOW7uumAmuefpeOAgeS4jeWTjeS4jemch++8ieOAgiAqLwogICAgc3RhdGljIHZvaWQgcmVmcmVzaE5vdGUoQ29udGV4dCBjdHgpIHsKICAgICAgICB0cnkgewogICAgICAgICAgICBXYXRjaGRvZ1NlcnZpY2UgcyA9IElOU1RBTkNFOwogICAgICAgICAgICBpZiAocyA9PSBudWxsKSByZXR1cm47CiAgICAgICAgICAgIE5vdGlmaWNhdGlvbk1hbmFnZXIgbSA9IChOb3RpZmljYXRpb25NYW5hZ2VyKSBjdHguZ2V0U3lzdGVtU2VydmljZShDb250ZXh0Lk5PVElGSUNBVElPTl9TRVJWSUNFKTsKICAgICAgICAgICAgaWYgKG0gPT0gbnVsbCkgcmV0dXJuOwogICAgICAgICAgICBtLm5vdGlmeShOSUQsIHMuYnVpbGROb3RlKCkpOwogICAgICAgIH0gY2F0Y2ggKFRocm93YWJsZSB0KSB7IH0KICAgIH0KCiAgICBwcml2YXRlIHZvaWQgY2hhbm5lbCgpIHsKICAgICAgICBpZiAoQnVpbGQuVkVSU0lPTi5TREtfSU5UIDwgMjYpIHJldHVybjsKICAgICAgICBOb3RpZmljYXRpb25NYW5hZ2VyIG0gPSAoTm90aWZpY2F0aW9uTWFuYWdlcikgZ2V0U3lzdGVtU2VydmljZShDb250ZXh0Lk5PVElGSUNBVElPTl9TRVJWSUNFKTsKICAgICAgICBpZiAobSA9PSBudWxsKSByZXR1cm47CiAgICAgICAgTm90aWZpY2F0aW9uQ2hhbm5lbCBhID0gbmV3IE5vdGlmaWNhdGlvbkNoYW5uZWwoTm90aWZpZXIuQ0hfU1RBVCwgV29yZHMuTlRfQ0hfU1RBVCwgTm90aWZpY2F0aW9uTWFuYWdlci5JTVBPUlRBTkNFX0xPVyk7CiAgICAgICAgYS5zZXREZXNjcmlwdGlvbihXb3Jkcy5OVF9DSF9TVEFUX0QpOwogICAgICAgIG0uY3JlYXRlTm90aWZpY2F0aW9uQ2hhbm5lbChhKTsKICAgIH0KfQo=
+package app.reticle;
+
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.app.Service;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Build;
+import android.os.IBinder;
+
+/**
+ * 27 号单 · 看门狗前台服务
+ *
+ * 为什么需要它（2026-10-07 实测教训）：
+ * 无障碍服务一被系统摘掉，Reticle 这个进程就从「服务进程」掉成「空进程」，优先级一落，
+ * 系统在一分钟内就把它收走——看门狗（同一个进程里的线程）随之死掉，于是「看着自己被关，
+ * 却来不及去开」。挂上前台服务后，进程优先级接近前台应用，看门狗能撑到下一轮检查，
+ * 把无障碍开回来。
+ *
+ * 只做一件事：让看门狗活着（前台通知 + A11yWatchdog.start）；不碰别的设置。
+ *
+ * 52 号单加了四件事（都在下面标了 52）：
+ *   ① 「用户主动划掉 ＝ 停」：onTaskRemoved（只有从最近任务划掉才回调）→ 置「用户已停」
+ *      ＋主动停手＋stopSelf，**不再自动回来**（开机自启也不覆盖它），直到用户手动打开 App；
+ *   ② 「被系统回收 ＝ 自愈」：这条路不走 onTaskRemoved，照旧靠 START_STICKY 回来；
+ *   ③ onTrimMemory 转发给 MemGuard（内存自保的主接入点：系统主动喊话，最准最省电）；
+ *   ④ 前台通知正文带一句内存档位（让"它在让路"这件事看得见）。
+ */
+public class WatchdogService extends Service {
+
+    /** 前台通知编号（与「眼线」那条 1 号通知分开，免得互相盖）。 */
+    public static final int NID = 2;
+
+    /** 37 号单：上线那条日志只在状态变化时写一次（同一实例只写一条），免得刷屏。 */
+    private static volatile boolean upLogged = false;
+
+    /** 52 号单：档位变了要刷前台通知，所以留住实例。 */
+    static volatile WatchdogService INSTANCE = null;
+
+    // ───────── 52 号单 · 「用户已停」标志（存 SP：进程死了也记得） ─────────
+    private static final String PREFS = "settings";
+    private static final String KEY_USER_STOPPED = "user_stopped";
+
+    /** 用户是否已经明确停过（从最近任务划掉）。 */
+    public static boolean isUserStopped(Context c) {
+        try { return c.getSharedPreferences(PREFS, Context.MODE_PRIVATE).getBoolean(KEY_USER_STOPPED, false); }
+        catch (Throwable t) { return false; }
+    }
+
+    /** 置／清「用户已停」：置上＝不再自动回来；清掉＝手动打开 App 之后恢复。 */
+    public static void setUserStopped(Context c, boolean v) {
+        try { c.getSharedPreferences(PREFS, Context.MODE_PRIVATE).edit().putBoolean(KEY_USER_STOPPED, v).apply(); }
+        catch (Throwable t) { }
+    }
+
+    /** 幂等拉起：Android 8+ 走 startForegroundService；失败（如后台限制）退化为普通服务。
+     *  52 号单：「用户已停」期间一律不拉（开机自启、装包回调都走这里，一并挡住）。 */
+    public static void ensure(Context c) {
+        try { if (isUserStopped(c)) return; } catch (Throwable t) { }
+        try {
+            Intent i = new Intent(c, WatchdogService.class);
+            if (Build.VERSION.SDK_INT >= 26) c.startForegroundService(i); else c.startService(i);
+        } catch (Throwable t) {
+            try { c.startService(new Intent(c, WatchdogService.class)); } catch (Throwable t2) { }
+        }
+    }
+
+    /** 28 号单 · 一键停机用：把前台守护服务停掉 */
+    public static void stop(Context c) {
+        try { c.stopService(new Intent(c, WatchdogService.class)); } catch (Throwable t) { }
+    }
+
+    @Override public void onCreate() {
+        super.onCreate();
+        INSTANCE = this;
+        try { Notifier.purgeLegacyMedia(this); } catch (Throwable t) { }   // 72 号单：启动清掉旧媒体那条（id=9）＋旧渠道 yitong_media
+        up();
+    }
+
+    @Override public int onStartCommand(Intent intent, int flags, int startId) {
+        up();
+        return START_STICKY;
+    }
+
+    @Override public IBinder onBind(Intent intent) { return null; }
+
+    @Override public void onDestroy() { upLogged = false; INSTANCE = null; super.onDestroy(); }
+
+    /**
+     * 52 号单 ①：「用户主动划掉 ＝ 停」。只有"从最近任务里划掉本应用"才会回调这里，
+     * 被系统内存回收不走这条路（那条仍靠 START_STICKY 自愈）。
+     */
+    @Override public void onTaskRemoved(Intent rootIntent) {
+        try {
+            setUserStopped(this, true);
+            A11yWatchdog.log(this, "用户在最近任务里划掉了 Reticle ⇒ 全部停手"
+                    + "（看门狗／内存自保／本地服务都停；开机自启也不覆盖，手动打开 App 才恢复）");
+            try { A11yWatchdog.stopLoop(this); } catch (Throwable t) { }
+            try { MemGuard.stopLoop(this); } catch (Throwable t) { }
+            try { McpServer.stop(this); } catch (Throwable t) { }
+            try { stopForeground(true); } catch (Throwable t) { }
+        } catch (Throwable t) { }
+        try { stopSelf(); } catch (Throwable t) { }
+        super.onTaskRemoved(rootIntent);
+    }
+
+    /** 52 号单 ③：内存自保的主接入点——系统主动喊话，转给 MemGuard。 */
+    @Override public void onTrimMemory(int level) {
+        super.onTrimMemory(level);
+        try { MemGuard.onTrim(this, level); } catch (Throwable t) { }
+    }
+
+    private void up() {
+        // 52 号单：说过"停"就不再起来（sticky 被系统拉起、或别处调 ensure 时都走这儿挡一道）。
+        if (isUserStopped(this)) {
+            try { A11yWatchdog.log(this, "服务被拉起，但「用户已停」⇒ 立刻退下（不自动回来）"); } catch (Throwable t) { }
+            try { stopSelf(); } catch (Throwable t) { }
+            return;
+        }
+        try { channel(); } catch (Throwable t) { }
+        try {
+            startForeground(NID, buildNote());
+            if (!upLogged) { upLogged = true; A11yWatchdog.log(this, "前台服务已上线（通知 " + NID + "）"); }
+        } catch (Throwable t) {
+            A11yWatchdog.log(this, "前台服务启动失败：" + t);
+        }
+        try { A11yWatchdog.start(this); } catch (Throwable t) { }
+        try { MemGuard.start(this); } catch (Throwable t) { }
+        try { McpServer.start(this); } catch (Throwable t) { }
+    }
+
+    /** 52 号单 ④：通知正文＝常态那句 ＋（让路档时）一句人话。 */
+    private Notification buildNote() {
+        Notification.Builder b = (Build.VERSION.SDK_INT >= 26)
+                ? new Notification.Builder(this, Notifier.CH_STAT) : new Notification.Builder(this);
+        b.setSmallIcon(R.drawable.ic_stat_notify);
+        b.setContentTitle(Words.NT_DEF_TITLE);
+        String txt = Words.NT_WD_TEXT;
+        try { txt = txt + MemGuard.noteSuffix(); } catch (Throwable t) { }
+        b.setContentText(txt);
+        b.setOngoing(true);
+        b.setShowWhen(false);
+        b.setOnlyAlertOnce(true);
+        try {
+            Intent it = new Intent(this, MainActivity.class);
+            it.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            int fl = PendingIntent.FLAG_UPDATE_CURRENT;
+            if (Build.VERSION.SDK_INT >= 23) fl |= PendingIntent.FLAG_IMMUTABLE;
+            b.setContentIntent(PendingIntent.getActivity(this, 0, it, fl));
+        } catch (Throwable t) { }
+        return b.build();
+    }
+
+    /** 52 号单：内存档位变了 → 只刷前台那条通知的正文（不新建通知、不响不震）。 */
+    static void refreshNote(Context ctx) {
+        try {
+            WatchdogService s = INSTANCE;
+            if (s == null) return;
+            NotificationManager m = (NotificationManager) ctx.getSystemService(Context.NOTIFICATION_SERVICE);
+            if (m == null) return;
+            m.notify(NID, s.buildNote());
+        } catch (Throwable t) { }
+    }
+
+    private void channel() {
+        if (Build.VERSION.SDK_INT < 26) return;
+        NotificationManager m = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        if (m == null) return;
+        NotificationChannel a = new NotificationChannel(Notifier.CH_STAT, Words.NT_CH_STAT, NotificationManager.IMPORTANCE_LOW);
+        a.setDescription(Words.NT_CH_STAT_D);
+        m.createNotificationChannel(a);
+    }
+}

@@ -1,1 +1,8 @@
-PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSDnirbmgIHljaHCt+mAmuefpe+8iOmTg+mTm++8ieWNleiJsuefoumHj++8jOmaj+S4u+mimCB0aW50IC0tPgo8dmVjdG9yIHhtbG5zOmFuZHJvaWQ9Imh0dHA6Ly9zY2hlbWFzLmFuZHJvaWQuY29tL2Fway9yZXMvYW5kcm9pZCIKICAgIGFuZHJvaWQ6d2lkdGg9IjI0ZHAiIGFuZHJvaWQ6aGVpZ2h0PSIyNGRwIgogICAgYW5kcm9pZDp2aWV3cG9ydFdpZHRoPSIyNCIgYW5kcm9pZDp2aWV3cG9ydEhlaWdodD0iMjQiPgogIDxwYXRoIGFuZHJvaWQ6ZmlsbENvbG9yPSIjRkZGRkZGRkYiCiAgICAgIGFuZHJvaWQ6cGF0aERhdGE9Ik0xMiwyMmMxLjEsMCAyLC0wLjkgMiwtMmgtNGMwLDEuMSAwLjksMiAyLDJ6IE0xOCwxNnYtNWMwLC0zLjA3IC0xLjYzLC01LjY0IC00LjUsLTYuMzJMMTMuNSw0YzAsLTAuODMgLTAuNjcsLTEuNSAtMS41LC0xLjVTMTAuNSwzLjE3IDEwLjUsNHYwLjY4QzcuNjQsNS4zNiA2LDcuOTIgNiwxMXY1bC0yLDJ2MWgxNnYtMWwtMiwtMnoiLz4KPC92ZWN0b3I+Cg==
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 状态卡·通知（铃铛）单色矢量，随主题 tint -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp" android:height="24dp"
+    android:viewportWidth="24" android:viewportHeight="24">
+  <path android:fillColor="#FFFFFFFF"
+      android:pathData="M12,22c1.1,0 2,-0.9 2,-2h-4c0,1.1 0.9,2 2,2z M18,16v-5c0,-3.07 -1.63,-5.64 -4.5,-6.32L13.5,4c0,-0.83 -0.67,-1.5 -1.5,-1.5S10.5,3.17 10.5,4v0.68C7.64,5.36 6,7.92 6,11v5l-2,2v1h16v-1l-2,-2z"/>
+</vector>

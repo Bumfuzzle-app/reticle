@@ -1,1 +1,10 @@
-PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSDlvJXlr7znrKwgMSDmraXCt+i/nuaOpe+8iOWPjOeOr++8ieWNleiJsuefoumHj++8jOmaj+S4u+mimCB0aW50IC0tPgo8dmVjdG9yIHhtbG5zOmFuZHJvaWQ9Imh0dHA6Ly9zY2hlbWFzLmFuZHJvaWQuY29tL2Fway9yZXMvYW5kcm9pZCIKICAgIGFuZHJvaWQ6d2lkdGg9IjI0ZHAiIGFuZHJvaWQ6aGVpZ2h0PSIyNGRwIgogICAgYW5kcm9pZDp2aWV3cG9ydFdpZHRoPSIyNCIgYW5kcm9pZDp2aWV3cG9ydEhlaWdodD0iMjQiPgogIDxwYXRoIGFuZHJvaWQ6ZmlsbENvbG9yPSIjMDAwMDAwMDAiIGFuZHJvaWQ6c3Ryb2tlQ29sb3I9IiNGRkZGRkZGRiIgYW5kcm9pZDpzdHJva2VXaWR0aD0iMS45IgogICAgICBhbmRyb2lkOnBhdGhEYXRhPSJNOS41LDcuOCBhNC4yLDQuMiAwIDEsMCAwLDguNCBhNC4yLDQuMiAwIDEsMCAwLC04LjQiLz4KICA8cGF0aCBhbmRyb2lkOmZpbGxDb2xvcj0iIzAwMDAwMDAwIiBhbmRyb2lkOnN0cm9rZUNvbG9yPSIjRkZGRkZGRkYiIGFuZHJvaWQ6c3Ryb2tlV2lkdGg9IjEuOSIKICAgICAgYW5kcm9pZDpwYXRoRGF0YT0iTTE0LjUsNy44IGE0LjIsNC4yIDAgMSwwIDAsOC40IGE0LjIsNC4yIDAgMSwwIDAsLTguNCIvPgo8L3ZlY3Rvcj4K
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 引导第 1 步·连接（双环）单色矢量，随主题 tint -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp" android:height="24dp"
+    android:viewportWidth="24" android:viewportHeight="24">
+  <path android:fillColor="#00000000" android:strokeColor="#FFFFFFFF" android:strokeWidth="1.9"
+      android:pathData="M9.5,7.8 a4.2,4.2 0 1,0 0,8.4 a4.2,4.2 0 1,0 0,-8.4"/>
+  <path android:fillColor="#00000000" android:strokeColor="#FFFFFFFF" android:strokeWidth="1.9"
+      android:pathData="M14.5,7.8 a4.2,4.2 0 1,0 0,8.4 a4.2,4.2 0 1,0 0,-8.4"/>
+</vector>

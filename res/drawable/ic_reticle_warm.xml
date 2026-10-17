@@ -1,1 +1,21 @@
-PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSA3MyDlj7fljZUgwrcg6aKE572u5Zu+5qCH44CM5pqW5YWJ44CN55qE5YmN5pmv77ya5Yeg5L2V5LiO6buY6K6k5qy+6YCQ5YC85LiA6Ie077yM5o2i5oiQ5pqW5qmZIC0tPgo8dmVjdG9yIHhtbG5zOmFuZHJvaWQ9Imh0dHA6Ly9zY2hlbWFzLmFuZHJvaWQuY29tL2Fway9yZXMvYW5kcm9pZCIKICAgIGFuZHJvaWQ6d2lkdGg9IjEwOGRwIgogICAgYW5kcm9pZDpoZWlnaHQ9IjEwOGRwIgogICAgYW5kcm9pZDp2aWV3cG9ydFdpZHRoPSIxMDgiCiAgICBhbmRyb2lkOnZpZXdwb3J0SGVpZ2h0PSIxMDgiPgogICAgPHBhdGgKICAgICAgICBhbmRyb2lkOnBhdGhEYXRhPSJNNTQsMzAuNjcgTDU0LDIxLjYgTTU0LDc3LjMzIEw1NCw4Ni40IE0zMC42Nyw1NCBMMjEuNiw1NCBNNzcuMzMsNTQgTDg2LjQsNTQiCiAgICAgICAgYW5kcm9pZDpzdHJva2VDb2xvcj0iI0ZGQjI3QSIKICAgICAgICBhbmRyb2lkOnN0cm9rZVdpZHRoPSI0LjAiCiAgICAgICAgYW5kcm9pZDpzdHJva2VMaW5lQ2FwPSJyb3VuZCIgLz4KICAgIDxwYXRoCiAgICAgICAgYW5kcm9pZDpwYXRoRGF0YT0iTTU0LDM5LjEwIGExNC45LDE0LjkgMCAxLDAgMCwyOS44IGExNC45LDE0LjkgMCAxLDAgMCwtMjkuOCIKICAgICAgICBhbmRyb2lkOmZpbGxDb2xvcj0iIzAwMDAwMDAwIgogICAgICAgIGFuZHJvaWQ6c3Ryb2tlQ29sb3I9IiNGRkIyN0EiCiAgICAgICAgYW5kcm9pZDpzdHJva2VXaWR0aD0iMy43IiAvPgogICAgPHBhdGgKICAgICAgICBhbmRyb2lkOnBhdGhEYXRhPSJNNTQsNDguNDkgYTUuNTEsNS41MSAwIDEsMCAwLDExLjAyIGE1LjUxLDUuNTEgMCAxLDAgMCwtMTEuMDIiCiAgICAgICAgYW5kcm9pZDpmaWxsQ29sb3I9IiNGRkIyN0EiIC8+CjwvdmVjdG9yPgo=
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 73 号单 · 预置图标「暖光」的前景：几何与默认款逐值一致，换成暖橙 -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <path
+        android:pathData="M54,30.67 L54,21.6 M54,77.33 L54,86.4 M30.67,54 L21.6,54 M77.33,54 L86.4,54"
+        android:strokeColor="#FFB27A"
+        android:strokeWidth="4.0"
+        android:strokeLineCap="round" />
+    <path
+        android:pathData="M54,39.10 a14.9,14.9 0 1,0 0,29.8 a14.9,14.9 0 1,0 0,-29.8"
+        android:fillColor="#00000000"
+        android:strokeColor="#FFB27A"
+        android:strokeWidth="3.7" />
+    <path
+        android:pathData="M54,48.49 a5.51,5.51 0 1,0 0,11.02 a5.51,5.51 0 1,0 0,-11.02"
+        android:fillColor="#FFB27A" />
+</vector>

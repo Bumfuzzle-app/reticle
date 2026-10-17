@@ -1,1 +1,162 @@
-cGFja2FnZSBhcHAucmV0aWNsZTsKCmltcG9ydCBhbmRyb2lkLmNvbnRlbnQuQ29tcG9uZW50TmFtZTsKaW1wb3J0IGFuZHJvaWQuY29udGVudC5Db250ZXh0OwppbXBvcnQgYW5kcm9pZC5jb250ZW50LkludGVudDsKaW1wb3J0IGFuZHJvaWQuY29udGVudC5wbS5QYWNrYWdlTWFuYWdlcjsKaW1wb3J0IGFuZHJvaWQuY29udGVudC5wbS5TaG9ydGN1dEluZm87CmltcG9ydCBhbmRyb2lkLmNvbnRlbnQucG0uU2hvcnRjdXRNYW5hZ2VyOwppbXBvcnQgYW5kcm9pZC5ncmFwaGljcy5CaXRtYXA7CmltcG9ydCBhbmRyb2lkLmdyYXBoaWNzLkJpdG1hcEZhY3Rvcnk7CmltcG9ydCBhbmRyb2lkLmdyYXBoaWNzLmRyYXdhYmxlLkljb247CmltcG9ydCBhbmRyb2lkLm5ldC5Vcmk7CgppbXBvcnQgamF2YS5pby5CeXRlQXJyYXlPdXRwdXRTdHJlYW07CmltcG9ydCBqYXZhLmlvLkZpbGU7CmltcG9ydCBqYXZhLmlvLkZpbGVPdXRwdXRTdHJlYW07CmltcG9ydCBqYXZhLmlvLklucHV0U3RyZWFtOwoKLyoqCiAqIDczIOWPt+WNle+8iDIwMjYtMTAtMTbvvInCtyDlupTnlKjlm77moIcKICoKICog4piF5oqA5pyv546w5a6e77yI5YaZ5q275Zyo5rOo6YeK6YeM77yM5YWN5b6X5ZCO5Lq65YaN57uV77yJ77ya6Z2eIHJvb3Qg5LiLKirlupTnlKjlm77moIfmnKzouqvkuI3og73ov5DooYzml7bmm7/mjaIqKuKAlOKAlAogKiAgIGBhbmRyb2lkOmljb25gIOS4jiBhY3Rpdml0eS1hbGlhcyDnmoQgaWNvbiDpg73mmK8qKue8luivkeacn+i1hOa6kCoq44CCCiAqICAg5omA5Lul6L+Z6YeM5Y+q5YGa5Lik5Lu255yf6IO95YGa5oiQ55qE5LqL77yaCiAqICAg4pGgKirpooTnva7mrL7liIfmjaIqKu+8mm1hbmlmZXN0IOmHjCA0IOS4qiBhY3Rpdml0eS1hbGlhc++8iOWQhOW4puS4gOWll+Wbvuagh++8ie+8jOeUqAogKiAgICAgYHNldENvbXBvbmVudEVuYWJsZWRTZXR0aW5nYCDlnKjlkIzkuIDml7bliLvlj6rlkK/nlKjkuIDkuKog4oeSIOahjOmdou+8j+acgOi/keS7u+WKoemHjCoq55yf55qE5o2i5Zu+5qCHKioKICogICAgIO+8iOS4jeeUqOmHjeijheOAgeS4jeaUueWMheWQje+8ieOAguKYhei/meWPqyLmjaLliKvlkI0i77yM55WM6Z2i5LiK5LiN6K645YaZ5oiQIuabtOaNouW6lOeUqOWbvuaghyLjgIIKICogICDikaEqKuS4iuS8oOeahOWbviDihpIg5qGM6Z2i5b+r5o235pa55byPKirvvJpgU2hvcnRjdXRJbmZvYCDvvIsgYHJlcXVlc3RQaW5TaG9ydGN1dGAg4oeSIOahjOmdouS4iuWkmuS4gOS4qgogKiAgICAg5bim6L+Z5byg5Zu+55qE5YWl5Y+j77yI6KaB55So5oi35Zyo57O757uf5by556qX6YeM54K556Gu6K6k77yJ44CC4piF6YKj5pivIuahjOmdouWFpeWPoyLvvIzkuI3mmK8i5bqU55So5Zu+5qCHIuOAggogKgogKiDpu5jorqTmrL7vvJ01NyDlj7fljZXpgqPlpZfvvIhgaWNfbGF1bmNoZXJg77yJ77yM5LiA5Liq5a2X5rKh5Yqo44CCCiAqLwpwdWJsaWMgY2xhc3MgSWNvbnMgewoKICAgIC8qKiA0IOS4quWIq+WQje+8iOmhuuW6j++8neeVjOmdouS4iuS7juW3puWIsOWPs++8iSAqLwogICAgcHVibGljIHN0YXRpYyBmaW5hbCBTdHJpbmdbXSBBTElBUyA9IHsgIi5JY29uRGVmYXVsdCIsICIuSWNvbkN5YW4iLCAiLkljb25NaW4iLCAiLkljb25XYXJtIiB9OwogICAgLyoqIOmihOiniOeUqOeahOWbvuagh+i1hOa6kCAqLwogICAgcHVibGljIHN0YXRpYyBmaW5hbCBpbnRbXSBQUkVWSUVXID0gewogICAgICAgICAgICBSLm1pcG1hcC5pY19sYXVuY2hlciwgUi5taXBtYXAuaWNfbGF1bmNoZXJfMiwgUi5taXBtYXAuaWNfbGF1bmNoZXJfMywgUi5taXBtYXAuaWNfbGF1bmNoZXJfNAogICAgfTsKICAgIC8qKiDliKvlkI3lr7nlupTnmoQgbGFiZWwg6LWE5rqQIGlk77yI77yd5qGM6Z2i5Zu+5qCH5LiL55qE5ZCN5a2X77yJICovCiAgICBwdWJsaWMgc3RhdGljIGZpbmFsIGludFtdIExBQkVMID0geyBSLnN0cmluZy5pY19sYWJfMCwgUi5zdHJpbmcuaWNfbGFiXzEsIFIuc3RyaW5nLmljX2xhYl8yLCBSLnN0cmluZy5pY19sYWJfMyB9OwoKICAgIHByaXZhdGUgc3RhdGljIENvbXBvbmVudE5hbWUgY24oQ29udGV4dCBjLCBpbnQgaSkgewogICAgICAgIHJldHVybiBuZXcgQ29tcG9uZW50TmFtZShjLmdldFBhY2thZ2VOYW1lKCksIGMuZ2V0UGFja2FnZU5hbWUoKSArIEFMSUFTW2ldKTsKICAgIH0KCiAgICAvKiog5b2T5YmN5ZCv55So5Lit55qE6YKj5LiA5qy+77yI5om+5LiN5Yiw77ydMO+8nem7mOiupOasvu+8m+S4jeaKm++8iSAqLwogICAgcHVibGljIHN0YXRpYyBpbnQgY3VycmVudChDb250ZXh0IGMpIHsKICAgICAgICB0cnkgewogICAgICAgICAgICBQYWNrYWdlTWFuYWdlciBwbSA9IGMuZ2V0UGFja2FnZU1hbmFnZXIoKTsKICAgICAgICAgICAgZm9yIChpbnQgaSA9IDA7IGkgPCBBTElBUy5sZW5ndGg7IGkrKykgewogICAgICAgICAgICAgICAgaW50IHN0ID0gcG0uZ2V0Q29tcG9uZW50RW5hYmxlZFNldHRpbmcoY24oYywgaSkpOwogICAgICAgICAgICAgICAgaWYgKHN0ID09IFBhY2thZ2VNYW5hZ2VyLkNPTVBPTkVOVF9FTkFCTEVEX1NUQVRFX0VOQUJMRUQpIHJldHVybiBpOwogICAgICAgICAgICB9CiAgICAgICAgfSBjYXRjaCAoVGhyb3dhYmxlIHQpIHsgfQogICAgICAgIHJldHVybiAwOwogICAgfQoKICAgIC8qKiDliIfliLDnrKwgaSDmrL7jgILov5Tlm57nu5nnlKjmiLfnnIvnmoTkuIDlj6Xor53vvIjmiJDlip/vvI/lpLHotKXpg73or7Tkurror53vvInjgIIgKi8KICAgIHB1YmxpYyBzdGF0aWMgU3RyaW5nIGFwcGx5KENvbnRleHQgYywgaW50IGkpIHsKICAgICAgICBpZiAoaSA8IDAgfHwgaSA+PSBBTElBUy5sZW5ndGgpIHJldHVybiBXb3Jkcy5DRl9NU0dfSUNPTl9GQUlMOwogICAgICAgIHRyeSB7CiAgICAgICAgICAgIFBhY2thZ2VNYW5hZ2VyIHBtID0gYy5nZXRQYWNrYWdlTWFuYWdlcigpOwogICAgICAgICAgICBTdHJpbmcgbmFtZSA9IGMuZ2V0U3RyaW5nKExBQkVMW2ldKTsKICAgICAgICAgICAgLy8g5YWI5oqK55uu5qCH5ZCv55So6LW35p2l77yM5YaN5YWz5o6J5YW25L2Z77yI6YG/5YWN5Lit6YCU5LiA5Liq5YWl5Y+j6YO95rKh5pyJ55qE56m656qX77yJCiAgICAgICAgICAgIHBtLnNldENvbXBvbmVudEVuYWJsZWRTZXR0aW5nKGNuKGMsIGkpLCBQYWNrYWdlTWFuYWdlci5DT01QT05FTlRfRU5BQkxFRF9TVEFURV9FTkFCTEVELAogICAgICAgICAgICAgICAgICAgIFBhY2thZ2VNYW5hZ2VyLkRPTlRfS0lMTF9BUFApOwogICAgICAgICAgICBmb3IgKGludCBqID0gMDsgaiA8IEFMSUFTLmxlbmd0aDsgaisrKSB7CiAgICAgICAgICAgICAgICBpZiAoaiA9PSBpKSBjb250aW51ZTsKICAgICAgICAgICAgICAgIHBtLnNldENvbXBvbmVudEVuYWJsZWRTZXR0aW5nKGNuKGMsIGopLCBQYWNrYWdlTWFuYWdlci5DT01QT05FTlRfRU5BQkxFRF9TVEFURV9ESVNBQkxFRCwKICAgICAgICAgICAgICAgICAgICAgICAgUGFja2FnZU1hbmFnZXIuRE9OVF9LSUxMX0FQUCk7CiAgICAgICAgICAgIH0KICAgICAgICAgICAgcmV0dXJuIFN0cmluZy5mb3JtYXQoV29yZHMuQ0ZfTVNHX0lDT05fRk1ULCBuYW1lKTsKICAgICAgICB9IGNhdGNoIChUaHJvd2FibGUgdCkgewogICAgICAgICAgICByZXR1cm4gV29yZHMuQ0ZfTVNHX0lDT05fRkFJTCArICLvvIgiICsgdCArICLvvIkiOwogICAgICAgIH0KICAgIH0KCiAgICAvLyDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIAg5LiK5Lyg5Zu+54mHIOKGkiDmoYzpnaLlv6vmjbfmlrnlvI8g4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSACgogICAgc3RhdGljIGZpbmFsIFN0cmluZyBTSE9SVENVVF9JRCA9ICJyZXRpY2xlX2N1c3RvbV9pY29uIjsKICAgIHN0YXRpYyBmaW5hbCBTdHJpbmcgSUNPTl9QTkcgPSAi5qGM6Z2i5Zu+5qCHLnBuZyI7CgogICAgLyoqCiAgICAgKiDmiornlKjmiLfmjJHnmoTlm74gKirlsYXkuK3oo4HmlrkqKu+8iOS4jeiuuOWPmOW9ou+8ieKGkiA1MTLDlzUxMiDihpIgcmVxdWVzdFBpblNob3J0Y3V044CCCiAgICAgKiDov5Tlm57kuIDlj6Xkurror53nu5nnlKjmiLfvvIjmiJDlip/kuZ/lj6rmmK/kuIDlj6Ui5bey6K+35rGC77yM5Y675qGM6Z2i56Gu6K6kIuKAlOKAlOecn+WHuueOsOimgeeUqOaIt+eCueezu+e7n+W8ueeql++8ieOAggogICAgICovCiAgICBwdWJsaWMgc3RhdGljIFN0cmluZyBwaW5TaG9ydGN1dChDb250ZXh0IGMsIEludGVudCBkYXRhKSB7CiAgICAgICAgaWYgKGRhdGEgPT0gbnVsbCB8fCBkYXRhLmdldERhdGEoKSA9PSBudWxsKSByZXR1cm4gV29yZHMuQ0ZfSUNPTl9QSU5fQ0FOQ0VMOwogICAgICAgIEJpdG1hcCBzcTsKICAgICAgICB0cnkgewogICAgICAgICAgICBzcSA9IGxvYWRTcXVhcmUoYywgZGF0YS5nZXREYXRhKCkpOwogICAgICAgIH0gY2F0Y2ggKFRvb0JpZyBlKSB7CiAgICAgICAgICAgIHJldHVybiBXb3Jkcy5DRl9JQ09OX1BJTl9UT09CSUc7CiAgICAgICAgfSBjYXRjaCAoVGhyb3dhYmxlIHQpIHsKICAgICAgICAgICAgcmV0dXJuIFdvcmRzLkNGX0lDT05fUElOX0JBRDsKICAgICAgICB9CiAgICAgICAgaWYgKHNxID09IG51bGwpIHJldHVybiBXb3Jkcy5DRl9JQ09OX1BJTl9CQUQ7CiAgICAgICAgLy8g55WZ5LiA5Lu977yI5LiL5qyh5oOz5YaN5re75Yqg77yP5o2i5o6J5pe25aW95om+77yb5pS+5Zyo5aSW6KeC5paH5Lu25aS577yM55So5oi36Ieq5bex5Yig5b6X5o6J77yJCiAgICAgICAgdHJ5IHsKICAgICAgICAgICAgRmlsZSBkID0gSG9tZS5zdWIoYywgIuWkluingiIpOwogICAgICAgICAgICBGaWxlIGYgPSBuZXcgRmlsZShkLCBJQ09OX1BORyk7CiAgICAgICAgICAgIEZpbGVPdXRwdXRTdHJlYW0gbyA9IG5ldyBGaWxlT3V0cHV0U3RyZWFtKGYpOwogICAgICAgICAgICBzcS5jb21wcmVzcyhCaXRtYXAuQ29tcHJlc3NGb3JtYXQuUE5HLCAxMDAsIG8pOwogICAgICAgICAgICBvLmNsb3NlKCk7CiAgICAgICAgfSBjYXRjaCAoVGhyb3dhYmxlIHQpIHsgfQogICAgICAgIHRyeSB7CiAgICAgICAgICAgIFNob3J0Y3V0TWFuYWdlciBzbSA9IChTaG9ydGN1dE1hbmFnZXIpIGMuZ2V0U3lzdGVtU2VydmljZShDb250ZXh0LlNIT1JUQ1VUX1NFUlZJQ0UpOwogICAgICAgICAgICBpZiAoc20gPT0gbnVsbCB8fCAhc20uaXNSZXF1ZXN0UGluU2hvcnRjdXRTdXBwb3J0ZWQoKSkgcmV0dXJuIFdvcmRzLkNGX0lDT05fUElOX05PU1VQOwogICAgICAgICAgICBJbnRlbnQgb3BlbiA9IG5ldyBJbnRlbnQoYywgTWFpbkFjdGl2aXR5LmNsYXNzKTsKICAgICAgICAgICAgb3Blbi5zZXRBY3Rpb24oSW50ZW50LkFDVElPTl9NQUlOKTsKICAgICAgICAgICAgb3Blbi5hZGRDYXRlZ29yeShJbnRlbnQuQ0FURUdPUllfTEFVTkNIRVIpOwogICAgICAgICAgICBTaG9ydGN1dEluZm8gaW5mbyA9IG5ldyBTaG9ydGN1dEluZm8uQnVpbGRlcihjLCBTSE9SVENVVF9JRCkKICAgICAgICAgICAgICAgICAgICAuc2V0U2hvcnRMYWJlbChjLmdldFN0cmluZyhSLnN0cmluZy5hcHBfbmFtZSkpCiAgICAgICAgICAgICAgICAgICAgLnNldExvbmdMYWJlbChjLmdldFN0cmluZyhSLnN0cmluZy5hcHBfbmFtZSkgKyAi77yI6Ieq5a6a5LmJ5Zu+5qCH77yJIikKICAgICAgICAgICAgICAgICAgICAuc2V0SWNvbihJY29uLmNyZWF0ZVdpdGhCaXRtYXAoc3EpKQogICAgICAgICAgICAgICAgICAgIC5zZXRJbnRlbnQob3BlbikKICAgICAgICAgICAgICAgICAgICAuYnVpbGQoKTsKICAgICAgICAgICAgYm9vbGVhbiBvayA9IHNtLnJlcXVlc3RQaW5TaG9ydGN1dChpbmZvLCBudWxsKTsKICAgICAgICAgICAgcmV0dXJuIG9rID8gV29yZHMuQ0ZfSUNPTl9QSU5fT0sgOiBXb3Jkcy5DRl9JQ09OX1BJTl9GQUlMOwogICAgICAgIH0gY2F0Y2ggKFRocm93YWJsZSB0KSB7CiAgICAgICAgICAgIHJldHVybiBXb3Jkcy5DRl9JQ09OX1BJTl9GQUlMICsgIu+8iCIgKyB0ICsgIu+8iSI7CiAgICAgICAgfQogICAgfQoKICAgIHN0YXRpYyBjbGFzcyBUb29CaWcgZXh0ZW5kcyBFeGNlcHRpb24geyB9CgogICAgc3RhdGljIEJpdG1hcCBsb2FkU3F1YXJlKENvbnRleHQgYywgVXJpIHUpIHRocm93cyBUaHJvd2FibGUgewogICAgICAgIElucHV0U3RyZWFtIGluID0gbnVsbDsKICAgICAgICB0cnkgewogICAgICAgICAgICBpbiA9IGMuZ2V0Q29udGVudFJlc29sdmVyKCkub3BlbklucHV0U3RyZWFtKHUpOwogICAgICAgICAgICBpZiAoaW4gPT0gbnVsbCkgdGhyb3cgbmV3IEV4Y2VwdGlvbigibm8gc3RyZWFtIik7CiAgICAgICAgICAgIEJ5dGVBcnJheU91dHB1dFN0cmVhbSBibyA9IG5ldyBCeXRlQXJyYXlPdXRwdXRTdHJlYW0oKTsKICAgICAgICAgICAgYnl0ZVtdIGJ1ZiA9IG5ldyBieXRlWzgxOTJdOwogICAgICAgICAgICBpbnQgbjsgbG9uZyB0b3QgPSAwTDsKICAgICAgICAgICAgd2hpbGUgKChuID0gaW4ucmVhZChidWYpKSA+IDApIHsKICAgICAgICAgICAgICAgIHRvdCArPSBuOwogICAgICAgICAgICAgICAgaWYgKHRvdCA+IDhMICogMTAyNCAqIDEwMjQpIHRocm93IG5ldyBUb29CaWcoKTsKICAgICAgICAgICAgICAgIGJvLndyaXRlKGJ1ZiwgMCwgbik7CiAgICAgICAgICAgIH0KICAgICAgICAgICAgYnl0ZVtdIGJ5dGVzID0gYm8udG9CeXRlQXJyYXkoKTsKICAgICAgICAgICAgQml0bWFwRmFjdG9yeS5PcHRpb25zIG8gPSBuZXcgQml0bWFwRmFjdG9yeS5PcHRpb25zKCk7CiAgICAgICAgICAgIG8uaW5KdXN0RGVjb2RlQm91bmRzID0gdHJ1ZTsKICAgICAgICAgICAgQml0bWFwRmFjdG9yeS5kZWNvZGVCeXRlQXJyYXkoYnl0ZXMsIDAsIGJ5dGVzLmxlbmd0aCwgbyk7CiAgICAgICAgICAgIGlmIChvLm91dFdpZHRoIDw9IDAgfHwgby5vdXRIZWlnaHQgPD0gMCkgcmV0dXJuIG51bGw7CiAgICAgICAgICAgIGludCBzYW1wbGUgPSAxOwogICAgICAgICAgICB3aGlsZSAoby5vdXRXaWR0aCAvIHNhbXBsZSA+IDEwMjQgfHwgby5vdXRIZWlnaHQgLyBzYW1wbGUgPiAxMDI0KSBzYW1wbGUgKj0gMjsKICAgICAgICAgICAgQml0bWFwRmFjdG9yeS5PcHRpb25zIG8yID0gbmV3IEJpdG1hcEZhY3RvcnkuT3B0aW9ucygpOwogICAgICAgICAgICBvMi5pblNhbXBsZVNpemUgPSBzYW1wbGU7CiAgICAgICAgICAgIEJpdG1hcCBiID0gQml0bWFwRmFjdG9yeS5kZWNvZGVCeXRlQXJyYXkoYnl0ZXMsIDAsIGJ5dGVzLmxlbmd0aCwgbzIpOwogICAgICAgICAgICBpZiAoYiA9PSBudWxsKSByZXR1cm4gbnVsbDsKICAgICAgICAgICAgaW50IHMgPSBNYXRoLm1pbihiLmdldFdpZHRoKCksIGIuZ2V0SGVpZ2h0KCkpOwogICAgICAgICAgICBpZiAocyA8PSAwKSByZXR1cm4gbnVsbDsKICAgICAgICAgICAgQml0bWFwIGN1dCA9IEJpdG1hcC5jcmVhdGVCaXRtYXAoYiwgKGIuZ2V0V2lkdGgoKSAtIHMpIC8gMiwgKGIuZ2V0SGVpZ2h0KCkgLSBzKSAvIDIsIHMsIHMpOwogICAgICAgICAgICBpZiAoY3V0LmdldFdpZHRoKCkgIT0gNTEyKSBjdXQgPSBCaXRtYXAuY3JlYXRlU2NhbGVkQml0bWFwKGN1dCwgNTEyLCA1MTIsIHRydWUpOwogICAgICAgICAgICByZXR1cm4gY3V0OwogICAgICAgIH0gZmluYWxseSB7CiAgICAgICAgICAgIHRyeSB7IGlmIChpbiAhPSBudWxsKSBpbi5jbG9zZSgpOyB9IGNhdGNoIChUaHJvd2FibGUgdCkgeyB9CiAgICAgICAgfQogICAgfQp9Cg==
+package app.reticle;
+
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ShortcutInfo;
+import android.content.pm.ShortcutManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Icon;
+import android.net.Uri;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+
+/**
+ * 73 号单（2026-10-16）· 应用图标
+ *
+ * ★技术现实（写死在注释里，免得后人再绕）：非 root 下**应用图标本身不能运行时替换**——
+ *   `android:icon` 与 activity-alias 的 icon 都是**编译期资源**。
+ *   所以这里只做两件真能做成的事：
+ *   ①**预置款切换**：manifest 里 4 个 activity-alias（各带一套图标），用
+ *     `setComponentEnabledSetting` 在同一时刻只启用一个 ⇒ 桌面／最近任务里**真的换图标**
+ *     （不用重装、不改包名）。★这叫"换别名"，界面上不许写成"更换应用图标"。
+ *   ②**上传的图 → 桌面快捷方式**：`ShortcutInfo` ＋ `requestPinShortcut` ⇒ 桌面上多一个
+ *     带这张图的入口（要用户在系统弹窗里点确认）。★那是"桌面入口"，不是"应用图标"。
+ *
+ * 默认款＝57 号单那套（`ic_launcher`），一个字没动。
+ */
+public class Icons {
+
+    /** 4 个别名（顺序＝界面上从左到右） */
+    public static final String[] ALIAS = { ".IconDefault", ".IconCyan", ".IconMin", ".IconWarm" };
+    /** 预览用的图标资源 */
+    public static final int[] PREVIEW = {
+            R.mipmap.ic_launcher, R.mipmap.ic_launcher_2, R.mipmap.ic_launcher_3, R.mipmap.ic_launcher_4
+    };
+    /** 别名对应的 label 资源 id（＝桌面图标下的名字） */
+    public static final int[] LABEL = { R.string.ic_lab_0, R.string.ic_lab_1, R.string.ic_lab_2, R.string.ic_lab_3 };
+
+    private static ComponentName cn(Context c, int i) {
+        return new ComponentName(c.getPackageName(), c.getPackageName() + ALIAS[i]);
+    }
+
+    /** 当前启用中的那一款（找不到＝0＝默认款；不抛） */
+    public static int current(Context c) {
+        try {
+            PackageManager pm = c.getPackageManager();
+            for (int i = 0; i < ALIAS.length; i++) {
+                int st = pm.getComponentEnabledSetting(cn(c, i));
+                if (st == PackageManager.COMPONENT_ENABLED_STATE_ENABLED) return i;
+            }
+        } catch (Throwable t) { }
+        return 0;
+    }
+
+    /** 切到第 i 款。返回给用户看的一句话（成功／失败都说人话）。 */
+    public static String apply(Context c, int i) {
+        if (i < 0 || i >= ALIAS.length) return Words.CF_MSG_ICON_FAIL;
+        try {
+            PackageManager pm = c.getPackageManager();
+            String name = c.getString(LABEL[i]);
+            // 先把目标启用起来，再关掉其余（避免中途一个入口都没有的空窗）
+            pm.setComponentEnabledSetting(cn(c, i), PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+                    PackageManager.DONT_KILL_APP);
+            for (int j = 0; j < ALIAS.length; j++) {
+                if (j == i) continue;
+                pm.setComponentEnabledSetting(cn(c, j), PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+                        PackageManager.DONT_KILL_APP);
+            }
+            return String.format(Words.CF_MSG_ICON_FMT, name);
+        } catch (Throwable t) {
+            return Words.CF_MSG_ICON_FAIL + "（" + t + "）";
+        }
+    }
+
+    // ───────────────── 上传图片 → 桌面快捷方式 ─────────────────
+
+    static final String SHORTCUT_ID = "reticle_custom_icon";
+    static final String ICON_PNG = "桌面图标.png";
+
+    /**
+     * 把用户挑的图 **居中裁方**（不许变形）→ 512×512 → requestPinShortcut。
+     * 返回一句人话给用户（成功也只是一句"已请求，去桌面确认"——真出现要用户点系统弹窗）。
+     */
+    public static String pinShortcut(Context c, Intent data) {
+        if (data == null || data.getData() == null) return Words.CF_ICON_PIN_CANCEL;
+        Bitmap sq;
+        try {
+            sq = loadSquare(c, data.getData());
+        } catch (TooBig e) {
+            return Words.CF_ICON_PIN_TOOBIG;
+        } catch (Throwable t) {
+            return Words.CF_ICON_PIN_BAD;
+        }
+        if (sq == null) return Words.CF_ICON_PIN_BAD;
+        // 留一份（下次想再添加／换掉时好找；放在外观文件夹，用户自己删得掉）
+        try {
+            File d = Home.sub(c, "外观");
+            File f = new File(d, ICON_PNG);
+            FileOutputStream o = new FileOutputStream(f);
+            sq.compress(Bitmap.CompressFormat.PNG, 100, o);
+            o.close();
+        } catch (Throwable t) { }
+        try {
+            ShortcutManager sm = (ShortcutManager) c.getSystemService(Context.SHORTCUT_SERVICE);
+            if (sm == null || !sm.isRequestPinShortcutSupported()) return Words.CF_ICON_PIN_NOSUP;
+            Intent open = new Intent(c, MainActivity.class);
+            open.setAction(Intent.ACTION_MAIN);
+            open.addCategory(Intent.CATEGORY_LAUNCHER);
+            ShortcutInfo info = new ShortcutInfo.Builder(c, SHORTCUT_ID)
+                    .setShortLabel(c.getString(R.string.app_name))
+                    .setLongLabel(c.getString(R.string.app_name) + "（自定义图标）")
+                    .setIcon(Icon.createWithBitmap(sq))
+                    .setIntent(open)
+                    .build();
+            boolean ok = sm.requestPinShortcut(info, null);
+            return ok ? Words.CF_ICON_PIN_OK : Words.CF_ICON_PIN_FAIL;
+        } catch (Throwable t) {
+            return Words.CF_ICON_PIN_FAIL + "（" + t + "）";
+        }
+    }
+
+    static class TooBig extends Exception { }
+
+    static Bitmap loadSquare(Context c, Uri u) throws Throwable {
+        InputStream in = null;
+        try {
+            in = c.getContentResolver().openInputStream(u);
+            if (in == null) throw new Exception("no stream");
+            ByteArrayOutputStream bo = new ByteArrayOutputStream();
+            byte[] buf = new byte[8192];
+            int n; long tot = 0L;
+            while ((n = in.read(buf)) > 0) {
+                tot += n;
+                if (tot > 8L * 1024 * 1024) throw new TooBig();
+                bo.write(buf, 0, n);
+            }
+            byte[] bytes = bo.toByteArray();
+            BitmapFactory.Options o = new BitmapFactory.Options();
+            o.inJustDecodeBounds = true;
+            BitmapFactory.decodeByteArray(bytes, 0, bytes.length, o);
+            if (o.outWidth <= 0 || o.outHeight <= 0) return null;
+            int sample = 1;
+            while (o.outWidth / sample > 1024 || o.outHeight / sample > 1024) sample *= 2;
+            BitmapFactory.Options o2 = new BitmapFactory.Options();
+            o2.inSampleSize = sample;
+            Bitmap b = BitmapFactory.decodeByteArray(bytes, 0, bytes.length, o2);
+            if (b == null) return null;
+            int s = Math.min(b.getWidth(), b.getHeight());
+            if (s <= 0) return null;
+            Bitmap cut = Bitmap.createBitmap(b, (b.getWidth() - s) / 2, (b.getHeight() - s) / 2, s, s);
+            if (cut.getWidth() != 512) cut = Bitmap.createScaledBitmap(cut, 512, 512, true);
+            return cut;
+        } finally {
+            try { if (in != null) in.close(); } catch (Throwable t) { }
+        }
+    }
+}

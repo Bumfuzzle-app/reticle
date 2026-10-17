@@ -1,1 +1,360 @@
-cGFja2FnZSBhcHAucmV0aWNsZTsKCmltcG9ydCBhbmRyb2lkLmNvbnRlbnQuQ29udGV4dDsKaW1wb3J0IGFuZHJvaWQucHJvdmlkZXIuU2V0dGluZ3M7CgppbXBvcnQgamF2YS5pby5GaWxlOwppbXBvcnQgamF2YS5pby5GaWxlT3V0cHV0U3RyZWFtOwppbXBvcnQgamF2YS50ZXh0LlNpbXBsZURhdGVGb3JtYXQ7CmltcG9ydCBqYXZhLnV0aWwuRGF0ZTsKaW1wb3J0IGphdmEudXRpbC5Mb2NhbGU7CgovKioKICogMjcg5Y+35Y2VIMK3IOaXoOmanOeijeeci+mXqOeLlwogKgogKiDkuLrku4DkuYjmnInlroPvvJp2aXZv77yP5LiA5Yqg6IeqIDIwMjQg6LW35pyJ57O757uf57qn5py65Yi24oCU4oCU5Lya5a6a5pyf77yI5pyA6ZW/57qmIDUg5bCP5pe277yJ5oiW5Zyo5L2g5omT5byA57O757ufCiAqIOOAjOaXoOmanOeijeOAjeiuvue9rumhteaXtu+8jOiHquWKqOemgeeUqOesrOS4ieaWueaXoOmanOeijeacjeWKoe+8m+W6lOeUqOWGheaXoOazlemYu+atou+8iHZpdm8g5a6Y5pa5IEZBUSDmnIkKICog44CM5peg6Zqc56KN6KKr6Ieq5Yqo56aB55So44CN5LiA5p2h77yJ44CC57uT5p6c5bCx5pivIFJldGljbGUg5Lya5pe25LiN5pe244CM55y8556O5omL55ir44CN44CCCiAqCiAqIOWug+W5suS7gOS5iO+8muavjyAzMCDnp5LnnIvkuIDnnLzjgIzmnKzlupTnlKjnmoTml6Dpmpznoo3ov5jlnKjkuI3lnKjns7vnu5/nmoTlnKjlhozliJfooajph4zjgI3vvJsKICog5LiN5ZyoIOKGkiDmiorlroPliqDlm57ljrvvvIjlj6rliqjmnKzlupTnlKjov5nkuIDmnaHvvIzlhbblroPovoXliqnmnI3liqHljp/moLfkv53nlZnvvInjgIIKICog5bmy5LiN5bmy55Sx55So5oi35byA5YWz5Yaz5a6a77yI6buY6K6k5byA77yJ77yb5YWz5o6J77yd5pys57G75LiN5YaZ5Lu75L2V57O757uf6K6+572u44CCCiAqCiAqIOeLrOeri+S6juaXoOmanOeijeacjeWKoeacrOi6q++8muiHquW3sei1t+e6v+eoi+i3ke+8iFZlcmlTZXJ2aWNlIOS4juS4u+eVjOmdouWQr+WKqOaXtumDveW5guetieaLiei1t++8ie+8jAogKiDov5nmoLfljbPkvb/ml6Dpmpznoo3ooqvns7vnu5/lhbPmjonvvIzlj6ropoHov5vnqIvov5jlnKjvvIznnIvpl6jni5flsLHog73ljrvmlZHlroPjgIIKICoKICog5YaZ5Zue55qE5Lik5p2h6Lev77yI5oyJ6aG65bqP6K+V77yJ77yaCiAqICAg4pGgIOW6lOeUqOWGhSBTZXR0aW5ncy5TZWN1cmUucHV0U3RyaW5n4oCU4oCU6ZyA6KaBIFdSSVRFX1NFQ1VSRV9TRVRUSU5HU++8iOijheacuuiEmuacrOmHjOeUqCBzaGVsbCDmjojmnYPvvInvvJsKICogICDikaEg57uPIFNoaXp1a3Ug55qEIHNoZWxsIOi3kSBgY29udGVudCBpbnNlcnRg4oCU4oCUdml2byDlrp7mtYvvvJpzZXR0aW5ncyDlkb3ku6TkuI4gY29udGVudCB1cGRhdGUg5YWo6KKr57O757ufCiAqICAgICAg5oum5LiL77yI5YaZ5LiN6L+b77yJ77yM5L2GIGNvbnRlbnQgaW5zZXJ0IOiDveecn+ato+iQveWcsO+8iOacrOWNlSAyMDI2LTEwLTA3IOWunua1i++8ieOAggogKi8KcHVibGljIGNsYXNzIEExMXlXYXRjaGRvZyB7CgogICAgLyoqIOezu+e7n+WcqOWGjOWIl+ihqOmHjOeahOacrOW6lOeUqOadoeebru+8iOS4jiBNYWluQWN0aXZpdHkuYTExeVN0YXRlIOWIpOaNruS4gOiHtO+8ieOAgiAqLwogICAgc3RhdGljIGZpbmFsIFN0cmluZyBTVkNfRlVMTCA9ICJhcHAucmV0aWNsZS9hcHAucmV0aWNsZS5WZXJpU2VydmljZSI7CiAgICBzdGF0aWMgZmluYWwgU3RyaW5nIFNWQ19TSE9SVCA9ICJhcHAucmV0aWNsZS8uVmVyaVNlcnZpY2UiOwoKICAgIHByaXZhdGUgc3RhdGljIGZpbmFsIFN0cmluZyBQUkVGUyA9ICJzZXR0aW5ncyI7CiAgICBwcml2YXRlIHN0YXRpYyBmaW5hbCBTdHJpbmcgS0VZX09OID0gImExMXlfd2F0Y2hkb2ciOwogICAgcHJpdmF0ZSBzdGF0aWMgZmluYWwgU3RyaW5nIEtFWV9GSVhFUyA9ICJhMTF5X3dhdGNoZG9nX2ZpeGVzIjsKICAgIHByaXZhdGUgc3RhdGljIGZpbmFsIFN0cmluZyBLRVlfTEFTVEZJWCA9ICJhMTF5X3dhdGNoZG9nX2xhc3RfZml4IjsKICAgIC8qKiDmo4DmtYvlkajmnJ/vvJoxMCDnp5LjgILmtL7ljZXlu7rorq4gMzB+NjAg56eS77yM5L2G5a6e5rWL5o6J57q/5ZCO6L+b56iL5b6I5b+r5Lya5YGc5pGG77yM5Y+q6IO95oqi5pe26Ze077ybCiAgICAgKiAg6K+75LiA5qyhIFNlY3VyZSDorr7nva7lj6rmmK/mnKzlnLAgSVBD77yM6ICX55S15Y+v5b+955Wl77yI55yf5q2j55qE6YeN5rS75piv5pWR5Zue5pe255qEIHNoZWxs77yM5Y+q5Zyo5o6J57q/5pe25omN6LeR77yJ44CCICovCiAgICBwcml2YXRlIHN0YXRpYyBmaW5hbCBsb25nIElOVEVSVkFMX01TID0gMTAwMDBMOwoKICAgIC8qKiA1MiDlj7fljZXvvJrmo4DmtYvlkajmnJ/kuI7jgIzmmoLlgZzph43or5XjgI3nlLHlhoXlrZjoh6rkv53vvIhNZW1HdWFyZO+8ieiwg+KAlOKAlOS4gOe6p+OAjOe8k+OAjeaKiiAxMCDnp5LmlL7mhaLliLAgNjAg56eS77yMCiAgICAgKiAg5LiJ57qn44CM6K6p44CN5pqC5YGc6YeN6K+V5Y+q55WZ5pyA5bCP5L+d5rS777yb5oGi5aSN5ZCO6Ieq5bex6LCD5Zue5p2l44CCICovCiAgICBzdGF0aWMgdm9sYXRpbGUgbG9uZyBpbnRlcnZhbE1zID0gSU5URVJWQUxfTVM7CiAgICBzdGF0aWMgdm9sYXRpbGUgYm9vbGVhbiBwYXVzZWQgPSBmYWxzZTsKCiAgICBwdWJsaWMgc3RhdGljIHZvaWQgc2V0SW50ZXJ2YWwobG9uZyBtcykgeyBpbnRlcnZhbE1zID0gbXMgPiAwID8gbXMgOiBJTlRFUlZBTF9NUzsgfQogICAgcHVibGljIHN0YXRpYyB2b2lkIHNldFBhdXNlZChib29sZWFuIHApIHsgcGF1c2VkID0gcDsgfQogICAgcHVibGljIHN0YXRpYyBsb25nIGludGVydmFsKCkgeyByZXR1cm4gaW50ZXJ2YWxNczsgfQogICAgcHVibGljIHN0YXRpYyBib29sZWFuIGlzUGF1c2VkKCkgeyByZXR1cm4gcGF1c2VkOyB9CgogICAgLyoqIOeOsOWcuu+8iOeVjOmdouS4juiHquajgOivu++8ieOAgiAqLwogICAgc3RhdGljIHZvbGF0aWxlIGJvb2xlYW4gaW5MaXN0ID0gZmFsc2U7CiAgICBzdGF0aWMgdm9sYXRpbGUgbG9uZyBsYXN0Q2hlY2tBdCA9IDBMOwogICAgc3RhdGljIHZvbGF0aWxlIGxvbmcgbGFzdEZpeEF0ID0gMEw7CiAgICBzdGF0aWMgdm9sYXRpbGUgaW50IGZpeGVzID0gMDsKICAgIHN0YXRpYyB2b2xhdGlsZSBTdHJpbmcgbGFzdE5vdGUgPSAi6L+Y5rKh5p+l6L+HIjsKICAgIHN0YXRpYyB2b2xhdGlsZSBTdHJpbmcgbGFzdERldGFpbCA9ICIiOwoKICAgIHByaXZhdGUgc3RhdGljIHZvbGF0aWxlIGJvb2xlYW4gc3RhcnRlZCA9IGZhbHNlOwogICAgcHJpdmF0ZSBzdGF0aWMgdm9sYXRpbGUgVGhyZWFkIHRocmVhZCA9IG51bGw7CgogICAgLy8g4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSAIOeUqOaIt+W8gOWFs++8iOm7mOiupOW8gO+8muS4jeeEtumDqOWIhuWbveS6p+ezu+e7n+eUqOaIt+etieS6jueUqOS4jeS6hu+8iSDilIDilIDilIDilIDilIDilIDilIDilIDilIAKICAgIHB1YmxpYyBzdGF0aWMgYm9vbGVhbiBpc09uKENvbnRleHQgY3R4KSB7CiAgICAgICAgdHJ5IHsgcmV0dXJuIGN0eC5nZXRTaGFyZWRQcmVmZXJlbmNlcyhQUkVGUywgQ29udGV4dC5NT0RFX1BSSVZBVEUpLmdldEJvb2xlYW4oS0VZX09OLCB0cnVlKTsgfQogICAgICAgIGNhdGNoIChUaHJvd2FibGUgdCkgeyByZXR1cm4gZmFsc2U7IH0KICAgIH0KCiAgICBwdWJsaWMgc3RhdGljIHZvaWQgc2V0T24oQ29udGV4dCBjdHgsIGJvb2xlYW4gdikgewogICAgICAgIHRyeSB7CiAgICAgICAgICAgIGN0eC5nZXRTaGFyZWRQcmVmZXJlbmNlcyhQUkVGUywgQ29udGV4dC5NT0RFX1BSSVZBVEUpLmVkaXQoKS5wdXRCb29sZWFuKEtFWV9PTiwgdikuYXBwbHkoKTsKICAgICAgICAgICAgbG9nKGN0eCwgIuW8gOWFsyAiICsgKHYgPyAi5omT5byAIiA6ICLlhbPpl60iKSk7CiAgICAgICAgfSBjYXRjaCAoVGhyb3dhYmxlIHQpIHsgfQogICAgfQoKICAgIHByaXZhdGUgc3RhdGljIGludCBzYXZlZEludChDb250ZXh0IGN0eCwgU3RyaW5nIGspIHsKICAgICAgICB0cnkgeyByZXR1cm4gY3R4LmdldFNoYXJlZFByZWZlcmVuY2VzKFBSRUZTLCBDb250ZXh0Lk1PREVfUFJJVkFURSkuZ2V0SW50KGssIDApOyB9IGNhdGNoIChUaHJvd2FibGUgdCkgeyByZXR1cm4gMDsgfQogICAgfQoKICAgIHByaXZhdGUgc3RhdGljIGxvbmcgc2F2ZWRMb25nKENvbnRleHQgY3R4LCBTdHJpbmcgaykgewogICAgICAgIHRyeSB7IHJldHVybiBjdHguZ2V0U2hhcmVkUHJlZmVyZW5jZXMoUFJFRlMsIENvbnRleHQuTU9ERV9QUklWQVRFKS5nZXRMb25nKGssIDBMKTsgfSBjYXRjaCAoVGhyb3dhYmxlIHQpIHsgcmV0dXJuIDBMOyB9CiAgICB9CgogICAgLy8g4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSAIOi1t+e6v+eoi++8iOW5guetie+8iSDilIDilIDilIDilIDilIDilIDilIDilIDilIAKICAgIHB1YmxpYyBzdGF0aWMgc3luY2hyb25pemVkIHZvaWQgc3RhcnQoQ29udGV4dCBjdHgpIHsKICAgICAgICBpZiAoc3RhcnRlZCAmJiB0aHJlYWQgIT0gbnVsbCAmJiB0aHJlYWQuaXNBbGl2ZSgpKSByZXR1cm47CiAgICAgICAgc3RhcnRlZCA9IHRydWU7CiAgICAgICAgZmluYWwgQ29udGV4dCBjID0gY3R4LmdldEFwcGxpY2F0aW9uQ29udGV4dCgpOwogICAgICAgIFRocmVhZCB0ID0gbmV3IFRocmVhZChuZXcgUnVubmFibGUoKSB7CiAgICAgICAgICAgIHB1YmxpYyB2b2lkIHJ1bigpIHsKICAgICAgICAgICAgICAgIHRyeSB7IFRocmVhZC5zbGVlcCgxMDAwMEwpOyB9IGNhdGNoIChUaHJvd2FibGUgeCkgeyB9CiAgICAgICAgICAgICAgICB3aGlsZSAodHJ1ZSkgewogICAgICAgICAgICAgICAgICAgIGlmICghcGF1c2VkKSB7IHRyeSB7IHRpY2soYywgdHJ1ZSk7IH0gY2F0Y2ggKFRocm93YWJsZSB4KSB7IH0gfQogICAgICAgICAgICAgICAgICAgIHRyeSB7IFRocmVhZC5zbGVlcChwYXVzZWQgPyA1MDAwTCA6IGludGVydmFsTXMpOyB9IGNhdGNoIChUaHJvd2FibGUgeCkgeyByZXR1cm47IH0KICAgICAgICAgICAgICAgIH0KICAgICAgICAgICAgfQogICAgICAgIH0pOwogICAgICAgIHQuc2V0RGFlbW9uKHRydWUpOwogICAgICAgIHRocmVhZCA9IHQ7CiAgICAgICAgdC5zdGFydCgpOwogICAgICAgIGluTGlzdCA9IGhhc1N2YyhyZWFkTGlzdChjKSk7CiAgICAgICAgbG9nKGMsICLnnIvpl6jni5fkuIrnur/vvIjlvIDlhbM9IiArIChpc09uKGMpID8gIuW8gCIgOiAi5YWzIikgKyAi77yM5ZGo5pyfICIgKyAoaW50ZXJ2YWxNcyAvIDEwMDApICsgIiDnp5LvvJvlvZPliY0iICsgKGluTGlzdCA/ICLlnKjlhowiIDogIuS4jeWcqOWGjCIpICsgIu+8iSIpOwogICAgfQoKICAgIC8qKgogICAgICog6LWw5LiA6L2u77ya6K+75Zyo5YaMIOKGkiDnvLrkuoblsLHlhpnlm54g4oaSIOivu+WbnumqjOivgeOAggogICAgICogQHBhcmFtIHJlc3BlY3RTd2l0Y2ggdHJ1Ze+8neWQrOeUqOaIt+W8gOWFs++8iOiHquWKqOi9ruivoueUqO+8ie+8m2ZhbHNl77yd55So5oi35omL5Yqo54K55LqG44CM56uL5Y2z5qOA5p+l44CN77yM5by65Yi25omn6KGM5LiA5qyh44CCCiAgICAgKiBAcmV0dXJuIOS4gOWPpeS6uuivnee7k+aenO+8iOe7meeVjOmdoiB0b2FzdO+8j+eKtuaAgeihjOeUqO+8ieOAggogICAgICovCiAgICAvKiog5o6J57q/556s6Ze05LuO5peg6Zqc56KN5pyN5Yqh55qE5Zue6LCD6YeM5Y+r5LiA5aOw77ya56uL5Yi777yI5bm256iN5ZCO5YaN77yJ5p+l5LiA6L2u77yM5Yir562J5ZGo5pyf44CCICovCiAgICBwdWJsaWMgc3RhdGljIHZvaWQgbnVkZ2UoZmluYWwgQ29udGV4dCBjdHgpIHsKICAgICAgICB0cnkgewogICAgICAgICAgICBmaW5hbCBDb250ZXh0IGMgPSBjdHguZ2V0QXBwbGljYXRpb25Db250ZXh0KCk7CiAgICAgICAgICAgIFRocmVhZCB0ID0gbmV3IFRocmVhZChuZXcgUnVubmFibGUoKSB7CiAgICAgICAgICAgICAgICBwdWJsaWMgdm9pZCBydW4oKSB7CiAgICAgICAgICAgICAgICAgICAgc2xlZXAoODAwTCk7CiAgICAgICAgICAgICAgICAgICAgaWYgKCFwYXVzZWQpIHsgdHJ5IHsgdGljayhjLCB0cnVlKTsgfSBjYXRjaCAoVGhyb3dhYmxlIHgpIHsgfSB9CiAgICAgICAgICAgICAgICAgICAgc2xlZXAoMzAwMEwpOwogICAgICAgICAgICAgICAgICAgIGlmICghcGF1c2VkKSB7IHRyeSB7IHRpY2soYywgdHJ1ZSk7IH0gY2F0Y2ggKFRocm93YWJsZSB4KSB7IH0gfQogICAgICAgICAgICAgICAgfQogICAgICAgICAgICB9KTsKICAgICAgICAgICAgdC5zZXREYWVtb24odHJ1ZSk7CiAgICAgICAgICAgIHQuc3RhcnQoKTsKICAgICAgICB9IGNhdGNoIChUaHJvd2FibGUgdCkgeyB9CiAgICB9CgogICAgcHVibGljIHN0YXRpYyBzeW5jaHJvbml6ZWQgU3RyaW5nIHRpY2soQ29udGV4dCBjdHgsIGJvb2xlYW4gcmVzcGVjdFN3aXRjaCkgewogICAgICAgIGxhc3RDaGVja0F0ID0gU3lzdGVtLmN1cnJlbnRUaW1lTWlsbGlzKCk7CiAgICAgICAgaWYgKHJlc3BlY3RTd2l0Y2ggJiYgIWlzT24oY3R4KSkgeyBsYXN0Tm90ZSA9ICLlt7LlhbPpl63vvIjkuI3mo4Dmn6XvvIkiOyByZXR1cm4gIuW3suWFs+mXre+8iOS4jeajgOafpe+8iSI7IH0KICAgICAgICBTdHJpbmcgY3VyID0gcmVhZExpc3QoY3R4KTsKICAgICAgICBpbnQgc3QgPSBBMTF5TGluay5vYnNlcnZlKGN0eCk7ICAgLy8gNTMg5Y+35Y2V77ya6L+e5o6l5oCB5Yik5o2u77yI5ZCr44CM5pyq6L+e5o6l5oyB57ut5aSa5LmF44CN55qE6K6w6LSm77yJCiAgICAgICAgaWYgKGN1ciA9PSBudWxsKSB7IGxhc3ROb3RlID0gIuivu+S4jeWIsOezu+e7n+iuvue9riI7IHJldHVybiAi6K+75LiN5Yiw57O757uf6K6+572uIjsgfQogICAgICAgIGlmIChoYXNTdmMoY3VyKSkgewogICAgICAgICAgICBpbkxpc3QgPSB0cnVlOwogICAgICAgICAgICAvLyA1MyDlj7fljZXvvJrimIXlnKjlhowg4omgIOiDveeUqCDigJTigJQg5YaN55yL5LiA55y844CM57O757uf5Yiw5bqV5pyJ5rKh5pyJ5oqK5oiR5Lus5o6l5LiK44CNCiAgICAgICAgICAgIGlmIChzdCA9PSBBMTF5TGluay5TVF9JTl9MSVNUX05PX0NPTk4pIHsKICAgICAgICAgICAgICAgIGxvbmcgZm9yTXMgPSBBMTF5TGluay5ub0Nvbm5Gb3IoKTsKICAgICAgICAgICAgICAgIGlmIChmb3JNcyA+PSBBMTF5TGluay5HUkFDRV9NUyAmJiBBMTF5TGluay5hdXRvUmVwYWlyQWxsb3dlZCgpKSB7CiAgICAgICAgICAgICAgICAgICAgbG9nKGN0eCwgIuWcqOWGjOS9huacqui/nuaOpe+8iOW3suaMgee7rSAiICsgKGZvck1zIC8gMTAwMCkgKyAiIOenku+8ieKGkiDoh6rliqjkv67kuIDmrKHvvIjliKDlkI3ihpLlhpnlm57vvIkiKTsKICAgICAgICAgICAgICAgICAgICBTdHJpbmcgcnIgPSBBMTF5TGluay5yZXBhaXIoY3R4LCBmYWxzZSk7CiAgICAgICAgICAgICAgICAgICAgaWYgKEExMXlMaW5rLmlzQ29ubmVjdGVkKCkpIHsgbGFzdE5vdGUgPSAi5bey6Ieq5Yqo5o6l5Zue77yI5Zyo5YaM5pyq6L+e5o6lIOKGkiDliKDlkI3lhpnlm57vvIkiOyBsYXN0RGV0YWlsID0gcnI7IHJldHVybiAi5bey6Ieq5Yqo5o6l5Zue77yaIiArIHJyOyB9CiAgICAgICAgICAgICAgICAgICAgbGFzdE5vdGUgPSAi5Zyo5YaM5L2G5rKh5o6l5LiK77yI6Ieq5Yqo5L+u5rKh5oiQ77yJIjsKICAgICAgICAgICAgICAgICAgICBsYXN0RGV0YWlsID0gcnI7CiAgICAgICAgICAgICAgICAgICAgcmV0dXJuICLlnKjlhozkvYbmnKrov57mjqUg4pqg77yaIiArIHJyOwogICAgICAgICAgICAgICAgfQogICAgICAgICAgICAgICAgbGFzdE5vdGUgPSAi5Zyo5YaM5L2G5pyq6L+e5o6lIOKaoCI7CiAgICAgICAgICAgICAgICBsYXN0RGV0YWlsID0gIuWQjeWNlemHjOacieaIkeS7rOOAgeezu+e7n+ayoeaOpeS4iu+8iOS4iuasoeWbnuiwgyAiICsgQTExeUxpbmsubGFzdENiICsgIu+8iSI7CiAgICAgICAgICAgICAgICByZXR1cm4gIuWcqOWGjOS9huacqui/nuaOpSDimqAiOwogICAgICAgICAgICB9CiAgICAgICAgICAgIGlmIChzdCA9PSBBMTF5TGluay5TVF9VTktOT1dOKSB7IGxhc3ROb3RlID0gIuivu+S4jeWIsOezu+e7n+iuvue9riI7IHJldHVybiAi6K+75LiN5Yiw57O757uf6K6+572uIjsgfQogICAgICAgICAgICAvLyA1MyDlj7fljZXvvIjovoXliKTmja7vvInvvJror7Qi6L+e552AIuaXtu+8jOmalOS4gOS8muWEv+aOouS4gOasoeagueiKgueCue+8m+i/nue7reaOouS4jeWIsOWPquiusOWkh+azqO+8jOS4jeWNleeLrOW9kyLmlq3lvIAiCiAgICAgICAgICAgIHRyeSB7IEExMXlMaW5rLnByb2JlTm93KCk7IH0gY2F0Y2ggKFRocm93YWJsZSB0KSB7IH0KICAgICAgICAgICAgaWYgKEExMXlMaW5rLnByb2JlRmFpbHMgPj0gMykgbGFzdERldGFpbCA9ICLov57mjqXmgIHlnKjjgIHkvYbov57nu60gIiArIEExMXlMaW5rLnByb2JlRmFpbHMgKyAiIOasoeaOouS4jeWIsOeUu+mdou+8iOWxj+W5leWPr+iDvemUgeedgO+8iSI7CiAgICAgICAgICAgIGxhc3ROb3RlID0gIuWcqOWGjCDinJMiOwogICAgICAgICAgICByZXR1cm4gIuWcqOWGjCDinJMiOwogICAgICAgIH0KCiAgICAgICAgaW5MaXN0ID0gZmFsc2U7CiAgICAgICAgU3RyaW5nIG52ID0gam9pbihjdXIpOwogICAgICAgIGxvZyhjdHgsICLlj5HnjrDmjonnur/vvJrnjrBbIiArIGN1ciArICJdIOKGkiDnm67moIdbIiArIG52ICsgIl0iKTsKICAgICAgICAvLyDikaAg5bqU55So5YaF55u05YaZCiAgICAgICAgU3RyaW5nIGUxID0gd3JpdGVMb2NhbChjdHgsIG52KTsKICAgICAgICBzbGVlcCgxMjAwTCk7CiAgICAgICAgaWYgKGhhc1N2YyhyZWFkTGlzdChjdHgpKSkgeyBkb25lKGN0eCwgIuW6lOeUqOWGheWGmeWFpSIpOyByZXR1cm4gIuW3suiHquWKqOmHjeW8gO+8iOW6lOeUqOWGheWGmeWFpe+8iSI7IH0KICAgICAgICAvLyDikaEg57uPIFNoaXp1a3Ug55qEIHNoZWxs77yI5pys5py65a6e5rWL5Li76Lev5b6E77yJCiAgICAgICAgU3RyaW5nIGUyID0gd3JpdGVTaGVsbChudik7CiAgICAgICAgc2xlZXAoMTUwMEwpOwogICAgICAgIGlmIChoYXNTdmMocmVhZExpc3QoY3R4KSkpIHsgZG9uZShjdHgsICJzaGVsbCDlhpnlhaUiKTsgcmV0dXJuICLlt7Loh6rliqjph43lvIDvvIhzaGVsbCDlhpnlhaXvvIkiOyB9CgogICAgICAgIGxhc3ROb3RlID0gIumHjeW8gOWksei0pSI7CiAgICAgICAgbGFzdERldGFpbCA9ICLlupTnlKjlhoXvvJoiICsgZTEgKyAiIO+9nCBzaGVsbO+8miIgKyBjbGlwKGUyKTsKICAgICAgICBsb2coY3R4LCAi6YeN5byA5aSx6LSl772cIiArIGxhc3REZXRhaWwpOwogICAgICAgIHJldHVybiAi6YeN5byA5aSx6LSl77ya57O757uf5oum5LiL5LqG5YaZ6K6+572u77yI6ZyA6KaB5omL5Yqo5byA5LiA5qyh77yJIjsKICAgIH0KCiAgICBwcml2YXRlIHN0YXRpYyB2b2lkIGRvbmUoQ29udGV4dCBjdHgsIFN0cmluZyBob3cpIHsKICAgICAgICBsYXN0Rml4QXQgPSBTeXN0ZW0uY3VycmVudFRpbWVNaWxsaXMoKTsKICAgICAgICBmaXhlcysrOwogICAgICAgIGluTGlzdCA9IHRydWU7CiAgICAgICAgbGFzdE5vdGUgPSAi5bey6Ieq5Yqo6YeN5byA77yIIiArIGhvdyArICLvvIkiOwogICAgICAgIHRyeSB7CiAgICAgICAgICAgIGN0eC5nZXRTaGFyZWRQcmVmZXJlbmNlcyhQUkVGUywgQ29udGV4dC5NT0RFX1BSSVZBVEUpLmVkaXQoKQogICAgICAgICAgICAgICAgICAgIC5wdXRJbnQoS0VZX0ZJWEVTLCBmaXhlcykucHV0TG9uZyhLRVlfTEFTVEZJWCwgbGFzdEZpeEF0KS5hcHBseSgpOwogICAgICAgIH0gY2F0Y2ggKFRocm93YWJsZSB0KSB7IH0KICAgICAgICBsb2coY3R4LCAi5bey6YeN5byA77yIIiArIGhvdyArICLvvInvvIzntK/orqEgIiArIGZpeGVzICsgIiDmrKEiKTsKICAgIH0KCiAgICAvKiogNTIg5Y+35Y2VIMK3IOeUqOaIt+S4u+WKqOWBnO+8iOS7juacgOi/keS7u+WKoeWIkuaOie+8ieaXtuaUtuW3pe+8muiuqei9ruivoue6v+eoi+mAgOWHuu+8jOS4jeWGjeiHquW3seWbnuadpeOAgiAqLwogICAgcHVibGljIHN0YXRpYyBzeW5jaHJvbml6ZWQgdm9pZCBzdG9wTG9vcChDb250ZXh0IGN0eCkgewogICAgICAgIHN0YXJ0ZWQgPSBmYWxzZTsKICAgICAgICBUaHJlYWQgdCA9IHRocmVhZDsKICAgICAgICB0aHJlYWQgPSBudWxsOwogICAgICAgIGlmICh0ICE9IG51bGwpIHsgdHJ5IHsgdC5pbnRlcnJ1cHQoKTsgfSBjYXRjaCAoVGhyb3dhYmxlIHgpIHsgfSB9CiAgICAgICAgbG9nKGN0eCwgIueci+mXqOeLl+S4i+e6v++8iOeUqOaIt+S4u+WKqOWBnO+8iSIpOwogICAgfQoKICAgIC8vIOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgCDor7vlhpkg4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSACiAgICBzdGF0aWMgU3RyaW5nIHJlYWRMaXN0KENvbnRleHQgY3R4KSB7CiAgICAgICAgdHJ5IHsgcmV0dXJuIFNldHRpbmdzLlNlY3VyZS5nZXRTdHJpbmcoY3R4LmdldENvbnRlbnRSZXNvbHZlcigpLCBTZXR0aW5ncy5TZWN1cmUuRU5BQkxFRF9BQ0NFU1NJQklMSVRZX1NFUlZJQ0VTKTsgfQogICAgICAgIGNhdGNoIChUaHJvd2FibGUgdCkgeyByZXR1cm4gbnVsbDsgfQogICAgfQoKICAgIHN0YXRpYyBib29sZWFuIGhhc1N2YyhTdHJpbmcgdikgewogICAgICAgIHJldHVybiB2ICE9IG51bGwgJiYgKHYuY29udGFpbnMoU1ZDX0ZVTEwpIHx8IHYuY29udGFpbnMoU1ZDX1NIT1JUKSk7CiAgICB9CgogICAgc3RhdGljIFN0cmluZyBqb2luKFN0cmluZyBjdXIpIHsKICAgICAgICBpZiAoY3VyID09IG51bGwpIHJldHVybiBTVkNfRlVMTDsKICAgICAgICBTdHJpbmcgdCA9IGN1ci50cmltKCk7CiAgICAgICAgaWYgKHQubGVuZ3RoKCkgPT0gMCB8fCB0LmVxdWFsc0lnbm9yZUNhc2UoIm51bGwiKSkgcmV0dXJuIFNWQ19GVUxMOwogICAgICAgIHJldHVybiB0ICsgIjoiICsgU1ZDX0ZVTEw7CiAgICB9CgogICAgLyoqIOKRoCDlupTnlKjlhoXnm7TlhpnvvIjopoEgV1JJVEVfU0VDVVJFX1NFVFRJTkdT77yJ77yb6L+U5Zue5LiA5Y+l57uT5p6c44CCICovCiAgICBwcml2YXRlIHN0YXRpYyBTdHJpbmcgd3JpdGVMb2NhbChDb250ZXh0IGN0eCwgU3RyaW5nIG52KSB7CiAgICAgICAgdHJ5IHsKICAgICAgICAgICAgU2V0dGluZ3MuU2VjdXJlLnB1dFN0cmluZyhjdHguZ2V0Q29udGVudFJlc29sdmVyKCksIFNldHRpbmdzLlNlY3VyZS5FTkFCTEVEX0FDQ0VTU0lCSUxJVFlfU0VSVklDRVMsIG52KTsKICAgICAgICAgICAgdHJ5IHsgU2V0dGluZ3MuU2VjdXJlLnB1dEludChjdHguZ2V0Q29udGVudFJlc29sdmVyKCksIFNldHRpbmdzLlNlY3VyZS5BQ0NFU1NJQklMSVRZX0VOQUJMRUQsIDEpOyB9IGNhdGNoIChUaHJvd2FibGUgdCkgeyB9CiAgICAgICAgICAgIHJldHVybiBXb3Jkcy5SUF9TSFhfTE9DQUxfT0s7CiAgICAgICAgfSBjYXRjaCAoVGhyb3dhYmxlIHQpIHsgcmV0dXJuIFN0cmluZy52YWx1ZU9mKHQpOyB9CiAgICB9CgogICAgLyoqIOKRoSBzaGVsbCDot6/lvoTvvJpjb250ZW50IGluc2VydOOAgnZpdm8g5a6e5rWLIHNldHRpbmdzIOWRveS7pOS4jiBjb250ZW50IHVwZGF0ZSDpg73ooqvmi6bvvIxpbnNlcnQg6IO96JC95Zyw77yMCiAgICAgKiAg5L2GKirlgLzph4zkuI3og73lkKvlhpLlj7cqKu+8iHRveWJveCDnmoQgLS1iaW5kIOaMieWGkuWPt+WIh+WIhu+8m+WkmuacjeWKoeWIl+ihqOW/heeEtuWQq+WGkuWPt++8ieKGkiDlj6rlr7ki5YiX6KGo5Li656m6IuaXtuWPr+eUqOOAgiAqLwogICAgcHJpdmF0ZSBzdGF0aWMgU3RyaW5nIHdyaXRlU2hlbGwoU3RyaW5nIG52KSB7CiAgICAgICAgdHJ5IHsKICAgICAgICAgICAgaWYgKG52LmluZGV4T2YoJzonKSA+PSAwKSByZXR1cm4gV29yZHMuUlBfU0hYX1NLSVBfQ09MT047CiAgICAgICAgICAgIGlmICghcmlra2Euc2hpenVrdS5TaGl6dWt1LnBpbmdCaW5kZXIoKSkgcmV0dXJuIFdvcmRzLlJQX1NIWF9BQlNFTlQ7CiAgICAgICAgICAgIFN0cmluZyBjbWQgPSAiY29udGVudCBpbnNlcnQgLS11cmkgY29udGVudDovL3NldHRpbmdzL3NlY3VyZSIKICAgICAgICAgICAgICAgICAgICArICIgLS1iaW5kIG5hbWU6czplbmFibGVkX2FjY2Vzc2liaWxpdHlfc2VydmljZXMgLS1iaW5kIHZhbHVlOnM6XCIiICsgbnYgKyAiXCIiCiAgICAgICAgICAgICAgICAgICAgKyAiOyBjb250ZW50IGluc2VydCAtLXVyaSBjb250ZW50Oi8vc2V0dGluZ3Mvc2VjdXJlIgogICAgICAgICAgICAgICAgICAgICsgIiAtLWJpbmQgbmFtZTpzOmFjY2Vzc2liaWxpdHlfZW5hYmxlZCAtLWJpbmQgdmFsdWU6czoxIjsKICAgICAgICAgICAgU3RyaW5nIHIgPSBWZXJpU2VydmljZS5zaHhSdW4oY21kKTsKICAgICAgICAgICAgcmV0dXJuIHIgPT0gbnVsbCA/ICIiIDogcjsKICAgICAgICB9IGNhdGNoIChUaHJvd2FibGUgdCkgeyByZXR1cm4gU3RyaW5nLnZhbHVlT2YodCk7IH0KICAgIH0KCiAgICAvKiogMzgg5Y+35Y2VIMK3IOiHqua1i+ato+mXqO+8iOWPqueUsSBpbi8g5qe95L2NIGBjbWQ9YTExeXRlc3RgIOinpuWPke+8jOS4jeWNoCBNQ1DvvInvvJoKICAgICAqICDmlYXmhI/mioogZW5hYmxlZF9hY2Nlc3NpYmlsaXR5X3NlcnZpY2VzIOWGmeWdjyDihpIg56uL5Yi76LeR5LiA6L2uIOKGkiDnnIvog73lkKboh6rmhIjvvJvml6DorrrmiJDotKXpg73lpI3kvY3jgIIgKi8KICAgIHB1YmxpYyBzdGF0aWMgU3RyaW5nIHNlbGZUZXN0KENvbnRleHQgY3R4KSB7CiAgICAgICAgdHJ5IHsKICAgICAgICAgICAgU3RyaW5nIGJlZm9yZSA9IHJlYWRMaXN0KGN0eCk7CiAgICAgICAgICAgIFN0cmluZyB3ID0gd3JpdGVSYXcoInJldGljbGUtc2VsZnRlc3QiKTsKICAgICAgICAgICAgc2xlZXAoMTIwMCk7CiAgICAgICAgICAgIFN0cmluZyB3cm90ZSA9IHJlYWRMaXN0KGN0eCk7CiAgICAgICAgICAgIFN0cmluZyB0ID0gdGljayhjdHgsIGZhbHNlKTsKICAgICAgICAgICAgc2xlZXAoODAwKTsKICAgICAgICAgICAgU3RyaW5nIGFmdGVyID0gcmVhZExpc3QoY3R4KTsKICAgICAgICAgICAgYm9vbGVhbiBvayA9IGhhc1N2YyhhZnRlcik7CiAgICAgICAgICAgIGlmICghb2spIHsKICAgICAgICAgICAgICAgIHRyeSB7IFNldHRpbmdzLlNlY3VyZS5wdXRTdHJpbmcoY3R4LmdldENvbnRlbnRSZXNvbHZlcigpLCBTZXR0aW5ncy5TZWN1cmUuRU5BQkxFRF9BQ0NFU1NJQklMSVRZX1NFUlZJQ0VTLCBqb2luKGFmdGVyKSk7IH0gY2F0Y2ggKFRocm93YWJsZSB4KSB7IH0KICAgICAgICAgICAgICAgIHNsZWVwKDgwMCk7CiAgICAgICAgICAgICAgICBhZnRlciA9IHJlYWRMaXN0KGN0eCk7CiAgICAgICAgICAgICAgICBvayA9IGhhc1N2YyhhZnRlcik7CiAgICAgICAgICAgIH0KICAgICAgICAgICAgLy8gMzkg5Y+35Y2V77ya5peg5p2h5Lu25aSN5L2N77yI5Y6f5p2l5Y+q5Zyo44CM5pWR5Zue5aSx6LSl44CN5pe25aSN5L2N77yM5oiQ5Yqf5pe25Lya5q6L55WZIHJldGljbGUtc2VsZnRlc3Qg5YmN57yA77yJ44CCCiAgICAgICAgICAgIFN0cmluZyByZXNldCA9IHJlc2V0TGlzdChjdHgsIGFmdGVyKTsKICAgICAgICAgICAgb2sgPSBoYXNTdmMocmVzZXQpOwogICAgICAgICAgICByZXR1cm4gIntcIm9rXCI6IiArIChvayA/IDEgOiAwKSArICIsXCJiZWZvcmVcIjpcIiIgKyBzcShiZWZvcmUpICsgIlwiLFwid3JvdGVcIjpcIiIgKyBzcSh3cm90ZSkKICAgICAgICAgICAgICAgICAgICArICJcIixcInRpY2tcIjpcIiIgKyBzcSh0KSArICJcIixcImFmdGVyXCI6XCIiICsgc3EoYWZ0ZXIpICsgIlwiLFwicmVzZXRcIjpcIiIgKyBzcShyZXNldCkgKyAiXCJ9IjsKICAgICAgICB9IGNhdGNoIChUaHJvd2FibGUgdCkgewogICAgICAgICAgICB0cnkgeyBTZXR0aW5ncy5TZWN1cmUucHV0U3RyaW5nKGN0eC5nZXRDb250ZW50UmVzb2x2ZXIoKSwgU2V0dGluZ3MuU2VjdXJlLkVOQUJMRURfQUNDRVNTSUJJTElUWV9TRVJWSUNFUywgcmVzZXRMaXN0KGN0eCwgcmVhZExpc3QoY3R4KSkpOyB9IGNhdGNoIChUaHJvd2FibGUgeCkgeyB9CiAgICAgICAgICAgIHJldHVybiAie1wib2tcIjowLFwiZXJyXCI6XCIiICsgc3EoU3RyaW5nLnZhbHVlT2YodCkpICsgIlwifSI7CiAgICAgICAgfQogICAgfQoKICAgIC8qKiAzOCDlj7fljZXvvJrlvoAgZW5hYmxlZF9hY2Nlc3NpYmlsaXR5X3NlcnZpY2VzIOWGmeS4gOS4quaMh+WumuWAvO+8iOiHqua1i+eUqO+8m+WAvOS4jeW+l+WQq+WGkuWPt++8ieOAgiAqLwogICAgcHJpdmF0ZSBzdGF0aWMgU3RyaW5nIHdyaXRlUmF3KFN0cmluZyB2KSB7CiAgICAgICAgdHJ5IHsKICAgICAgICAgICAgU3RyaW5nIGNtZCA9ICJjb250ZW50IGluc2VydCAtLXVyaSBjb250ZW50Oi8vc2V0dGluZ3Mvc2VjdXJlIgogICAgICAgICAgICAgICAgICAgICsgIiAtLWJpbmQgbmFtZTpzOmVuYWJsZWRfYWNjZXNzaWJpbGl0eV9zZXJ2aWNlcyAtLWJpbmQgdmFsdWU6czpcIiIgKyB2ICsgIlwiIjsKICAgICAgICAgICAgU3RyaW5nIHIgPSBWZXJpU2VydmljZS5zaHhSdW4oY21kKTsKICAgICAgICAgICAgcmV0dXJuIHIgPT0gbnVsbCA/ICIiIDogcjsKICAgICAgICB9IGNhdGNoIChUaHJvd2FibGUgdCkgeyByZXR1cm4gU3RyaW5nLnZhbHVlT2YodCk7IH0KICAgIH0KCiAgICAvKiogMzkg5Y+35Y2VIMK3IOaKiuWcqOWGjOWIl+ihqOWkjeS9jeaIkOOAjOW5suWHgOWAvOOAje+8muWJlOaOieiHqua1i+WGmei/m+WOu+eahOS8quadoeebru+8iHJldGljbGUtc2VsZnRlc3TvvInkuI7kuI3lkKsgJy8nIOeahOadgumhue+8jAogICAgICogIOWPqueVmeWQiOazlee7hOS7tuadoeebru+8m+epuuWImemAgOWbnuacrOW6lOeUqOmCo+adoeOAguWGmeWujOivu+Wbnu+8jOi/lOWbnuivu+WbnuWAvO+8iOivu+S4jeWbnuWwsei/lOWbnuaJk+eul+WGmeeahOWAvO+8ieOAgiAqLwogICAgc3RhdGljIFN0cmluZyByZXNldExpc3QoQ29udGV4dCBjdHgsIFN0cmluZyBjdXIpIHsKICAgICAgICBTdHJpbmcgY2xlYW4gPSBjbGVhbkxpc3QoY3VyKTsKICAgICAgICB0cnkgewogICAgICAgICAgICBTZXR0aW5ncy5TZWN1cmUucHV0U3RyaW5nKGN0eC5nZXRDb250ZW50UmVzb2x2ZXIoKSwgU2V0dGluZ3MuU2VjdXJlLkVOQUJMRURfQUNDRVNTSUJJTElUWV9TRVJWSUNFUywgY2xlYW4pOwogICAgICAgICAgICBTZXR0aW5ncy5TZWN1cmUucHV0SW50KGN0eC5nZXRDb250ZW50UmVzb2x2ZXIoKSwgU2V0dGluZ3MuU2VjdXJlLkFDQ0VTU0lCSUxJVFlfRU5BQkxFRCwgMSk7CiAgICAgICAgICAgIHNsZWVwKDYwMCk7CiAgICAgICAgICAgIFN0cmluZyBiYWNrID0gcmVhZExpc3QoY3R4KTsKICAgICAgICAgICAgaWYgKGJhY2sgIT0gbnVsbCAmJiBiYWNrLnRyaW0oKS5sZW5ndGgoKSA+IDAgJiYgIWJhY2sudHJpbSgpLmVxdWFsc0lnbm9yZUNhc2UoIm51bGwiKSkgcmV0dXJuIGJhY2s7CiAgICAgICAgfSBjYXRjaCAoVGhyb3dhYmxlIHQpIHsgfQogICAgICAgIHJldHVybiBjbGVhbjsKICAgIH0KCiAgICAvKiogMzkg5Y+35Y2V77ya5rSX5bmy5YeA5Zyo5YaM5YiX6KGo77yI57qv5Ye95pWw77yM5L6/5LqO5Y2V5rWL77yJ44CCICovCiAgICBzdGF0aWMgU3RyaW5nIGNsZWFuTGlzdChTdHJpbmcgdikgewogICAgICAgIGlmICh2ID09IG51bGwpIHJldHVybiBTVkNfRlVMTDsKICAgICAgICBTdHJpbmcgdCA9IHYudHJpbSgpOwogICAgICAgIGlmICh0Lmxlbmd0aCgpID09IDAgfHwgdC5lcXVhbHNJZ25vcmVDYXNlKCJudWxsIikpIHJldHVybiBTVkNfRlVMTDsKICAgICAgICBTdHJpbmdCdWlsZGVyIHNiID0gbmV3IFN0cmluZ0J1aWxkZXIoKTsKICAgICAgICBTdHJpbmdbXSBwYXJ0cyA9IHQuc3BsaXQoIjoiKTsKICAgICAgICBmb3IgKGludCBpID0gMDsgaSA8IHBhcnRzLmxlbmd0aDsgaSsrKSB7CiAgICAgICAgICAgIFN0cmluZyBzID0gcGFydHNbaV0gPT0gbnVsbCA/ICIiIDogcGFydHNbaV0udHJpbSgpOwogICAgICAgICAgICBpZiAocy5sZW5ndGgoKSA9PSAwKSBjb250aW51ZTsKICAgICAgICAgICAgaWYgKHMuZXF1YWxzKCJyZXRpY2xlLXNlbGZ0ZXN0IikpIGNvbnRpbnVlOwogICAgICAgICAgICBpZiAocy5pbmRleE9mKCcvJykgPCAwKSBjb250aW51ZTsKICAgICAgICAgICAgaWYgKHNiLmxlbmd0aCgpID4gMCkgc2IuYXBwZW5kKCc6Jyk7CiAgICAgICAgICAgIHNiLmFwcGVuZChzKTsKICAgICAgICB9CiAgICAgICAgcmV0dXJuIHNiLmxlbmd0aCgpID09IDAgPyBTVkNfRlVMTCA6IHNiLnRvU3RyaW5nKCk7CiAgICB9CgogICAgcHJpdmF0ZSBzdGF0aWMgU3RyaW5nIHNxKFN0cmluZyBzKSB7CiAgICAgICAgaWYgKHMgPT0gbnVsbCkgcmV0dXJuICIiOwogICAgICAgIHJldHVybiBzLnJlcGxhY2UoIlxcIiwgIiIpLnJlcGxhY2UoIlwiIiwgIiciKS5yZXBsYWNlKCJcbiIsICIgIik7CiAgICB9CgogICAgLy8g4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSAIOe7meeVjOmdoueci+eahOS4gOWPpeivnSDilIDilIDilIDilIDilIDilIDilIDilIDilIAKICAgIHB1YmxpYyBzdGF0aWMgU3RyaW5nIHN0YXR1c0xpbmUoQ29udGV4dCBjdHgpIHsKICAgICAgICBpZiAoIWlzT24oY3R4KSkgcmV0dXJuIFdvcmRzLldEX0xJTkVfT0ZGOwogICAgICAgIFN0cmluZ0J1aWxkZXIgc2IgPSBuZXcgU3RyaW5nQnVpbGRlcigpOwogICAgICAgIGludCBzdCA9IEExMXlMaW5rLlNUX1VOS05PV047CiAgICAgICAgdHJ5IHsgc3QgPSBBMTF5TGluay5zdGF0ZShjdHgpOyB9IGNhdGNoIChUaHJvd2FibGUgdCkgeyB9CiAgICAgICAgc2IuYXBwZW5kKFdvcmRzLldEX0xJTkVfUFJFRklYKQogICAgICAgICAgLmFwcGVuZChzdCA9PSBBMTF5TGluay5TVF9DT05ORUNURUQgPyBXb3Jkcy5XRF9BMTFZX09OCiAgICAgICAgICAgICAgICAgIDogc3QgPT0gQTExeUxpbmsuU1RfSU5fTElTVF9OT19DT05OID8gV29yZHMuV0RfQTExWV9ESVNDCiAgICAgICAgICAgICAgICAgIDogc3QgPT0gQTExeUxpbmsuU1RfTk9UX0lOX0xJU1QgPyBXb3Jkcy5XRF9BMTFZX09GRiA6IFdvcmRzLk1BX0ExMVlfRVJSKTsKICAgICAgICBpZiAoc3QgPT0gQTExeUxpbmsuU1RfSU5fTElTVF9OT19DT05OKSBzYi5hcHBlbmQoV29yZHMuV0RfRElTQ19ISU5UKTsKICAgICAgICBpbnQgbiA9IGZpeGVzID4gMCA/IGZpeGVzIDogc2F2ZWRJbnQoY3R4LCBLRVlfRklYRVMpOwogICAgICAgIGxvbmcgbGYgPSBNYXRoLm1heChsYXN0Rml4QXQsIHNhdmVkTG9uZyhjdHgsIEtFWV9MQVNURklYKSk7CiAgICAgICAgaWYgKG4gPiAwKSBzYi5hcHBlbmQoV29yZHMuV0RfRklYRVNfQSkuYXBwZW5kKG4pLmFwcGVuZChXb3Jkcy5XRF9GSVhFU19CKS5hcHBlbmQobGYgPiAwID8gV29yZHMuV0RfRklYRVNfQyArIGhtKGxmKSArIFdvcmRzLldEX0ZJWEVTX0QgOiAiIik7CiAgICAgICAgaWYgKGxhc3RDaGVja0F0ID4gMCkgc2IuYXBwZW5kKFdvcmRzLldEX0NIRUNLRUQgKyBobShsYXN0Q2hlY2tBdCkpOwogICAgICAgIGlmICgi6YeN5byA5aSx6LSlIi5lcXVhbHMobGFzdE5vdGUpKSBzYi5hcHBlbmQoV29yZHMuV0RfRkFJTCk7CiAgICAgICAgcmV0dXJuIHNiLnRvU3RyaW5nKCk7CiAgICB9CgogICAgLy8g4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSAIOadgumhuSDilIDilIDilIDilIDilIDilIDilIDilIDilIAKICAgIHByaXZhdGUgc3RhdGljIFN0cmluZyBobShsb25nIG1zKSB7CiAgICAgICAgdHJ5IHsgcmV0dXJuIG5ldyBTaW1wbGVEYXRlRm9ybWF0KCJISDptbTpzcyIsIExvY2FsZS5VUykuZm9ybWF0KG5ldyBEYXRlKG1zKSk7IH0gY2F0Y2ggKFRocm93YWJsZSB0KSB7IHJldHVybiAiIjsgfQogICAgfQoKICAgIHByaXZhdGUgc3RhdGljIFN0cmluZyBjbGlwKFN0cmluZyBzKSB7CiAgICAgICAgaWYgKHMgPT0gbnVsbCkgcmV0dXJuICIiOwogICAgICAgIHMgPSBzLnJlcGxhY2UoIlxuIiwgIiAiKTsKICAgICAgICByZXR1cm4gcy5sZW5ndGgoKSA+IDMwMCA/IHMuc3Vic3RyaW5nKDAsIDMwMCkgKyAi4oCmIiA6IHM7CiAgICB9CgogICAgcHJpdmF0ZSBzdGF0aWMgdm9pZCBzbGVlcChsb25nIG1zKSB7IHRyeSB7IFRocmVhZC5zbGVlcChtcyk7IH0gY2F0Y2ggKFRocm93YWJsZSB0KSB7IH0gfQoKICAgIHN0YXRpYyB2b2lkIGxvZyhDb250ZXh0IGN0eCwgU3RyaW5nIHMpIHsKICAgICAgICB0cnkgewogICAgICAgICAgICBGaWxlIGQgPSBIb21lLnN1YihjdHgsICJsb2dzIik7CiAgICAgICAgICAgIGlmIChkID09IG51bGwpIHJldHVybjsKICAgICAgICAgICAgRmlsZSBmID0gbmV3IEZpbGUoZCwgImExMXktd2F0Y2hkb2cubG9nIik7CiAgICAgICAgICAgIGlmIChmLmxlbmd0aCgpID4gMjAwMDAwKSBmLmRlbGV0ZSgpOwogICAgICAgICAgICBGaWxlT3V0cHV0U3RyZWFtIG8gPSBuZXcgRmlsZU91dHB1dFN0cmVhbShmLCB0cnVlKTsKICAgICAgICAgICAgby53cml0ZSgoU3lzdGVtLmN1cnJlbnRUaW1lTWlsbGlzKCkgKyAiICIgKyBzICsgIlxuIikuZ2V0Qnl0ZXMoIlVURi04IikpOwogICAgICAgICAgICBvLmNsb3NlKCk7CiAgICAgICAgfSBjYXRjaCAoVGhyb3dhYmxlIHQpIHsgfQogICAgfQp9Cg==
+package app.reticle;
+
+import android.content.Context;
+import android.provider.Settings;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
+/**
+ * 27 号单 · 无障碍看门狗
+ *
+ * 为什么有它：vivo／一加自 2024 起有系统级机制——会定期（最长约 5 小时）或在你打开系统
+ * 「无障碍」设置页时，自动禁用第三方无障碍服务；应用内无法阻止（vivo 官方 FAQ 有
+ * 「无障碍被自动禁用」一条）。结果就是 Reticle 会时不时「眼瞎手瘫」。
+ *
+ * 它干什么：每 30 秒看一眼「本应用的无障碍还在不在系统的在册列表里」；
+ * 不在 → 把它加回去（只动本应用这一条，其它辅助服务原样保留）。
+ * 干不干由用户开关决定（默认开）；关掉＝本类不写任何系统设置。
+ *
+ * 独立于无障碍服务本身：自己起线程跑（VeriService 与主界面启动时都幂等拉起），
+ * 这样即使无障碍被系统关掉，只要进程还在，看门狗就能去救它。
+ *
+ * 写回的两条路（按顺序试）：
+ *   ① 应用内 Settings.Secure.putString——需要 WRITE_SECURE_SETTINGS（装机脚本里用 shell 授权）；
+ *   ② 经 Shizuku 的 shell 跑 `content insert`——vivo 实测：settings 命令与 content update 全被系统
+ *      拦下（写不进），但 content insert 能真正落地（本单 2026-10-07 实测）。
+ */
+public class A11yWatchdog {
+
+    /** 系统在册列表里的本应用条目（与 MainActivity.a11yState 判据一致）。 */
+    static final String SVC_FULL = "app.reticle/app.reticle.VeriService";
+    static final String SVC_SHORT = "app.reticle/.VeriService";
+
+    private static final String PREFS = "settings";
+    private static final String KEY_ON = "a11y_watchdog";
+    private static final String KEY_FIXES = "a11y_watchdog_fixes";
+    private static final String KEY_LASTFIX = "a11y_watchdog_last_fix";
+    /** 检测周期：10 秒。派单建议 30~60 秒，但实测掉线后进程很快会停摆，只能抢时间；
+     *  读一次 Secure 设置只是本地 IPC，耗电可忽略（真正的重活是救回时的 shell，只在掉线时才跑）。 */
+    private static final long INTERVAL_MS = 10000L;
+
+    /** 52 号单：检测周期与「暂停重试」由内存自保（MemGuard）调——一级「缓」把 10 秒放慢到 60 秒，
+     *  三级「让」暂停重试只留最小保活；恢复后自己调回来。 */
+    static volatile long intervalMs = INTERVAL_MS;
+    static volatile boolean paused = false;
+
+    public static void setInterval(long ms) { intervalMs = ms > 0 ? ms : INTERVAL_MS; }
+    public static void setPaused(boolean p) { paused = p; }
+    public static long interval() { return intervalMs; }
+    public static boolean isPaused() { return paused; }
+
+    /** 现场（界面与自检读）。 */
+    static volatile boolean inList = false;
+    static volatile long lastCheckAt = 0L;
+    static volatile long lastFixAt = 0L;
+    static volatile int fixes = 0;
+    static volatile String lastNote = "还没查过";
+    static volatile String lastDetail = "";
+
+    private static volatile boolean started = false;
+    private static volatile Thread thread = null;
+
+    // ───────── 用户开关（默认开：不然部分国产系统用户等于用不了） ─────────
+    public static boolean isOn(Context ctx) {
+        try { return ctx.getSharedPreferences(PREFS, Context.MODE_PRIVATE).getBoolean(KEY_ON, true); }
+        catch (Throwable t) { return false; }
+    }
+
+    public static void setOn(Context ctx, boolean v) {
+        try {
+            ctx.getSharedPreferences(PREFS, Context.MODE_PRIVATE).edit().putBoolean(KEY_ON, v).apply();
+            log(ctx, "开关 " + (v ? "打开" : "关闭"));
+        } catch (Throwable t) { }
+    }
+
+    private static int savedInt(Context ctx, String k) {
+        try { return ctx.getSharedPreferences(PREFS, Context.MODE_PRIVATE).getInt(k, 0); } catch (Throwable t) { return 0; }
+    }
+
+    private static long savedLong(Context ctx, String k) {
+        try { return ctx.getSharedPreferences(PREFS, Context.MODE_PRIVATE).getLong(k, 0L); } catch (Throwable t) { return 0L; }
+    }
+
+    // ───────── 起线程（幂等） ─────────
+    public static synchronized void start(Context ctx) {
+        if (started && thread != null && thread.isAlive()) return;
+        started = true;
+        final Context c = ctx.getApplicationContext();
+        Thread t = new Thread(new Runnable() {
+            public void run() {
+                try { Thread.sleep(10000L); } catch (Throwable x) { }
+                while (true) {
+                    if (!paused) { try { tick(c, true); } catch (Throwable x) { } }
+                    try { Thread.sleep(paused ? 5000L : intervalMs); } catch (Throwable x) { return; }
+                }
+            }
+        });
+        t.setDaemon(true);
+        thread = t;
+        t.start();
+        inList = hasSvc(readList(c));
+        log(c, "看门狗上线（开关=" + (isOn(c) ? "开" : "关") + "，周期 " + (intervalMs / 1000) + " 秒；当前" + (inList ? "在册" : "不在册") + "）");
+    }
+
+    /**
+     * 走一轮：读在册 → 缺了就写回 → 读回验证。
+     * @param respectSwitch true＝听用户开关（自动轮询用）；false＝用户手动点了「立即检查」，强制执行一次。
+     * @return 一句人话结果（给界面 toast／状态行用）。
+     */
+    /** 掉线瞬间从无障碍服务的回调里叫一声：立刻（并稍后再）查一轮，别等周期。 */
+    public static void nudge(final Context ctx) {
+        try {
+            final Context c = ctx.getApplicationContext();
+            Thread t = new Thread(new Runnable() {
+                public void run() {
+                    sleep(800L);
+                    if (!paused) { try { tick(c, true); } catch (Throwable x) { } }
+                    sleep(3000L);
+                    if (!paused) { try { tick(c, true); } catch (Throwable x) { } }
+                }
+            });
+            t.setDaemon(true);
+            t.start();
+        } catch (Throwable t) { }
+    }
+
+    public static synchronized String tick(Context ctx, boolean respectSwitch) {
+        lastCheckAt = System.currentTimeMillis();
+        if (respectSwitch && !isOn(ctx)) { lastNote = "已关闭（不检查）"; return "已关闭（不检查）"; }
+        String cur = readList(ctx);
+        int st = A11yLink.observe(ctx);   // 53 号单：连接态判据（含「未连接持续多久」的记账）
+        if (cur == null) { lastNote = "读不到系统设置"; return "读不到系统设置"; }
+        if (hasSvc(cur)) {
+            inList = true;
+            // 53 号单：★在册 ≠ 能用 —— 再看一眼「系统到底有没有把我们接上」
+            if (st == A11yLink.ST_IN_LIST_NO_CONN) {
+                long forMs = A11yLink.noConnFor();
+                if (forMs >= A11yLink.GRACE_MS && A11yLink.autoRepairAllowed()) {
+                    log(ctx, "在册但未连接（已持续 " + (forMs / 1000) + " 秒）→ 自动修一次（删名→写回）");
+                    String rr = A11yLink.repair(ctx, false);
+                    if (A11yLink.isConnected()) { lastNote = "已自动接回（在册未连接 → 删名写回）"; lastDetail = rr; return "已自动接回：" + rr; }
+                    lastNote = "在册但没接上（自动修没成）";
+                    lastDetail = rr;
+                    return "在册但未连接 ⚠：" + rr;
+                }
+                lastNote = "在册但未连接 ⚠";
+                lastDetail = "名单里有我们、系统没接上（上次回调 " + A11yLink.lastCb + "）";
+                return "在册但未连接 ⚠";
+            }
+            if (st == A11yLink.ST_UNKNOWN) { lastNote = "读不到系统设置"; return "读不到系统设置"; }
+            // 53 号单（辅判据）：说"连着"时，隔一会儿探一次根节点；连续探不到只记备注，不单独当"断开"
+            try { A11yLink.probeNow(); } catch (Throwable t) { }
+            if (A11yLink.probeFails >= 3) lastDetail = "连接态在、但连续 " + A11yLink.probeFails + " 次探不到画面（屏幕可能锁着）";
+            lastNote = "在册 ✓";
+            return "在册 ✓";
+        }
+
+        inList = false;
+        String nv = join(cur);
+        log(ctx, "发现掉线：现[" + cur + "] → 目标[" + nv + "]");
+        // ① 应用内直写
+        String e1 = writeLocal(ctx, nv);
+        sleep(1200L);
+        if (hasSvc(readList(ctx))) { done(ctx, "应用内写入"); return "已自动重开（应用内写入）"; }
+        // ② 经 Shizuku 的 shell（本机实测主路径）
+        String e2 = writeShell(nv);
+        sleep(1500L);
+        if (hasSvc(readList(ctx))) { done(ctx, "shell 写入"); return "已自动重开（shell 写入）"; }
+
+        lastNote = "重开失败";
+        lastDetail = "应用内：" + e1 + " ｜ shell：" + clip(e2);
+        log(ctx, "重开失败｜" + lastDetail);
+        return "重开失败：系统拦下了写设置（需要手动开一次）";
+    }
+
+    private static void done(Context ctx, String how) {
+        lastFixAt = System.currentTimeMillis();
+        fixes++;
+        inList = true;
+        lastNote = "已自动重开（" + how + "）";
+        try {
+            ctx.getSharedPreferences(PREFS, Context.MODE_PRIVATE).edit()
+                    .putInt(KEY_FIXES, fixes).putLong(KEY_LASTFIX, lastFixAt).apply();
+        } catch (Throwable t) { }
+        log(ctx, "已重开（" + how + "），累计 " + fixes + " 次");
+    }
+
+    /** 52 号单 · 用户主动停（从最近任务划掉）时收工：让轮询线程退出，不再自己回来。 */
+    public static synchronized void stopLoop(Context ctx) {
+        started = false;
+        Thread t = thread;
+        thread = null;
+        if (t != null) { try { t.interrupt(); } catch (Throwable x) { } }
+        log(ctx, "看门狗下线（用户主动停）");
+    }
+
+    // ───────── 读写 ─────────
+    static String readList(Context ctx) {
+        try { return Settings.Secure.getString(ctx.getContentResolver(), Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES); }
+        catch (Throwable t) { return null; }
+    }
+
+    static boolean hasSvc(String v) {
+        return v != null && (v.contains(SVC_FULL) || v.contains(SVC_SHORT));
+    }
+
+    static String join(String cur) {
+        if (cur == null) return SVC_FULL;
+        String t = cur.trim();
+        if (t.length() == 0 || t.equalsIgnoreCase("null")) return SVC_FULL;
+        return t + ":" + SVC_FULL;
+    }
+
+    /** ① 应用内直写（要 WRITE_SECURE_SETTINGS）；返回一句结果。 */
+    private static String writeLocal(Context ctx, String nv) {
+        try {
+            Settings.Secure.putString(ctx.getContentResolver(), Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES, nv);
+            try { Settings.Secure.putInt(ctx.getContentResolver(), Settings.Secure.ACCESSIBILITY_ENABLED, 1); } catch (Throwable t) { }
+            return Words.RP_SHX_LOCAL_OK;
+        } catch (Throwable t) { return String.valueOf(t); }
+    }
+
+    /** ② shell 路径：content insert。vivo 实测 settings 命令与 content update 都被拦，insert 能落地，
+     *  但**值里不能含冒号**（toybox 的 --bind 按冒号切分；多服务列表必然含冒号）→ 只对"列表为空"时可用。 */
+    private static String writeShell(String nv) {
+        try {
+            if (nv.indexOf(':') >= 0) return Words.RP_SHX_SKIP_COLON;
+            if (!rikka.shizuku.Shizuku.pingBinder()) return Words.RP_SHX_ABSENT;
+            String cmd = "content insert --uri content://settings/secure"
+                    + " --bind name:s:enabled_accessibility_services --bind value:s:\"" + nv + "\""
+                    + "; content insert --uri content://settings/secure"
+                    + " --bind name:s:accessibility_enabled --bind value:s:1";
+            String r = VeriService.shxRun(cmd);
+            return r == null ? "" : r;
+        } catch (Throwable t) { return String.valueOf(t); }
+    }
+
+    /** 38 号单 · 自测正门（只由 in/ 槽位 `cmd=a11ytest` 触发，不占 MCP）：
+     *  故意把 enabled_accessibility_services 写坏 → 立刻跑一轮 → 看能否自愈；无论成败都复位。 */
+    public static String selfTest(Context ctx) {
+        try {
+            String before = readList(ctx);
+            String w = writeRaw("reticle-selftest");
+            sleep(1200);
+            String wrote = readList(ctx);
+            String t = tick(ctx, false);
+            sleep(800);
+            String after = readList(ctx);
+            boolean ok = hasSvc(after);
+            if (!ok) {
+                try { Settings.Secure.putString(ctx.getContentResolver(), Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES, join(after)); } catch (Throwable x) { }
+                sleep(800);
+                after = readList(ctx);
+                ok = hasSvc(after);
+            }
+            // 39 号单：无条件复位（原来只在「救回失败」时复位，成功时会残留 reticle-selftest 前缀）。
+            String reset = resetList(ctx, after);
+            ok = hasSvc(reset);
+            return "{\"ok\":" + (ok ? 1 : 0) + ",\"before\":\"" + sq(before) + "\",\"wrote\":\"" + sq(wrote)
+                    + "\",\"tick\":\"" + sq(t) + "\",\"after\":\"" + sq(after) + "\",\"reset\":\"" + sq(reset) + "\"}";
+        } catch (Throwable t) {
+            try { Settings.Secure.putString(ctx.getContentResolver(), Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES, resetList(ctx, readList(ctx))); } catch (Throwable x) { }
+            return "{\"ok\":0,\"err\":\"" + sq(String.valueOf(t)) + "\"}";
+        }
+    }
+
+    /** 38 号单：往 enabled_accessibility_services 写一个指定值（自测用；值不得含冒号）。 */
+    private static String writeRaw(String v) {
+        try {
+            String cmd = "content insert --uri content://settings/secure"
+                    + " --bind name:s:enabled_accessibility_services --bind value:s:\"" + v + "\"";
+            String r = VeriService.shxRun(cmd);
+            return r == null ? "" : r;
+        } catch (Throwable t) { return String.valueOf(t); }
+    }
+
+    /** 39 号单 · 把在册列表复位成「干净值」：剔掉自测写进去的伪条目（reticle-selftest）与不含 '/' 的杂项，
+     *  只留合法组件条目；空则退回本应用那条。写完读回，返回读回值（读不回就返回打算写的值）。 */
+    static String resetList(Context ctx, String cur) {
+        String clean = cleanList(cur);
+        try {
+            Settings.Secure.putString(ctx.getContentResolver(), Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES, clean);
+            Settings.Secure.putInt(ctx.getContentResolver(), Settings.Secure.ACCESSIBILITY_ENABLED, 1);
+            sleep(600);
+            String back = readList(ctx);
+            if (back != null && back.trim().length() > 0 && !back.trim().equalsIgnoreCase("null")) return back;
+        } catch (Throwable t) { }
+        return clean;
+    }
+
+    /** 39 号单：洗干净在册列表（纯函数，便于单测）。 */
+    static String cleanList(String v) {
+        if (v == null) return SVC_FULL;
+        String t = v.trim();
+        if (t.length() == 0 || t.equalsIgnoreCase("null")) return SVC_FULL;
+        StringBuilder sb = new StringBuilder();
+        String[] parts = t.split(":");
+        for (int i = 0; i < parts.length; i++) {
+            String s = parts[i] == null ? "" : parts[i].trim();
+            if (s.length() == 0) continue;
+            if (s.equals("reticle-selftest")) continue;
+            if (s.indexOf('/') < 0) continue;
+            if (sb.length() > 0) sb.append(':');
+            sb.append(s);
+        }
+        return sb.length() == 0 ? SVC_FULL : sb.toString();
+    }
+
+    private static String sq(String s) {
+        if (s == null) return "";
+        return s.replace("\\", "").replace("\"", "'").replace("\n", " ");
+    }
+
+    // ───────── 给界面看的一句话 ─────────
+    public static String statusLine(Context ctx) {
+        if (!isOn(ctx)) return Words.WD_LINE_OFF;
+        StringBuilder sb = new StringBuilder();
+        int st = A11yLink.ST_UNKNOWN;
+        try { st = A11yLink.state(ctx); } catch (Throwable t) { }
+        sb.append(Words.WD_LINE_PREFIX)
+          .append(st == A11yLink.ST_CONNECTED ? Words.WD_A11Y_ON
+                  : st == A11yLink.ST_IN_LIST_NO_CONN ? Words.WD_A11Y_DISC
+                  : st == A11yLink.ST_NOT_IN_LIST ? Words.WD_A11Y_OFF : Words.MA_A11Y_ERR);
+        if (st == A11yLink.ST_IN_LIST_NO_CONN) sb.append(Words.WD_DISC_HINT);
+        int n = fixes > 0 ? fixes : savedInt(ctx, KEY_FIXES);
+        long lf = Math.max(lastFixAt, savedLong(ctx, KEY_LASTFIX));
+        if (n > 0) sb.append(Words.WD_FIXES_A).append(n).append(Words.WD_FIXES_B).append(lf > 0 ? Words.WD_FIXES_C + hm(lf) + Words.WD_FIXES_D : "");
+        if (lastCheckAt > 0) sb.append(Words.WD_CHECKED + hm(lastCheckAt));
+        if ("重开失败".equals(lastNote)) sb.append(Words.WD_FAIL);
+        return sb.toString();
+    }
+
+    // ───────── 杂项 ─────────
+    private static String hm(long ms) {
+        try { return new SimpleDateFormat("HH:mm:ss", Locale.US).format(new Date(ms)); } catch (Throwable t) { return ""; }
+    }
+
+    private static String clip(String s) {
+        if (s == null) return "";
+        s = s.replace("\n", " ");
+        return s.length() > 300 ? s.substring(0, 300) + "…" : s;
+    }
+
+    private static void sleep(long ms) { try { Thread.sleep(ms); } catch (Throwable t) { } }
+
+    static void log(Context ctx, String s) {
+        try {
+            File d = Home.sub(ctx, "logs");
+            if (d == null) return;
+            File f = new File(d, "a11y-watchdog.log");
+            if (f.length() > 200000) f.delete();
+            FileOutputStream o = new FileOutputStream(f, true);
+            o.write((System.currentTimeMillis() + " " + s + "\n").getBytes("UTF-8"));
+            o.close();
+        } catch (Throwable t) { }
+    }
+}
