@@ -1,1 +1,7 @@
-PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSDliJfooajmnaHnm67Ct+WPs+S+p+eureWktCDljZXoibLnn6Lph4/vvIzpmo/kuLvpopggdGludCAtLT4KPHZlY3RvciB4bWxuczphbmRyb2lkPSJodHRwOi8vc2NoZW1hcy5hbmRyb2lkLmNvbS9hcGsvcmVzL2FuZHJvaWQiCiAgICBhbmRyb2lkOndpZHRoPSIyNGRwIiBhbmRyb2lkOmhlaWdodD0iMjRkcCIKICAgIGFuZHJvaWQ6dmlld3BvcnRXaWR0aD0iMjQiIGFuZHJvaWQ6dmlld3BvcnRIZWlnaHQ9IjI0Ij4KICA8cGF0aCBhbmRyb2lkOmZpbGxDb2xvcj0iI0ZGRkZGRkZGIiBhbmRyb2lkOnBhdGhEYXRhPSJNMTAsNkw4LjU5LDcuNDEgMTMuMTcsMTJsLTQuNTgsNC41OUwxMCwxOGw2LC02eiIvPgo8L3ZlY3Rvcj4K
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 列表条目·右侧箭头 单色矢量，随主题 tint -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp" android:height="24dp"
+    android:viewportWidth="24" android:viewportHeight="24">
+  <path android:fillColor="#FFFFFFFF" android:pathData="M10,6L8.59,7.41 13.17,12l-4.58,4.59L10,18l6,-6z"/>
+</vector>

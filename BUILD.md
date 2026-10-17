@@ -1,1 +1,103 @@
-IyBCVUlMRC5tZCDigJQg6ZmM55Sf5Lq65oCO5LmI5oqK6L+Z5Liq5LuT5bqT5p6E5bu65oiQIEFQSwoKPiDmnKzmlofku7bmmK8qKuWRveS7pOe6pyoq5oyH5byV77ya6KaB6Ieq5aSH5LuA5LmI44CB5pS+5ZOq44CB5pWy5LuA5LmI44CB5q+P5q2l5pyf5pyb55yL5Yiw5LuA5LmI77yM5Lul5Y+KKirkuIDlrprkvJrljaHlnKjlk6oqKuOAggo+IOWunua1i+eOr+Wig++8neS4gOWPsCBBbmRyb2lkIDE3IOaJi+acuu+8iHNoZWxsIOi6q+S7ve+8ie+8jDIwMjYtMTAtMTMg6LW36ZmG57ut5a6e5rWL44CCKirmnKzmnLrot5HpgJog4omgIOWIq+S6uuiDvei3kemAmioq77yM6KeBIMKnNeOAggoKIyMgMCDlhYjor7Tnu5PorroKCi0g5pys5LuT5bqTKirkuI3lkKvkuozov5vliLYqKu+8muaehOW7uuW3peWFt+mTvu+8iGFhcHQy77yPYW5kcm9pZC5qYXLvvI9FQ0rvvI9kOO+8j2Fwa3NpZ25lcu+8ieOAgeesrOS4ieaWuSBqYXLvvIhBbmRyb2lkWO+8j01hdGVyaWFs77yPS290bGlu77yPTGlxdWlkIEdsYXNz77yPTUwgS2l077yJ6YO95b6X6Ieq5aSH44CC5q+P5qC35Lic6KW/Kirku47lk6rmi7/jgIHmgI7kuYjpgKAqKu+8muingSBbYGRvY3Mv5p6E5bu6546v5aKD5riF5Y2VLm1kYF0oZG9jcy/mnoTlu7rnjq/looPmuIXljZUubWQp44CCCi0g5pys5LuT5bqTKirkuI3lkKvnrb7lkI3pkqXljJkqKu+8muS4jeW4pumSpeWMmeWPquiDveaehOW7uuWIsCoq5pyq562+5ZCNIEFQSyoq77yb6KaB5Ye65Y+v5a6J6KOF5YyF77yM5b6X6Ieq5bex55Sf5oiQ6ZKl5YyZ77yI6KeBIMKnNCDikaTvvInjgIIKLSAqKuS4jeeUqCBQQyDkuZ/og73lh7rljIUqKu+8iDAuMjguMzEg6LW377yJ77ya5bqU55So5YaF6Ieq5bim6L+Z5p2h5p6E5bu66Lev57q/4oCU4oCU5a6J6KOF5YyF5YaF572u5bel5YW36ZO+77yI4omIKioxMC40IE1pQioq77yPKio0NDUg5Lu2KirvvIzotKbmnKzop4EgW2Bkb2NzL+aehOW7uueOr+Wig+a4heWNlS5tZGBdKGRvY3Mv5p6E5bu6546v5aKD5riF5Y2VLm1kKe+8ie+8jOesrOS4gOasoeeUqOaXtuS4gOmUruS7jioq5a6Y5pa55rqQKirkuIvovb0gYGFuZHJvaWQuamFyYO+8iCoq6K645Y+v5LiN5YWB6K645YaN5YiG5Y+RIOKHkiDlj6rog73lpJblj5bvvIzku5PlupPph4zmsqHmnIkqKu+8jOS4i+WujOmAkOS4qiBzaGEyNTYg5qCh6aqM77yJ44CC5a6e5rWL77ya54K544CM5omT5YyFIEFwcOOAjeKGkiDlh7rljIUgKirnuqYgNSDnp5IqKiDihpIg6KOF5LiK6IO96LW344CC4oeSIOS7k+W6k+S7jeaYryLmupDnoIEgKyDohJrmnKwi77yMKirkuI3lkKvku7vkvZXkuozov5vliLYqKuOAggotIOe8uuS7tuS4jeS8muOAjOmdmem7mOatu+OAje+8muWHuuWMhS/oo4XmnLrohJrmnKwqKuW8gOWcuuWFiOiHquajgCoq44CB6YCQ5p2h54K55ZCN57y65LuA5LmI5bm25oyH6Lev77yb5bqU55So5YaFIGBidWlsZGAg5bel5YW36L+Y6IO9IGBhY3Rpb249Y2hlY2tgIOS4gOadoeWRveS7pOeci+OAjOWwsee7qu+8j+e8uuWTquWHoOS4qu+8j+S7juWTquaLv+OAjeOAggotIOWunua1i++8iOWQjOS4gOWkqeOAgeWQjOS4gOWPsOacuuWZqO+8ie+8mgogIC0g5Y+q5ou/5LuT5bqT44CB5LuA5LmI6YO95LiN6YWNIOKGkiDohJrmnKzlvIDlnLoqKumAkOadoeeCueWQjee8uuS7tuW5tuaKiuOAjOS7juWTquaLv+OAjeaMh+WHuuadpSoq77yM6YCA5Ye656CBIDTvvIjCpzQg4pGg77yJ44CCCiAgLSDoh6rlpIflt6Xlhbfpk77vvIvnianmlpnjgIEqKuS4jeW4puS7u+S9lemSpeWMmSoqIOKGkiDkuIDot6/ot5HliLAgYHVuc2lnbmVkLmFwa2DvvIwqKuWPquWBnOWcqOetvuWQjemCo+S4gOatpSoq77yIwqc0IOKRpO+8ieOAggotIOS7k+W6k+mHjOeahCBgc3JjL2DjgIFgcmVzL2DjgIFgQW5kcm9pZE1hbmlmZXN0LnhtbGAg5LiO5L2c6ICF55qE5Y+R5biD55So5rqQ56CB5qCRKirpgJDlrZfoioLnm7jlkIwqKu+8iGBkaWZmIC1ycWAg5peg5beu5byC77yJ44CCCgojIyAxIOi/kOihjOeOr+Wig++8muS4pOadoei3rwoKKipBIOiuvuWkh+S+p++8iOacrOS7k+W6k+iEmuacrOeahOWOn+eUn+i3r+e6v++8iSoqCkFuZHJvaWQg6K6+5aSHICsgc2hlbGwg6Lqr5Lu977yIYWRiIHNoZWxs77yPU2hpenVrde+8j2ByaXNoYCDpg73ooYzvvInvvIznlKggYC9zeXN0ZW0vYmluL2FwcF9wcm9jZXNzYCDot5EqKumihOi9rOWlveeahCBkZXgqKuOAgumcgOimge+8mgoKYGBgCuW3peWFt+mTvi9iaW4vYWFwdDIgICAgICAgICAgICDvvIjvvIvlkIznm67lvZXkuIDloIYgbGliKi5zb++8jOmdoCBMRF9MSUJSQVJZX1BBVEgg5om+77yJCuW3peWFt+mTvi9saWIvYW5kcm9pZC5qYXIgICAgICDvvIhBUEkgMzXvvIkK5bel5YW36ZO+L2RleC9lY2ouZGV4ICBkOC5kZXggIGQ4LTIuZGV4ICBhcGtzaWduZXIuZGV4ICBidWlsZHRvb2wuZGV4CuW3peWFt+mTvi9lY2otcmVzLyAgICAgICAgICAgICDvvIhFQ0og55qE6LWE5rqQ55uu5b2V77yJCmBgYArvvIjkvZzogIXnmoTmnoTlu7rlt6Xlhbfpk77mmK/ljoblj7LkuqfnianvvJsqKuaAjuS5iOS7jumbtui9rOWHuuadpe+8muaciee7k+iuuioq4oCU4oCUYGJ1aWxkdG9vbC5kZXhgIOW3suWunua1i+WPr+S7juacrOS7k+W6k+a6kOeggeWujOWFqOmHjemAoO+8iOmAkOWtl+iKguS4gOiHtO+8ie+8jOWFtuS9meS7tuaYr+OAjGphciDihpIgZDjjgI3mnLrmorDkuqfnianvvIzmraXpqqTnhafmioQgW2Bkb2NzL+aehOW7uueOr+Wig+a4heWNlS5tZGBdKGRvY3Mv5p6E5bu6546v5aKD5riF5Y2VLm1kKSDnmoTph43lr7zphY3mlrnjgILvvIkKCioqQiBQQyDot6/nur/vvIjku5PlupPmnKrmj5DkvpvohJrmnKzvvIzpnIDopoHoh6rlt7HmkK3vvIkqKgpKREsgMTcrIO+8iyBBbmRyb2lkIFNESyBidWlsZC10b29sc++8iGBhYXB0MmDvvI9gZDhg77yPYGFwa3NpZ25lcmDvvInvvIsgYGFuZHJvaWQuamFyYO+8iEFQSSAzNe+8ie+8iyBgamF2YWNg44CCCuaKiiBgYnVpbGQvYnVpbGQyLnNoYCDph4zkuInlpITosIPnlKjmjaLmiJDlr7nlupTnmoTlkb3ku6TooYzlt6XlhbfvvIhFQ0rihpJqYXZhY+OAgWFwcF9wcm9jZXNzK2Q4LmRleOKGkmQ444CBYXBrc2lnbmVyLmRleOKGkmFwa3NpZ25lcu+8ieWNs+WPr++8jCoqSmF2YSDmupDnoIHkuIDooYzpg73kuI3nlKjmlLkqKuOAgu+8iOacrOi3r+e6v+acquWunua1i+OAgu+8iQoKIyMgMiDot6/lvoTkuI7nianmlpnvvJrnjq/looPlj5jph4/miJYgYnVpbGQuY29uZgoKYGJ1aWxkL2J1aWxkMi5zaGAg55So6L+Z5Lqb5Y+Y6YeP5a6a5L2N5Lic6KW/77yMKirpu5jorqTlgLzmmK/kvZzogIXmnLrot6/lvoTvvIznlKjliY3orr7miJDkvaDoh6rlt7HnmoQqKu+8mgoKfCDlj5jph48gfCDlkKvkuYkgfCDpu5jorqTlgLzvvIjkvZzogIXmnLrvvIkgfAp8LS0tfC0tLXwtLS18CnwgYFNCYCB8IOa6kOeggeagkSB8IGAvc2RjYXJkL1JldGljbGUv5bel56iLYCB8CnwgYFRDYCB8IOW3peWFt+mTviB8IGAkU0Iv5bel5YW36ZO+YCB8CnwgYEtFRVBgIHwg56ys5LiJ5pa554mp5paZIHwgYCRTQi/nianmlplgIHwKfCBgS1Ng77yPYEtEYO+8j2BLQWAgfCDnrb7lkI3pkqXljJnlupPvvI/lj6Pku6Tmlofku7bvvI/pkqXljJnliKvlkI0gfCBgLi9rZXlzL3JlbGVhc2UucDEyYO+8j2AuL2tleXMv5Y+j5LukLnR4dGDvvI9gcmVsZWFzZWAgfAoKKirlupTnlKjlhoUqKu+8iGBidWlsZGAg5bel5YW377yJ5Y+m5pyJ6YWN572u5paH5Lu2IGBidWlsZC5jb25mYO+8iOaUvuiuvuWkh+OAjOi/kOihjOebruW9leOAje+8jOS4u+WMhSBgL3NkY2FyZC9SZXRpY2xlL2J1aWxkLmNvbmZg77yb56S65L6L77yaYGJ1aWxkL2J1aWxkLmNvbmYuZXhhbXBsZWDvvInvvIzlha3kuKrplK7vvJpgUFJPSkVDVF9ESVJg77yPYFRPT0xDSEFJTl9ESVJg77yPYE1BVEVSSUFMX0RJUmDvvI9gQlVJTERfU0hg77yPYElOU1RBTExfU0hg77yPYFRNUF9ESVJg4oCU4oCU5LiN5YaZ77yd55So6buY6K6k77yb5pSv5oyBIGAkUFJPSkVDVF9ESVJgIOW8leeUqOS4juWQjOWQjeeOr+Wig+WPmOmHj+imhuebluOAguaUueWujOi3kSBgYnVpbGQgYWN0aW9uPWNoZWNrYCDlpI3mo4DjgIIKCueJqeaWmeebruW9leeFp+edgOaRhu+8iOiEmuacrOaMieWbuuWumuWQjeWtl+aJvu+8ie+8mgoKYGBgCueJqeaWmS9jbGFzc2VzLyouamFyICAgICAgICAg56ys5LiJ5pa55bqTIGphcgrnianmlpkvcmVzLXppcHMvKi56aXAgICAgICAgIOesrOS4ieaWueW6k+eahOi1hOa6kOWMhe+8iGFhcHQyIGxpbmsg55SoIC1SIOmAkOS4quWhnu+8iQrnianmlpkvam5pLzxhYmk+Lyouc28gICAgICAgIG5hdGl2ZSDlupPvvIjmloflrZfor4bliKvmqKHlnovvvIzop4Egwqc0IOKRoe+8iQrnianmlpkvYXNzZXRzLyAgICAgICAgICAgICAgIOWPr+mAiQrnianmlpkvbWFuaWZlc3Tnoo7niYcvKi54bWwgICAg5Y+v6YCJ77yb55So5LqO57uZ56ys5LiJ5pa55bqT55Sf5oiQ5a6D5Lus55qEIFIg57G7CmBgYAoK546v5aKD6Ieq5qOA5Lya6YCQ5Liq54K55ZCN55qEIGphcu+8mmBjb3JlLTEuOS4wLmphcmDjgIFgYXBwY29tcGF0LTEuNi4xLmphcmDjgIFgbWF0ZXJpYWwtMS45LjAuamFyYOOAgWBsaXF1aWRnbGFzcy0yLjAuMTEuamFyYOOAgWB2aXNpb24tY29tbW9uLTE3LjMuMC5qYXJg44CBYHBsYXktc2VydmljZXMtdGFza3MtMTguMi4wLmphcmDjgIFga290bGluLXN0ZGxpYi0yLjAuMjEuamFyYOOAgu+8iOavj+agt+S7juWTquaLv++8muingSDCpzQv5riF5Y2V6aG144CC77yJCgojIyAzIOaVsuS7gOS5iAoKYGBgc2gKY3AgLXIgL3BhdGgvdG8vcmV0aWNsZS3lvIDmupAgL2RhdGEvbG9jYWwvdG1wL215cmVwbyAgICMg5Yir5Zyo5Y6f55uu5b2V6LeR77ya6ISa5pys5Lya5YaZIOi+k+WHui8KY2QgL2RhdGEvbG9jYWwvdG1wL215cmVwbwpTQj0kUFdEIFRDPS9wYXRoL3RvL+W3peWFt+mTviBLRUVQPS9wYXRoL3RvL+eJqeaWmSBzaCBidWlsZC9idWlsZDIuc2gKYGBgCgrpgJDmraXmnJ/mnJvovpPlh7rvvJoKCnwg5q2lIHwg5pyf5pybIHwKfC0tLXwtLS18CnwgMCB8IGDnjq/looPoh6rmo4DvvJrpvZAg4pyTYO+8iOe8uuS7tuS8mumAkOadoeeCueWQje+8i+aMh+i3r+W5tumAgOWHuu+8jOingSDCpzQg4pGg77yJIHwKfCAxIHwgYWFwdDIgY29tcGlsZSDnlJ/miJAgYHJlc3ppcC9hcHAuemlwYCB8CnwgMiB8IGBiYXNlLmFwa2Ag4omIIDMuMiBNQu+8m2DlupPljIXlkI0gNjIg5LiqIOKGkiDnlJ/miJAgUiDnsbtgIHwKfCAzIHwgYGphdmFjKEVDSikgb2s6IDEzMDUg5LiqIGNsYXNzYCB8CnwgNCB8IGQ4IOWHuiA4IOS4qiBkZXjvvIjnuqYgMX4zIOWIhumSn++8jGAtWG14MTUzNm1g77yJIHwKfCA1IHwgYHVuc2lnbmVkLmFwa2Ag4omIIDI4LjQgTUIgfAp8IDYgfCDnrb7lkI3vvJvpkqXljJnkuI3pvZDlsLHkvJrlnKjov5nlhL/mlq3vvIjCpzQg4pGk77yJIHwKfCA3IHwgYOi+k+WHui9yZXRpY2xlLmFwa2Ag77yLIHNoYTI1NiB8Cgroo4XmnLrohJrmnKwgYGJ1aWxkL+ijheW3peWFty5zaGAg55So56ys5LiA5Liq5Y+C5pWw5oiWIGBBUEs9POi3r+W+hD5gIOeOr+Wig+WPmOmHj+aMh+WumuWMhe+8m+mDveS4jee7meaJjeeUqOm7mOiupOi3r+W+hO+8iOS9nOiAheacuui3r+W+hO+8jOiusOW+l+aUue+8ieOAggoKIyMgNCDkuIDlrprkvJrljaHnmoTlnLDmlrnvvIjmjInnnJ/lrp7pgYfliLDnmoTpobrluo/vvIkKCuKRoCAqKue8uuS7tioq77ya5Ye65YyFL+ijheacuuiEmuacrCoq5byA5Zy65YWI6Ieq5qOAKirvvIg1OSDlj7fljZXotbfvvInvvIznvLrku7bpgJDmnaHngrnlkI3lubbnu5njgIzku47lk6rmi7/jgI3mjIflvJXvvIzpgIDlh7rnoIEgNOKAlOKAlOS4jeS8mui3keWIsOS4gOWNiumdmem7mOatu+OAguW6lOeUqOWGhSBgYnVpbGQgYWN0aW9uPWNoZWNrYCDlkIzmoLfkuIDnnLznnIvmuIXjgIzlsLHnu6rvvI/nvLrlk6rlh6DkuKrvvI/ku47lk6rmi7/jgI3jgIIK4pGhICoqTUwgS2l0IOS4jeiuuOmaj+S7k+W6k+WPkSoq77ya5paH5a2X6K+G5Yir55So55qEIGB2aXNpb24tY29tbW9uYOOAgWBwbGF5LXNlcnZpY2VzLXRhc2tzYCDnrYkgamFyIOS4jiBg54mp5paZL2puaS8qLyoqLnNvYO+8iOS4reaWhyBidW5kbGVkIOaooeWei++8ieWPlyBHb29nbGUg5p2h5qy+57qm5p2f77yM6ZyA6KaB6Ieq5bex5LuOIEdvb2dsZSBNYXZlbiDlj5YgYHRleHQtcmVjb2duaXRpb24tY2hpbmVzZWAgYnVuZGxlZCDniYjlubbmlL7ov5vnianmlpnvvJvnvLrkuobnrKwgMyDmraXnvJbor5HlsLHov4fkuI3ljrvjgIIK4pGiICoqTGlxdWlkIEdsYXNzIOS4jeW4puS6jOi/m+WItioq77ya6Ieq6KGM5Y+WIGBsaXF1aWRnbGFzcy0yLjAuMTEuamFyYCDmlL4gYOeJqeaWmS9jbGFzc2VzL2DjgILlj6blpJblroPopoHmsYIgYGtvdGxpbi1zdGRsaWIgMi4wLjIxYO+8j2Bjb3JlLWt0eCAxLjEzLjFg77yb54mp5paZ6YeM6Iul5ZCM5pe25pyJIDEuNy4xMO+8jzEuOC4wIOS5i+exu+eahOaXp+WQjOWQjeW6k++8jGQ4IOS8muaKpSBgZGVmaW5lZCBtdWx0aXBsZSB0aW1lc2DvvIjohJrmnKzph4zlt7LmmL7lvI/mjpLpmaTlh6DkuKrml6fniYjmnKzvvInjgIIK4pGjICoqYC9zZGNhcmRgIOS4iuS4jeiDveaJp+ihjCoq77yaYWFwdDIg562J5Y+v5omn6KGM5paH5Lu25b+F6aG75ou35YiwIGAvZGF0YS9sb2NhbC90bXBgIOaIluW6lOeUqOengeacieebruW9leWGjei3ke+8iOiEmuacrOiHquW3seS8muaLt+WIsCBgJFcvYmluYO+8ieOAggrikaQgKirmsqHmnInpkqXljJkg4oeSIOWPquiDveWIsCB1bnNpZ25lZCoq77ya5LuT5bqT5LiN5ZCr6ZKl5YyZ77yMYEtTYCDpu5jorqQgYC4va2V5cy9yZWxlYXNlLnAxMmAg5om+5LiN5Yiw5pe25Lya5Zue6YCA5Y6755SoIGAkVEMvZGVidWcucDEyYOKAlOKAlOmCo+imgeS9oOiHquW3seeahOW3peWFt+mTvumHjOaUvuS6huiwg+ivlemSpeWMme+8m+mDveayoeacie+8jOWwseWcqOetvuWQjeWkhOaKpSBgRmlsZU5vdEZvdW5kRXhjZXB0aW9uYCDlgZzkuIvvvIjmraTml7YgYHVuc2lnbmVkLmFwa2Ag5bey5a6M5pW05Y+v55So77yJ44CC6KaB5Ye66Ieq5bex55qE5YyF77yaYC4va2V5cy9yZWxlYXNlLnAxMmAg77yLIGAuL2tleXMv5Y+j5LukLnR4dGDvvIjkuIDooYwgYOWPo+S7pD3kvaDnmoTlj6Pku6Rg77yJ77yM5oiW55u05o6lIGBrZXl0b29sYCDnlJ/miJDlkI7mlLkgYEtTL0tEL0tBYOOAggrikaUgKirlupTnlKjlhoXjgIzlh7rljIXvvI/mm7TmlrDjgI3ot6/lvoTlhajpg6jlj6/phY0qKu+8iDU5IOWPt+WNlei1t++8ie+8mum7mOiupO+8neS9nOiAheacuui3r+W+hO+8m+acqumFjee9ruS4lOm7mOiupOi3r+W+hOS4jeWtmOWcqOaXtu+8jOS8mioq5piO56Gu5oql44CM5LiN5Y+v55So77yL57y65LuA5LmI44CNKirvvIjkuI3mmK/pnZnpu5jvvInjgILlnKjoh6rlt7HnmoTmnLrlmajkuIrnlKjlroPvvJrlhpkgYGJ1aWxkLmNvbmZg77yI56S65L6LIGBidWlsZC9idWlsZC5jb25mLmV4YW1wbGVg77yJ77yM5oiW5oyJIMKnMiDmiorohJrmnKzot5HpgJrlkI7nhafmioTot6/lvoTjgIIKCiMjIDUg5a6e5rWL6K6w5b2V77yI5pyA6L+R5Zyo5LiK77yJCgp8IOi/kOihjCB8IOWRveS7pOimgeeCuSB8IOe7k+aenCB8CnwtLS18LS0tfC0tLXwKfCA1OS0zIHwg6YWN572u5Li05pe25oyH5ZCR5LiN5a2Y5Zyo6Lev5b6E77yI6ZmM55Sf5Lq65Zy65pmv77yJ4oaSIGBidWlsZGDvvI9gaW5zdGFsbGDvvI9gY2hlY2tgIHwg6YCQ5p2h5Lq66K+d77yL44CM5LuO5ZOq5ou/44CN5oyH5byV77yI6KeBIDU5IOWNleivgeaNru+8iSB8CnwgNTktMiB8IGBidWlsZHRvb2wuZGV4YCDph43pgKDvvJpFQ0og57yW6K+RIGDlt6XlhbcvQnVpbGRUb29sLmphdmFgIOKGkiBkOCBgLS1taW4tYXBpIDI0YCB8ICoqc2hhMjU2IOS4jueOsOW9uemAkOWtl+iKguS4gOiHtCoq77yIYDllYjlkY2Ux4oCmZGQ1Mzdg77yJIHwKfCA1OS0xIHwg5pS55ZCO6buY6K6k6Lev5b6E6YeN6LeRIGBidWlsZDIuc2hgIHwg5YWo6YCaIOKGkiBgMC4yOC4xNe+8j1ZDNjlg77ybdW5zaWduZWQgMjgsMzc4LDgzMiBC77ybYOi+k+WHui9yZXRpY2xlLmFwa2Agc2hhMjU2IGAzNDkyMzllZOKApmYyNTlgIHwKfCA3NC0xIHwg5bqU55So5YaFIGBidWlsZCBhY3Rpb249c3RhcnRg77yIYXBwIOi6q+S7ve+8jOS4jeWAnyBTaGl6dWt177yJIHwg546v5aKD5bCx57uqIOKGkiDlh7rljIUgKirnuqYgNSDnp5IqKiDihpIg6KOF5LiK6IO96LW377ybYGFuZHJvaWQuamFyYCAyNS44IE1C77yPc2hhMjU2IOS4jiA2OSDotKbmnKzpgJDku7bkuIDoh7QgfAp8IDU4LTIgfCDvvIg1OSDkv67lpI3liY3vvInoh6rlpIflt6Xlhbfpk77vvIvnianmlpnjgIHml6DpkqXljJkgfCDliLAgYHVuc2lnbmVkLmFwa2DjgIHlgZzlnKjnrb7lkI0gfAp8IDU4LTEgfCDvvIg1OSDkv67lpI3liY3vvInlj6rmi7/ku5PlupPjgIHku4DkuYjpg73kuI3phY0gfCDlvZPml7bml6Dmj5DnpLrnm7TpgIDvvJsqKjU5IOi1t+aUueS4uuS4gOW8gOWcuumAkOadoeeCueWQje+8i+aMh+i3ryoqIHwKCioq5rKh6aqM6K+B55qEKirvvJrnnJ/mraPpmYznlJ/nmoTmnLrlmajvvI/ns7vnu5/vvIjmjaLlj7DnlLXohJHjgIHmjaLlj7DmiYvmnLrjgIHlubLlh4DlrrnlmajvvInog73lkKbmnoTlu7rvvJtQQyDot6/nur/vvIhKREvvvItTREvvvInvvJtXaW5kb3dz77yPbWFjT1PvvJtHcmFkbGUg5YyW5p6E5bu677ybYGFhcHQyYO+8j2BhbmRyb2lkLmphcmDvvI9gRUNKYO+8j2BkOGDvvI9gYXBrc2lnbmVyYCDnmoTljp/mlpnkuI3lnKjmnKzmnLrvvIwqKuOAjOS7juWOn+aWmemHjei9rOOAjemZpCBgYnVpbGR0b29sLmRleGDvvIjlt7Llrp7mtYvvvInlpJblnYfmnKrlrp7mtYsqKuOAggo=
+# BUILD.md — 陌生人怎么把这个仓库构建成 APK
+
+> 本文件是**命令级**指引：要自备什么、放哪、敲什么、每步期望看到什么，以及**一定会卡在哪**。
+> 实测环境＝一台 Android 17 手机（shell 身份），2026-10-13 起陆续实测。**本机跑通 ≠ 别人能跑通**，见 §5。
+
+## 0 先说结论
+
+- 本仓库**不含二进制**：构建工具链（aapt2／android.jar／ECJ／d8／apksigner）、第三方 jar（AndroidX／Material／Kotlin／Liquid Glass／ML Kit）都得自备。每样东西**从哪拿、怎么造**：见 [`docs/构建环境清单.md`](docs/构建环境清单.md)。
+- 本仓库**不含签名钥匙**：不带钥匙只能构建到**未签名 APK**；要出可安装包，得自己生成钥匙（见 §4 ⑤）。
+- **不用 PC 也能出包**（0.28.31 起）：应用内自带这条构建路线——安装包内置工具链（≈**10.4 MiB**／**445 件**，账本见 [`docs/构建环境清单.md`](docs/构建环境清单.md)），第一次用时一键从**官方源**下载 `android.jar`（**许可不允许再分发 ⇒ 只能外取，仓库里没有**，下完逐个 sha256 校验）。实测：点「打包 App」→ 出包 **约 5 秒** → 装上能起。⇒ 仓库仍是"源码 + 脚本"，**不含任何二进制**。
+- 缺件不会「静默死」：出包/装机脚本**开场先自检**、逐条点名缺什么并指路；应用内 `build` 工具还能 `action=check` 一条命令看「就绪／缺哪几个／从哪拿」。
+- 实测（同一天、同一台机器）：
+  - 只拿仓库、什么都不配 → 脚本开场**逐条点名缺件并把「从哪拿」指出来**，退出码 4（§4 ①）。
+  - 自备工具链＋物料、**不带任何钥匙** → 一路跑到 `unsigned.apk`，**只停在签名那一步**（§4 ⑤）。
+- 仓库里的 `src/`、`res/`、`AndroidManifest.xml` 与作者的发布用源码树**逐字节相同**（`diff -rq` 无差异）。
+
+## 1 运行环境：两条路
+
+**A 设备侧（本仓库脚本的原生路线）**
+Android 设备 + shell 身份（adb shell／Shizuku／`rish` 都行），用 `/system/bin/app_process` 跑**预转好的 dex**。需要：
+
+```
+工具链/bin/aapt2            （＋同目录一堆 lib*.so，靠 LD_LIBRARY_PATH 找）
+工具链/lib/android.jar      （API 35）
+工具链/dex/ecj.dex  d8.dex  d8-2.dex  apksigner.dex  buildtool.dex
+工具链/ecj-res/             （ECJ 的资源目录）
+```
+（作者的构建工具链是历史产物；**怎么从零转出来：有结论**——`buildtool.dex` 已实测可从本仓库源码完全重造（逐字节一致），其余件是「jar → d8」机械产物，步骤照抄 [`docs/构建环境清单.md`](docs/构建环境清单.md) 的重导配方。）
+
+**B PC 路线（仓库未提供脚本，需要自己搭）**
+JDK 17+ ＋ Android SDK build-tools（`aapt2`／`d8`／`apksigner`）＋ `android.jar`（API 35）＋ `javac`。
+把 `build/build2.sh` 里三处调用换成对应的命令行工具（ECJ→javac、app_process+d8.dex→d8、apksigner.dex→apksigner）即可，**Java 源码一行都不用改**。（本路线未实测。）
+
+## 2 路径与物料：环境变量或 build.conf
+
+`build/build2.sh` 用这些变量定位东西，**默认值是作者机路径，用前设成你自己的**：
+
+| 变量 | 含义 | 默认值（作者机） |
+|---|---|---|
+| `SB` | 源码树 | `/sdcard/Reticle/工程` |
+| `TC` | 工具链 | `$SB/工具链` |
+| `KEEP` | 第三方物料 | `$SB/物料` |
+| `KS`／`KD`／`KA` | 签名钥匙库／口令文件／钥匙别名 | `./keys/release.p12`／`./keys/口令.txt`／`release` |
+
+**应用内**（`build` 工具）另有配置文件 `build.conf`（放设备「运行目录」，主包 `/sdcard/Reticle/build.conf`；示例：`build/build.conf.example`），六个键：`PROJECT_DIR`／`TOOLCHAIN_DIR`／`MATERIAL_DIR`／`BUILD_SH`／`INSTALL_SH`／`TMP_DIR`——不写＝用默认；支持 `$PROJECT_DIR` 引用与同名环境变量覆盖。改完跑 `build action=check` 复检。
+
+物料目录照着摆（脚本按固定名字找）：
+
+```
+物料/classes/*.jar         第三方库 jar
+物料/res-zips/*.zip        第三方库的资源包（aapt2 link 用 -R 逐个塞）
+物料/jni/<abi>/*.so        native 库（文字识别模型，见 §4 ②）
+物料/assets/               可选
+物料/manifest碎片/*.xml    可选；用于给第三方库生成它们的 R 类
+```
+
+环境自检会逐个点名的 jar：`core-1.9.0.jar`、`appcompat-1.6.1.jar`、`material-1.9.0.jar`、`liquidglass-2.0.11.jar`、`vision-common-17.3.0.jar`、`play-services-tasks-18.2.0.jar`、`kotlin-stdlib-2.0.21.jar`。（每样从哪拿：见 §4/清单页。）
+
+## 3 敲什么
+
+```sh
+cp -r /path/to/reticle-开源 /data/local/tmp/myrepo   # 别在原目录跑：脚本会写 输出/
+cd /data/local/tmp/myrepo
+SB=$PWD TC=/path/to/工具链 KEEP=/path/to/物料 sh build/build2.sh
+```
+
+逐步期望输出：
+
+| 步 | 期望 |
+|---|---|
+| 0 | `环境自检：齐 ✓`（缺件会逐条点名＋指路并退出，见 §4 ①） |
+| 1 | aapt2 compile 生成 `reszip/app.zip` |
+| 2 | `base.apk` ≈ 3.2 MB；`库包名 62 个 → 生成 R 类` |
+| 3 | `javac(ECJ) ok: 1305 个 class` |
+| 4 | d8 出 8 个 dex（约 1~3 分钟，`-Xmx1536m`） |
+| 5 | `unsigned.apk` ≈ 28.4 MB |
+| 6 | 签名；钥匙不齐就会在这儿断（§4 ⑤） |
+| 7 | `输出/reticle.apk` ＋ sha256 |
+
+装机脚本 `build/装工具.sh` 用第一个参数或 `APK=<路径>` 环境变量指定包；都不给才用默认路径（作者机路径，记得改）。
+
+## 4 一定会卡的地方（按真实遇到的顺序）
+
+① **缺件**：出包/装机脚本**开场先自检**（59 号单起），缺件逐条点名并给「从哪拿」指引，退出码 4——不会跑到一半静默死。应用内 `build action=check` 同样一眼看清「就绪／缺哪几个／从哪拿」。
+② **ML Kit 不许随仓库发**：文字识别用的 `vision-common`、`play-services-tasks` 等 jar 与 `物料/jni/*/**.so`（中文 bundled 模型）受 Google 条款约束，需要自己从 Google Maven 取 `text-recognition-chinese` bundled 版并放进物料；缺了第 3 步编译就过不去。
+③ **Liquid Glass 不带二进制**：自行取 `liquidglass-2.0.11.jar` 放 `物料/classes/`。另外它要求 `kotlin-stdlib 2.0.21`／`core-ktx 1.13.1`；物料里若同时有 1.7.10／1.8.0 之类的旧同名库，d8 会报 `defined multiple times`（脚本里已显式排除几个旧版本）。
+④ **`/sdcard` 上不能执行**：aapt2 等可执行文件必须拷到 `/data/local/tmp` 或应用私有目录再跑（脚本自己会拷到 `$W/bin`）。
+⑤ **没有钥匙 ⇒ 只能到 unsigned**：仓库不含钥匙，`KS` 默认 `./keys/release.p12` 找不到时会回退去用 `$TC/debug.p12`——那要你自己的工具链里放了调试钥匙；都没有，就在签名处报 `FileNotFoundException` 停下（此时 `unsigned.apk` 已完整可用）。要出自己的包：`./keys/release.p12` ＋ `./keys/口令.txt`（一行 `口令=你的口令`），或直接 `keytool` 生成后改 `KS/KD/KA`。
+⑥ **应用内「出包／更新」路径全部可配**（59 号单起）：默认＝作者机路径；未配置且默认路径不存在时，会**明确报「不可用＋缺什么」**（不是静默）。在自己的机器上用它：写 `build.conf`（示例 `build/build.conf.example`），或按 §2 把脚本跑通后照抄路径。
+
+## 5 实测记录（最近在上）
+
+| 运行 | 命令要点 | 结果 |
+|---|---|---|
+| 78-1 | 同机同工程（Reticle 正本源码 28 java）：只改 1 个 java 文件后出包（增量） | **34 秒**；同工程从头全量 **126 秒**；只改一处资源值 22 秒（跳过编译器与两个 dex 步骤）；应用内 `build action=start` 同场景 19 秒 |
+| 59-3 | 配置临时指向不存在路径（陌生人场景）→ `build`／`install`／`check` | 逐条人话＋「从哪拿」指引（见 59 单证据） |
+| 59-2 | `buildtool.dex` 重造：ECJ 编译 `工具/BuildTool.java` → d8 `--min-api 24` | **sha256 与现役逐字节一致**（`9eb9dce1…dd537`） |
+| 59-1 | 改后默认路径重跑 `build2.sh` | 全通 → `0.28.15／VC69`；unsigned 28,378,832 B；`输出/reticle.apk` sha256 `349239ed…f259` |
+| 74-1 | 应用内 `build action=start`（app 身份，不借 Shizuku） | 环境就绪 → 出包 **约 5 秒** → 装上能起；`android.jar` 25.8 MB／sha256 与 69 账本逐件一致 |
+| 58-2 | （59 修复前）自备工具链＋物料、无钥匙 | 到 `unsigned.apk`、停在签名 |
+| 58-1 | （59 修复前）只拿仓库、什么都不配 | 当时无提示直退；**59 起改为一开场逐条点名＋指路** |
+
+**没验证的**：真正陌生的机器／系统（换台电脑、换台手机、干净容器）能否构建；PC 路线（JDK＋SDK）；Windows／macOS；Gradle 化构建；`aapt2`／`android.jar`／`ECJ`／`d8`／`apksigner` 的原料不在本机，**「从原料重转」除 `buildtool.dex`（已实测）外均未实测**。

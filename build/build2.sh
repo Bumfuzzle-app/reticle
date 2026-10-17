@@ -1,1 +1,428 @@
-IyEvc3lzdGVtL2Jpbi9zaAojIDI0IOWPt+WNlSDCtyDorr7lpIfkvqfmnoTlu7rohJrmnKwgdjLvvIjkuI3pnIDopoEgVGVybXV477yb55SoIHNoZWxsIOi6q+S7vei3ke+8iQojIDM5IOWPt+WNlSDCtyDliqAgSUQg5Y+C5pWw77yaSUQ9QiDlh7rjgIzlia/lrp7kvovjgI3ljIXvvIjljIXlkI0gYXBwLnJldGljbGUuYiAvIE1DUCA4NzcxIC8g55uu5b2VIC9zZGNhcmQvUmV0aWNsZULvvIkKIyDnlKjms5XvvJpzaCAvc2RjYXJkL1JldGljbGUv5bel56iLL+W3peWFt+mTvi9idWlsZDIuc2ggICAgICAgICDihpIg5Li75YyFIOi+k+WHui9yZXRpY2xlLmFwawojICAgICAgIElEPUIgc2ggL3NkY2FyZC9SZXRpY2xlL+W3peeoiy/lt6Xlhbfpk74vYnVpbGQyLnNoICAgIOKGkiDlia/ljIUg6L6T5Ye6L3JldGljbGUtYi5hcGsKIyAgIOi6q+S7veabv+aNouWPquWcqOS4tOaXtuW3peS9nOWMuuWBmu+8jOato+acrOa6kOeggeS4gOS4quWtl+iKgumDveS4jeWKqO+8m+i3r+W+hOWPr+aNou+8iOeOr+Wig+WPmOmHj+S8mOWFiO+8jOm7mOiupO+8neacrOacuuWOn+i3r+W+hO+8ie+8mlNCPea6kOeggeagkSBUQz3lt6Xlhbfpk74gS0VFUD3nianmlpkgS1MvS0QvS0E9562+5ZCNCiMg5Lqn54mp77yaL3NkY2FyZC9SZXRpY2xlL+W3peeoiy/ovpPlh7ovKi5hcGvvvIhyZWxlYXNlIOetvuWQje+8m+mSpeWMmeS4juWPo+S7pOingSDlpIfku70vUmV0aWNsZS3nrb7lkI0v77yJCnNldCAtZQpTQj0iJHtTQjotL3NkY2FyZC9SZXRpY2xlL+W3peeoi30iICAgIyDmupDnoIHmoJHvvIjlj6/nlKjnjq/looPlj5jph4/mjIflkJHoh6rlt7HnmoTot6/lvoTvvIkKVEM9IiR7VEM6LSRTQi/lt6Xlhbfpk759IiAgICAgICAgICAgICAgICAjIOaehOW7uuW3peWFt+mTvu+8iOS7k+W6k+S4jeWQq++8jOmcgOiHquWkh++8iQpJRD0iJHtJRDotfSIKaWYgWyAiJElEIiA9ICJCIiBdOyB0aGVuCiAgVz0vZGF0YS9sb2NhbC90bXAvcmV0aWNsZS1idWlsZC1iCiAgUEtHPWFwcC5yZXRpY2xlLmIKICBQT1JUPTg3NzEKICBSRElSPS9zZGNhcmQvUmV0aWNsZUIKICBPVVROQU1FPXJldGljbGUtYi5hcGsKZWxzZQogIFc9L2RhdGEvbG9jYWwvdG1wL3JldGljbGUtYnVpbGQKICBQS0c9YXBwLnJldGljbGUKICBQT1JUPTg3NzAKICBSRElSPS9zZGNhcmQvUmV0aWNsZQogIE9VVE5BTUU9cmV0aWNsZS5hcGsKZmkKSkFSPSRUQy9saWIvYW5kcm9pZC5qYXIKS0VFUD0iJHtLRUVQOi0kU0Iv54mp5paZfSIgICAgICAgICAgICAgIyDnrKzkuInmlrnkvp3otZbvvIjku5PlupPkuI3lkKvvvIzpnIDoh6rlpIfvvIkKU1JDRElSPSRTQi9zcmMKUkVTRElSPSRTQi9yZXMKTUFOSUZFU1Q9JFNCL0FuZHJvaWRNYW5pZmVzdC54bWwKCiMgMjkg5Y+35Y2V77ya5ray5oCB546755KD5bqT77yIUVdFQTAvTGlxdWlkLUdsYXNzLUFuZHJvaWQgdjIuMC4xMe+8iemcgOimgSBrb3RsaW4tc3RkbGliIDIuMC4yMSAvIGNvcmUta3R4IDEuMTMuMe+8mwojICAg54mp5paZ6YeM5pen55qE5ZCM5ZCN5bqT77yIMS43LjEw77yPMS44LjDvvInkvJrpgKDmiJDph43lpI3nsbvvvIhkOCDmiqUgZGVmaW5lZCBtdWx0aXBsZSB0aW1lc++8ieKGkiDmmL7lvI/mjpLpmaTvvIznlLHmlrDniYjmnKzpobbmm7/jgIIKRVhDTD0iIGtvdGxpbi1zdGRsaWItMS43LjEwLmphciBrb3RsaW4tc3RkbGliLWNvbW1vbi0xLjcuMTAuamFyIGtvdGxpbi1zdGRsaWItamRrNy0xLjYuMC5qYXIga290bGluLXN0ZGxpYi1qZGs4LTEuNi4wLmphciBjb3JlLWt0eC0xLjguMC5qYXIgIgpza2lwX2phcigpIHsgY2FzZSAiJEVYQ0wiIGluICoiICQxICIqKSByZXR1cm4gMCA7OyBlc2FjOyByZXR1cm4gMTsgfQpBUFA9L3N5c3RlbS9iaW4vYXBwX3Byb2Nlc3MKRUNKPSJvcmcuZWNsaXBzZS5qZHQuaW50ZXJuYWwuY29tcGlsZXIuYmF0Y2guTWFpbiIKRDhNPSJjb20uYW5kcm9pZC50b29scy5yOC5EOCIKU0lHTj0iY29tLmFuZHJvaWQuYXBrc2lnbmVyLkFwa1NpZ25lclRvb2wiCgplY2hvICI9PSAwKSDlh4blpIcgJChkYXRlICcrJUg6JU06JVMnKSA9PSAg6Lqr5Lu9PSRJRCDljIXlkI09JFBLRyDnq6/lj6M9JFBPUlQg55uu5b2VPSRSRElSIOS6p+eJqT0kT1VUTkFNRSIKIyA1OSDlj7fljZXvvJrlhYjlgZrnvLrku7boh6rmo4DvvIjnvLrku7blhYjngrnlkI3lho3pgIDvvJvml6fpobrluo/ph4zkvJrooqvkuIvpnaLnmoQgY2htb2Qg5pKe5q2744CB55yL5LiN5Yiw6L+Z5Lu95riF5Y2V77yJCk1JU1M9IiIKWyAtZiAkVEMvYmluL2FhcHQyIF0gfHwgTUlTUz0iJE1JU1Mg5bel5YW36ZO+L2Jpbi9hYXB0Mu+8iFRlcm11eOWPr+ijhe+8m+i/nuWQjOebruW9lWxpYiouc2/vvIkiClsgLWYgJEpBUiBdIHx8IE1JU1M9IiRNSVNTIOW3peWFt+mTvi9saWIvYW5kcm9pZC5qYXLvvIhTREstcGxhdGZvcm0tMzXvvIkiCmZvciBkIGluIGVjaiBkOCBkOC0yIGFwa3NpZ25lciBidWlsZHRvb2w7IGRvIFsgLWYgJFRDL2RleC8kZC5kZXggXSB8fCBNSVNTPSIkTUlTUyDlt6Xlhbfpk74vZGV4LyRkLmRleCI7IGRvbmUKWyAtZCAkVEMvZWNqLXJlcyBdIHx8IE1JU1M9IiRNSVNTIOW3peWFt+mTvi9lY2otcmVz77yIRUNK6LWE5rqQ55uu5b2V77yJIgpmb3IgaiBpbiBjb3JlLTEuOS4wLmphciBhcHBjb21wYXQtMS42LjEuamFyIG1hdGVyaWFsLTEuOS4wLmphciBsaXF1aWRnbGFzcy0yLjAuMTEuamFyIHZpc2lvbi1jb21tb24tMTcuMy4wLmphciBwbGF5LXNlcnZpY2VzLXRhc2tzLTE4LjIuMC5qYXIga290bGluLXN0ZGxpYi0yLjAuMjEuamFyOyBkbyBbIC1mICIkS0VFUC9jbGFzc2VzLyRqIiBdIHx8IE1JU1M9IiRNSVNTIOeJqeaWmS9jbGFzc2VzLyRqIjsgZG9uZQpbIC1mICRNQU5JRkVTVCBdIHx8IE1JU1M9IiRNSVNTICRNQU5JRkVTVO+8iOaUuVNCPeaMh+WIsOS9oOeahOa6kOeggeagke+8iSIKWyAtZCAkU1JDRElSIF0gfHwgTUlTUz0iJE1JU1MgJFNSQ0RJUu+8iOaUuVNCPeaMh+WIsOS9oOeahOa6kOeggeagke+8iSIKWyAtZCAkUkVTRElSIF0gfHwgTUlTUz0iJE1JU1MgJFJFU0RJUu+8iOaUuVNCPeaMh+WIsOS9oOeahOa6kOeggeagke+8iSIKaWYgWyAtbiAiJE1JU1MiIF07IHRoZW4KICBlY2hvICLvvIHnvLrku7bvvIjooaXpvZDlho3lh7rljIXvvInvvJoiCiAgZm9yIG0gaW4gJE1JU1M7IGRvIGVjaG8gIiAgIMK3ICRtIjsgZG9uZQogIGVjaG8gIiAgIOKAlOKAlOimgeS7gOS5iO+8j+S7juWTquaLv++8j+i3r+W+hOaAjuS5iOmFje+8muingeS7k+W6kyBCVUlMRC5tZOOAjOi3r+W+hOS4jueJqeaWmeOAjeS4gOiKgu+8m+W6lOeUqOWGheWPryBidWlsZCBhY3Rpb249Y2hlY2sg5aSN5qOA44CCIgogIGV4aXQgNApmaQplY2hvICIgICDnjq/looPoh6rmo4DvvJrpvZAg4pyTIgpybSAtcmYgJFc7IG1rZGlyIC1wICRXL2JpbiAkVy9jbGFzc2VzICRXL2RleCAkVy9nZW4gJFcvcmVzemlwICRXL291dApjcCAkVEMvYmluLyogJFcvYmluLwpjaG1vZCA3NTUgJFcvYmluL2FhcHQyCkxMPSRXL2JpbgoKIyDilIDilIAgMzkg5Y+35Y2V77ya6Lqr5Lu95Y+C5pWw5YyW77yISUQ9QiDml7bvvJvlj6rlnKjkuLTml7blt6XkvZzljLrmm7/mjaLvvIzmraPmnKzkuI3liqjvvInilIDilIAKaWYgWyAiJElEIiA9ICJCIiBdOyB0aGVuCiAgZWNobyAiPT0gMGIpIOi6q+S7veWPguaVsOWMlu+8iOS4tOaXtuWJr+acrO+8iT09IgogIG1rZGlyIC1wICRXL3NyYzsgY3AgJFNCL3NyYy8qLmphdmEgJFcvc3JjLwogIGNwIC1yICRTQi9yZXMgJFcvcmVzCiAgY3AgJFNCL0FuZHJvaWRNYW5pZmVzdC54bWwgJFcvQW5kcm9pZE1hbmlmZXN0LnhtbAogIFNSQ0RJUj0kVy9zcmMKICBSRVNESVI9JFcvcmVzCiAgTUFOSUZFU1Q9JFcvQW5kcm9pZE1hbmlmZXN0LnhtbAogICMgbWFuaWZlc3QgKyDotYTmupDph4znmoTljIXlkI3vvIhhdXRob3JpdHnvvI/nu4Tku7blhajlkI3oh6rnhLbot5/nnYDlj5jvvIkKICBmb3IgZiBpbiAkVy9BbmRyb2lkTWFuaWZlc3QueG1sICRXL3Jlcy92YWx1ZXMvc3RyaW5ncy54bWwgJFcvcmVzL3htbC9hY2Nlc3NpYmlsaXR5X3NlcnZpY2VfY29uZmlnLnhtbDsgZG8KICAgIFsgLWYgIiRmIiBdIHx8IGNvbnRpbnVlCiAgICBzZWQgLWkgInN8YXBwXC5yZXRpY2xlfCRQS0d8ZyIgIiRmIgogIGRvbmUKICAjIOaYvuekuuWQje+8muezu+e7n+aXoOmanOeijeWIl+ihqCAvIOmAmuefpemHjOiDveS4gOecvOWIhui+qOS4u+WJr++8iOS6uuivneWRveWQje+8jOS4jeaUuei6q+S7veW4uOmHj++8iQogIHNlZCAtaSAnc3w+UmV0aWNsZTx8PlJldGljbGUgQjx8JyAkVy9yZXMvdmFsdWVzL3N0cmluZ3MueG1sCiAgc2VkIC1pICdzfD5SZXRpY2xl77yIfD5SZXRpY2xlIELvvIh8JyAkVy9yZXMvdmFsdWVzL3N0cmluZ3MueG1sCiAgIyDmupDnoIHvvJrnm67lvZUg4oaSIOWMheWQjSDihpIg56uv5Y+jIOKGkiDpgJrnn6XnvJblj7cKICBmb3IgZiBpbiAkKGZpbmQgJFcvc3JjIC1uYW1lICcqLmphdmEnKTsgZG8KICAgIHNlZCAtaSAic3wvc2RjYXJkL1JldGljbGV8JFJESVJ8ZyIgIiRmIgogICAgc2VkIC1pICJzfGFwcFwucmV0aWNsZXwkUEtHfGciICIkZiIKICAgIHNlZCAtaSAic3w4NzcwfCRQT1JUfGciICIkZiIKICAgIHNlZCAtaSAic3zlt6Xlhbfpk74vYnVpbGQyLnNofOW3peWFt+mTvi9idWlsZDJiLnNofGciICIkZiIKICAgIHNlZCAtaSAic3zlt6Xlhbcv6KOF5bel5YW3LnNofOW3peWFty/oo4Xlt6XlhbdCLnNofGciICIkZiIKICAgIHNlZCAtaSAic3xwdWJsaWMgc3RhdGljIGZpbmFsIGludCBERUZfSUQgPSAxO3xwdWJsaWMgc3RhdGljIGZpbmFsIGludCBERUZfSUQgPSAxMDE7fCIgIiRmIgogICAgc2VkIC1pICJzfHB1YmxpYyBzdGF0aWMgZmluYWwgaW50IE5JRCA9IDI7fHB1YmxpYyBzdGF0aWMgZmluYWwgaW50IE5JRCA9IDEwMjt8IiAiJGYiCiAgZG9uZQogICMg6Ieq5qOA77yaQiDljIXph4zkuI3orrjlho3lh7rnjrDkuLvljIXouqvku70KICBSMT0kKGdyZXAgLXJFbiAiYXBwXC5yZXRpY2xlOyIgJFcvc3JjICRXL0FuZHJvaWRNYW5pZmVzdC54bWwgfCB3YyAtbCkKICBSMj0kKGdyZXAgLXJFbiAiODc3MCIgJFcvc3JjICRXL0FuZHJvaWRNYW5pZmVzdC54bWwgfCB3YyAtbCkKICBSMz0kKGdyZXAgLXJFbiAiL3NkY2FyZC9SZXRpY2xlKCR8W15CXSkiICRXL3NyYyB8IHdjIC1sKQogIGVjaG8gIiAgIOaui+eVmeajgOafpe+8muaXp+WMheWQjSAkUjEg5aSE772c5pen56uv5Y+jICRSMiDlpITvvZzml6fnm67lvZUgJFIzIOWkhO+8iOW6lOWFqCAw77yJIgogIGlmIFsgIiRSMSIgIT0gIjAiIF0gfHwgWyAiJFIyIiAhPSAiMCIgXSB8fCBbICIkUjMiICE9ICIwIiBdOyB0aGVuCiAgICBlY2hvICLvvIHlj4LmlbDljJboh6rmo4DkuI3ov4fvvJoiCiAgICBncmVwIC1yRW4gImFwcFwucmV0aWNsZTt8ODc3MHwvc2RjYXJkL1JldGljbGUoJHxbXkJdKSIgJFcvc3JjICRXL0FuZHJvaWRNYW5pZmVzdC54bWwgfCBoZWFkIC0yMAogICAgZXhpdCA4CiAgZmkKICBlY2hvICIgICDouqvku73oh6rmo4DvvJrov4cg4pyT77yI5YyF5ZCNICQoZ3JlcCAtbTEgJ3BhY2thZ2U9JyAkVy9BbmRyb2lkTWFuaWZlc3QueG1sIHwgc2VkICdzLy4qcGFja2FnZT0iLy87IHMvIi4qLy8nKe+8iSIKZmkKCmVjaG8gIj09IDEpIGFhcHQyIGNvbXBpbGUgPT0iCkxEX0xJQlJBUllfUEFUSD0kTEwgJExML2FhcHQyIGNvbXBpbGUgLS1kaXIgIiRSRVNESVIiIC1vICRXL3Jlc3ppcC9hcHAuemlwClJFU0FSR1M9Ii1SICRXL3Jlc3ppcC9hcHAuemlwIgpmb3IgeiBpbiAiJEtFRVAiL3Jlcy16aXBzLyouemlwOyBkbyBbIC1lICIkeiIgXSB8fCBjb250aW51ZTsgUkVTQVJHUz0iJFJFU0FSR1MgLVIgJHoiOyBkb25lCkFBU1NFVD0iIjsgWyAtZCAiJEtFRVAvYXNzZXRzIiBdICYmIEFBU1NFVD0iLUEgJEtFRVAvYXNzZXRzIgoKIyAyNiDlj7fljZXvvJrkuLrnrKzkuInmlrnlupPnlJ/miJAgUiDnsbvvvIhtYXRlcmlhbC9hcHBjb21wYXQg562J6L+Q6KGM5pe26KaB5byV55So5a6D5Lus6Ieq5bex55qEIFLvvJvnvLrkuobkvJogTm9DbGFzc0RlZkZvdW5kRXJyb3LvvIkKUEtHUz0kKGdyZXAgLWggLW8gJ3BhY2thZ2U9IlteIl0qIicgIiRLRUVQIi9tYW5pZmVzdOeijueJhy8qLnhtbCAyPi9kZXYvbnVsbCB8IHNlZCAncy9wYWNrYWdlPSIvLzsgcy8iLy8nIHwgc29ydCAtdSB8IHRyICdcbicgJzonIHwgc2VkICdzLzokLy8nKQpFWFRSQT0iIjsgWyAtbiAiJFBLR1MiIF0gJiYgRVhUUkE9Ii0tZXh0cmEtcGFja2FnZXMgJFBLR1MiCmVjaG8gIiAgICAg5bqT5YyF5ZCNICQoZWNobyAiJFBLR1MiIHwgdHIgJzonICdcbicgfCBncmVwIC1jIC4pIOS4qiDihpIg55Sf5oiQIFIg57G7IgplY2hvICI9PSAyKSBhYXB0MiBsaW5rID09IgpMRF9MSUJSQVJZX1BBVEg9JExMICRMTC9hYXB0MiBsaW5rIC1vICRXL2Jhc2UuYXBrIC0tbWFuaWZlc3QgIiRNQU5JRkVTVCIgLUkgIiRKQVIiIFwKICAtLW1pbi1zZGstdmVyc2lvbiAzMCAtLXRhcmdldC1zZGstdmVyc2lvbiAzNSAtLWphdmEgJFcvZ2VuICRFWFRSQSAkUkVTQVJHUyAkQUFTU0VUIC0tYXV0by1hZGQtb3ZlcmxheSA+ICRXL2FhcHQybGluay5sb2cgMj4mMSB8fCB7IGVjaG8gIu+8gWFhcHQyIGxpbmsg5aSx6LSl77yI5pyr5bC+IDMwIOihjO+8ie+8miI7IHRhaWwgLW4gMzAgJFcvYWFwdDJsaW5rLmxvZzsgZXhpdCA1OyB9CmxzIC1sICRXL2Jhc2UuYXBrCgplY2hvICI9PSAzKSBFQ0og57yW6K+RID09IgpDUD0iJEpBUiIKZm9yIGogaW4gIiRLRUVQIi9jbGFzc2VzLyouamFyOyBkbyBbIC1lICIkaiIgXSB8fCBjb250aW51ZTsgYj0kKGJhc2VuYW1lICIkaiIpOyBza2lwX2phciAiJGIiICYmIGNvbnRpbnVlOyBDUD0iJENQOiRqIjsgZG9uZQpTUkNTPSIiCmZvciBmIGluICQoZmluZCAiJFNSQ0RJUiIgLW5hbWUgJyouamF2YScpOyBkbyBTUkNTPSIkU1JDUyAkZiI7IGRvbmUKQ0xBU1NQQVRIPSRUQy9kZXgvZWNqLmRleDokVEMvZWNqLXJlcyAkQVBQIC9zeXN0ZW0vYmluICRFQ0ogXAogIC1zb3VyY2UgMS44IC10YXJnZXQgMS44IC1ub3dhcm4gLXByb2M6bm9uZSAtZCAkVy9jbGFzc2VzIC1jbGFzc3BhdGggIiRDUCIgJFNSQ1MgJChmaW5kICRXL2dlbiAtbmFtZSAiKi5qYXZhIikgPiAkVy9lY2oubG9nIDI+JjEgfHwgeyBlY2hvICLvvIFFQ0og57yW6K+R5aSx6LSl77yI5pyr5bC+IDMwIOihjO+8ie+8miI7IHRhaWwgLW4gMzAgJFcvZWNqLmxvZzsgZXhpdCA3OyB9CmVjaG8gImphdmFjKEVDSikgb2s6ICQoZmluZCAkVy9jbGFzc2VzIC1uYW1lICcqLmNsYXNzJyB8IHdjIC1sKSDkuKogY2xhc3MiCgplY2hvICI9PSA0KSBkOCA9PSIKRDhJTj0iIgpmb3IgZiBpbiAkKGZpbmQgJFcvY2xhc3NlcyAtbmFtZSAnKi5jbGFzcycpOyBkbyBEOElOPSIkRDhJTiAkZiI7IGRvbmUKZm9yIGogaW4gIiRLRUVQIi9jbGFzc2VzLyouamFyOyBkbyBbIC1lICIkaiIgXSB8fCBjb250aW51ZTsgYj0kKGJhc2VuYW1lICIkaiIpOyBza2lwX2phciAiJGIiICYmIGNvbnRpbnVlOyBEOElOPSIkRDhJTiAkaiI7IGRvbmUKQ0xBU1NQQVRIPSRUQy9kZXgvZDguZGV4OiRUQy9kZXgvZDgtMi5kZXggJEFQUCAtWG14MTUzNm0gL3N5c3RlbS9iaW4gJEQ4TSBcCiAgLS1taW4tYXBpIDMwIC0tbGliICIkSkFSIiAtLW91dHB1dCAkVy9kZXggJEQ4SU4gPiAkVy9kOC5sb2cgMj4mMSB8fCB7IGVjaG8gIu+8gWQ4IOWksei0pe+8iOacq+WwviA0MCDooYzvvInvvJoiOyB0YWlsIC1uIDQwICRXL2Q4LmxvZzsgZXhpdCA2OyB9CmxzIC1sICRXL2RleAoKZWNobyAiPT0gNSkg57uE6KOFID09IgpERVhDU1Y9IiIKZm9yIGYgaW4gJFcvZGV4L2NsYXNzZXMqLmRleDsgZG8gREVYQ1NWPSIkREVYQ1NWLCRmIjsgZG9uZQpERVhDU1Y9JHtERVhDU1YjLH0KSk5JPSItIjsgWyAtZCAiJEtFRVAvam5pIiBdICYmIEpOST0iJEtFRVAvam5pIgpDTEFTU1BBVEg9JFRDL2RleC9idWlsZHRvb2wuZGV4ICRBUFAgL3N5c3RlbS9iaW4gQnVpbGRUb29sICRXL2Jhc2UuYXBrICRXL3Vuc2lnbmVkLmFwayAiJERFWENTViIgIiRKTkkiCmxzIC1sICRXL3Vuc2lnbmVkLmFwawoKZWNobyAiPT0gNikg562+5ZCN77yIcmVsZWFzZe+8iT09IgojIC0tLS0g562+5ZCN5Y+v6YWN77yINTcg5Y+35Y2V77yJ77ya546v5aKD5Y+Y6YeP5LyY5YWI77yb5pys5LuT5bqT5LiN5ZCr6ZKl5YyZ5LiO5Y+j5LukIC0tLS0KS1M9IiR7S1M6LS4va2V5cy9yZWxlYXNlLnAxMn0iICAgICMg6ZKl5YyZ5bqT77yI6Ieq6KGM5pS+572u77yb5LuT5bqT5LiN5o+Q5L6b77yJCktEPSIke0tEOi0uL2tleXMv5Y+j5LukLnR4dH0iICAgICAgICMg5Y+j5Luk5paH5Lu277yI5LiA6KGM77ya5Y+j5LukPXh4eO+8iQpLQT0iJHtLQTotcmVsZWFzZX0iICAgICAgICAgICAgICMg6ZKl5YyZ5Yir5ZCNCktQPSIke0tQOi0kKGdyZXAgLW0xICde5Y+j5LukPScgIiRLRCIgMj4vZGV2L251bGwgfCBjdXQgLWQ9IC1mMi0pfSIKaWYgWyAtbiAiJEtQIiBdICYmIFsgLWYgIiRLUyIgXTsgdGhlbgogIGVjaG8gIiAgICDnlKggcmVsZWFzZSDpkqXljJnvvJokS1MiCiAgQ0xBU1NQQVRIPSRUQy9kZXgvYXBrc2lnbmVyLmRleCAkQVBQIC9zeXN0ZW0vYmluICRTSUdOIHNpZ24gXAogICAgLS1rcyAiJEtTIiAtLWtzLXR5cGUgUEtDUzEyIC0ta3Mta2V5LWFsaWFzICIkS0EiIFwKICAgIC0ta3MtcGFzcyAicGFzczokS1AiIC0ta2V5LXBhc3MgInBhc3M6JEtQIiBcCiAgICAtLW91dCAkVy9zaWduZWQuYXBrICRXL3Vuc2lnbmVkLmFwawplbHNlCiAgZWNobyAiICAgIO+8geaJvuS4jeWIsCByZWxlYXNlIOmSpeWMmeaIluWPo+S7pCDihpIg5Zue6YCAIGRlYnVnIOetvuWQje+8iOato+W8j+WPkeW4g+WIq+i/meagt++8iSIKICBDTEFTU1BBVEg9JFRDL2RleC9hcGtzaWduZXIuZGV4ICRBUFAgL3N5c3RlbS9iaW4gJFNJR04gc2lnbiBcCiAgICAtLWtzICIkVEMvZGVidWcucDEyIiAtLWtzLXR5cGUgUEtDUzEyIC0ta3MtcGFzcyBwYXNzOmFuZHJvaWQgLS1rZXktcGFzcyBwYXNzOmFuZHJvaWQgXAogICAgLS1vdXQgJFcvc2lnbmVkLmFwayAkVy91bnNpZ25lZC5hcGsKZmkKbHMgLWwgJFcvc2lnbmVkLmFwawoKZWNobyAiPT0gNmIpIOiHquivge+8mmFwa3NpZ25lciB2ZXJpZnkgPT0iCkNMQVNTUEFUSD0kVEMvZGV4L2Fwa3NpZ25lci5kZXggJEFQUCAvc3lzdGVtL2JpbiAkU0lHTiB2ZXJpZnkgLS1wcmludC1jZXJ0cyAkVy9zaWduZWQuYXBrCgplY2hvICI9PSA3KSDkuqfniakgPT0iCm1rZGlyIC1wICIkU0Iv6L6T5Ye6IjsgY3AgJFcvc2lnbmVkLmFwayAiJFNCL+i+k+WHui8kT1VUTkFNRSIKbHMgLWwgIiRTQi/ovpPlh7ovJE9VVE5BTUUiOyBzaGEyNTZzdW0gIiRTQi/ovpPlh7ovJE9VVE5BTUUiCmVjaG8gIj09IOWujCAkKGRhdGUgJyslSDolTTolUycpID09Igo=
+#!/system/bin/sh
+# 24 号单 · 设备侧构建脚本 v2（不需要 Termux；用 shell 身份跑）
+# 39 号单 · 加 ID 参数：ID=B 出「副实例」包（包名 app.reticle.b / MCP 8771 / 目录 /sdcard/ReticleB）
+# 78 号单（2026-10-17）· 增量编译 + 手动 jar/AAR
+#   用法（家版）：sh /sdcard/workbench/构建/build2.sh        → 输出/reticle.apk（增量）
+#                 ID=B sh /sdcard/workbench/构建/build2.sh   → 输出/reticle-b.apk
+#                 NOINCR=1 sh ...                            → 强制全量（对照/排错）
+#   增量怎么判（缓存目录 $W-cache，与每次清空的 $W 分开）：
+#     · 资源清单（路径+大小+改动时刻）没变 ⇒ 跳 aapt2 compile
+#     · 资源+manifest+依赖包名+assets 没变 ⇒ 跳 aapt2 link（复用 base.apk 与 R 类）
+#     · java/gen 清单没变 ⇒ 跳 ECJ；变了 ⇒ 只重编「变化文件所在包」（包级增量）
+#     · 依赖 jar 清单没变 ⇒ 跳依赖部分 d8；工程 class 清单没变 ⇒ 跳工程部分 d8
+#     · 改 java ⇒ 该包重编；改 manifest/包名/依赖 ⇒ link 缓存键变，不会误用旧缓存
+#   手动依赖：工程 libs/*.jar → classpath 与 dex；libs/*.aar → classes.jar + res + assets + jni（仍不给 Gradle）
+# 产物：/sdcard/workbench/构建/输出/*.apk（release 签名；钥匙与口令见旧家 备份/Reticle-签名/）
+set -e
+SB="${SB:-/sdcard/手机通道/通道三/工程}"   # 源码树（环境变量优先；仓库 BUILD.md 有说明）
+TC="${TC:-/sdcard/workbench/构建/工具链}"  # 构建工具链（仓库不含，需自备）
+ID="${ID:-}"
+if [ "$ID" = "B" ]; then
+  W=/data/local/tmp/reticle-build-b
+  PKG=app.reticle.b
+  PORT=8771
+  RDIR=/sdcard/ReticleB
+  OUTNAME=reticle-b.apk
+else
+  W=/data/local/tmp/reticle-build
+  PKG=app.reticle
+  PORT=8770
+  RDIR=/sdcard/Reticle
+  OUTNAME=reticle.apk
+fi
+CACHE="${CACHE:-$W-cache}"                # 增量缓存（独立于 $W；清了＝下次自动全量）
+JAR=$TC/lib/android.jar
+KEEP="${KEEP:-/sdcard/workbench/构建/物料}"
+SRCDIR=$SB/src
+RESDIR=$SB/res
+MANIFEST=$SB/AndroidManifest.xml
+LIBS=$SB/libs
+NOINCR="${NOINCR:-0}"
+
+# 29 号单：液态玻璃库要 kotlin-stdlib 2.0.21 / core-ktx 1.13.1，旧同名库会造成重复类 ⇒ 显式排除
+EXCL=" kotlin-stdlib-1.7.10.jar kotlin-stdlib-common-1.7.10.jar kotlin-stdlib-jdk7-1.6.0.jar kotlin-stdlib-jdk8-1.6.0.jar core-ktx-1.8.0.jar "
+skip_jar() { case "$EXCL" in *" $1 "*) return 0 ;; esac; return 1; }
+APP=/system/bin/app_process
+ECJ="org.eclipse.jdt.internal.compiler.batch.Main"
+D8M="com.android.tools.r8.D8"
+SIGN="com.android.apksigner.ApkSignerTool"
+
+T0=$(date +%s)
+step() { echo "== $* @$(date '+%H:%M:%S')（累计 $(( $(date +%s) - T0 ))s）"; }
+SKIP=""
+skipped() { SKIP="$SKIP $1"; }
+
+# 指纹：路径 + 大小 + 改动时刻（秒）三元组；目录递归、文件本体。改了内容/换名/增删都会变。
+fp() {
+  # 78：内容级指纹（sha256）——比 mtime 准：mtime 变了内容没变不算变、保留 mtime 覆盖内容也会被认出来
+  for p in "$@"; do
+    [ -e "$p" ] || continue
+    if [ -d "$p" ]; then find "$p" -type f -exec sha256sum {} + 2>/dev/null
+    else find "$p" -maxdepth 1 -exec sha256sum {} + 2>/dev/null; fi
+  done | sort | sha256sum | cut -c1-16
+}
+
+step "0) 准备"
+echo "   身份=$ID 包名=$PKG 端口=$PORT 目录=$RDIR 产物=$OUTNAME"
+[ "$NOINCR" = "1" ] && echo "   NOINCR=1：本次强制全量（不读缓存）"
+MISS=""
+[ -f $TC/bin/aapt2 ] || MISS="$MISS 工具链/bin/aapt2（Termux可装；连同目录lib*.so）"
+[ -f $JAR ] || MISS="$MISS 工具链/lib/android.jar（SDK-platform-35）"
+for d in ecj d8 d8-2 apksigner buildtool; do [ -f $TC/dex/$d.dex ] || MISS="$MISS 工具链/dex/$d.dex"; done
+[ -d $TC/ecj-res ] || MISS="$MISS 工具链/ecj-res（ECJ资源目录）"
+for j in core-1.9.0.jar appcompat-1.6.1.jar material-1.9.0.jar liquidglass-2.0.11.jar vision-common-17.3.0.jar play-services-tasks-18.2.0.jar kotlin-stdlib-2.0.21.jar; do [ -f "$KEEP/classes/$j" ] || MISS="$MISS 物料/classes/$j"; done
+[ -f $MANIFEST ] || MISS="$MISS $MANIFEST（改SB=指到你的源码树）"
+[ -d $SRCDIR ] || MISS="$MISS $SRCDIR（改SB=指到你的源码树）"
+[ -d $RESDIR ] || MISS="$MISS $RESDIR（改SB=指到你的源码树）"
+if [ -n "$MISS" ]; then
+  echo "！缺件（补齐再出包）："
+  for m in $MISS; do echo "   · $m"; done
+  echo "   ——要什么／从哪拿／路径怎么配：见仓库 BUILD.md「路径与物料」一节；应用内可 build action=check 复检。"
+  exit 4
+fi
+echo "   环境自检：齐 ✓"
+mkdir -p "$CACHE"
+rm -rf "$W"
+mkdir -p "$W/classes" "$W/dex" "$W/dexapp" "$W/gen" "$W/reszip"
+
+# 工具链 bin（12MB）不必每次从 /sdcard 复制：缓存到 $CACHE/bin
+BINK=$(fp "$TC/bin")
+if [ "$NOINCR" != "1" ] && [ -x "$CACHE/bin/aapt2" ] && [ "$(cat "$CACHE/bin/.key" 2>/dev/null)" = "$BINK" ]; then
+  echo "   工具链 bin：用缓存（$CACHE/bin）"
+else
+  rm -rf "$CACHE/bin"; mkdir -p "$CACHE/bin"
+  cp "$TC/bin"/* "$CACHE/bin/" 2>/dev/null || true
+  chmod 755 "$CACHE/bin/aapt2"
+  echo "$BINK" > "$CACHE/bin/.key"
+  echo "   工具链 bin：从 $TC/bin 复制到缓存"
+fi
+LL="$CACHE/bin"
+
+# ── 39 号单：身份参数化（只在临时工作区替换，正本源码一个字节都不动）──
+if [ "$ID" = "B" ]; then
+  step "0b) 身份参数化（临时副本）"
+  mkdir -p $W/src; cp -p $SB/src/*.java $W/src/
+  cp -rp $SB/res $W/res
+  cp -p $SB/AndroidManifest.xml $W/AndroidManifest.xml
+  SRCDIR=$W/src
+  RESDIR=$W/res
+  MANIFEST=$W/AndroidManifest.xml
+  for f in $W/AndroidManifest.xml $W/res/values/strings.xml $W/res/xml/accessibility_service_config.xml; do
+    [ -f "$f" ] || continue
+    sed -i "s|app\.reticle|$PKG|g" "$f"
+  done
+  sed -i 's|>Reticle<|>Reticle B<|' $W/res/values/strings.xml
+  sed -i 's|>Reticle（|>Reticle B（|' $W/res/values/strings.xml
+  for f in $(find $W/src -name '*.java'); do
+    sed -i "s|/sdcard/Reticle|$RDIR|g" "$f"
+    sed -i "s|app\.reticle|$PKG|g" "$f"
+    sed -i "s|8770|$PORT|g" "$f"
+    sed -i "s|工具链/build2.sh|工具链/build2b.sh|g" "$f"
+    sed -i "s|工具/装工具.sh|工具/装工具B.sh|g" "$f"
+    sed -i "s|public static final int DEF_ID = 1;|public static final int DEF_ID = 101;|" "$f"
+    sed -i "s|public static final int NID = 2;|public static final int NID = 102;|" "$f"
+  done
+  R1=$(grep -rEc "app\.reticle;" $W/src $W/AndroidManifest.xml | awk -F: '{s+=$2} END{print s+0}')
+  R2=$(grep -rEc "8770" $W/src $W/AndroidManifest.xml | awk -F: '{s+=$2} END{print s+0}')
+  R3=$(grep -rEc "/sdcard/Reticle($|[^B])" $W/src | awk -F: '{s+=$2} END{print s+0}')
+  echo "   残留检查：旧包名 $R1 处｜旧端口 $R2 处｜旧目录 $R3 处（应全 0）"
+  if [ "$R1" != "0" ] || [ "$R2" != "0" ] || [ "$R3" != "0" ]; then
+    echo "！参数化自检不过："
+    grep -rEn "app\.reticle;|8770|/sdcard/Reticle($|[^B])" $W/src $W/AndroidManifest.xml | head -20
+    exit 8
+  fi
+  echo "   身份自检：过 ✓（包名 $(grep -m1 'package=' $W/AndroidManifest.xml | sed 's/.*package="//; s/".*//')）"
+fi
+
+# ── 78 号单：工程 libs（手动 jar / AAR）──
+step "1) 工程 libs（jar / AAR）"
+LIBJARS=""
+AARRES=""
+AARPKS=""
+AARASSETS=""
+AARJNI=""
+if [ -d "$LIBS" ]; then
+  for j in "$LIBS"/*.jar; do
+    [ -e "$j" ] || continue
+    LIBJARS="$LIBJARS $j"
+    echo "   jar：$(basename "$j")（进 classpath 与 dex）"
+  done
+  for a in "$LIBS"/*.aar; do
+    [ -e "$a" ] || continue
+    n=$(basename "$a" .aar)
+    D="$CACHE/aar/$n"
+    K=$(fp "$a")
+    if [ "$NOINCR" = "1" ] || [ ! -f "$D/.key" ] || [ "$(cat "$D/.key" 2>/dev/null)" != "$K" ]; then
+      rm -rf "$D"; mkdir -p "$D"
+      unzip -o -q "$a" -d "$D" || { echo "！AAR 解不开：$a"; exit 4; }
+      echo "$K" > "$D/.key"
+    fi
+    [ -f "$D/classes.jar" ] && LIBJARS="$LIBJARS $D/classes.jar"
+    if [ -d "$D/res" ]; then
+      RK=$(fp "$D/res")
+      if [ ! -f "$D/res.zip" ] || [ "$(cat "$D/.reskey" 2>/dev/null)" != "$RK" ]; then
+        LD_LIBRARY_PATH="$LL" "$LL/aapt2" compile --dir "$D/res" -o "$D/res.zip" || { echo "！AAR 资源编译失败：$a"; exit 5; }
+        echo "$RK" > "$D/.reskey"
+      fi
+      AARRES="$AARRES $D/res.zip"
+    fi
+    if [ -f "$D/AndroidManifest.xml" ]; then
+      AP=$(grep -m1 -o 'package="[^"]*"' "$D/AndroidManifest.xml" | sed 's/package="//; s/"//') || true
+      [ -n "$AP" ] && AARPKS="$AARPKS:$AP"
+    fi
+    [ -d "$D/assets" ] && AARASSETS="$AARASSETS $D"
+    [ -d "$D/jni" ] && AARJNI="$AARJNI $D"
+    echo "   aar：$(basename "$a")（classes.jar$([ -d "$D/res" ] && echo " ＋ 资源")$([ -d "$D/assets" ] && echo " ＋ assets")$([ -d "$D/jni" ] && echo " ＋ jni")）"
+  done
+  [ -z "$LIBJARS$AARRES$AARASSETS$AARJNI" ] && echo "   libs/ 里没有 jar／AAR（跳过）"
+else
+  echo "   （工程没有 libs/：跳过）"
+fi
+
+# ── aapt2 compile（资源没变就跳）──
+step "2) aapt2 compile"
+RESK=$(fp "$RESDIR" "$KEEP/res-zips")
+if [ "$NOINCR" != "1" ] && [ -f "$CACHE/app.zip" ] && [ "$(cat "$CACHE/res.key" 2>/dev/null)" = "$RESK" ]; then
+  echo "   资源没变 → 跳过 aapt2 compile（复用缓存 app.zip）"
+  cp -p "$CACHE/app.zip" "$W/reszip/app.zip"
+  skipped "aapt2-compile"
+else
+  LD_LIBRARY_PATH="$LL" "$LL/aapt2" compile --dir "$RESDIR" -o "$W/reszip/app.zip"
+  cp "$W/reszip/app.zip" "$CACHE/app.zip"
+  echo "$RESK" > "$CACHE/res.key"
+  echo "   编译完成（已入缓存）"
+fi
+RESARGS="-R $W/reszip/app.zip"
+for z in "$KEEP"/res-zips/*.zip; do [ -e "$z" ] || continue; RESARGS="$RESARGS -R $z"; done
+for z in $AARRES; do RESARGS="$RESARGS -R $z"; done
+
+# assets（第三方 ＋ 工程 ＋ AAR，要合并成一个目录时才合并）
+ASSETSRC=""
+[ -d "$KEEP/assets" ] && ASSETSRC="$ASSETSRC $KEEP/assets"
+[ -d "$SB/assets" ] && ASSETSRC="$ASSETSRC $SB/assets"
+for d in $AARASSETS; do ASSETSRC="$ASSETSRC $d/assets"; done
+AASSET=""
+if [ -n "$AARASSETS" ] || { [ -d "$SB/assets" ] && [ -d "$KEEP/assets" ]; }; then
+  mkdir -p "$W/aassets"
+  for d in $ASSETSRC; do cp -rp "$d/." "$W/aassets/" 2>/dev/null || true; done
+  AASSET="-A $W/aassets"
+  echo "   assets：已合并 $(echo $ASSETSRC | wc -w) 处 → 临时目录"
+elif [ -d "$KEEP/assets" ]; then
+  AASSET="-A $KEEP/assets"
+fi
+
+# 第三方库 R 类包名
+PKGS=$(grep -h -o 'package="[^"]*"' "$KEEP"/manifest碎片/*.xml 2>/dev/null | sed 's/package="//; s/"//' | sort -u | tr '\n' ':' | sed 's/:$//') || true
+PKGS="$PKGS$AARPKS"
+PKGS=$(printf '%s' "$PKGS" | sed 's/^://')
+EXTRA=""
+[ -n "$PKGS" ] && EXTRA="--extra-packages $PKGS"
+echo "   R 类包名 $(printf '%s' "$PKGS" | tr ':' '\n' | grep -c . || true) 个"
+
+# ── aapt2 link（键没变就跳）──
+step "3) aapt2 link"
+LINKKEY="$(fp "$MANIFEST" "$CACHE/app.zip" "$KEEP/res-zips" "$JAR" $AARRES $ASSETSRC)-$(printf '%s' "$EXTRA" | sha256sum | cut -c1-8)"
+if [ "$NOINCR" != "1" ] && [ -f "$CACHE/base.apk" ] && [ -d "$CACHE/gen" ] && [ "$(cat "$CACHE/link.key" 2>/dev/null)" = "$LINKKEY" ]; then
+  echo "   资源／manifest／依赖包名／assets 都没变 → 跳过 aapt2 link（复用 base.apk 与 R 类）"
+  cp "$CACHE/base.apk" "$W/base.apk"
+  cp -rp "$CACHE/gen/." "$W/gen/" 2>/dev/null || true
+  skipped "aapt2-link"
+else
+  LD_LIBRARY_PATH="$LL" "$LL/aapt2" link -o "$W/base.apk" --manifest "$MANIFEST" -I "$JAR" \
+    --min-sdk-version 30 --target-sdk-version 35 --java $W/gen $EXTRA $RESARGS $AASSET --auto-add-overlay > $W/aapt2link.log 2>&1 || { echo "！aapt2 link 失败（末尾 30 行）："; tail -n 30 $W/aapt2link.log; exit 5; }
+  ls -l $W/base.apk
+  cp "$W/base.apk" "$CACHE/base.apk"
+  rm -rf "$CACHE/gen"; mkdir -p "$CACHE/gen"; cp -rp "$W/gen/." "$CACHE/gen/" 2>/dev/null || true
+  echo "$LINKKEY" > "$CACHE/link.key"
+  echo "   （已入缓存：base.apk ＋ R 类）"
+fi
+
+# ── ECJ（java 没变就跳；变了只重编变化文件所在包）──
+step "4) ECJ 编译"
+CP="$JAR"
+for j in "$KEEP"/classes/*.jar; do [ -e "$j" ] || continue; b=$(basename "$j"); skip_jar "$b" && continue; CP="$CP:$j"; done
+for j in $LIBJARS; do CP="$CP:$j"; done
+CUR="$W/src.cur"
+  { find "$SRCDIR" -name '*.java' -printf '%p %s %T@\n' 2>/dev/null
+    find "$W/gen" -name '*.java' -exec sha256sum {} + 2>/dev/null | awk '{print $2, $1}' | sort
+  } | sort > "$CUR"
+ALLJ=$(find "$SRCDIR" "$W/gen" -name '*.java' | wc -l)
+CHANGED=""
+if [ "$NOINCR" != "1" ] && [ -d "$CACHE/classes" ] && [ -f "$CACHE/src.list" ]; then
+  CHANGED=$(diff "$CACHE/src.list" "$CUR" | awk '/^[-+]/{p=substr($1,2); if (p ~ /^\//) print p}' | sort -u) || true
+fi
+CHN=$(printf '%s\n' "$CHANGED" | grep -c . || true)
+FULLECJ=0
+[ "$NOINCR" = "1" ] && FULLECJ=1
+[ ! -d "$CACHE/classes" ] && FULLECJ=1
+[ "$CHN" -gt 0 ] && [ "$((CHN * 5))" -gt "$((ALLJ * 3))" ] && FULLECJ=1   # 变太多（>60%）不如全量
+if [ "$FULLECJ" = "0" ] && [ "$CHN" = "0" ]; then
+  echo "   java／R 类都没变 → 跳过 ECJ（复用缓存 $ALLJ 个 class）"
+  cp -rp "$CACHE/classes/." "$W/classes/" 2>/dev/null || true
+  skipped "ECJ"
+else
+  # 包名映射（一次 awk 扫全部 java）
+  find "$SRCDIR" "$W/gen" -name '*.java' > "$W/alljava.list"
+  awk 'FNR==1{f=FILENAME} /^package /{if(!(f in seen)){seen[f]=1; sub(/^package /,""); sub(/;.*/,""); print f" "$0}}' $(cat "$W/alljava.list") > "$W/pkgmap"
+  if [ "$FULLECJ" = "1" ]; then
+    echo "   全量编译（$ALLJ 个 java；变化 $CHN 个$([ "$NOINCR" = "1" ] && echo "／NOINCR")）"
+    SRCS=""
+    for f in $(find "$SRCDIR" -name '*.java'); do SRCS="$SRCS $f"; done
+    GEN=""
+    for f in $(find "$W/gen" -name '*.java'); do GEN="$GEN $f"; done
+    rm -rf "$W/classes"; mkdir -p "$W/classes"
+    CLASSPATH=$TC/dex/ecj.dex:$TC/ecj-res $APP /system/bin $ECJ \
+      -source 1.8 -target 1.8 -nowarn -proc:none -d $W/classes -classpath "$CP" $SRCS $GEN > $W/ecj.log 2>&1 || { echo "！ECJ 编译失败（末尾 30 行）："; tail -n 30 $W/ecj.log; exit 7; }
+  else
+    # 包级增量：变化文件所在包的全部 java 一起编（常量内联多数发生在包内）
+    printf '%s\n' "$CHANGED" | grep '\.java$' > "$W/chg.list" || true
+    # 78：先判能不能「只编变化的文件」——变化行里出现 static final（编译期常量会被别的类内联）
+    #     或 gen 的 R 类变了（R 常量同理）⇒ 保守退回「整包」；否则只重编变化文件（快得多）
+    NEEDPKG=0
+    FASTSRC=""
+    while read f; do
+      [ -n "$f" ] || continue
+      case "$f" in
+        "$SRCDIR"/*)
+          rel=${f#$SRCDIR/}
+          old="$CACHE/srcprev/$rel"
+          if [ -f "$old" ]; then
+            dl=$(diff "$old" "$f" | grep -E "^[-+][^-+]" || true)
+            printf '%s' "$dl" | grep -qE "static[[:space:]]+final" && NEEDPKG=1
+          fi
+          FASTSRC="$FASTSRC $f"
+          ;;
+        *) NEEDPKG=1 ;;
+      esac
+    done < "$W/chg.list"
+    if [ "$NEEDPKG" = "0" ]; then
+      printf '%s\n' "$FASTSRC" | tr ' ' '\n' | grep . > "$W/incsrc.list"
+      echo "   文件级增量：变化 $CHN 个 java → 只重编 $(wc -l < "$W/incsrc.list") 个（变化行里没有 static final 常量、R 类没变）"
+    else
+      if [ -s "$W/chg.list" ]; then
+        awk 'NR==FNR{chg[$1]=1;next} ($1 in chg){print $2}' "$W/chg.list" "$W/pkgmap" | sort -u > "$W/pkgs.list"
+      else
+        : > "$W/pkgs.list"
+      fi
+      awk 'NR==FNR{pk[$1]=1;next} ($2 in pk){print $1}' "$W/pkgs.list" "$W/pkgmap" > "$W/incsrc.list"
+      echo "   包级增量：变化 $CHN 个 java／$(( $(wc -l < "$W/pkgs.list") )) 个包 → 重编 $(wc -l < "$W/incsrc.list") 个 java（原因：变化里有 static final 常量或 R 类变了）"
+    fi
+    INC=$(wc -l < "$W/incsrc.list")
+    [ "$INC" = "0" ] && { echo "！增量清单是空的（变化 $CHN 个 java 却没算出该编谁）→ 停下，不产旧包"; exit 7; }
+    cp -rp "$CACHE/classes/." "$W/classes/" 2>/dev/null || true
+    # 源文件被删 ⇒ 顺手清掉它的 class（别留旧的）
+    diff "$CACHE/src.list" "$CUR" | awk '/^-/{p=substr($1,2); if (p ~ /^\/.*\.java$/) print p}' > "$W/gone.list" || true
+    while read f; do
+      [ -n "$f" ] || continue
+      n=$(basename "$f" .java)
+      find "$W/classes" -name "$n*.class" -exec rm -f {} + 2>/dev/null || true
+    done < "$W/gone.list"
+    CLASSPATH=$TC/dex/ecj.dex:$TC/ecj-res $APP /system/bin $ECJ \
+      -source 1.8 -target 1.8 -nowarn -proc:none -d $W/classes -classpath "$CP:$CACHE/classes" $(cat "$W/incsrc.list") > $W/ecj.log 2>&1 || { echo "！ECJ 编译失败（末尾 30 行）："; tail -n 30 $W/ecj.log; exit 7; }
+  fi
+  echo "   javac(ECJ) ok: $(find $W/classes -name '*.class' | wc -l) 个 class"
+  rm -rf "$CACHE/classes"; mkdir -p "$CACHE/classes"; cp -rp "$W/classes/." "$CACHE/classes/"
+  cp "$CUR" "$CACHE/src.list"
+  # 78：留一份源码快照（下次判「变化行里有没有 static final」用；编译成功才更新）
+  rm -rf "$CACHE/srcprev"; mkdir -p "$CACHE/srcprev"
+  for f in $(find "$SRCDIR" -name '*.java'); do
+    rel=${f#$SRCDIR/}
+    mkdir -p "$CACHE/srcprev/$(dirname "$rel")"
+    cp -p "$f" "$CACHE/srcprev/$rel"
+  done
+fi
+
+# ── d8：依赖部分与工程部分分开，各自缓存 ──
+step "5) d8"
+LIBJARLIST=""
+for j in "$KEEP"/classes/*.jar; do [ -e "$j" ] || continue; b=$(basename "$j"); skip_jar "$b" && continue; LIBJARLIST="$LIBJARLIST $j"; done
+LIBJARLIST="$LIBJARLIST $LIBJARS"
+LIBKEY="$(fp $LIBJARLIST "$JAR")-$(printf '%s' "$KEEP" | sha256sum | cut -c1-6)"
+if [ "$NOINCR" != "1" ] && [ -f "$CACHE/dexlib/.key" ] && [ "$(cat "$CACHE/dexlib/.key" 2>/dev/null)" = "$LIBKEY" ] && [ -f "$CACHE/dexlib/classes.dex" ]; then
+  echo "   依赖 jar 没变 → 跳过依赖部分 d8（复用 $(ls "$CACHE/dexlib"/classes*.dex | wc -l) 个 dex）"
+  skipped "d8-依赖"
+else
+  rm -rf "$CACHE/dexlib"; mkdir -p "$CACHE/dexlib"
+  CLASSPATH=$TC/dex/d8.dex:$TC/dex/d8-2.dex $APP -Xmx1536m /system/bin $D8M \
+    --min-api 30 --lib "$JAR" --output "$CACHE/dexlib" $LIBJARLIST > $W/d8lib.log 2>&1 || { echo "！d8（依赖）失败（末尾 40 行）："; tail -n 40 $W/d8lib.log; exit 6; }
+  echo "$LIBKEY" > "$CACHE/dexlib/.key"
+  echo "   依赖部分 dex：$(ls "$CACHE/dexlib"/classes*.dex | wc -l) 个（已入缓存）"
+fi
+CLSK=$(fp "$W/classes")
+if [ "$NOINCR" != "1" ] && [ -f "$CACHE/dexapp/.key" ] && [ "$(cat "$CACHE/dexapp/.key" 2>/dev/null)" = "$CLSK" ] && [ -f "$CACHE/dexapp/classes.dex" ]; then
+  echo "   工程 class 没变 → 跳过工程部分 d8"
+  skipped "d8-工程"
+else
+  rm -rf "$CACHE/dexapp"; mkdir -p "$CACHE/dexapp"
+  D8IN=""
+  for f in $(find $W/classes -name '*.class'); do D8IN="$D8IN $f"; done
+  LIBOPT=""
+  # 78：app 组 d8 不再把依赖 jar 当 --lib 传（读 60 个 jar 的类型信息最慢）；min-api 30 下缺类型只是 warning
+  CLASSPATH=$TC/dex/d8.dex:$TC/dex/d8-2.dex $APP -Xmx1536m /system/bin $D8M \
+    --min-api 30 --lib "$JAR" $LIBOPT --output "$CACHE/dexapp" $D8IN > $W/d8app.log 2>&1 || { echo "！d8（工程）失败（末尾 40 行）："; tail -n 40 $W/d8app.log; exit 6; }
+  echo "$CLSK" > "$CACHE/dexapp/.key"
+  echo "   工程部分 dex：$(ls "$CACHE/dexapp"/classes*.dex | wc -l) 个（已入缓存）"
+fi
+
+# ── 组装：工程 dex 在前（主 dex 要含 manifest 组件），依赖 dex 续号 ──
+step "6) 组装"
+rm -rf "$W/dex"; mkdir -p "$W/dex"
+A=0
+for f in "$CACHE/dexapp"/classes*.dex; do
+  [ -e "$f" ] || continue
+  A=$((A + 1))
+  if [ "$A" = "1" ]; then ln -sf "$f" "$W/dex/classes.dex"; else ln -sf "$f" "$W/dex/classes$A.dex"; fi
+done
+K=0
+for f in "$CACHE/dexlib"/classes*.dex; do
+  [ -e "$f" ] || continue
+  K=$((K + 1)); N=$((A + K))
+  ln -sf "$f" "$W/dex/classes$N.dex"
+done
+echo "   dex：工程 $A 个 ＋ 依赖 $K 个（classes.dex 起连续编号）"
+DEXCSV=""
+for f in $W/dex/classes*.dex; do DEXCSV="$DEXCSV,$f"; done
+DEXCSV=${DEXCSV#,}
+JNI="-"
+[ -d "$KEEP/jni" ] && JNI="$KEEP/jni"
+[ -d "$SB/jni" ] && JNI="$SB/jni"
+if [ -n "$AARJNI" ] || [ -d "$SB/jni" ]; then
+  mkdir -p "$W/alibs"
+  [ -d "$KEEP/jni" ] && cp -rp "$KEEP/jni/." "$W/alibs/"
+  [ -d "$SB/jni" ] && cp -rp "$SB/jni/." "$W/alibs/"
+  for d in $AARJNI; do mkdir -p "$W/alibs/lib"; cp -rp "$d/jni/." "$W/alibs/lib/" 2>/dev/null || true; done
+  JNI="$W/alibs"
+  echo "   jni：已合并（$JNI）"
+fi
+CLASSPATH=$TC/dex/buildtool.dex $APP /system/bin BuildTool $W/base.apk $W/unsigned.apk "$DEXCSV" "$JNI"
+ls -l $W/unsigned.apk
+
+# ── 签名 ──
+step "7) 签名（release）"
+KS="${KS:-/sdcard/手机通道/备份/Reticle-签名/reticle-release.p12}"
+KD="${KD:-/sdcard/手机通道/备份/Reticle-签名/钥匙说明.txt}"
+KA="${KA:-reticle}"
+KP="${KP:-$(grep -m1 '^口令=' "$KD" 2>/dev/null | cut -d= -f2-)}"
+if [ -n "$KP" ] && [ -f "$KS" ]; then
+  echo "    用 release 钥匙：$KS"
+  CLASSPATH=$TC/dex/apksigner.dex $APP /system/bin $SIGN sign \
+    --ks "$KS" --ks-type PKCS12 --ks-key-alias "$KA" \
+    --ks-pass "pass:$KP" --key-pass "pass:$KP" \
+    --out $W/signed.apk $W/unsigned.apk
+else
+  echo "    ！找不到 release 钥匙或口令 → 回退 debug 签名（正式发布别这样）"
+  CLASSPATH=$TC/dex/apksigner.dex $APP /system/bin $SIGN sign \
+    --ks "${DEBUG_KS:-$TC/debug.p12}" --ks-type PKCS12 --ks-pass pass:android --key-pass pass:android \
+    --out $W/signed.apk $W/unsigned.apk
+fi
+ls -l $W/signed.apk
+
+step "7b) 自证：apksigner verify"
+CLASSPATH=$TC/dex/apksigner.dex $APP /system/bin $SIGN verify --print-certs $W/signed.apk
+
+step "8) 产物"
+mkdir -p /sdcard/workbench/构建/输出; cp $W/signed.apk "/sdcard/workbench/构建/输出/$OUTNAME"
+ls -l "/sdcard/workbench/构建/输出/$OUTNAME"; sha256sum "/sdcard/workbench/构建/输出/$OUTNAME"
+echo "== 完 $(date '+%H:%M:%S') 总 $(( $(date +%s) - T0 ))s =="
+[ -n "$SKIP" ] && echo "   本次跳过：$SKIP"
+exit 0

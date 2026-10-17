@@ -1,1 +1,83 @@
-cGFja2FnZSBhcHAucmV0aWNsZTsKCmltcG9ydCBhbmRyb2lkLmNvbnRlbnQuQnJvYWRjYXN0UmVjZWl2ZXI7CmltcG9ydCBhbmRyb2lkLmNvbnRlbnQuQ29udGV4dDsKaW1wb3J0IGFuZHJvaWQuY29udGVudC5JbnRlbnQ7CgovKioKICogMTkuOSDCtyDpgJrpgZPkuozjgIzpl7Lnva7oh6rlhbPjgI3pgJrnn6XnmoTku6Plj5Hlj6PjgIIKICog6YCa6YGT5LqM77yIVGVybXV4IOS+p+acjeWKoe+8ieWcqOmXsue9ruWFs+mXreWJjeeUqCBhbSBicm9hZGNhc3Qg5omT6L+Z5Liq5Zu65a6aIGFjdGlvbu+8jAogKiDnlLHkuIDnu5/oh6rlt7Hlj5Hov5nmnaHpgJrnn6Ug4oCU4oCUIOmAmuefpeagj+aYvuekuueahOWbvuagh+WNs+S4gOe7n+eahOWbvuaghwogKiDvvIh2aXZvIOmAmuefpeS4reW/g+WPquaYvuekuiLlj5HpgJrnn6XlupTnlKjnmoTlm77moIci77yM5ZG95Luk6YCa6YGT5LulIHNoZWxsIOi6q+S7veWPkeeahOmAmuefpeWPquiDveaYr+m7mOiupOWbvuagh++8ieOAggogKiDlronlhajorr7orqHvvJrikaAg5Y+q6K6k6L+Z5LiA5Y+lIGFjdGlvbu+8m+KRoSDkuI3or7vku7vkvZXlpJbpg6ggZXh0cmFz77yI5qCH6aKYL+aWh+ahiOWGmeatu+WcqOi/memHjO+8jOWkluS6uuaXoOazleS8qumAoOWGheWuue+8ie+8mwogKiDikaIgMTAg56eS6ZmQ5rWB77yb4pGjIOeLrOeriyBpZD0xMDHvvIzkuI3norDnnLznur/pgqPmnaHvvIhpZD0577yJ44CCCiAqLwpwdWJsaWMgY2xhc3MgTm90aWZ5QnJpZGdlIGV4dGVuZHMgQnJvYWRjYXN0UmVjZWl2ZXIgewogICAgcHVibGljIHN0YXRpYyBmaW5hbCBTdHJpbmcgQUNUSU9OID0gImFwcC5yZXRpY2xlLmFjdGlvbi5DSEFOTkVMX0lETEVfQ0xPU0UiOwogICAgLyoqIDUzIOWPt+WNlSDCtyDmiYvliqjpl6jvvJrorqkgUmV0aWNsZSDoh6rlt7Hljrvmiorml6Dpmpznoo3ov57mjqXkv67kuIDmrKHjgIIKICAgICAqICDlkb3ku6TooYzpgqPmiYvvvIhzaGVsbCDouqvku73lj6/nlKjvvIzimIXlt7Llrp7mtYvvvJvlv4XpobvluKbmmL7lvI/nu4Tku7YgLW7vvIzlhYkgLXAg5Yiw5LiN5LqG77yJ77yaCiAgICAgKiAgICBhbSBicm9hZGNhc3QgLW4gYXBwLnJldGljbGUvLk5vdGlmeUJyaWRnZSAtYSBhcHAucmV0aWNsZS5hY3Rpb24uQTExWV9SRVBBSVIgLXAgYXBwLnJldGljbGUKICAgICAqICDimIXlrp7mtYvvvIgyMDI2LTEwLTEzIMK3IDUzIOWNle+8ie+8muacrOacuiB2aXZvIOS4i+i/meaJiyoq6IO95oqK6KKr5p2A5o6J55qE5Li75YyF5Ya35ZCv5YqoKirvvIjov5vnqIvvvI/liY3lj7DmnI3liqHvvI9NQ1Ag5YWo5Zue5p2l77yJ77yLCiAgICAgKiAgICDmiorml6Dpmpznoo3ov57mjqXmjqXlm57vvIgxfjMg56eS77yJ77yb5Y+q5YaZIC1wIDzljIXlkI0+IOS4jeW4piAtbiDnmoTlhpnms5XlnKjmnKzmnLrliLDkuI3kuoYgcmVjZWl2ZXLvvIjlrp7mtYvmsqHokL3lnLDvvInjgIIKICAgICAqICDlronlhajvvJrlj6rorqTov5nkuIDlj6UgYWN0aW9u44CB5LiN6K+75Lu75L2VIGV4dHJhc+OAgTEwIOenkumZkOa1ge+8m+WKqOS9nO+8neWPquWKqCBSZXRpY2xlIOiHquW3semCo+adoeaXoOmanOeije+8jOS4jeeisOWIq+S6uuOAgiAqLwogICAgcHVibGljIHN0YXRpYyBmaW5hbCBTdHJpbmcgQUNUSU9OX1JFUEFJUiA9ICJhcHAucmV0aWNsZS5hY3Rpb24uQTExWV9SRVBBSVIiOwogICAgcHJpdmF0ZSBzdGF0aWMgZmluYWwgaW50IElEID0gMTAxOwogICAgcHJpdmF0ZSBzdGF0aWMgZmluYWwgU3RyaW5nIFRJVExFID0gV29yZHMuTlRfQlJJREdFX1RJVExFOwogICAgcHJpdmF0ZSBzdGF0aWMgZmluYWwgU3RyaW5nIFRFWFQgPSBXb3Jkcy5OVF9CUklER0VfVEVYVDsKICAgIHByaXZhdGUgc3RhdGljIGZpbmFsIGxvbmcgR0FQX01TID0gMTAwMDBMOwogICAgcHJpdmF0ZSBzdGF0aWMgbG9uZyBsYXN0QXQgPSAwTDsKICAgIHByaXZhdGUgc3RhdGljIHZvbGF0aWxlIGxvbmcgbGFzdFJlcGFpckF0ID0gMEw7CgogICAgQE92ZXJyaWRlCiAgICBwdWJsaWMgdm9pZCBvblJlY2VpdmUoQ29udGV4dCBjdHgsIEludGVudCBpdCkgewogICAgICAgIHRyeSB7CiAgICAgICAgICAgIFN0cmluZyBhID0gKGl0ID09IG51bGwpID8gbnVsbCA6IGl0LmdldEFjdGlvbigpOwoKICAgICAgICAgICAgLy8gNTMg5Y+35Y2V77ya5omL5Yqo6ZeoIOKAlOKAlOOAjOS/ruS4gOasoeaXoOmanOeijei/nuaOpeOAje+8iOWIoOWQjeKGkuWGmeWbnu+8jOmAvOezu+e7n+mHjeaWsOe7ke+8iQogICAgICAgICAgICBpZiAoYSAhPSBudWxsICYmIEFDVElPTl9SRVBBSVIuZXF1YWxzKGEpKSB7CiAgICAgICAgICAgICAgICBsb25nIG5vd1IgPSBTeXN0ZW0uY3VycmVudFRpbWVNaWxsaXMoKTsKICAgICAgICAgICAgICAgIGlmIChub3dSIC0gbGFzdFJlcGFpckF0IDwgR0FQX01TKSB7IE5vdGlmaWVyLm5sb2coY3R4LCAiYnJpZGdlIHJlcGFpciByYXRlLWxpbWl0ZWQgKGdhcD0iICsgKG5vd1IgLSBsYXN0UmVwYWlyQXQpICsgIm1zKSIpOyByZXR1cm47IH0KICAgICAgICAgICAgICAgIGxhc3RSZXBhaXJBdCA9IG5vd1I7CiAgICAgICAgICAgICAgICB0cnkgeyBXYXRjaGRvZ1NlcnZpY2UuZW5zdXJlKGN0eCk7IH0gY2F0Y2ggKFRocm93YWJsZSB0KSB7IH0KICAgICAgICAgICAgICAgIHRyeSB7IE1jcFNlcnZlci5zdGFydChjdHgpOyB9IGNhdGNoIChUaHJvd2FibGUgdCkgeyB9CiAgICAgICAgICAgICAgICBOb3RpZmllci5ubG9nKGN0eCwgImJyaWRnZSBhMTF5LXJlcGFpciBzdGFydCIpOwogICAgICAgICAgICAgICAgZmluYWwgQ29udGV4dCBjMiA9IGN0eC5nZXRBcHBsaWNhdGlvbkNvbnRleHQoKTsKICAgICAgICAgICAgICAgIFRocmVhZCB0ciA9IG5ldyBUaHJlYWQobmV3IFJ1bm5hYmxlKCkgewogICAgICAgICAgICAgICAgICAgIHB1YmxpYyB2b2lkIHJ1bigpIHsKICAgICAgICAgICAgICAgICAgICAgICAgU3RyaW5nIHIgPSAi77yI5rKh6LeR77yJIjsKICAgICAgICAgICAgICAgICAgICAgICAgdHJ5IHsgciA9IEExMXlMaW5rLnJlcGFpcihjMiwgdHJ1ZSk7IH0gY2F0Y2ggKFRocm93YWJsZSB0KSB7IHIgPSAi5byC5bi477yaIiArIHQ7IH0KICAgICAgICAgICAgICAgICAgICAgICAgdHJ5IHsgTm90aWZpZXIubmxvZyhjMiwgImJyaWRnZSBhMTF5LXJlcGFpciAtPiAiICsgcik7IH0gY2F0Y2ggKFRocm93YWJsZSB0KSB7IH0KICAgICAgICAgICAgICAgICAgICAgICAgQTExeUxpbmsubG9nKGMyLCAi5omL5Yqo6Zeo5L+u5aSN6L+U5Zue77yaIiArIHIpOwogICAgICAgICAgICAgICAgICAgIH0KICAgICAgICAgICAgICAgIH0pOwogICAgICAgICAgICAgICAgdHIuc2V0RGFlbW9uKHRydWUpOwogICAgICAgICAgICAgICAgdHIuc3RhcnQoKTsKICAgICAgICAgICAgICAgIHJldHVybjsKICAgICAgICAgICAgfQogICAgICAgICAgICAvLyAzOSDlj7fljZXvvJrkuKTmnaHlj6PvvIjoh6rlt7HnmoTjgIzpl7Lnva7lhbPpl63jgI3lj6PvvI/ns7vnu5/jgIzmnKzljIXooqvmm7/mjaLjgI3lj6PvvInpg73lhYjmiormoLjlv4PmnI3liqHluYLnrYnmi4notbfvvJoKICAgICAgICAgICAgLy8gICDoo4XljIUv6KKr5p2A5LmL5ZCOIEFwcCDkuI3kvJroh6rlt7HotbfvvIzogIwgc2hlbGwg5ZCv5Yqo5LiN5LqG5pyq5a+85Ye655qE5pyN5Yqh4oCU4oCU6L+Z5piv44CM6KOF5a6M6Ieq5bex5Zue6a2C44CN55qE5omL44CCCiAgICAgICAgICAgIGlmIChhICE9IG51bGwgJiYgKEFDVElPTi5lcXVhbHMoYSkgfHwgImFuZHJvaWQuaW50ZW50LmFjdGlvbi5NWV9QQUNLQUdFX1JFUExBQ0VEIi5lcXVhbHMoYSkpKSB7CiAgICAgICAgICAgICAgICAvLyA1MiDlj7fljZXvvJropobnm5blronoo4XvvJ3nlKjmiLfmmI7noa7nmoTmiYvliqjliqjkvZwg4oeSIOmhuuW4pua4heaOieOAjOeUqOaIt+W3suWBnOOAje+8jOijheWujOacjeWKoeiDveiHquW3seWbnuadpeOAggogICAgICAgICAgICAgICAgaWYgKCJhbmRyb2lkLmludGVudC5hY3Rpb24uTVlfUEFDS0FHRV9SRVBMQUNFRCIuZXF1YWxzKGEpKSB7CiAgICAgICAgICAgICAgICAgICAgdHJ5IHsgV2F0Y2hkb2dTZXJ2aWNlLnNldFVzZXJTdG9wcGVkKGN0eCwgZmFsc2UpOyB9IGNhdGNoIChUaHJvd2FibGUgdCkgeyB9CiAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgICAgICB0cnkgeyBXYXRjaGRvZ1NlcnZpY2UuZW5zdXJlKGN0eCk7IH0gY2F0Y2ggKFRocm93YWJsZSB0KSB7IE5vdGlmaWVyLm5sb2coY3R4LCAiYnJpZGdlIGVuc3VyZSBlcnIgIiArIHQpOyB9CiAgICAgICAgICAgICAgICB0cnkgeyBNY3BTZXJ2ZXIuc3RhcnQoY3R4KTsgfSBjYXRjaCAoVGhyb3dhYmxlIHQpIHsgfQogICAgICAgICAgICB9CiAgICAgICAgICAgIGlmIChhID09IG51bGwgfHwgIUFDVElPTi5lcXVhbHMoYSkpIHsKICAgICAgICAgICAgICAgIE5vdGlmaWVyLm5sb2coY3R4LCAiYnJpZGdlIGlnbm9yZSBhY3Rpb249IiArIGEpOwogICAgICAgICAgICAgICAgcmV0dXJuOwogICAgICAgICAgICB9CiAgICAgICAgICAgIGxvbmcgbm93ID0gU3lzdGVtLmN1cnJlbnRUaW1lTWlsbGlzKCk7CiAgICAgICAgICAgIGlmIChub3cgLSBsYXN0QXQgPCBHQVBfTVMpIHsKICAgICAgICAgICAgICAgIE5vdGlmaWVyLm5sb2coY3R4LCAiYnJpZGdlIHJhdGUtbGltaXRlZCAoZ2FwPSIgKyAobm93IC0gbGFzdEF0KSArICJtcykiKTsKICAgICAgICAgICAgICAgIHJldHVybjsKICAgICAgICAgICAgfQogICAgICAgICAgICBsYXN0QXQgPSBub3c7CiAgICAgICAgICAgIFN0cmluZyByID0gTm90aWZpZXIuc2VuZChjdHgsIElELCBUSVRMRSwgVEVYVCwgZmFsc2UpOwogICAgICAgICAgICBOb3RpZmllci5ubG9nKGN0eCwgImJyaWRnZSBpZGxlLWNsb3NlIGlkPSIgKyBJRCArICIgLT4gIiArIHIpOwogICAgICAgIH0gY2F0Y2ggKFRocm93YWJsZSB0KSB7CiAgICAgICAgICAgIE5vdGlmaWVyLm5sb2coY3R4LCAiYnJpZGdlIGVyciAiICsgdCk7CiAgICAgICAgfQogICAgfQp9Cg==
+package app.reticle;
+
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+
+/**
+ * 19.9 · 通道二「闲置自关」通知的代发口。
+ * 通道二（Termux 侧服务）在闲置关闭前用 am broadcast 打这个固定 action，
+ * 由一统自己发这条通知 —— 通知栏显示的图标即一统的图标
+ * （vivo 通知中心只显示"发通知应用的图标"，命令通道以 shell 身份发的通知只能是默认图标）。
+ * 安全设计：① 只认这一句 action；② 不读任何外部 extras（标题/文案写死在这里，外人无法伪造内容）；
+ * ③ 10 秒限流；④ 独立 id=101，不碰眼线那条（id=9）。
+ */
+public class NotifyBridge extends BroadcastReceiver {
+    public static final String ACTION = "app.reticle.action.CHANNEL_IDLE_CLOSE";
+    /** 53 号单 · 手动门：让 Reticle 自己去把无障碍连接修一次。
+     *  命令行那手（shell 身份可用，★已实测；必须带显式组件 -n，光 -p 到不了）：
+     *    am broadcast -n app.reticle/.NotifyBridge -a app.reticle.action.A11Y_REPAIR -p app.reticle
+     *  ★实测（2026-10-13 · 53 单）：本机 vivo 下这手**能把被杀掉的主包冷启动**（进程／前台服务／MCP 全回来）＋
+     *    把无障碍连接接回（1~3 秒）；只写 -p <包名> 不带 -n 的写法在本机到不了 receiver（实测没落地）。
+     *  安全：只认这一句 action、不读任何 extras、10 秒限流；动作＝只动 Reticle 自己那条无障碍，不碰别人。 */
+    public static final String ACTION_REPAIR = "app.reticle.action.A11Y_REPAIR";
+    private static final int ID = 101;
+    private static final String TITLE = Words.NT_BRIDGE_TITLE;
+    private static final String TEXT = Words.NT_BRIDGE_TEXT;
+    private static final long GAP_MS = 10000L;
+    private static long lastAt = 0L;
+    private static volatile long lastRepairAt = 0L;
+
+    @Override
+    public void onReceive(Context ctx, Intent it) {
+        try {
+            String a = (it == null) ? null : it.getAction();
+
+            // 53 号单：手动门 ——「修一次无障碍连接」（删名→写回，逼系统重新绑）
+            if (a != null && ACTION_REPAIR.equals(a)) {
+                long nowR = System.currentTimeMillis();
+                if (nowR - lastRepairAt < GAP_MS) { Notifier.nlog(ctx, "bridge repair rate-limited (gap=" + (nowR - lastRepairAt) + "ms)"); return; }
+                lastRepairAt = nowR;
+                try { WatchdogService.ensure(ctx); } catch (Throwable t) { }
+                try { McpServer.start(ctx); } catch (Throwable t) { }
+                Notifier.nlog(ctx, "bridge a11y-repair start");
+                final Context c2 = ctx.getApplicationContext();
+                Thread tr = new Thread(new Runnable() {
+                    public void run() {
+                        String r = "（没跑）";
+                        try { r = A11yLink.repair(c2, true); } catch (Throwable t) { r = "异常：" + t; }
+                        try { Notifier.nlog(c2, "bridge a11y-repair -> " + r); } catch (Throwable t) { }
+                        A11yLink.log(c2, "手动门修复返回：" + r);
+                    }
+                });
+                tr.setDaemon(true);
+                tr.start();
+                return;
+            }
+            // 39 号单：两条口（自己的「闲置关闭」口／系统「本包被替换」口）都先把核心服务幂等拉起：
+            //   装包/被杀之后 App 不会自己起，而 shell 启动不了未导出的服务——这是「装完自己回魂」的手。
+            if (a != null && (ACTION.equals(a) || "android.intent.action.MY_PACKAGE_REPLACED".equals(a))) {
+                // 52 号单：覆盖安装＝用户明确的手动动作 ⇒ 顺带清掉「用户已停」，装完服务能自己回来。
+                if ("android.intent.action.MY_PACKAGE_REPLACED".equals(a)) {
+                    try { WatchdogService.setUserStopped(ctx, false); } catch (Throwable t) { }
+                }
+                try { WatchdogService.ensure(ctx); } catch (Throwable t) { Notifier.nlog(ctx, "bridge ensure err " + t); }
+                try { McpServer.start(ctx); } catch (Throwable t) { }
+            }
+            if (a == null || !ACTION.equals(a)) {
+                Notifier.nlog(ctx, "bridge ignore action=" + a);
+                return;
+            }
+            long now = System.currentTimeMillis();
+            if (now - lastAt < GAP_MS) {
+                Notifier.nlog(ctx, "bridge rate-limited (gap=" + (now - lastAt) + "ms)");
+                return;
+            }
+            lastAt = now;
+            String r = Notifier.send(ctx, ID, TITLE, TEXT, false);
+            Notifier.nlog(ctx, "bridge idle-close id=" + ID + " -> " + r);
+        } catch (Throwable t) {
+            Notifier.nlog(ctx, "bridge err " + t);
+        }
+    }
+}

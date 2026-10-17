@@ -1,1 +1,29 @@
-PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBSZXRpY2xlIOWbvuagh+WJjeaZr++8iOefoumHj+a6kO+8jDEwOGRwIOe9keagvO+8jOWbvuahiOWNiuW+hCAzMi40LzU0IOKJiCDlronlhajljLogMC4277yJCiAgICAg6KeE5qC877ya5ZyG546vICsg5Zub5Liq55+t5Yi75bqmICsg5Lit5b+D5a6e5b+D54K577yI5Y2V6Imy77yM5Y+v6KKr57O757uf5Li76aKYIHRpbnTvvInjgIIKICAgICDlh6DkvZXkuI4g5bel5YW3L+Wbvuagh+eUn+aIkOWZqC9SZXRpY2xlSWNvbi5qYXZh77yIUE5HIOWvvOWHuu+8iemAkOWAvOS4gOiHtOOAggogICAgIOKYhTU3IOWPt+WNleesrOS4iei9ru+8iDIwMjYtMTAtMTMg55So5oi35a6a44CM5Zue5b2S5Y6f5Zu+5qCH77yM5Y+q5oqK57q/5byE57uG5LiA54K544CN77yJ77yaCiAgICAgICDlm57liLAgMC4yOC4xMSDljp/lh6DkvZXvvIzlj6rmlLnkuKTlpITnur/lrr3igJTigJTliLvluqYgNC44NiDihpIgNC4w44CB5ZyG546vIDQuNTQg4oaSIDMuN++8iOKJiOaUtue7hiAxNyXvvInvvJsKICAgICAgIOWIu+W6puWGheerryAyMy4zM++8j+WkluerryAzMi4044CB5ZyG546v5Y2K5b6EIDE0LjnjgIHkuK3lv4PngrnljYrlvoQgNS41MeOAgeWchuWktOerr+W4veOAgeacneWQkeOAgemFjeiJsuS4gOW+i+acquWKqOOAgiAtLT4KPHZlY3RvciB4bWxuczphbmRyb2lkPSJodHRwOi8vc2NoZW1hcy5hbmRyb2lkLmNvbS9hcGsvcmVzL2FuZHJvaWQiCiAgICBhbmRyb2lkOndpZHRoPSIxMDhkcCIKICAgIGFuZHJvaWQ6aGVpZ2h0PSIxMDhkcCIKICAgIGFuZHJvaWQ6dmlld3BvcnRXaWR0aD0iMTA4IgogICAgYW5kcm9pZDp2aWV3cG9ydEhlaWdodD0iMTA4Ij4KICAgIDwhLS0g5Zub5Liq55+t5Yi75bqm77ya5YaF56uvIHI9MjMuMzPvvIzlpJbnq68gcj0zMi4077yM57q/5a69IDQuMO+8jOWchuWktCAtLT4KICAgIDxwYXRoCiAgICAgICAgYW5kcm9pZDpwYXRoRGF0YT0iTTU0LDMwLjY3IEw1NCwyMS42IE01NCw3Ny4zMyBMNTQsODYuNCBNMzAuNjcsNTQgTDIxLjYsNTQgTTc3LjMzLDU0IEw4Ni40LDU0IgogICAgICAgIGFuZHJvaWQ6c3Ryb2tlQ29sb3I9IiNGRkZGRkYiCiAgICAgICAgYW5kcm9pZDpzdHJva2VXaWR0aD0iNC4wIgogICAgICAgIGFuZHJvaWQ6c3Ryb2tlTGluZUNhcD0icm91bmQiIC8+CiAgICA8IS0tIOWchueOr++8muWNiuW+hCAxNC4577yM57q/5a69IDMuNyAtLT4KICAgIDxwYXRoCiAgICAgICAgYW5kcm9pZDpwYXRoRGF0YT0iTTU0LDM5LjEwIGExNC45LDE0LjkgMCAxLDAgMCwyOS44IGExNC45LDE0LjkgMCAxLDAgMCwtMjkuOCIKICAgICAgICBhbmRyb2lkOmZpbGxDb2xvcj0iIzAwMDAwMDAwIgogICAgICAgIGFuZHJvaWQ6c3Ryb2tlQ29sb3I9IiNGRkZGRkYiCiAgICAgICAgYW5kcm9pZDpzdHJva2VXaWR0aD0iMy43IiAvPgogICAgPCEtLSDkuK3lv4Plrp7lv4PngrnvvJrljYrlvoQgNS41MSAtLT4KICAgIDxwYXRoCiAgICAgICAgYW5kcm9pZDpwYXRoRGF0YT0iTTU0LDQ4LjQ5IGE1LjUxLDUuNTEgMCAxLDAgMCwxMS4wMiBhNS41MSw1LjUxIDAgMSwwIDAsLTExLjAyIgogICAgICAgIGFuZHJvaWQ6ZmlsbENvbG9yPSIjRkZGRkZGIiAvPgo8L3ZlY3Rvcj4K
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Reticle 图标前景（矢量源，108dp 网格，图案半径 32.4/54 ≈ 安全区 0.6）
+     规格：圆环 + 四个短刻度 + 中心实心点（单色，可被系统主题 tint）。
+     几何与 工具/图标生成器/ReticleIcon.java（PNG 导出）逐值一致。
+     ★57 号单第三轮（2026-10-13 用户定「回归原图标，只把线弄细一点」）：
+       回到 0.28.11 原几何，只改两处线宽——刻度 4.86 → 4.0、圆环 4.54 → 3.7（≈收细 17%）；
+       刻度内端 23.33／外端 32.4、圆环半径 14.9、中心点半径 5.51、圆头端帽、朝向、配色一律未动。 -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- 四个短刻度：内端 r=23.33，外端 r=32.4，线宽 4.0，圆头 -->
+    <path
+        android:pathData="M54,30.67 L54,21.6 M54,77.33 L54,86.4 M30.67,54 L21.6,54 M77.33,54 L86.4,54"
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="4.0"
+        android:strokeLineCap="round" />
+    <!-- 圆环：半径 14.9，线宽 3.7 -->
+    <path
+        android:pathData="M54,39.10 a14.9,14.9 0 1,0 0,29.8 a14.9,14.9 0 1,0 0,-29.8"
+        android:fillColor="#00000000"
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="3.7" />
+    <!-- 中心实心点：半径 5.51 -->
+    <path
+        android:pathData="M54,48.49 a5.51,5.51 0 1,0 0,11.02 a5.51,5.51 0 1,0 0,-11.02"
+        android:fillColor="#FFFFFF" />
+</vector>

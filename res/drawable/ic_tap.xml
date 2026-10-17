@@ -1,1 +1,12 @@
-PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSDlvJXlr7zCt+eCueWxj+W5le+8iOaJi+aMh+eCueWHu++8ieWNleiJsuefoumHj++8jOmaj+S4u+mimCB0aW50IC0tPgo8dmVjdG9yIHhtbG5zOmFuZHJvaWQ9Imh0dHA6Ly9zY2hlbWFzLmFuZHJvaWQuY29tL2Fway9yZXMvYW5kcm9pZCIKICAgIGFuZHJvaWQ6d2lkdGg9IjI0ZHAiIGFuZHJvaWQ6aGVpZ2h0PSIyNGRwIgogICAgYW5kcm9pZDp2aWV3cG9ydFdpZHRoPSIyNCIgYW5kcm9pZDp2aWV3cG9ydEhlaWdodD0iMjQiPgogIDxwYXRoIGFuZHJvaWQ6ZmlsbENvbG9yPSIjMDAwMDAwMDAiIGFuZHJvaWQ6c3Ryb2tlQ29sb3I9IiNGRkZGRkZGRiIgYW5kcm9pZDpzdHJva2VXaWR0aD0iMS44IgogICAgICBhbmRyb2lkOnN0cm9rZUxpbmVKb2luPSJyb3VuZCIKICAgICAgYW5kcm9pZDpwYXRoRGF0YT0iTTEyLDMgQzEwLjYsNi4yIDkuOSw3LjggOS45LDkuNCBDOS45LDEwLjUgMTAuOCwxMS40IDEyLDExLjQgQzEzLjIsMTEuNCAxNC4xLDEwLjUgMTQuMSw5LjQgQzE0LjEsNy44IDEzLjQsNi4yIDEyLDMgWiIvPgogIDxwYXRoIGFuZHJvaWQ6ZmlsbENvbG9yPSIjMDAwMDAwMDAiIGFuZHJvaWQ6c3Ryb2tlQ29sb3I9IiNGRkZGRkZGRiIgYW5kcm9pZDpzdHJva2VXaWR0aD0iMS44IgogICAgICBhbmRyb2lkOnN0cm9rZUxpbmVDYXA9InJvdW5kIgogICAgICBhbmRyb2lkOnBhdGhEYXRhPSJNMTIsMTQuMiBWMjEgTTguNiwxNy40IEgxNS40Ii8+CjwvdmVjdG9yPgo=
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 引导·点屏幕（手指点击）单色矢量，随主题 tint -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp" android:height="24dp"
+    android:viewportWidth="24" android:viewportHeight="24">
+  <path android:fillColor="#00000000" android:strokeColor="#FFFFFFFF" android:strokeWidth="1.8"
+      android:strokeLineJoin="round"
+      android:pathData="M12,3 C10.6,6.2 9.9,7.8 9.9,9.4 C9.9,10.5 10.8,11.4 12,11.4 C13.2,11.4 14.1,10.5 14.1,9.4 C14.1,7.8 13.4,6.2 12,3 Z"/>
+  <path android:fillColor="#00000000" android:strokeColor="#FFFFFFFF" android:strokeWidth="1.8"
+      android:strokeLineCap="round"
+      android:pathData="M12,14.2 V21 M8.6,17.4 H15.4"/>
+</vector>

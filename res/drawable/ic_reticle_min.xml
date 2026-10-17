@@ -1,1 +1,16 @@
-PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSA3MyDlj7fljZUgwrcg6aKE572u5Zu+5qCH44CM5p6B566A44CN55qE5YmN5pmv77ya5Y+q55WZ5ZyG546v77yL5Lit5b+D54K577yI5Y675o6J5Zub6YGT5Yi75bqm77yJ77yM55m96ImyIC0tPgo8dmVjdG9yIHhtbG5zOmFuZHJvaWQ9Imh0dHA6Ly9zY2hlbWFzLmFuZHJvaWQuY29tL2Fway9yZXMvYW5kcm9pZCIKICAgIGFuZHJvaWQ6d2lkdGg9IjEwOGRwIgogICAgYW5kcm9pZDpoZWlnaHQ9IjEwOGRwIgogICAgYW5kcm9pZDp2aWV3cG9ydFdpZHRoPSIxMDgiCiAgICBhbmRyb2lkOnZpZXdwb3J0SGVpZ2h0PSIxMDgiPgogICAgPHBhdGgKICAgICAgICBhbmRyb2lkOnBhdGhEYXRhPSJNNTQsMzkuMTAgYTE0LjksMTQuOSAwIDEsMCAwLDI5LjggYTE0LjksMTQuOSAwIDEsMCAwLC0yOS44IgogICAgICAgIGFuZHJvaWQ6ZmlsbENvbG9yPSIjMDAwMDAwMDAiCiAgICAgICAgYW5kcm9pZDpzdHJva2VDb2xvcj0iI0ZGRkZGRiIKICAgICAgICBhbmRyb2lkOnN0cm9rZVdpZHRoPSIzLjciIC8+CiAgICA8cGF0aAogICAgICAgIGFuZHJvaWQ6cGF0aERhdGE9Ik01NCw0OC40OSBhNS41MSw1LjUxIDAgMSwwIDAsMTEuMDIgYTUuNTEsNS41MSAwIDEsMCAwLC0xMS4wMiIKICAgICAgICBhbmRyb2lkOmZpbGxDb2xvcj0iI0ZGRkZGRiIgLz4KPC92ZWN0b3I+Cg==
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 73 号单 · 预置图标「极简」的前景：只留圆环＋中心点（去掉四道刻度），白色 -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <path
+        android:pathData="M54,39.10 a14.9,14.9 0 1,0 0,29.8 a14.9,14.9 0 1,0 0,-29.8"
+        android:fillColor="#00000000"
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="3.7" />
+    <path
+        android:pathData="M54,48.49 a5.51,5.51 0 1,0 0,11.02 a5.51,5.51 0 1,0 0,-11.02"
+        android:fillColor="#FFFFFF" />
+</vector>

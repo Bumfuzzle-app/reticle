@@ -1,1 +1,297 @@
-cGFja2FnZSBhcHAucmV0aWNsZTsKCmltcG9ydCBhbmRyb2lkLmNvbnRlbnQuQ29udGV4dDsKaW1wb3J0IGFuZHJvaWQuY29udGVudC5yZXMuQXNzZXRNYW5hZ2VyOwppbXBvcnQgb3JnLmpzb24uSlNPTk9iamVjdDsKCmltcG9ydCBqYXZhLmlvLkZpbGU7CmltcG9ydCBqYXZhLmlvLkZpbGVJbnB1dFN0cmVhbTsKaW1wb3J0IGphdmEuaW8uRmlsZU91dHB1dFN0cmVhbTsKaW1wb3J0IGphdmEuaW8uSW5wdXRTdHJlYW07CmltcG9ydCBqYXZhLmlvLk91dHB1dFN0cmVhbTsKaW1wb3J0IGphdmEubmV0Lkh0dHBVUkxDb25uZWN0aW9uOwppbXBvcnQgamF2YS5uZXQuVVJMOwppbXBvcnQgamF2YS5zZWN1cml0eS5NZXNzYWdlRGlnZXN0OwppbXBvcnQgamF2YS51dGlsLnppcC5aaXBFbnRyeTsKaW1wb3J0IGphdmEudXRpbC56aXAuWmlwSW5wdXRTdHJlYW07CgovKioKICogNzQg5Y+35Y2V77yIMjAyNi0xMC0xNu+8icK3IOW6lOeUqOWGheijheeOr+Wig++8iOaehOW7uue6v+esrOS4gOatpe+8ieOAggogKgogKiDjgJDmmK/ku4DkuYjjgJHmiooi6IO957yW5a6J5Y2TIEFwcCLnmoTkuIDmlbTlpZfkuJzopb/okL3liLDmiYvmnLrkuIrvvIzorqkgUmV0aWNsZSDoh6rlt7HlsLHkvJrlh7rljIXjgILkuInku7bvvJoKICogICDikaAg5bel5YW36ZO+77yIYWFwdDLvvIsxMDAg5Liq5L6d6LWWIHNvIO+8iyBFQ0ovZDgvYXBrc2lnbmVyL2J1aWxkdG9vbCDnmoQgZGV477yJ77ydKirmiZPov5sgQVBLIOeahCBsaWIvYXJtNjQtdjhhKirvvIwKICogICAgICDlronoo4XlkI7kvY3kuo4gbmF0aXZlTGlicmFyeURpciDigJTigJQg6L+Z5piv57O757uf5ZSv5LiA5YWB6K64IuW6lOeUqOi6q+S7veebtOaOpeaJp+ihjCLnmoTlnLDmlrkKICogICAgICDvvIhBbmRyb2lkIDEwIOi1tyBhcHAg56eB5pyJ55uu5b2V55qE5paH5Lu25LiN6K64IGV4ZWPvvInih5Ig5LiN55SoIFNoaXp1a3XjgIHkuI3nlKjokL3lnLDop6PljovjgIHkuI3nlKjogZTnvZHjgIIKICogICDikaEg6YWN5aWX5bCP5Lu277yIZWNqLXJlcyDotYTmupDnm67lvZUg77yLIOaehOW7uuiEmuacrCBidWlsZDMuc2jvvInvvJ3pppbmrKHku44gYXNzZXRzIOino+WIsOW6lOeUqOengeacieebruW9le+8iOWPquivu+S4jSBleGVj77yJ44CCCiAqICAg4pGiIGFuZHJvaWQuamFy77yIMjUuOE1C77yMU0RLIOadoeasvuemgeWGjeWIhuWPke+8ie+8nemmluasoeS4gOmUruS7juWumOaWuea6kOS4i+i9vSDvvIsgKipzaGEyNTYg5qCh6aqMKirvvIjplJnkuoblsLHmiqXvvIzkuI3nlKjplJnku7bvvInjgIIKICoKICog44CQ55uu5b2V44CR5bqU55So56eB5pyJIGZpbGVzL2J1aWxkZW52LyDvvJplY2otcmVzL+OAgWJ1aWxkMy5zaOOAgWFuZHJvaWQuamFy44CBa2V5LnAxMu+8iOeUqOaIt+iHquW3seeahOiwg+ivleetvuWQjemSpeWMme+8ieOAgQogKiAgICB3b3JrL++8iOaehOW7uuW3peS9nOWMuu+8ieOAgW91dC/vvIjkuqfniakgYXBr77yJ44CC5bel5YW36ZO+5pys5L2T5LiN5Zyo6L+Z6YeM77yM5ZyoIG5hdGl2ZUxpYnJhcnlEaXLvvIjlj6ror7vmlbDvvInjgIIKICoKICog44CQ57qi57q/44CRYW5kcm9pZC5qYXIg5rC45LiN5YaF572u44CB5rC45LiN6ZqP5YyF5YiG5Y+RIOKHkiDlj6rog73kuIvovb3vvJvmnKznsbvkuIDooYzpg73msqHlvoAgYXNzZXRzIOmHjOWhniBhbmRyb2lkLmphcuOAggogKi8KcHVibGljIGNsYXNzIEJ1aWxkRW52IHsKCiAgICAvKiog5a6Y5pa55rqQ77yIR29vZ2xlIFNESyByZXBvc2l0b3J577yJ6YeM55qEIHBsYXRmb3JtLTM1IOWMhe+8m+ino+WHuueahCBhbmRyb2lkLmphciDnlKjkuIvpnaLov5nkuKogc2hhIOWNoeatu+OAgiAqLwogICAgcHVibGljIHN0YXRpYyBmaW5hbCBTdHJpbmcgSkFSX1VSTCA9ICJodHRwczovL2RsLmdvb2dsZS5jb20vYW5kcm9pZC9yZXBvc2l0b3J5L3BsYXRmb3JtLTM1X3IwMi56aXAiOwogICAgcHVibGljIHN0YXRpYyBmaW5hbCBTdHJpbmcgSkFSX0lOX1pJUCA9ICJhbmRyb2lkLTM1L2FuZHJvaWQuamFyIjsKICAgIHB1YmxpYyBzdGF0aWMgZmluYWwgU3RyaW5nIEpBUl9TSEEgPSAiNDU2NjY2M2MzODc2ZTAyMmI0ZmE0Y2VkOGM4Njk3YzRhYjE2ODgyNjdmMDkwMTE0ZmQ5MmQwMjdiMzJlNjE5YiI7CiAgICBwdWJsaWMgc3RhdGljIGZpbmFsIGxvbmcgSkFSX1NJWkUgPSAyNzA5MjQ1MEw7CiAgICAvKiog546v5aKD6Ieq5bex55qE6YCa55+l57yW5Y+377yI5LiO5LiL6L295bel5YW3IDjvvI/lvaLosaEgOSDliIblvIDvvInjgIIgKi8KICAgIHB1YmxpYyBzdGF0aWMgZmluYWwgaW50IE5JRCA9IDEwOwoKICAgIC8qKiDlt6Xlhbfpk77vvIjlnKggYXBrIOeahCBsaWIvYXJtNjQtdjhhIOmHjO+8iemcgOimgeeahOaWh+S7tuKAlOKAlOWQjeWtl+WwseaYr+WuieijheWQjueahCAuc28g5ZCN44CCICovCiAgICBwcml2YXRlIHN0YXRpYyBmaW5hbCBTdHJpbmdbXSBMSUJfRklMRVMgPSB7CiAgICAgICAgImxpYmFhcHQyLnNvIiwgImxpYmVjai5zbyIsICJsaWJkOC5zbyIsICJsaWJkOF8yLnNvIiwgImxpYmFwa3NpZ25lci5zbyIsICJsaWJidWlsZHRvb2wuc28iLAogICAgfTsKCiAgICBwdWJsaWMgc3RhdGljIEZpbGUgaG9tZShDb250ZXh0IGMpIHsgRmlsZSBmID0gbmV3IEZpbGUoYy5nZXRGaWxlc0RpcigpLCAiYnVpbGRlbnYiKTsgaWYgKCFmLmV4aXN0cygpKSBmLm1rZGlycygpOyByZXR1cm4gZjsgfQogICAgcHVibGljIHN0YXRpYyBGaWxlIGphcihDb250ZXh0IGMpIHsgcmV0dXJuIG5ldyBGaWxlKGhvbWUoYyksICJhbmRyb2lkLmphciIpOyB9CiAgICBwdWJsaWMgc3RhdGljIEZpbGUgcmVzKENvbnRleHQgYykgeyByZXR1cm4gbmV3IEZpbGUoaG9tZShjKSwgImVjai1yZXMiKTsgfQogICAgcHVibGljIHN0YXRpYyBGaWxlIHNjcmlwdChDb250ZXh0IGMpIHsgcmV0dXJuIG5ldyBGaWxlKGhvbWUoYyksICJidWlsZDMuc2giKTsgfQogICAgcHVibGljIHN0YXRpYyBGaWxlIGtleShDb250ZXh0IGMpIHsgcmV0dXJuIG5ldyBGaWxlKGhvbWUoYyksICJrZXkucDEyIik7IH0KICAgIHB1YmxpYyBzdGF0aWMgRmlsZSB3b3JrKENvbnRleHQgYykgeyByZXR1cm4gbmV3IEZpbGUoaG9tZShjKSwgIndvcmsiKTsgfQogICAgcHVibGljIHN0YXRpYyBGaWxlIG91dChDb250ZXh0IGMpIHsgcmV0dXJuIG5ldyBGaWxlKGhvbWUoYyksICJvdXQiKTsgfQogICAgLyoqIOW3peWFt+mTvuebruW9le+8nWFwayDnmoQgbGliL2FybTY0LXY4Ye+8iG5hdGl2ZUxpYnJhcnlEaXLvvInjgIIgKi8KICAgIHB1YmxpYyBzdGF0aWMgRmlsZSBsaWIoQ29udGV4dCBjKSB7IHJldHVybiBuZXcgRmlsZShjLmdldEFwcGxpY2F0aW9uSW5mbygpLm5hdGl2ZUxpYnJhcnlEaXIpOyB9CgogICAgLy8g4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQIOWwsee7quWIpOaNriDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZAKCiAgICAvKiog5bel5YW36ZO+77yaNiDkuKrlj6/miafooYwvZGV4IOmDveWcqO+8iO+8i+iDveeci+WIsCBhYXB0MiDnmoTkvp3otZYgc2/vvInjgIIgKi8KICAgIHB1YmxpYyBzdGF0aWMgYm9vbGVhbiB0Y09rKENvbnRleHQgYykgewogICAgICAgIHRyeSB7CiAgICAgICAgICAgIEZpbGUgZCA9IGxpYihjKTsKICAgICAgICAgICAgZm9yIChpbnQgaSA9IDA7IGkgPCBMSUJfRklMRVMubGVuZ3RoOyBpKyspIHsKICAgICAgICAgICAgICAgIEZpbGUgZiA9IG5ldyBGaWxlKGQsIExJQl9GSUxFU1tpXSk7CiAgICAgICAgICAgICAgICBpZiAoIWYuZXhpc3RzKCkgfHwgZi5sZW5ndGgoKSA9PSAwKSByZXR1cm4gZmFsc2U7CiAgICAgICAgICAgIH0KICAgICAgICAgICAgcmV0dXJuIG5ldyBGaWxlKGQsICJsaWJhYnNsX2Jhc2Uuc28iKS5leGlzdHMoKTsKICAgICAgICB9IGNhdGNoIChUaHJvd2FibGUgdCkgeyByZXR1cm4gZmFsc2U7IH0KICAgIH0KICAgIHB1YmxpYyBzdGF0aWMgYm9vbGVhbiBqYXJPayhDb250ZXh0IGMpIHsgdHJ5IHsgRmlsZSBmID0gamFyKGMpOyByZXR1cm4gZi5leGlzdHMoKSAmJiBmLmxlbmd0aCgpID09IEpBUl9TSVpFOyB9IGNhdGNoIChUaHJvd2FibGUgdCkgeyByZXR1cm4gZmFsc2U7IH0gfQogICAgcHVibGljIHN0YXRpYyBib29sZWFuIHJlc09rKENvbnRleHQgYykgeyB0cnkgeyByZXR1cm4gbmV3IEZpbGUocmVzKGMpLCAiZWNqLjEiKS5leGlzdHMoKSB8fCBuZXcgRmlsZShyZXMoYyksICJhYm91dC5odG1sIikuZXhpc3RzKCk7IH0gY2F0Y2ggKFRocm93YWJsZSB0KSB7IHJldHVybiBmYWxzZTsgfSB9CiAgICBwdWJsaWMgc3RhdGljIGJvb2xlYW4gc2NyaXB0T2soQ29udGV4dCBjKSB7IHRyeSB7IHJldHVybiBzY3JpcHQoYykuZXhpc3RzKCkgJiYgc2NyaXB0KGMpLmxlbmd0aCgpID4gMDsgfSBjYXRjaCAoVGhyb3dhYmxlIHQpIHsgcmV0dXJuIGZhbHNlOyB9IH0KICAgIHB1YmxpYyBzdGF0aWMgYm9vbGVhbiBrZXlPayhDb250ZXh0IGMpIHsgdHJ5IHsgcmV0dXJuIGtleShjKS5leGlzdHMoKSAmJiBrZXkoYykubGVuZ3RoKCkgPiAwOyB9IGNhdGNoIChUaHJvd2FibGUgdCkgeyByZXR1cm4gZmFsc2U7IH0gfQoKICAgIC8qKiDkuInku7bpvZDvvIvnrb7lkI3pkqXljJnmnInvvJ3og73lh7rljIXvvIjpkqXljJnnvLrku7bkvJrlnKjnrKzkuIDmrKHmnoTlu7rml7boh6rliqjnlJ/miJDvvIzmiYDku6XkuI3nrpci57y65Lu2Iu+8ieOAgiAqLwogICAgcHVibGljIHN0YXRpYyBib29sZWFuIHJlYWR5KENvbnRleHQgYykgeyByZXR1cm4gdGNPayhjKSAmJiBqYXJPayhjKSAmJiByZXNPayhjKSAmJiBzY3JpcHRPayhjKTsgfQoKICAgIC8qKiDnvLrku4DkuYjvvIjnqbrkuLLvvJ3pvZDvvInigJTigJTkurror53vvIzkuIDlj6XkuIDku7bvvJvnu5kgQUkg5LiO55So5oi35YWx55So44CCICovCiAgICBwdWJsaWMgc3RhdGljIFN0cmluZyBtaXNzaW5nKENvbnRleHQgYykgewogICAgICAgIFN0cmluZ0J1aWxkZXIgc2IgPSBuZXcgU3RyaW5nQnVpbGRlcigpOwogICAgICAgIGlmICghdGNPayhjKSkgc2IuYXBwZW5kKCLCtyDlt6Xlhbfpk77msqHluKbkuIrvvIhhcGsg55qEIGxpYi9hcm02NC12OGEg6YeM55yL5LiN5YiwIGFhcHQy77yPRUNK77yPZDjvvInigJTigJTmnKzljIXlj6rkv53or4EgYXJtNjQg5py65Z6LXG4iKTsKICAgICAgICBpZiAoIXJlc09rKGMpKSBzYi5hcHBlbmQoIsK3IOe8luivkeWZqOi1hOa6kOayoeino+WHuuadpe+8iGVjai1yZXPvvJvpppbmrKHoh6rliqjop6PvvIzlpLHotKXlj6/ph43lvIDlupTnlKjmiJbngrnjgI7kuIDplK7lh4blpIfnjq/looPjgI/vvIlcbiIpOwogICAgICAgIGlmICghc2NyaXB0T2soYykpIHNiLmFwcGVuZCgiwrcg5p6E5bu66ISa5pys5rKh6Kej5Ye65p2l77yIYnVpbGQzLnNo77yb5ZCM5LiK77yJXG4iKTsKICAgICAgICBpZiAoIWphck9rKGMpKSBzYi5hcHBlbmQoIsK3IGFuZHJvaWQuamFyIOi/mOayoeS4i+i9ve+8iDI1LjhNQu+8m1NESyDmnaHmrL7kuI3orrjpmo/ljIXliIblj5HvvIzlj6rog73kuIvovb3vvIlcbiIpOwogICAgICAgIHJldHVybiBzYi50b1N0cmluZygpOwogICAgfQoKICAgIC8qKiDkuIDooYznirbmgIHvvIjnlYzpnaLkuI4gQUkg5YWx55So77yJ44CCICovCiAgICBwdWJsaWMgc3RhdGljIFN0cmluZyBzdGF0dXNMaW5lKENvbnRleHQgYykgewogICAgICAgIGlmIChyZWFkeShjKSkgcmV0dXJuICLlsLHnu6rvvJrlt6Xlhbfpk74g4pyT44CAYW5kcm9pZC5qYXIg4pyT77yIMjUuOE1C77yM5bey5qCh6aqM77yJIjsKICAgICAgICBpZiAoIXRjT2soYykpIHJldHVybiAi5pyq5bCx57uq77ya6L+Z5aWX5YyF6YeM5rKh5pyJ5bel5YW36ZO+77yI5Y+q5pyJIGFybTY0IOacuuWei+W4pu+8iSI7CiAgICAgICAgaWYgKCFqYXJPayhjKSkgcmV0dXJuICLmnKrlsLHnu6rvvJrnvLogYW5kcm9pZC5qYXLvvIgyNS44TULvvIzmnKrkuIvovb3vvIkiOwogICAgICAgIHJldHVybiAi5pyq5bCx57uq77ya57y657yW6K+R6LWE5rqQ77yP6ISa5pys77yI5Y+v54K544CO5LiA6ZSu5YeG5aSH546v5aKD44CP6KGl77yJIjsKICAgIH0KCiAgICAvKiog57uT5p6E5YyW54q25oCB77yI57uZIEFJ77yadG9vbHMvbGlzdCDmj4/ov7DkuI4gYnVpbGQg55qE6ZSZ6K+v6YO96K+75a6D77yJ44CCICovCiAgICBwdWJsaWMgc3RhdGljIEpTT05PYmplY3Qgc3RhdHVzSnNvbihDb250ZXh0IGMpIHsKICAgICAgICBKU09OT2JqZWN0IG8gPSBuZXcgSlNPTk9iamVjdCgpOwogICAgICAgIHRyeSB7CiAgICAgICAgICAgIG8ucHV0KCJyZWFkeSIsIHJlYWR5KGMpID8gMSA6IDApOwogICAgICAgICAgICBvLnB1dCgidG9vbGNoYWluIiwgdGNPayhjKSA/IDEgOiAwKTsKICAgICAgICAgICAgby5wdXQoImFuZHJvaWRKYXIiLCBqYXJPayhjKSA/IDEgOiAwKTsKICAgICAgICAgICAgby5wdXQoImVjalJlcyIsIHJlc09rKGMpID8gMSA6IDApOwogICAgICAgICAgICBvLnB1dCgic2NyaXB0Iiwgc2NyaXB0T2soYykgPyAxIDogMCk7CiAgICAgICAgICAgIG8ucHV0KCJrZXkiLCBrZXlPayhjKSA/IDEgOiAwKTsKICAgICAgICAgICAgby5wdXQoImFiaSIsIHRjT2soYykgPyAiYXJtNjQtdjhhIiA6ICIiKTsKICAgICAgICAgICAgU3RyaW5nIG1pc3MgPSBtaXNzaW5nKGMpOwogICAgICAgICAgICBpZiAobWlzcy5sZW5ndGgoKSA+IDApIG8ucHV0KCJuZWVkIiwgbWlzcy5yZXBsYWNlKCJcbiIsICIgIikudHJpbSgpKTsKICAgICAgICAgICAgby5wdXQoImhvd1RvIiwgcmVhZHkoYykgPyAi5Y+v5Lul55u05o6lIGJ1aWxkIGFjdGlvbj1zdGFydCDlh7rljIUiIDogIuWFiOihpeeOr+Wig++8muW6lOeUqOWGheOAjuaJk+WMhSBBcHDjgI/ihpLjgI7kuIDplK7lh4blpIfnjq/looPjgI/vvIzmiJYgYnVpbGQgYWN0aW9uPWVudiIpOwogICAgICAgIH0gY2F0Y2ggKFRocm93YWJsZSB0KSB7IH0KICAgICAgICByZXR1cm4gbzsKICAgIH0KCiAgICAvLyDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZAg6JC95Zyw77yaYXNzZXRzIOmHjOeahOWwj+S7tiDvvIsgYW5kcm9pZC5qYXIg4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQCgogICAgLyoqIOaKiiBhc3NldHMvdG9vbHMve2Vjai1yZXMsYnVpbGQzLnNofSDop6PliLDnp4HmnInnm67lvZXvvIjluYLnrYnvvJvlt7Lop6Pov4flsLHot7Pov4fvvInjgILov5Tlm57nqbrkuLLvvJ3miJDlip/vvIzlkKbliJnkurror53ljp/lm6DjgIIgKi8KICAgIHB1YmxpYyBzdGF0aWMgU3RyaW5nIHVucGFjayhDb250ZXh0IGMpIHsKICAgICAgICB0cnkgewogICAgICAgICAgICBBc3NldE1hbmFnZXIgYW0gPSBjLmdldEFzc2V0cygpOwogICAgICAgICAgICBpZiAoIXJlc09rKGMpKSBjb3B5QXNzZXREaXIoYW0sICJ0b29scy9lY2otcmVzIiwgcmVzKGMpKTsKICAgICAgICAgICAgY29weUFzc2V0RmlsZShhbSwgInRvb2xzL2J1aWxkMy5zaCIsIHNjcmlwdChjKSk7ICAgLy8g4piFNzQg5L+u77ya6ISa5pys5q+P5qyh6YO96KaG55uW77yI5pS56ISa5pys5LiN5b+F6YeN6KOF546v5aKD77yJCiAgICAgICAgICAgIHdvcmsoYykubWtkaXJzKCk7IG91dChjKS5ta2RpcnMoKTsKICAgICAgICAgICAgaWYgKCFyZXNPayhjKSB8fCAhc2NyaXB0T2soYykpIHJldHVybiAi6Kej5Ye65p2l6L+Y5piv57y65Lu277yIYXNzZXRzIOmHjOeahCB0b29scy8g5LiN5YWo77yf77yJIjsKICAgICAgICAgICAgcmV0dXJuICIiOwogICAgICAgIH0gY2F0Y2ggKFRocm93YWJsZSB0KSB7IHJldHVybiAi6Kej5Y6L5aSx6LSl77yaIiArIHQ7IH0KICAgIH0KCiAgICAvKiogYXNzZXRzIOebruW9lemAkuW9kuWkjeWItu+8iEFzc2V0TWFuYWdlciDlj6rog73pgJDlsYIgbGlzdO+8ieOAgiAqLwogICAgcHJpdmF0ZSBzdGF0aWMgdm9pZCBjb3B5QXNzZXREaXIoQXNzZXRNYW5hZ2VyIGFtLCBTdHJpbmcgZnJvbSwgRmlsZSB0bykgdGhyb3dzIEV4Y2VwdGlvbiB7CiAgICAgICAgU3RyaW5nW10ga2lkcyA9IGFtLmxpc3QoZnJvbSk7CiAgICAgICAgaWYgKGtpZHMgPT0gbnVsbCB8fCBraWRzLmxlbmd0aCA9PSAwKSB7IGNvcHlBc3NldEZpbGUoYW0sIGZyb20sIHRvKTsgcmV0dXJuOyB9CiAgICAgICAgaWYgKCF0by5leGlzdHMoKSkgdG8ubWtkaXJzKCk7CiAgICAgICAgZm9yIChpbnQgaSA9IDA7IGkgPCBraWRzLmxlbmd0aDsgaSsrKSB7CiAgICAgICAgICAgIFN0cmluZyBhID0gZnJvbSArICIvIiArIGtpZHNbaV07CiAgICAgICAgICAgIEZpbGUgZHN0ID0gbmV3IEZpbGUodG8sIGtpZHNbaV0pOwogICAgICAgICAgICBTdHJpbmdbXSBrMiA9IGFtLmxpc3QoYSk7CiAgICAgICAgICAgIGlmIChrMiAhPSBudWxsICYmIGsyLmxlbmd0aCA+IDApIGNvcHlBc3NldERpcihhbSwgYSwgZHN0KTsgZWxzZSBjb3B5QXNzZXRGaWxlKGFtLCBhLCBkc3QpOwogICAgICAgIH0KICAgIH0KCiAgICBwcml2YXRlIHN0YXRpYyB2b2lkIGNvcHlBc3NldEZpbGUoQXNzZXRNYW5hZ2VyIGFtLCBTdHJpbmcgZnJvbSwgRmlsZSB0bykgdGhyb3dzIEV4Y2VwdGlvbiB7CiAgICAgICAgSW5wdXRTdHJlYW0gaW4gPSBhbS5vcGVuKGZyb20pOwogICAgICAgIHRyeSB7CiAgICAgICAgICAgIEZpbGUgcCA9IHRvLmdldFBhcmVudEZpbGUoKTsgaWYgKHAgIT0gbnVsbCAmJiAhcC5leGlzdHMoKSkgcC5ta2RpcnMoKTsKICAgICAgICAgICAgT3V0cHV0U3RyZWFtIG9zID0gbmV3IEZpbGVPdXRwdXRTdHJlYW0odG8pOwogICAgICAgICAgICB0cnkgewogICAgICAgICAgICAgICAgYnl0ZVtdIGJ1ZiA9IG5ldyBieXRlWzY1NTM2XTsKICAgICAgICAgICAgICAgIGludCBuOwogICAgICAgICAgICAgICAgd2hpbGUgKChuID0gaW4ucmVhZChidWYpKSA+IDApIG9zLndyaXRlKGJ1ZiwgMCwgbik7CiAgICAgICAgICAgICAgICBvcy5mbHVzaCgpOwogICAgICAgICAgICB9IGZpbmFsbHkgeyB0cnkgeyBvcy5jbG9zZSgpOyB9IGNhdGNoIChUaHJvd2FibGUgdCkgeyB9IH0KICAgICAgICB9IGZpbmFsbHkgeyB0cnkgeyBpbi5jbG9zZSgpOyB9IGNhdGNoIChUaHJvd2FibGUgdCkgeyB9IH0KICAgIH0KCiAgICAvKiog6L+b5bqm5Zue6LCD77yI55WM6Z2i5by556qX5LiO6YCa55+l5qCP6YO96K+75a6D77yJ44CCICovCiAgICBwdWJsaWMgaW50ZXJmYWNlIFByb2dyZXNzIHsgdm9pZCBvbihpbnQgcGN0LCBTdHJpbmcgbGluZSk7IH0KCiAgICAvKiog5LiA6ZSu5YeG5aSH546v5aKD77yd6KejIGFzc2V0cyDlsI/ku7Yg77yL77yI57y65bCx77yJ5LiL6L29IGFuZHJvaWQuamFy44CC6L+U5Zue56m65Liy77yd5oiQ5Yqf44CCICovCiAgICBwdWJsaWMgc3RhdGljIFN0cmluZyBwcmVwYXJlKENvbnRleHQgYywgUHJvZ3Jlc3MgcCkgewogICAgICAgIFN0cmluZyB1ID0gdW5wYWNrKGMpOwogICAgICAgIGlmICh1Lmxlbmd0aCgpID4gMCkgcmV0dXJuIHU7CiAgICAgICAgaWYgKGphck9rKGMpKSB7IGlmIChwICE9IG51bGwpIHAub24oMTAwLCAi546v5aKD5bey5bCx57uq77yIYW5kcm9pZC5qYXIg5Zyo77yJIik7IHJldHVybiAiIjsgfQogICAgICAgIHJldHVybiBmZXRjaEphcihjLCBwKTsKICAgIH0KCiAgICAvKiog5LiL6L29IHBsYXRmb3JtLTM1IOWMhSDihpIg5Y+W5Ye6IGFuZHJvaWQuamFyIOKGkiBzaGEyNTYg5qCh6aqMIOKGkiDmlL7ov5vnp4HmnInnm67lvZXjgILlpLHotKXph43or5UgMSDmrKHjgIIgKi8KICAgIHB1YmxpYyBzdGF0aWMgU3RyaW5nIGZldGNoSmFyKENvbnRleHQgYywgUHJvZ3Jlc3MgcCkgewogICAgICAgIFN0cmluZyBsYXN0ID0gIiI7CiAgICAgICAgZm9yIChpbnQgYXR0ZW1wdCA9IDE7IGF0dGVtcHQgPD0gMjsgYXR0ZW1wdCsrKSB7CiAgICAgICAgICAgIEZpbGUgemlwID0gbmV3IEZpbGUoaG9tZShjKSwgInBsYXRmb3JtLTM1LnppcC50bXAiKTsKICAgICAgICAgICAgdHJ5IHsKICAgICAgICAgICAgICAgIGlmICh6aXAuZXhpc3RzKCkpIHppcC5kZWxldGUoKTsKICAgICAgICAgICAgICAgIGlmIChwICE9IG51bGwpIHAub24oMCwgIuW8gOWni+S4i+i9vSBhbmRyb2lkLmphcu+8iCIgKyAoYXR0ZW1wdCA+IDEgPyAi56ysICIgKyBhdHRlbXB0ICsgIiDmrKHph43or5UiIDogIue6piA2MU1CIOWuieijheWMhSIpICsgIu+8iSIpOwogICAgICAgICAgICAgICAgbG9uZyB0b3RhbCA9IC0xOwogICAgICAgICAgICAgICAgSHR0cFVSTENvbm5lY3Rpb24gY24gPSAoSHR0cFVSTENvbm5lY3Rpb24pIG5ldyBVUkwoSkFSX1VSTCkub3BlbkNvbm5lY3Rpb24oKTsKICAgICAgICAgICAgICAgIGNuLnNldENvbm5lY3RUaW1lb3V0KDIwMDAwKTsKICAgICAgICAgICAgICAgIGNuLnNldFJlYWRUaW1lb3V0KDMwMDAwKTsKICAgICAgICAgICAgICAgIGNuLnNldEluc3RhbmNlRm9sbG93UmVkaXJlY3RzKHRydWUpOwogICAgICAgICAgICAgICAgY24uY29ubmVjdCgpOwogICAgICAgICAgICAgICAgaW50IGNvZGUgPSBjbi5nZXRSZXNwb25zZUNvZGUoKTsKICAgICAgICAgICAgICAgIGlmIChjb2RlICE9IDIwMCkgeyBsYXN0ID0gIuS4i+i9vea6kOWbnuS6hiBIVFRQICIgKyBjb2RlOyBjbi5kaXNjb25uZWN0KCk7IGNvbnRpbnVlOyB9CiAgICAgICAgICAgICAgICB0b3RhbCA9IGNuLmdldENvbnRlbnRMZW5ndGgoKTsKICAgICAgICAgICAgICAgIElucHV0U3RyZWFtIGluID0gY24uZ2V0SW5wdXRTdHJlYW0oKTsKICAgICAgICAgICAgICAgIE91dHB1dFN0cmVhbSBvcyA9IG5ldyBGaWxlT3V0cHV0U3RyZWFtKHppcCk7CiAgICAgICAgICAgICAgICBieXRlW10gYnVmID0gbmV3IGJ5dGVbMjYyMTQ0XTsKICAgICAgICAgICAgICAgIGxvbmcgZ290ID0gMDsgaW50IG4sIGxhc3RQY3QgPSAtMTsKICAgICAgICAgICAgICAgIHRyeSB7CiAgICAgICAgICAgICAgICAgICAgd2hpbGUgKChuID0gaW4ucmVhZChidWYpKSA+IDApIHsKICAgICAgICAgICAgICAgICAgICAgICAgb3Mud3JpdGUoYnVmLCAwLCBuKTsKICAgICAgICAgICAgICAgICAgICAgICAgZ290ICs9IG47CiAgICAgICAgICAgICAgICAgICAgICAgIGlmICh0b3RhbCA+IDApIHsKICAgICAgICAgICAgICAgICAgICAgICAgICAgIGludCBwY3QgPSAoaW50KSAoZ290ICogMTAwIC8gdG90YWwpOwogICAgICAgICAgICAgICAgICAgICAgICAgICAgaWYgKHBjdCAhPSBsYXN0UGN0KSB7IGxhc3RQY3QgPSBwY3Q7IGlmIChwICE9IG51bGwpIHAub24ocGN0LCAi5LiL6L295LitICIgKyBwY3QgKyAiJe+8iCIgKyAoZ290IC8gMTA0ODU3NikgKyAiLyIgKyAodG90YWwgLyAxMDQ4NTc2KSArICJNQu+8iSIpOyB9CiAgICAgICAgICAgICAgICAgICAgICAgIH0KICAgICAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgICAgICAgICAgb3MuZmx1c2goKTsKICAgICAgICAgICAgICAgIH0gZmluYWxseSB7IHRyeSB7IG9zLmNsb3NlKCk7IH0gY2F0Y2ggKFRocm93YWJsZSB0KSB7IH0gdHJ5IHsgaW4uY2xvc2UoKTsgfSBjYXRjaCAoVGhyb3dhYmxlIHQpIHsgfSBjbi5kaXNjb25uZWN0KCk7IH0KICAgICAgICAgICAgICAgIGlmIChwICE9IG51bGwpIHAub24oMTAwLCAi5LiL6L295a6M77yM5q2j5Zyo5Y+W5Ye6IGFuZHJvaWQuamFy4oCmIik7CiAgICAgICAgICAgICAgICBGaWxlIGRzdCA9IG5ldyBGaWxlKGhvbWUoYyksICJhbmRyb2lkLmphci50bXAiKTsKICAgICAgICAgICAgICAgIGlmIChkc3QuZXhpc3RzKCkpIGRzdC5kZWxldGUoKTsKICAgICAgICAgICAgICAgIFN0cmluZyBleCA9IGV4dHJhY3RPbmUoemlwLCBKQVJfSU5fWklQLCBkc3QpOwogICAgICAgICAgICAgICAgaWYgKGV4Lmxlbmd0aCgpID4gMCkgeyBsYXN0ID0gZXg7IHppcC5kZWxldGUoKTsgY29udGludWU7IH0KICAgICAgICAgICAgICAgIFN0cmluZyBzaGEgPSBzaGEyNTYoZHN0KTsKICAgICAgICAgICAgICAgIGlmICghSkFSX1NIQS5lcXVhbHNJZ25vcmVDYXNlKHNoYSkpIHsKICAgICAgICAgICAgICAgICAgICBsYXN0ID0gImFuZHJvaWQuamFyIOagoemqjOS4jei/h++8iOaLv+WIsCAiICsgKHNoYSA9PSBudWxsID8gIj8iIDogc2hhLnN1YnN0cmluZygwLCAxNikpICsgIuKApu+8jOW6lOS4uiAiICsgSkFSX1NIQS5zdWJzdHJpbmcoMCwgMTYpICsgIuKApu+8iSI7CiAgICAgICAgICAgICAgICAgICAgZHN0LmRlbGV0ZSgpOyB6aXAuZGVsZXRlKCk7IGNvbnRpbnVlOwogICAgICAgICAgICAgICAgfQogICAgICAgICAgICAgICAgaWYgKGRzdC5sZW5ndGgoKSAhPSBKQVJfU0laRSkgewogICAgICAgICAgICAgICAgICAgIGxhc3QgPSAiYW5kcm9pZC5qYXIg5aSn5bCP5LiN5a+577yIIiArIGRzdC5sZW5ndGgoKSArICLvvIzlupTkuLogIiArIEpBUl9TSVpFICsgIu+8iSI7CiAgICAgICAgICAgICAgICAgICAgZHN0LmRlbGV0ZSgpOyB6aXAuZGVsZXRlKCk7IGNvbnRpbnVlOwogICAgICAgICAgICAgICAgfQogICAgICAgICAgICAgICAgaWYgKGphcihjKS5leGlzdHMoKSkgamFyKGMpLmRlbGV0ZSgpOwogICAgICAgICAgICAgICAgaWYgKCFkc3QucmVuYW1lVG8oamFyKGMpKSkgeyBjb3B5RmlsZShkc3QsIGphcihjKSk7IGRzdC5kZWxldGUoKTsgfQogICAgICAgICAgICAgICAgemlwLmRlbGV0ZSgpOwogICAgICAgICAgICAgICAgaWYgKHAgIT0gbnVsbCkgcC5vbigxMDAsICJhbmRyb2lkLmphciDlsLHkvY3vvIjmoKHpqozpgJrov4cgIiArIEpBUl9TSEEuc3Vic3RyaW5nKDAsIDEyKSArICLigKbvvIkiKTsKICAgICAgICAgICAgICAgIHJldHVybiAiIjsKICAgICAgICAgICAgfSBjYXRjaCAoVGhyb3dhYmxlIHQpIHsKICAgICAgICAgICAgICAgIGxhc3QgPSBTdHJpbmcudmFsdWVPZih0KTsKICAgICAgICAgICAgICAgIHRyeSB7IGlmICh6aXAuZXhpc3RzKCkpIHppcC5kZWxldGUoKTsgfSBjYXRjaCAoVGhyb3dhYmxlIHQyKSB7IH0KICAgICAgICAgICAgfQogICAgICAgIH0KICAgICAgICByZXR1cm4gIuS4i+i9vSBhbmRyb2lkLmphciDmsqHmiJDvvJoiICsgbGFzdCArICLvvIjmupDvvJ3lrpjmlrkgZGwuZ29vZ2xlLmNvbe+8m+e9kee7nOmAmuS4jemAmuOAgeaYr+WQpuiiq+ezu+e7n+aLpu+8jOmDveimgeeci++8iSI7CiAgICB9CgogICAgLyoqIOS7jiB6aXAg6YeM5oq95LiA5Liq5p2h55uu44CC6L+U5Zue56m65Liy77yd5oiQ5Yqf44CCICovCiAgICBwcml2YXRlIHN0YXRpYyBTdHJpbmcgZXh0cmFjdE9uZShGaWxlIHppcCwgU3RyaW5nIGVudHJ5LCBGaWxlIGRzdCkgewogICAgICAgIHRyeSB7CiAgICAgICAgICAgIFppcElucHV0U3RyZWFtIHpzID0gbmV3IFppcElucHV0U3RyZWFtKG5ldyBGaWxlSW5wdXRTdHJlYW0oemlwKSk7CiAgICAgICAgICAgIHRyeSB7CiAgICAgICAgICAgICAgICBaaXBFbnRyeSBlOwogICAgICAgICAgICAgICAgYnl0ZVtdIGJ1ZiA9IG5ldyBieXRlWzI2MjE0NF07CiAgICAgICAgICAgICAgICB3aGlsZSAoKGUgPSB6cy5nZXROZXh0RW50cnkoKSkgIT0gbnVsbCkgewogICAgICAgICAgICAgICAgICAgIGlmICghZS5nZXROYW1lKCkuZXF1YWxzKGVudHJ5KSkgY29udGludWU7CiAgICAgICAgICAgICAgICAgICAgT3V0cHV0U3RyZWFtIG9zID0gbmV3IEZpbGVPdXRwdXRTdHJlYW0oZHN0KTsKICAgICAgICAgICAgICAgICAgICB0cnkgewogICAgICAgICAgICAgICAgICAgICAgICBpbnQgbjsKICAgICAgICAgICAgICAgICAgICAgICAgd2hpbGUgKChuID0genMucmVhZChidWYpKSA+IDApIG9zLndyaXRlKGJ1ZiwgMCwgbik7CiAgICAgICAgICAgICAgICAgICAgICAgIG9zLmZsdXNoKCk7CiAgICAgICAgICAgICAgICAgICAgfSBmaW5hbGx5IHsgdHJ5IHsgb3MuY2xvc2UoKTsgfSBjYXRjaCAoVGhyb3dhYmxlIHQpIHsgfSB9CiAgICAgICAgICAgICAgICAgICAgcmV0dXJuICIiOwogICAgICAgICAgICAgICAgfQogICAgICAgICAgICB9IGZpbmFsbHkgeyB0cnkgeyB6cy5jbG9zZSgpOyB9IGNhdGNoIChUaHJvd2FibGUgdCkgeyB9IH0KICAgICAgICAgICAgcmV0dXJuICLljIXph4zmsqHmnIkgIiArIGVudHJ5ICsgIu+8iOa6kOaNouS6hu+8n++8iSI7CiAgICAgICAgfSBjYXRjaCAoVGhyb3dhYmxlIHQpIHsgcmV0dXJuICLop6PljIXlpLHotKXvvJoiICsgdDsgfQogICAgfQoKICAgIHB1YmxpYyBzdGF0aWMgU3RyaW5nIHNoYTI1NihGaWxlIGYpIHsKICAgICAgICB0cnkgewogICAgICAgICAgICBNZXNzYWdlRGlnZXN0IG1kID0gTWVzc2FnZURpZ2VzdC5nZXRJbnN0YW5jZSgiU0hBLTI1NiIpOwogICAgICAgICAgICBGaWxlSW5wdXRTdHJlYW0gaW4gPSBuZXcgRmlsZUlucHV0U3RyZWFtKGYpOwogICAgICAgICAgICB0cnkgewogICAgICAgICAgICAgICAgYnl0ZVtdIGJ1ZiA9IG5ldyBieXRlWzI2MjE0NF07CiAgICAgICAgICAgICAgICBpbnQgbjsKICAgICAgICAgICAgICAgIHdoaWxlICgobiA9IGluLnJlYWQoYnVmKSkgPiAwKSBtZC51cGRhdGUoYnVmLCAwLCBuKTsKICAgICAgICAgICAgfSBmaW5hbGx5IHsgdHJ5IHsgaW4uY2xvc2UoKTsgfSBjYXRjaCAoVGhyb3dhYmxlIHQpIHsgfSB9CiAgICAgICAgICAgIGJ5dGVbXSBkID0gbWQuZGlnZXN0KCk7CiAgICAgICAgICAgIFN0cmluZ0J1aWxkZXIgc2IgPSBuZXcgU3RyaW5nQnVpbGRlcigpOwogICAgICAgICAgICBmb3IgKGludCBpID0gMDsgaSA8IGQubGVuZ3RoOyBpKyspIHNiLmFwcGVuZChTdHJpbmcuZm9ybWF0KCIlMDJ4IiwgZFtpXSkpOwogICAgICAgICAgICByZXR1cm4gc2IudG9TdHJpbmcoKTsKICAgICAgICB9IGNhdGNoIChUaHJvd2FibGUgdCkgeyByZXR1cm4gbnVsbDsgfQogICAgfQoKICAgIHByaXZhdGUgc3RhdGljIHZvaWQgY29weUZpbGUoRmlsZSBzcmMsIEZpbGUgZHN0KSB0aHJvd3MgRXhjZXB0aW9uIHsKICAgICAgICBJbnB1dFN0cmVhbSBpbiA9IG5ldyBGaWxlSW5wdXRTdHJlYW0oc3JjKTsKICAgICAgICB0cnkgewogICAgICAgICAgICBPdXRwdXRTdHJlYW0gb3MgPSBuZXcgRmlsZU91dHB1dFN0cmVhbShkc3QpOwogICAgICAgICAgICB0cnkgewogICAgICAgICAgICAgICAgYnl0ZVtdIGJ1ZiA9IG5ldyBieXRlWzI2MjE0NF07CiAgICAgICAgICAgICAgICBpbnQgbjsKICAgICAgICAgICAgICAgIHdoaWxlICgobiA9IGluLnJlYWQoYnVmKSkgPiAwKSBvcy53cml0ZShidWYsIDAsIG4pOwogICAgICAgICAgICAgICAgb3MuZmx1c2goKTsKICAgICAgICAgICAgfSBmaW5hbGx5IHsgdHJ5IHsgb3MuY2xvc2UoKTsgfSBjYXRjaCAoVGhyb3dhYmxlIHQpIHsgfSB9CiAgICAgICAgfSBmaW5hbGx5IHsgdHJ5IHsgaW4uY2xvc2UoKTsgfSBjYXRjaCAoVGhyb3dhYmxlIHQpIHsgfSB9CiAgICB9CgogICAgLy8g4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQIOi/m+W6puWPjOmAmumBk++8iOmAmuefpeagjyDvvIsg5bCP5b2i6LGh5rCU5rOh77yJIOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkAoKICAgIC8qKiDov5vluqblm57osIPvvJrpgJrnn6XmoI/vvIjlrp7lhrXlnovluLjpqbvvvInvvIsg5bCP5b2i6LGh5rCU5rOh77yb5LiA5aSE57u05oqk77yM55WM6Z2i5LiOIEFJIOinpuWPkemDvei1sOWug+OAgiAqLwogICAgcHVibGljIHN0YXRpYyBQcm9ncmVzcyBub3RpZmllcihmaW5hbCBDb250ZXh0IGMpIHsKICAgICAgICByZXR1cm4gbmV3IFByb2dyZXNzKCkgewogICAgICAgICAgICBwcml2YXRlIFN0cmluZyBsYXN0ID0gIiI7CiAgICAgICAgICAgIHB1YmxpYyB2b2lkIG9uKGludCBwY3QsIFN0cmluZyBsaW5lKSB7CiAgICAgICAgICAgICAgICB0cnkgeyBOb3RpZmllci5wcm9tb3RlZChjLCBOSUQsICLmnoTlu7rnjq/looMiLCBsaW5lLCBwY3QpOyB9IGNhdGNoIChUaHJvd2FibGUgdCkgeyB9CiAgICAgICAgICAgICAgICBpZiAobGluZSA9PSBudWxsIHx8IGxpbmUuZXF1YWxzKGxhc3QpKSByZXR1cm47ICAgLy8g5rCU5rOh5LiN5Yi35ZCM5LiA5p2hCiAgICAgICAgICAgICAgICBsYXN0ID0gbGluZTsKICAgICAgICAgICAgICAgIHRyeSB7IE1hc2NvdC5idWJibGUoIuKakiDnjq/looMgwrcgIiArIGxpbmUpOyB9IGNhdGNoIChUaHJvd2FibGUgdCkgeyB9CiAgICAgICAgICAgIH0KICAgICAgICB9OwogICAgfQoKICAgIC8qKiDmlLblsL7vvJrmiJDlip/nlZnkuIDmnaHmma7pgJrpgJrnn6XvvIjlj6/ku6Xku47pgJrnn6XmoI/liJLmjonvvInvvIzlpLHotKXnlZnnuqLoibLlhoXlrrnjgIIgKi8KICAgIHB1YmxpYyBzdGF0aWMgdm9pZCBub3RpZnlEb25lKENvbnRleHQgYywgU3RyaW5nIGxpbmUsIGJvb2xlYW4gYmFkKSB7CiAgICAgICAgdHJ5IHsgTm90aWZpZXIuc2VuZChjLCBOSUQsIGJhZCA/ICLmnoTlu7rnjq/looMgwrcg5rKh5oiQIiA6ICLmnoTlu7rnjq/looMgwrcg5a6M5oiQIiwgbGluZSwgZmFsc2UpOyB9IGNhdGNoIChUaHJvd2FibGUgdCkgeyB9CiAgICAgICAgdHJ5IHsgTWFzY290LmJ1YmJsZSgoYmFkID8gIuKaoCAiIDogIuKckyAiKSArICLnjq/looMgwrcgIiArIGxpbmUpOyB9IGNhdGNoIChUaHJvd2FibGUgdCkgeyB9CiAgICB9Cn0K
+package app.reticle;
+
+import android.content.Context;
+import android.content.res.AssetManager;
+import org.json.JSONObject;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.security.MessageDigest;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
+
+/**
+ * 74 号单（2026-10-16）· 应用内装环境（构建线第一步）。
+ *
+ * 【是什么】把"能编安卓 App"的一整套东西落到手机上，让 Reticle 自己就会出包。三件：
+ *   ① 工具链（aapt2＋100 个依赖 so ＋ ECJ/d8/apksigner/buildtool 的 dex）＝**打进 APK 的 lib/arm64-v8a**，
+ *      安装后位于 nativeLibraryDir —— 这是系统唯一允许"应用身份直接执行"的地方
+ *      （Android 10 起 app 私有目录的文件不许 exec）⇒ 不用 Shizuku、不用落地解压、不用联网。
+ *   ② 配套小件（ecj-res 资源目录 ＋ 构建脚本 build3.sh）＝首次从 assets 解到应用私有目录（只读不 exec）。
+ *   ③ android.jar（25.8MB，SDK 条款禁再分发）＝首次一键从官方源下载 ＋ **sha256 校验**（错了就报，不用错件）。
+ *
+ * 【目录】应用私有 files/buildenv/ ：ecj-res/、build3.sh、android.jar、key.p12（用户自己的调试签名钥匙）、
+ *    work/（构建工作区）、out/（产物 apk）。工具链本体不在这里，在 nativeLibraryDir（只读数）。
+ *
+ * 【红线】android.jar 永不内置、永不随包分发 ⇒ 只能下载；本类一行都没往 assets 里塞 android.jar。
+ */
+public class BuildEnv {
+
+    /** 官方源（Google SDK repository）里的 platform-35 包；解出的 android.jar 用下面这个 sha 卡死。 */
+    public static final String JAR_URL = "https://dl.google.com/android/repository/platform-35_r02.zip";
+    public static final String JAR_IN_ZIP = "android-35/android.jar";
+    public static final String JAR_SHA = "4566663c3876e022b4fa4ced8c8697c4ab1688267f090114fd92d027b32e619b";
+    public static final long JAR_SIZE = 27092450L;
+    /** 环境自己的通知编号（与下载工具 8／形象 9 分开）。 */
+    public static final int NID = 10;
+
+    /** 工具链（在 apk 的 lib/arm64-v8a 里）需要的文件——名字就是安装后的 .so 名。 */
+    private static final String[] LIB_FILES = {
+        "libaapt2.so", "libecj.so", "libd8.so", "libd8_2.so", "libapksigner.so", "libbuildtool.so",
+    };
+
+    public static File home(Context c) { File f = new File(c.getFilesDir(), "buildenv"); if (!f.exists()) f.mkdirs(); return f; }
+    public static File jar(Context c) { return new File(home(c), "android.jar"); }
+    public static File res(Context c) { return new File(home(c), "ecj-res"); }
+    public static File script(Context c) { return new File(home(c), "build3.sh"); }
+    public static File key(Context c) { return new File(home(c), "key.p12"); }
+    public static File work(Context c) { return new File(home(c), "work"); }
+    public static File out(Context c) { return new File(home(c), "out"); }
+    /** 工具链目录＝apk 的 lib/arm64-v8a（nativeLibraryDir）。 */
+    public static File lib(Context c) { return new File(c.getApplicationInfo().nativeLibraryDir); }
+
+    // ═══════════════════════ 就绪判据 ═══════════════════════
+
+    /** 工具链：6 个可执行/dex 都在（＋能看到 aapt2 的依赖 so）。 */
+    public static boolean tcOk(Context c) {
+        try {
+            File d = lib(c);
+            for (int i = 0; i < LIB_FILES.length; i++) {
+                File f = new File(d, LIB_FILES[i]);
+                if (!f.exists() || f.length() == 0) return false;
+            }
+            return new File(d, "libabsl_base.so").exists();
+        } catch (Throwable t) { return false; }
+    }
+    public static boolean jarOk(Context c) { try { File f = jar(c); return f.exists() && f.length() == JAR_SIZE; } catch (Throwable t) { return false; } }
+    public static boolean resOk(Context c) { try { return new File(res(c), "ecj.1").exists() || new File(res(c), "about.html").exists(); } catch (Throwable t) { return false; } }
+    public static boolean scriptOk(Context c) { try { return script(c).exists() && script(c).length() > 0; } catch (Throwable t) { return false; } }
+    public static boolean keyOk(Context c) { try { return key(c).exists() && key(c).length() > 0; } catch (Throwable t) { return false; } }
+
+    /** 三件齐＋签名钥匙有＝能出包（钥匙缺件会在第一次构建时自动生成，所以不算"缺件"）。 */
+    public static boolean ready(Context c) { return tcOk(c) && jarOk(c) && resOk(c) && scriptOk(c); }
+
+    /** 缺什么（空串＝齐）——人话，一句一件；给 AI 与用户共用。 */
+    public static String missing(Context c) {
+        StringBuilder sb = new StringBuilder();
+        if (!tcOk(c)) sb.append("· 工具链没带上（apk 的 lib/arm64-v8a 里看不到 aapt2／ECJ／d8）——本包只保证 arm64 机型\n");
+        if (!resOk(c)) sb.append("· 编译器资源没解出来（ecj-res；首次自动解，失败可重开应用或点『一键准备环境』）\n");
+        if (!scriptOk(c)) sb.append("· 构建脚本没解出来（build3.sh；同上）\n");
+        if (!jarOk(c)) sb.append("· android.jar 还没下载（25.8MB；SDK 条款不许随包分发，只能下载）\n");
+        return sb.toString();
+    }
+
+    /** 一行状态（界面与 AI 共用）。 */
+    public static String statusLine(Context c) {
+        if (ready(c)) return "就绪：工具链 ✓　android.jar ✓（25.8MB，已校验）";
+        if (!tcOk(c)) return "未就绪：这套包里没有工具链（只有 arm64 机型带）";
+        if (!jarOk(c)) return "未就绪：缺 android.jar（25.8MB，未下载）";
+        return "未就绪：缺编译资源／脚本（可点『一键准备环境』补）";
+    }
+
+    /** 结构化状态（给 AI：tools/list 描述与 build 的错误都读它）。 */
+    public static JSONObject statusJson(Context c) {
+        JSONObject o = new JSONObject();
+        try {
+            o.put("ready", ready(c) ? 1 : 0);
+            o.put("toolchain", tcOk(c) ? 1 : 0);
+            o.put("androidJar", jarOk(c) ? 1 : 0);
+            o.put("ecjRes", resOk(c) ? 1 : 0);
+            o.put("script", scriptOk(c) ? 1 : 0);
+            o.put("key", keyOk(c) ? 1 : 0);
+            o.put("abi", tcOk(c) ? "arm64-v8a" : "");
+            String miss = missing(c);
+            if (miss.length() > 0) o.put("need", miss.replace("\n", " ").trim());
+            o.put("howTo", ready(c) ? "可以直接 build action=start 出包" : "先补环境：应用内『打包 App』→『一键准备环境』，或 build action=env");
+        } catch (Throwable t) { }
+        return o;
+    }
+
+    // ═══════════════════════ 落地：assets 里的小件 ＋ android.jar ═══════════════════════
+
+    /** 把 assets/tools/{ecj-res,build3.sh} 解到私有目录（幂等；已解过就跳过）。返回空串＝成功，否则人话原因。 */
+    public static String unpack(Context c) {
+        try {
+            AssetManager am = c.getAssets();
+            if (!resOk(c)) copyAssetDir(am, "tools/ecj-res", res(c));
+            copyAssetFile(am, "tools/build3.sh", script(c));   // ★74 修：脚本每次都覆盖（改脚本不必重装环境）
+            work(c).mkdirs(); out(c).mkdirs();
+            if (!resOk(c) || !scriptOk(c)) return "解出来还是缺件（assets 里的 tools/ 不全？）";
+            return "";
+        } catch (Throwable t) { return "解压失败：" + t; }
+    }
+
+    /** assets 目录递归复制（AssetManager 只能逐层 list）。 */
+    private static void copyAssetDir(AssetManager am, String from, File to) throws Exception {
+        String[] kids = am.list(from);
+        if (kids == null || kids.length == 0) { copyAssetFile(am, from, to); return; }
+        if (!to.exists()) to.mkdirs();
+        for (int i = 0; i < kids.length; i++) {
+            String a = from + "/" + kids[i];
+            File dst = new File(to, kids[i]);
+            String[] k2 = am.list(a);
+            if (k2 != null && k2.length > 0) copyAssetDir(am, a, dst); else copyAssetFile(am, a, dst);
+        }
+    }
+
+    private static void copyAssetFile(AssetManager am, String from, File to) throws Exception {
+        InputStream in = am.open(from);
+        try {
+            File p = to.getParentFile(); if (p != null && !p.exists()) p.mkdirs();
+            OutputStream os = new FileOutputStream(to);
+            try {
+                byte[] buf = new byte[65536];
+                int n;
+                while ((n = in.read(buf)) > 0) os.write(buf, 0, n);
+                os.flush();
+            } finally { try { os.close(); } catch (Throwable t) { } }
+        } finally { try { in.close(); } catch (Throwable t) { } }
+    }
+
+    /** 进度回调（界面弹窗与通知栏都读它）。 */
+    public interface Progress { void on(int pct, String line); }
+
+    /** 一键准备环境＝解 assets 小件 ＋（缺就）下载 android.jar。返回空串＝成功。 */
+    public static String prepare(Context c, Progress p) {
+        String u = unpack(c);
+        if (u.length() > 0) return u;
+        if (jarOk(c)) { if (p != null) p.on(100, "环境已就绪（android.jar 在）"); return ""; }
+        return fetchJar(c, p);
+    }
+
+    /** 下载 platform-35 包 → 取出 android.jar → sha256 校验 → 放进私有目录。失败重试 1 次。 */
+    public static String fetchJar(Context c, Progress p) {
+        String last = "";
+        for (int attempt = 1; attempt <= 2; attempt++) {
+            File zip = new File(home(c), "platform-35.zip.tmp");
+            try {
+                if (zip.exists()) zip.delete();
+                if (p != null) p.on(0, "开始下载 android.jar（" + (attempt > 1 ? "第 " + attempt + " 次重试" : "约 61MB 安装包") + "）");
+                long total = -1;
+                HttpURLConnection cn = (HttpURLConnection) new URL(JAR_URL).openConnection();
+                cn.setConnectTimeout(20000);
+                cn.setReadTimeout(30000);
+                cn.setInstanceFollowRedirects(true);
+                cn.connect();
+                int code = cn.getResponseCode();
+                if (code != 200) { last = "下载源回了 HTTP " + code; cn.disconnect(); continue; }
+                total = cn.getContentLength();
+                InputStream in = cn.getInputStream();
+                OutputStream os = new FileOutputStream(zip);
+                byte[] buf = new byte[262144];
+                long got = 0; int n, lastPct = -1;
+                try {
+                    while ((n = in.read(buf)) > 0) {
+                        os.write(buf, 0, n);
+                        got += n;
+                        if (total > 0) {
+                            int pct = (int) (got * 100 / total);
+                            if (pct != lastPct) { lastPct = pct; if (p != null) p.on(pct, "下载中 " + pct + "%（" + (got / 1048576) + "/" + (total / 1048576) + "MB）"); }
+                        }
+                    }
+                    os.flush();
+                } finally { try { os.close(); } catch (Throwable t) { } try { in.close(); } catch (Throwable t) { } cn.disconnect(); }
+                if (p != null) p.on(100, "下载完，正在取出 android.jar…");
+                File dst = new File(home(c), "android.jar.tmp");
+                if (dst.exists()) dst.delete();
+                String ex = extractOne(zip, JAR_IN_ZIP, dst);
+                if (ex.length() > 0) { last = ex; zip.delete(); continue; }
+                String sha = sha256(dst);
+                if (!JAR_SHA.equalsIgnoreCase(sha)) {
+                    last = "android.jar 校验不过（拿到 " + (sha == null ? "?" : sha.substring(0, 16)) + "…，应为 " + JAR_SHA.substring(0, 16) + "…）";
+                    dst.delete(); zip.delete(); continue;
+                }
+                if (dst.length() != JAR_SIZE) {
+                    last = "android.jar 大小不对（" + dst.length() + "，应为 " + JAR_SIZE + "）";
+                    dst.delete(); zip.delete(); continue;
+                }
+                if (jar(c).exists()) jar(c).delete();
+                if (!dst.renameTo(jar(c))) { copyFile(dst, jar(c)); dst.delete(); }
+                zip.delete();
+                if (p != null) p.on(100, "android.jar 就位（校验通过 " + JAR_SHA.substring(0, 12) + "…）");
+                return "";
+            } catch (Throwable t) {
+                last = String.valueOf(t);
+                try { if (zip.exists()) zip.delete(); } catch (Throwable t2) { }
+            }
+        }
+        return "下载 android.jar 没成：" + last + "（源＝官方 dl.google.com；网络通不通、是否被系统拦，都要看）";
+    }
+
+    /** 从 zip 里抽一个条目。返回空串＝成功。 */
+    private static String extractOne(File zip, String entry, File dst) {
+        try {
+            ZipInputStream zs = new ZipInputStream(new FileInputStream(zip));
+            try {
+                ZipEntry e;
+                byte[] buf = new byte[262144];
+                while ((e = zs.getNextEntry()) != null) {
+                    if (!e.getName().equals(entry)) continue;
+                    OutputStream os = new FileOutputStream(dst);
+                    try {
+                        int n;
+                        while ((n = zs.read(buf)) > 0) os.write(buf, 0, n);
+                        os.flush();
+                    } finally { try { os.close(); } catch (Throwable t) { } }
+                    return "";
+                }
+            } finally { try { zs.close(); } catch (Throwable t) { } }
+            return "包里没有 " + entry + "（源换了？）";
+        } catch (Throwable t) { return "解包失败：" + t; }
+    }
+
+    public static String sha256(File f) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            FileInputStream in = new FileInputStream(f);
+            try {
+                byte[] buf = new byte[262144];
+                int n;
+                while ((n = in.read(buf)) > 0) md.update(buf, 0, n);
+            } finally { try { in.close(); } catch (Throwable t) { } }
+            byte[] d = md.digest();
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < d.length; i++) sb.append(String.format("%02x", d[i]));
+            return sb.toString();
+        } catch (Throwable t) { return null; }
+    }
+
+    private static void copyFile(File src, File dst) throws Exception {
+        InputStream in = new FileInputStream(src);
+        try {
+            OutputStream os = new FileOutputStream(dst);
+            try {
+                byte[] buf = new byte[262144];
+                int n;
+                while ((n = in.read(buf)) > 0) os.write(buf, 0, n);
+                os.flush();
+            } finally { try { os.close(); } catch (Throwable t) { } }
+        } finally { try { in.close(); } catch (Throwable t) { } }
+    }
+
+    // ═══════════════════════ 进度双通道（通知栏 ＋ 小形象气泡） ═══════════════════════
+
+    /** 进度回调：通知栏（实况型常驻）＋ 小形象气泡；一处维护，界面与 AI 触发都走它。 */
+    public static Progress notifier(final Context c) {
+        return new Progress() {
+            private String last = "";
+            public void on(int pct, String line) {
+                try { Notifier.promoted(c, NID, "构建环境", line, pct); } catch (Throwable t) { }
+                if (line == null || line.equals(last)) return;   // 气泡不刷同一条
+                last = line;
+                try { Mascot.bubble("⚒ 环境 · " + line); } catch (Throwable t) { }
+            }
+        };
+    }
+
+    /** 收尾：成功留一条普通通知（可以从通知栏划掉），失败留红色内容。 */
+    public static void notifyDone(Context c, String line, boolean bad) {
+        try { Notifier.send(c, NID, bad ? "构建环境 · 没成" : "构建环境 · 完成", line, false); } catch (Throwable t) { }
+        try { Mascot.bubble((bad ? "⚠ " : "✓ ") + "环境 · " + line); } catch (Throwable t) { }
+    }
+}

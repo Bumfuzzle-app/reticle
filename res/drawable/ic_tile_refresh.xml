@@ -1,1 +1,8 @@
-PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSDljaHniYfCt+WIt+aWsOeKtuaAge+8iOeOr+W9oueureWktO+8ieWNleiJsuefoumHj++8jOmaj+S4u+mimCB0aW50IC0tPgo8dmVjdG9yIHhtbG5zOmFuZHJvaWQ9Imh0dHA6Ly9zY2hlbWFzLmFuZHJvaWQuY29tL2Fway9yZXMvYW5kcm9pZCIKICAgIGFuZHJvaWQ6d2lkdGg9IjI0ZHAiIGFuZHJvaWQ6aGVpZ2h0PSIyNGRwIgogICAgYW5kcm9pZDp2aWV3cG9ydFdpZHRoPSIyNCIgYW5kcm9pZDp2aWV3cG9ydEhlaWdodD0iMjQiPgogIDxwYXRoIGFuZHJvaWQ6ZmlsbENvbG9yPSIjRkZGRkZGRkYiCiAgICAgIGFuZHJvaWQ6cGF0aERhdGE9Ik0xNy42NSw2LjM1QzE2LjIsNC45IDE0LjIxLDQgMTIsNGMtNC40MiwwIC03Ljk5LDMuNTggLTgsOHMzLjU4LDggOCw4YzMuNzMsMCA2Ljg0LC0yLjU1IDcuNzMsLTZoLTIuMDhjLTAuODIsMi4zMyAtMy4wNCw0IC01LjY1LDQgLTMuMzEsMCAtNiwtMi42OSAtNiwtNnMyLjY5LC02IDYsLTZjMS42NiwwIDMuMTQsMC42OSA0LjIyLDEuNzhMMTMsMTFoN1Y0bC0yLjM1LDIuMzV6Ii8+CjwvdmVjdG9yPgo=
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 卡片·刷新状态（环形箭头）单色矢量，随主题 tint -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp" android:height="24dp"
+    android:viewportWidth="24" android:viewportHeight="24">
+  <path android:fillColor="#FFFFFFFF"
+      android:pathData="M17.65,6.35C16.2,4.9 14.21,4 12,4c-4.42,0 -7.99,3.58 -8,8s3.58,8 8,8c3.73,0 6.84,-2.55 7.73,-6h-2.08c-0.82,2.33 -3.04,4 -5.65,4 -3.31,0 -6,-2.69 -6,-6s2.69,-6 6,-6c1.66,0 3.14,0.69 4.22,1.78L13,11h7V4l-2.35,2.35z"/>
+</vector>

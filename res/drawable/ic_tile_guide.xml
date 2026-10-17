@@ -1,1 +1,8 @@
-PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSDljaHniYfCt+mHjei3keS4gOmBjeW8leWvvO+8iOeOr+W9ouWQjOatpe+8ieWNleiJsuefoumHj++8jOmaj+S4u+mimCB0aW50IC0tPgo8dmVjdG9yIHhtbG5zOmFuZHJvaWQ9Imh0dHA6Ly9zY2hlbWFzLmFuZHJvaWQuY29tL2Fway9yZXMvYW5kcm9pZCIKICAgIGFuZHJvaWQ6d2lkdGg9IjI0ZHAiIGFuZHJvaWQ6aGVpZ2h0PSIyNGRwIgogICAgYW5kcm9pZDp2aWV3cG9ydFdpZHRoPSIyNCIgYW5kcm9pZDp2aWV3cG9ydEhlaWdodD0iMjQiPgogIDxwYXRoIGFuZHJvaWQ6ZmlsbENvbG9yPSIjRkZGRkZGRkYiCiAgICAgIGFuZHJvaWQ6cGF0aERhdGE9Ik0xMiw0VjFMOCw1bDQsNFY2YzMuMzEsMCA2LDIuNjkgNiw2IDAsMS4wMSAtMC4yNSwxLjk4IC0wLjcsMi44bDEuNDYsMS40NkMxOS41NCwxNS4wMyAyMCwxMy41NyAyMCwxMmMwLC00LjQyIC0zLjU4LC04IC04LC04ek0xMiwxOGMtMy4zMSwwIC02LC0yLjY5IC02LC02IDAsLTEuMDEgMC4yNSwtMS45OCAwLjcsLTIuOEw1LjI0LDcuNzRDNC40Niw4Ljk3IDQsMTAuNDMgNCwxMmMwLDQuNDIgMy41OCw4IDgsOHYzbDQsLTQgLTQsLTR2M3oiLz4KPC92ZWN0b3I+Cg==
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 卡片·重跑一遍引导（环形同步）单色矢量，随主题 tint -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp" android:height="24dp"
+    android:viewportWidth="24" android:viewportHeight="24">
+  <path android:fillColor="#FFFFFFFF"
+      android:pathData="M12,4V1L8,5l4,4V6c3.31,0 6,2.69 6,6 0,1.01 -0.25,1.98 -0.7,2.8l1.46,1.46C19.54,15.03 20,13.57 20,12c0,-4.42 -3.58,-8 -8,-8zM12,18c-3.31,0 -6,-2.69 -6,-6 0,-1.01 0.25,-1.98 0.7,-2.8L5.24,7.74C4.46,8.97 4,10.43 4,12c0,4.42 3.58,8 8,8v3l4,-4 -4,-4v3z"/>
+</vector>

@@ -1,1 +1,9 @@
-PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSAzMyDmjqLot6/vvJrlip/og73vvIjlm5vlrqvmoLzvvInigJTigJTpnZnmgIHliqDnspfniYjvvIhmaWxsICsgc3Ryb2tlIOWQjOiJsu+8iSAtLT4KPHZlY3RvciB4bWxuczphbmRyb2lkPSJodHRwOi8vc2NoZW1hcy5hbmRyb2lkLmNvbS9hcGsvcmVzL2FuZHJvaWQiCiAgICBhbmRyb2lkOndpZHRoPSIyNGRwIiBhbmRyb2lkOmhlaWdodD0iMjRkcCIKICAgIGFuZHJvaWQ6dmlld3BvcnRXaWR0aD0iMjQiIGFuZHJvaWQ6dmlld3BvcnRIZWlnaHQ9IjI0Ij4KICA8cGF0aCBhbmRyb2lkOmZpbGxDb2xvcj0iI0ZGRkZGRkZGIiBhbmRyb2lkOnN0cm9rZUNvbG9yPSIjRkZGRkZGRkYiIGFuZHJvaWQ6c3Ryb2tlV2lkdGg9IjEuNCIKICAgICAgYW5kcm9pZDpzdHJva2VMaW5lSm9pbj0icm91bmQiCiAgICAgIGFuZHJvaWQ6cGF0aERhdGE9Ik00LDRoN3Y3SDR6IE0xMyw0aDd2N2gtN3ogTTQsMTNoN3Y3SDR6IE0xMywxM2g3djdoLTd6Ii8+CjwvdmVjdG9yPgo=
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 33 探路：功能（四宫格）——静态加粗版（fill + stroke 同色） -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp" android:height="24dp"
+    android:viewportWidth="24" android:viewportHeight="24">
+  <path android:fillColor="#FFFFFFFF" android:strokeColor="#FFFFFFFF" android:strokeWidth="1.4"
+      android:strokeLineJoin="round"
+      android:pathData="M4,4h7v7H4z M13,4h7v7h-7z M4,13h7v7H4z M13,13h7v7h-7z"/>
+</vector>

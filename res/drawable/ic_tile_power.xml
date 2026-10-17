@@ -1,1 +1,8 @@
-PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSDljaHniYfCt+mHjeWQr+acjeWKoe+8iOeUtea6kO+8ieWNleiJsuefoumHj++8jOmaj+S4u+mimCB0aW50IC0tPgo8dmVjdG9yIHhtbG5zOmFuZHJvaWQ9Imh0dHA6Ly9zY2hlbWFzLmFuZHJvaWQuY29tL2Fway9yZXMvYW5kcm9pZCIKICAgIGFuZHJvaWQ6d2lkdGg9IjI0ZHAiIGFuZHJvaWQ6aGVpZ2h0PSIyNGRwIgogICAgYW5kcm9pZDp2aWV3cG9ydFdpZHRoPSIyNCIgYW5kcm9pZDp2aWV3cG9ydEhlaWdodD0iMjQiPgogIDxwYXRoIGFuZHJvaWQ6ZmlsbENvbG9yPSIjRkZGRkZGRkYiCiAgICAgIGFuZHJvaWQ6cGF0aERhdGE9Ik0xMywzaC0ydjEwaDJWM3pNMTcuODMsNS4xN2wtMS40MiwxLjQyQzE3Ljk5LDcuODYgMTksOS44MSAxOSwxMmMwLDMuODcgLTMuMTMsNyAtNyw3cy03LC0zLjEzIC03LC03YzAsLTIuMTkgMS4wMSwtNC4xNCAyLjU4LC01LjQyTDYuMTcsNS4xN0M0LjIzLDYuODIgMyw5LjI2IDMsMTJjMCw0Ljk3IDQuMDMsOSA5LDlzOSwtNC4wMyA5LC05YzAsLTIuNzQgLTEuMjMsLTUuMTggLTMuMTcsLTYuODN6Ii8+CjwvdmVjdG9yPgo=
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 卡片·重启服务（电源）单色矢量，随主题 tint -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp" android:height="24dp"
+    android:viewportWidth="24" android:viewportHeight="24">
+  <path android:fillColor="#FFFFFFFF"
+      android:pathData="M13,3h-2v10h2V3zM17.83,5.17l-1.42,1.42C17.99,7.86 19,9.81 19,12c0,3.87 -3.13,7 -7,7s-7,-3.13 -7,-7c0,-2.19 1.01,-4.14 2.58,-5.42L6.17,5.17C4.23,6.82 3,9.26 3,12c0,4.97 4.03,9 9,9s9,-4.03 9,-9c0,-2.74 -1.23,-5.18 -3.17,-6.83z"/>
+</vector>

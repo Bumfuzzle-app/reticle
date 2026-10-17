@@ -1,1 +1,309 @@
-cGFja2FnZSBhcHAucmV0aWNsZTsKCmltcG9ydCBhbmRyb2lkLmNvbnRlbnQuQ29udGV4dDsKaW1wb3J0IG9yZy5qc29uLkpTT05PYmplY3Q7CgppbXBvcnQgamF2YS5pby5GaWxlOwppbXBvcnQgamF2YS5pby5GaWxlT3V0cHV0U3RyZWFtOwppbXBvcnQgamF2YS5pby5JbnB1dFN0cmVhbTsKaW1wb3J0IGphdmEuaW8uT3V0cHV0U3RyZWFtOwoKLyoqCiAqIDc0IOWPt+WNle+8iDIwMjYtMTAtMTbvvInCtyDlupTnlKjlhoXot5HmnoTlu7rvvIjlh7rljIXvvInjgIIKICoKICog44CQ5oCO5LmI6LeR44CR5LulKirlupTnlKjoh6rlt7HnmoTouqvku70qKiBleGVj77yaL3N5c3RlbS9iaW4vc2gg6LeRIGJ1aWxkMy5zaO+8mwogKiAgIOW3peWFt+mTvuWcqCBuYXRpdmVMaWJyYXJ5RGly77yIYXBrIOeahCBsaWIvYXJtNjQtdjhh77yJ77yd57O757uf5ZSv5LiA5YWB6K645bqU55So55u05o6l5omn6KGM55qE5Zyw5pa5IOKHkiDkuI3kvp3otZYgU2hpenVrdeOAggogKiAgIEVDSu+8j2Q477yPYXBrc2lnbmVy77yPQnVpbGRUb29sIOeUsSAvc3lzdGVtL2Jpbi9hcHBfcHJvY2VzcyDvvIsgQ0xBU1NQQVRIIOi3ke+8iGRleCDljJblkI7kuI3pnIDopoEgSlZN77yJ44CCCiAqIOOAkOaXpeW/l+S4juS6p+eJqeOAkeaXpeW/l++8nei/kOihjOebruW9lSBidWlsZC9sYXN0LWJ1aWxkLmxvZ++8iOeUqOaIt+eci+W+l+inge+8ie+8m+S6p+eJqe+8neS6p+eJqeebruW9lemHjOeahCAqLmFwa+OAggogKiDjgJDnrb7lkI3jgJHnlKjmiLfoh6rlt7HnmoTosIPor5XpkqXljJnvvIhCdWlsZEVudi9rZXkucDEy77yJ77yM56ys5LiA5qyh5p6E5bu65pe255SxIENlcnRHZW4g546w55Sf5oiQ4oCU4oCU5LiN55So5L2c6ICF5py655qE6ZKl5YyZ44CCCiAqLwpwdWJsaWMgY2xhc3MgQnVpbGRSdW5uZXIgewoKICAgIHByaXZhdGUgc3RhdGljIHZvbGF0aWxlIFByb2Nlc3MgcHJvYyA9IG51bGw7CiAgICBwcml2YXRlIHN0YXRpYyB2b2xhdGlsZSBsb25nIHN0YXJ0ZWRBdCA9IDBMOwogICAgcHJpdmF0ZSBzdGF0aWMgdm9sYXRpbGUgU3RyaW5nIGxhc3ROb3RlID0gIiI7CgogICAgcHVibGljIHN0YXRpYyBib29sZWFuIHJ1bm5pbmcoKSB7CiAgICAgICAgUHJvY2VzcyBwID0gcHJvYzsKICAgICAgICBpZiAocCA9PSBudWxsKSByZXR1cm4gZmFsc2U7CiAgICAgICAgdHJ5IHsgcC5leGl0VmFsdWUoKTsgcHJvYyA9IG51bGw7IHJldHVybiBmYWxzZTsgfSBjYXRjaCAoVGhyb3dhYmxlIGFsaXZlKSB7IHJldHVybiB0cnVlOyB9CiAgICB9CgogICAgcHVibGljIHN0YXRpYyBGaWxlIGRpcihDb250ZXh0IGMpIHsgRmlsZSBmID0gbmV3IEZpbGUoSG9tZS5nZXQoYyksICJidWlsZCIpOyBpZiAoIWYuZXhpc3RzKCkpIGYubWtkaXJzKCk7IHJldHVybiBmOyB9CiAgICBwdWJsaWMgc3RhdGljIEZpbGUgbG9nRmlsZShDb250ZXh0IGMpIHsgcmV0dXJuIG5ldyBGaWxlKGRpcihjKSwgImxhc3QtYnVpbGQubG9nIik7IH0KICAgIHB1YmxpYyBzdGF0aWMgRmlsZSBvdXREaXIoQ29udGV4dCBjKSB7IEZpbGUgZiA9IG5ldyBGaWxlKGRpcihjKSwgIm91dCIpOyBpZiAoIWYuZXhpc3RzKCkpIGYubWtkaXJzKCk7IHJldHVybiBmOyB9CgogICAgLyoqIOm7mOiupOa6kOeggeagke+8nei/kOihjOebruW9lS/lt6XnqIvvvIjnlKjmiLfmiorlronljZPlt6XnqIvmlL7ov5nlhL/vvJvkuZ/lj68gYnVpbGQuY29uZiDnmoQgUFJPSkVDVF9ESVI9IOaMh+i1sO+8ieOAgiAqLwogICAgcHVibGljIHN0YXRpYyBGaWxlIGRlZmF1bHRQcm9qZWN0KENvbnRleHQgYykgeyByZXR1cm4gbmV3IEZpbGUoSG9tZS5nZXQoYyksICLlt6XnqIsiKTsgfQoKICAgIC8qKiDlkK/liqjkuIDmrKHmnoTlu7rjgILov5Tlm57nqbrkuLLvvJ3lt7LlvIDot5HvvJvlkKbliJnkurror53ljp/lm6DjgIIgKi8KICAgIHB1YmxpYyBzdGF0aWMgU3RyaW5nIHN0YXJ0KENvbnRleHQgYywgRmlsZSBzYiwgRmlsZSBrZWVwLCBib29sZWFuIHJlbGVhc2UpIHsKICAgICAgICBzeW5jaHJvbml6ZWQgKEJ1aWxkUnVubmVyLmNsYXNzKSB7CiAgICAgICAgICAgIGlmIChydW5uaW5nKCkpIHJldHVybiAi5LiK5LiA5qyh6L+Y5Zyo6LeR77yIIiArIHNlY3MoKSArICJz77yJ77yb5YWIIGJ1aWxkIGFjdGlvbj1zdGF0dXMg55yL6L+b5bqmIjsKICAgICAgICAgICAgaWYgKCFCdWlsZEVudi5yZWFkeShjKSkgcmV0dXJuICLnjq/looPmsqHlsLHnu6rvvJpcbiIgKyBCdWlsZEVudi5taXNzaW5nKGMpICsgIuKGkiDlhYjlnKjlupTnlKjph4zngrnjgI7miZPljIUgQXBwIMK3IOS4gOmUruWHhuWkh+eOr+Wig+OAj++8iOaIliBidWlsZCBhY3Rpb249ZW5277yJIjsKICAgICAgICAgICAgaWYgKHNiID09IG51bGwgfHwgIW5ldyBGaWxlKHNiLCAiQW5kcm9pZE1hbmlmZXN0LnhtbCIpLmV4aXN0cygpKQogICAgICAgICAgICAgICAgcmV0dXJuICLmsqHmib7liLDlt6XnqIvvvJropoHkuIDkuKrlkKsgQW5kcm9pZE1hbmlmZXN0LnhtbCDnmoTnm67lvZXvvIjnjrDlnKjmmK8gIiArIChzYiA9PSBudWxsID8gIuKAlCIgOiBzYi5nZXRBYnNvbHV0ZVBhdGgoKSkgKyAi77yJIjsKICAgICAgICAgICAgU3RyaW5nIGtyID0gQ2VydEdlbi5lbnN1cmUoQnVpbGRFbnYua2V5KGMpLCBrZXlQYXNzKCksICJSZXRpY2xlIERlYnVnIik7CiAgICAgICAgICAgIGlmIChrci5sZW5ndGgoKSA+IDApIHJldHVybiBrcjsKICAgICAgICAgICAgdHJ5IHsKICAgICAgICAgICAgICAgIEJ1aWxkRW52LnVucGFjayhjKTsKICAgICAgICAgICAgICAgIEZpbGUgbG9nID0gbG9nRmlsZShjKTsKICAgICAgICAgICAgICAgIGlmIChsb2cuZXhpc3RzKCkpIGxvZy5kZWxldGUoKTsKCiAgICAgICAgICAgICAgICBQcm9jZXNzQnVpbGRlciBwYiA9IG5ldyBQcm9jZXNzQnVpbGRlcigiL3N5c3RlbS9iaW4vc2giLCBCdWlsZEVudi5zY3JpcHQoYykuZ2V0QWJzb2x1dGVQYXRoKCkpOwogICAgICAgICAgICAgICAgcGIuZGlyZWN0b3J5KEJ1aWxkRW52LmhvbWUoYykpOwogICAgICAgICAgICAgICAgcGIucmVkaXJlY3RFcnJvclN0cmVhbSh0cnVlKTsKICAgICAgICAgICAgICAgIHBiLnJlZGlyZWN0T3V0cHV0KFByb2Nlc3NCdWlsZGVyLlJlZGlyZWN0LnRvKGxvZykpOwogICAgICAgICAgICAgICAgamF2YS51dGlsLk1hcDxTdHJpbmcsIFN0cmluZz4gZSA9IHBiLmVudmlyb25tZW50KCk7CiAgICAgICAgICAgICAgICBlLnB1dCgiTElCIiwgQnVpbGRFbnYubGliKGMpLmdldEFic29sdXRlUGF0aCgpKTsKICAgICAgICAgICAgICAgIGUucHV0KCJSRVMiLCBCdWlsZEVudi5yZXMoYykuZ2V0QWJzb2x1dGVQYXRoKCkpOwogICAgICAgICAgICAgICAgZS5wdXQoIkpBUiIsIEJ1aWxkRW52LmphcihjKS5nZXRBYnNvbHV0ZVBhdGgoKSk7CiAgICAgICAgICAgICAgICBlLnB1dCgiU0IiLCBzYi5nZXRBYnNvbHV0ZVBhdGgoKSk7CiAgICAgICAgICAgICAgICBlLnB1dCgiS0VFUCIsIGtlZXAgPT0gbnVsbCA/ICIiIDoga2VlcC5nZXRBYnNvbHV0ZVBhdGgoKSk7CiAgICAgICAgICAgICAgICBlLnB1dCgiT1VUIiwgb3V0RGlyKGMpLmdldEFic29sdXRlUGF0aCgpKTsKICAgICAgICAgICAgICAgIGUucHV0KCJXIiwgbmV3IEZpbGUoQnVpbGRFbnYud29yayhjKSwgInJ1biIpLmdldEFic29sdXRlUGF0aCgpKTsKICAgICAgICAgICAgICAgIGUucHV0KCJLRVkiLCBCdWlsZEVudi5rZXkoYykuZ2V0QWJzb2x1dGVQYXRoKCkpOwogICAgICAgICAgICAgICAgZS5wdXQoIktQQVNTIiwga2V5UGFzcygpKTsKICAgICAgICAgICAgICAgIGUucHV0KCJSRUxFQVNFIiwgcmVsZWFzZSA/ICIxIiA6ICIwIik7CiAgICAgICAgICAgICAgICBwcm9jID0gcGIuc3RhcnQoKTsKICAgICAgICAgICAgICAgIHN0YXJ0ZWRBdCA9IFN5c3RlbS5jdXJyZW50VGltZU1pbGxpcygpOwogICAgICAgICAgICAgICAgbGFzdE5vdGUgPSAi5bey5byA6LeR77yaIiArIHNiLmdldE5hbWUoKTsKICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgbmV3IFRocmVhZChuZXcgUnVubmFibGUoKSB7IHB1YmxpYyB2b2lkIHJ1bigpIHsgdHJ5IHsgcHJvYy53YWl0Rm9yKCk7IH0gY2F0Y2ggKFRocm93YWJsZSB0KSB7IH0gbGFzdE5vdGUgPSAi6LeR5a6M77yIIiArIHNlY3MoKSArICJz77yJIjsgfSB9KS5zdGFydCgpOwogICAgICAgICAgICAgICAgcmV0dXJuICIiOwogICAgICAgICAgICB9IGNhdGNoIChUaHJvd2FibGUgdCkgewogICAgICAgICAgICAgICAgcmV0dXJuICLlkK/liqjmnoTlu7rlpLHotKXvvJoiICsgdDsKICAgICAgICAgICAgfQogICAgICAgIH0KICAgIH0KCgoKICAgIHB1YmxpYyBzdGF0aWMgU3RyaW5nIGtleVBhc3MoKSB7IHJldHVybiAicmV0aWNsZSI7IH0KCiAgICBwdWJsaWMgc3RhdGljIGxvbmcgc2VjcygpIHsgcmV0dXJuIHN0YXJ0ZWRBdCA9PSAwID8gMCA6IChTeXN0ZW0uY3VycmVudFRpbWVNaWxsaXMoKSAtIHN0YXJ0ZWRBdCkgLyAxMDAwOyB9CgogICAgLyoqIOeKtuaAge+8muWcqOi3ke+8j+i3keWujO+8i+aXpeW/l+WwviDvvIsg5Lqn54mp5riF5Y2V77yI5ZCrIHNoYTI1Nu+8ieOAgiAqLwogICAgcHVibGljIHN0YXRpYyBTdHJpbmcgc3RhdHVzKENvbnRleHQgYykgewogICAgICAgIFN0cmluZ0J1aWxkZXIgc2IgPSBuZXcgU3RyaW5nQnVpbGRlcigpOwogICAgICAgIHNiLmFwcGVuZChydW5uaW5nKCkgPyAoIuWcqOi3ke+8jCIgKyBzZWNzKCkgKyAic++8iOaXpeW/l++8miIgKyBsb2dGaWxlKGMpLmdldEFic29sdXRlUGF0aCgpICsgIu+8iSIpIDogKHN0YXJ0ZWRBdCA9PSAwID8gIui/mOayoei3kei/hyIgOiAi5rKh5Zyo6LeR77yI5LiK5qyh55So5pe2ICIgKyBzZWNzKCkgKyAic++8iSIpKTsKICAgICAgICBzYi5hcHBlbmQoIlxuIik7CiAgICAgICAgU3RyaW5nIHRhaWwgPSB0YWlsKGxvZ0ZpbGUoYyksIDQwKTsKICAgICAgICBpZiAodGFpbC5sZW5ndGgoKSA+IDApIHNiLmFwcGVuZCgiLS0tIOaXpeW/l+WwviAtLS1cbiIpLmFwcGVuZCh0YWlsKTsKICAgICAgICBGaWxlW10gYXBrcyA9IGFwa3MoYyk7CiAgICAgICAgaWYgKGFwa3MgIT0gbnVsbCAmJiBhcGtzLmxlbmd0aCA+IDApIHsKICAgICAgICAgICAgc2IuYXBwZW5kKCItLS0g5Lqn54mpIC0tLVxuIik7CiAgICAgICAgICAgIGZvciAoaW50IGkgPSAwOyBpIDwgYXBrcy5sZW5ndGg7IGkrKykgewogICAgICAgICAgICAgICAgc2IuYXBwZW5kKGFwa3NbaV0uZ2V0TmFtZSgpKS5hcHBlbmQoIiAgIikuYXBwZW5kKGFwa3NbaV0ubGVuZ3RoKCkpLmFwcGVuZCgiIEIgIHNoYTI1Nj0iKS5hcHBlbmQoY2xpcChCdWlsZEVudi5zaGEyNTYoYXBrc1tpXSkpKS5hcHBlbmQoIlxuIik7CiAgICAgICAgICAgIH0KICAgICAgICB9CiAgICAgICAgcmV0dXJuIHNiLnRvU3RyaW5nKCk7CiAgICB9CgogICAgcHVibGljIHN0YXRpYyBKU09OT2JqZWN0IHN0YXR1c0pzb24oQ29udGV4dCBjKSB7CiAgICAgICAgSlNPTk9iamVjdCBvID0gbmV3IEpTT05PYmplY3QoKTsKICAgICAgICB0cnkgewogICAgICAgICAgICBvLnB1dCgicnVubmluZyIsIHJ1bm5pbmcoKSA/IDEgOiAwKTsKICAgICAgICAgICAgby5wdXQoInNlY29uZHMiLCBzZWNzKCkpOwogICAgICAgICAgICBvLnB1dCgibG9nIiwgbG9nRmlsZShjKS5nZXRBYnNvbHV0ZVBhdGgoKSk7CiAgICAgICAgICAgIEZpbGVbXSBhID0gYXBrcyhjKTsKICAgICAgICAgICAgby5wdXQoImFwayIsIChhICE9IG51bGwgJiYgYS5sZW5ndGggPiAwKSA/IGFbMF0uZ2V0QWJzb2x1dGVQYXRoKCkgOiAiIik7CiAgICAgICAgICAgIG8ucHV0KCJhcGtTaGEyNTYiLCAoYSAhPSBudWxsICYmIGEubGVuZ3RoID4gMCkgPyBjbGlwKEJ1aWxkRW52LnNoYTI1NihhWzBdKSkgOiAiIik7CiAgICAgICAgICAgIG8ucHV0KCJyZWFkeSIsIEJ1aWxkRW52LnJlYWR5KGMpID8gMSA6IDApOwogICAgICAgIH0gY2F0Y2ggKFRocm93YWJsZSB0KSB7IH0KICAgICAgICByZXR1cm4gbzsKICAgIH0KCiAgICBwdWJsaWMgc3RhdGljIEZpbGVbXSBhcGtzKENvbnRleHQgYykgewogICAgICAgIEZpbGVbXSBmcyA9IG91dERpcihjKS5saXN0RmlsZXMoKTsKICAgICAgICBpZiAoZnMgPT0gbnVsbCkgcmV0dXJuIG51bGw7CiAgICAgICAgamF2YS51dGlsLkFycmF5TGlzdDxGaWxlPiByID0gbmV3IGphdmEudXRpbC5BcnJheUxpc3Q8RmlsZT4oKTsKICAgICAgICBmb3IgKGludCBpID0gMDsgaSA8IGZzLmxlbmd0aDsgaSsrKSBpZiAoZnNbaV0uZ2V0TmFtZSgpLmVuZHNXaXRoKCIuYXBrIikpIHIuYWRkKGZzW2ldKTsKICAgICAgICBpZiAoci5zaXplKCkgPT0gMCkgcmV0dXJuIG51bGw7CiAgICAgICAgRmlsZVtdIG91dCA9IHIudG9BcnJheShuZXcgRmlsZVswXSk7CiAgICAgICAgamF2YS51dGlsLkFycmF5cy5zb3J0KG91dCwgbmV3IGphdmEudXRpbC5Db21wYXJhdG9yPEZpbGU+KCkgeyBwdWJsaWMgaW50IGNvbXBhcmUoRmlsZSBhLCBGaWxlIGIpIHsgcmV0dXJuIExvbmcuY29tcGFyZShiLmxhc3RNb2RpZmllZCgpLCBhLmxhc3RNb2RpZmllZCgpKTsgfSB9KTsKICAgICAgICByZXR1cm4gb3V0OwogICAgfQoKICAgIHByaXZhdGUgc3RhdGljIFN0cmluZyBjbGlwKFN0cmluZyBzKSB7IHJldHVybiBzID09IG51bGwgPyAiPyIgOiBzOyB9CgogICAgc3RhdGljIFN0cmluZyB0YWlsKEZpbGUgZiwgaW50IGxpbmVzKSB7CiAgICAgICAgdHJ5IHsKICAgICAgICAgICAgaWYgKCFmLmV4aXN0cygpKSByZXR1cm4gIiI7CiAgICAgICAgICAgIGphdmEuaW8uUmFuZG9tQWNjZXNzRmlsZSByYSA9IG5ldyBqYXZhLmlvLlJhbmRvbUFjY2Vzc0ZpbGUoZiwgInIiKTsKICAgICAgICAgICAgdHJ5IHsKICAgICAgICAgICAgICAgIGxvbmcgbGVuID0gcmEubGVuZ3RoKCk7CiAgICAgICAgICAgICAgICBsb25nIGZyb20gPSBNYXRoLm1heCgwLCBsZW4gLSA4MTkyKTsKICAgICAgICAgICAgICAgIHJhLnNlZWsoZnJvbSk7CiAgICAgICAgICAgICAgICBieXRlW10gYiA9IG5ldyBieXRlWyhpbnQpIChsZW4gLSBmcm9tKV07CiAgICAgICAgICAgICAgICByYS5yZWFkRnVsbHkoYik7CiAgICAgICAgICAgICAgICBTdHJpbmcgcyA9IG5ldyBTdHJpbmcoYiwgIlVURi04Iik7CiAgICAgICAgICAgICAgICBTdHJpbmdbXSBscyA9IHMuc3BsaXQoIlxuIik7CiAgICAgICAgICAgICAgICBpbnQgc3QgPSBNYXRoLm1heCgwLCBscy5sZW5ndGggLSBsaW5lcyk7CiAgICAgICAgICAgICAgICBTdHJpbmdCdWlsZGVyIHNiID0gbmV3IFN0cmluZ0J1aWxkZXIoKTsKICAgICAgICAgICAgICAgIGZvciAoaW50IGkgPSBzdDsgaSA8IGxzLmxlbmd0aDsgaSsrKSBzYi5hcHBlbmQobHNbaV0pLmFwcGVuZCgiXG4iKTsKICAgICAgICAgICAgICAgIHJldHVybiBzYi50b1N0cmluZygpOwogICAgICAgICAgICB9IGZpbmFsbHkgeyB0cnkgeyByYS5jbG9zZSgpOyB9IGNhdGNoIChUaHJvd2FibGUgdCkgeyB9IH0KICAgICAgICB9IGNhdGNoIChUaHJvd2FibGUgdCkgeyByZXR1cm4gIiI7IH0KICAgIH0KCiAgICAvKiog6KOF5YyF77ya5Lqn54mp5ZyoIC9zZGNhcmQg5LiK77yIc2hlbGwg6Lqr5Lu96K+75b6X5Yiw77yJ4oeSIOebtOaOpSBwbSBpbnN0YWxsIC1y44CCICovCiAgICBwdWJsaWMgc3RhdGljIFN0cmluZyBpbnN0YWxsKENvbnRleHQgYykgewogICAgICAgIEZpbGVbXSBhID0gYXBrcyhjKTsKICAgICAgICBpZiAoYSA9PSBudWxsIHx8IGEubGVuZ3RoID09IDApIHJldHVybiAi5Lqn54mp55uu5b2V6YeM6L+Y5rKh5pyJIGFwa++8iOWFiCBidWlsZCBhY3Rpb249c3RhcnTvvIkiOwogICAgICAgIEZpbGUgYXBrID0gYVswXTsKICAgICAgICBTdHJpbmcgdG1wID0gIi9kYXRhL2xvY2FsL3RtcC9yZXRpY2xlLSIgKyBhcGsuZ2V0TmFtZSgpOwogICAgICAgIC8vIOKYhTc0IOWunua1i++8muezu+e7n+WuieijheWZqO+8iHN5c3RlbV9zZXJ2ZXLvvInor7vkuI3liLAgL3NkY2FyZO+8iEZVU0Ug6KKr5ouS77yJ4oeSIOW/hemhu+WFiOaLt+WIsCAvZGF0YS9sb2NhbC90bXAKICAgICAgICBTdHJpbmcgciA9IHNoeCgiY3AgJyIgKyBhcGsuZ2V0QWJzb2x1dGVQYXRoKCkgKyAiJyAnIiArIHRtcCArICInICYmIGNobW9kIDY0NCAnIiArIHRtcCArICInICYmIHBtIGluc3RhbGwgLXIgLWQgJyIgKyB0bXAgKyAiJyAyPiYxIik7CiAgICAgICAgaWYgKHIgPT0gbnVsbCkgcmV0dXJuICJzaGVsbCDpgJrpgZPvvIhTaGl6dWt177yJ5LiN6YCa77yM6KOF5LiN5LqG77ybYXBrIOWcqCAiICsgYXBrLmdldEFic29sdXRlUGF0aCgpICsgIu+8jOeUqOaWh+S7tueuoeeQhuWZqOeCueWug+WNs+WPryI7CiAgICAgICAgaWYgKHIuaW5kZXhPZigiU3VjY2VzcyIpIDwgMCkgcmV0dXJuICLoo4XljIXmsqHmiJDvvJpcbiIgKyByICsgIlxu77yI5bi46KeB5Y6f5Zug77ya5ZCM5YyF5ZCN5bey6KOF55qE5piv5Yir55qE562+5ZCNIOKHkiDlhYjljbjmjonml6fnmoTpgqPkuKrvvJvmiJbns7vnu5/niYjmnKzkvY7kuo7ljIXnmoQgbWluU2RrVmVyc2lvbu+8iSI7CiAgICAgICAgcmV0dXJuICLoo4Xlpb3kuobvvJoiICsgci50cmltKCk7CiAgICB9CgogICAgLyoqIOi1sCBTaGl6dWt1IOS7pSBzaGVsbCDouqvku73ot5HkuIDmnaHlkb3ku6TvvIjkuI3pgJrvvJ1udWxs77yJ44CCICovCiAgICBwcml2YXRlIHN0YXRpYyBTdHJpbmcgc2h4KFN0cmluZyBjbWQpIHsKICAgICAgICB0cnkgewogICAgICAgICAgICBTdHJpbmcgciA9IFZlcmlTZXJ2aWNlLnNoeFJ1bihjbWQsIDE4MDAwMEwpOwogICAgICAgICAgICBKU09OT2JqZWN0IG8gPSBuZXcgSlNPTk9iamVjdChyKTsKICAgICAgICAgICAgaWYgKG8ub3B0SW50KCJvayIsIDApICE9IDEpIHJldHVybiBudWxsOwogICAgICAgICAgICBTdHJpbmcgb3V0ID0gby5vcHRTdHJpbmcoIm91dCIsICIiKSArIG8ub3B0U3RyaW5nKCJlcnIiLCAiIik7CiAgICAgICAgICAgIHJldHVybiBvdXQubGVuZ3RoKCkgPT0gMCA/ICJleGl0PSIgKyBvLm9wdEludCgiZXhpdCIsIC0xKSA6IG91dDsKICAgICAgICB9IGNhdGNoIChUaHJvd2FibGUgdCkgeyByZXR1cm4gbnVsbDsgfQogICAgfQp9Cg==
+package app.reticle;
+
+import android.content.Context;
+import org.json.JSONObject;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+
+/**
+ * 74 号单（2026-10-16）· 应用内跑构建（出包）。
+ *
+ * 【怎么跑】以**应用自己的身份** exec：/system/bin/sh 跑 build3.sh；
+ *   工具链在 nativeLibraryDir（apk 的 lib/arm64-v8a）＝系统唯一允许应用直接执行的地方 ⇒ 不依赖 Shizuku。
+ *   ECJ／d8／apksigner／BuildTool 由 /system/bin/app_process ＋ CLASSPATH 跑（dex 化后不需要 JVM）。
+ * 【日志与产物】日志＝运行目录 build/last-build.log（用户看得见）；产物＝产物目录里的 *.apk。
+ * 【签名】用户自己的调试钥匙（BuildEnv/key.p12），第一次构建时由 CertGen 现生成——不用作者机的钥匙。
+ */
+public class BuildRunner {
+
+    private static volatile Process proc = null;
+    private static volatile long startedAt = 0L;
+    private static volatile String lastNote = "";
+
+    public static boolean running() {
+        Process p = proc;
+        if (p == null) return false;
+        try { p.exitValue(); proc = null; return false; } catch (Throwable alive) { return true; }
+    }
+
+    public static File dir(Context c) { File f = new File(Home.get(c), "build"); if (!f.exists()) f.mkdirs(); return f; }
+    public static File logFile(Context c) { return new File(dir(c), "last-build.log"); }
+    public static File outDir(Context c) { File f = new File(dir(c), "out"); if (!f.exists()) f.mkdirs(); return f; }
+
+    /** 默认源码树＝运行目录/工程（用户把安卓工程放这儿；也可 build.conf 的 PROJECT_DIR= 指走）。 */
+    public static File defaultProject(Context c) { return new File(Home.get(c), "工程"); }
+
+    /** 77 号单：摊一个最小可跑工程（manifest ＋ strings.xml ＋ MainActivity.java）。已有工程＝拒绝覆盖。返回人话。 */
+    public static String newProject(Context c, File proj, String name, String pkg) {
+        if (proj == null) return "！工程目录不可用（看 build.conf 的 PROJECT_DIR=）";
+        if (!proj.exists() && !proj.mkdirs()) return "！建不了工程目录：" + proj.getAbsolutePath();
+        if (new File(proj, "AndroidManifest.xml").exists() || new File(proj, "src").exists())
+            return "！这里已经有工程了（" + proj.getAbsolutePath() + "）：不覆盖别人的活。要另起一个就在 build.conf 写 PROJECT_DIR= 指到别处，或先把旧的挪走。";
+        String nm = name == null ? "" : name.trim();
+        if (nm.length() == 0) nm = "我的应用";
+        String pk = pkg == null ? "" : pkg.trim().toLowerCase(java.util.Locale.ROOT);
+        if (pk.length() == 0) pk = "com.example.myapp";
+        if (!pk.matches("[a-z][a-z0-9_]*(\\.[a-z][a-z0-9_]*)+"))
+            return "！包名不合规：" + pk + "（要像 com.example.myapp：小写字母／数字／下划线，至少两段，别用关键字）";
+        try {
+            String dir = pk.replace('.', '/');
+            File src = new File(proj, "src/" + dir);
+            File val = new File(proj, "res/values");
+            if (!src.mkdirs() || !val.mkdirs()) return "！建不了子目录（权限？）：" + proj.getAbsolutePath();
+            writeText(new File(proj, "AndroidManifest.xml"), manifestXml(pk));
+            writeText(new File(val, "strings.xml"), stringsXml(nm));
+            writeText(new File(src, "MainActivity.java"), mainJava(pk, nm));
+            StringBuilder sb = new StringBuilder();
+            sb.append("工程就绪：").append(proj.getAbsolutePath()).append("\n");
+            sb.append("应用名 ").append(nm).append("；包名 ").append(pk).append("\n");
+            sb.append("文件：AndroidManifest.xml ／ res/values/strings.xml ／ src/").append(dir).append("/MainActivity.java\n");
+            sb.append("下一步：build action=start 出包（1~3 分钟）→ build action=status 看进度 → build action=install 装到手机。\n");
+            sb.append("改界面＝改 MainActivity.java；改应用名＝改 strings.xml 的 app_name。\n");
+            return sb.toString();
+        } catch (Throwable t) { return "！摊工程失败：" + t; }
+    }
+
+    private static void writeText(File f, String s) throws Exception {
+        FileOutputStream fo = new FileOutputStream(f);
+        try { fo.write(s.getBytes("UTF-8")); } finally { try { fo.close(); } catch (Throwable t) { } }
+    }
+
+    private static String esc(String s) {
+        return s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;");
+    }
+
+    private static String manifestXml(String pk) {
+        return "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"
+             + "<manifest xmlns:android=\"http://schemas.android.com/apk/res/android\"\n"
+             + "    package=\"" + pk + "\"\n"
+             + "    android:versionCode=\"1\"\n"
+             + "    android:versionName=\"1.0\">\n"
+             + "    <uses-sdk android:minSdkVersion=\"21\" android:targetSdkVersion=\"33\" />\n"
+             + "    <application android:label=\"@string/app_name\"\n"
+             + "        android:icon=\"@android:drawable/sym_def_app_icon\"\n"
+             + "        android:allowBackup=\"true\"\n"
+             + "        android:theme=\"@android:style/Theme.DeviceDefault.Light\">\n"
+             + "        <activity android:name=\".MainActivity\" android:exported=\"true\" android:windowSoftInputMode=\"adjustResize\">\n"
+             + "            <intent-filter>\n"
+             + "                <action android:name=\"android.intent.action.MAIN\" />\n"
+             + "                <category android:name=\"android.intent.category.LAUNCHER\" />\n"
+             + "            </intent-filter>\n"
+             + "        </activity>\n"
+             + "    </application>\n"
+             + "</manifest>\n";
+    }
+
+    private static String stringsXml(String nm) {
+        return "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"
+             + "<resources>\n"
+             + "    <string name=\"app_name\">" + esc(nm) + "</string>\n"
+             + "</resources>\n";
+    }
+
+    private static String mainJava(String pk, String nm) {
+        return "package " + pk + ";\n"
+             + "\n"
+             + "import android.app.Activity;\n"
+             + "import android.os.Bundle;\n"
+             + "import android.widget.TextView;\n"
+             + "\n"
+             + "/** 最小可跑界面：改这个文件就是改你的 App。 */\n"
+             + "public class MainActivity extends Activity {\n"
+             + "    @Override\n"
+             + "    protected void onCreate(Bundle b) {\n"
+             + "        super.onCreate(b);\n"
+             + "        TextView t = new TextView(this);\n"
+             + "        t.setText(\"" + nm.replace("\\", "").replace("\"", "") + " 起好了\\n改 MainActivity.java 就是改界面\");\n"
+             + "        t.setTextSize(18);\n"
+             + "        setContentView(t);\n"
+             + "    }\n"
+             + "}\n";
+    }
+
+    /** 启动一次构建。返回空串＝已开跑；否则人话原因。 */
+    public static String start(Context c, File sb, File keep, boolean release) {
+        synchronized (BuildRunner.class) {
+            if (running()) return "上一次还在跑（" + secs() + "s）；先 build action=status 看进度";
+            if (!BuildEnv.ready(c)) return "环境没就绪：\n" + BuildEnv.missing(c) + "→ 先在应用里点『打包 App · 一键准备环境』（或 build action=env）";
+            if (sb == null || !new File(sb, "AndroidManifest.xml").exists())
+                return "没找到工程：要一个含 AndroidManifest.xml 的目录（现在是 " + (sb == null ? "—" : sb.getAbsolutePath()) + "）";
+            String kr = CertGen.ensure(BuildEnv.key(c), keyPass(), "Reticle Debug");
+            if (kr.length() > 0) return kr;
+            try {
+                BuildEnv.unpack(c);
+                File log = logFile(c);
+                if (log.exists()) log.delete();
+
+                ProcessBuilder pb = new ProcessBuilder("/system/bin/sh", BuildEnv.script(c).getAbsolutePath());
+                pb.directory(BuildEnv.home(c));
+                pb.redirectErrorStream(true);
+                pb.redirectOutput(ProcessBuilder.Redirect.to(log));
+                java.util.Map<String, String> e = pb.environment();
+                e.put("LIB", BuildEnv.lib(c).getAbsolutePath());
+                e.put("RES", BuildEnv.res(c).getAbsolutePath());
+                e.put("JAR", BuildEnv.jar(c).getAbsolutePath());
+                e.put("SB", sb.getAbsolutePath());
+                e.put("KEEP", keep == null ? "" : keep.getAbsolutePath());
+                e.put("OUT", outDir(c).getAbsolutePath());
+                e.put("W", new File(BuildEnv.work(c), "run").getAbsolutePath());
+                e.put("KEY", BuildEnv.key(c).getAbsolutePath());
+                e.put("KPASS", keyPass());
+                e.put("RELEASE", release ? "1" : "0");
+                proc = pb.start();
+                startedAt = System.currentTimeMillis();
+                lastNote = "已开跑：" + sb.getName();
+                
+                new Thread(new Runnable() { public void run() { try { proc.waitFor(); } catch (Throwable t) { } lastNote = "跑完（" + secs() + "s）"; } }).start();
+                return "";
+            } catch (Throwable t) {
+                return "启动构建失败：" + t;
+            }
+        }
+    }
+
+
+
+    public static String keyPass() { return "reticle"; }
+
+    public static long secs() { return startedAt == 0 ? 0 : (System.currentTimeMillis() - startedAt) / 1000; }
+
+    /** 状态：在跑／跑完＋日志尾 ＋ 产物清单（含 sha256）。 */
+    public static String status(Context c) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(running() ? ("在跑，" + secs() + "s（日志：" + logFile(c).getAbsolutePath() + "）") : Words.RP_BUILD_NOTRUN);
+        sb.append("\n");
+        String tail = running() ? tail(logFile(c), 12) : "";
+        if (tail.length() > 0) sb.append("--- 日志尾 ---\n").append(tail);
+        File[] apks = apks(c);
+        if (apks != null && apks.length > 0) {
+            sb.append("--- 产物 ---\n");
+            for (int i = 0; i < apks.length; i++) {
+                sb.append(apks[i].getName()).append("  ").append(apks[i].length()).append(" B  sha256=").append(clip(BuildEnv.sha256(apks[i]))).append("\n");
+            }
+        }
+        if (running()) sb.append(Words.RP_BUILD_NEXT_RUN);
+        else if (apks != null && apks.length > 0) sb.append(Words.RP_BUILD_NEXT_APK);
+        else sb.append(Words.RP_BUILD_NEXT_NEW);
+        return sb.toString();
+    }
+
+    public static JSONObject statusJson(Context c) {
+        JSONObject o = new JSONObject();
+        try {
+            o.put("running", running() ? 1 : 0);
+            o.put("seconds", secs());
+            o.put("log", logFile(c).getAbsolutePath());
+            File[] a = apks(c);
+            o.put("apk", (a != null && a.length > 0) ? a[0].getAbsolutePath() : "");
+            o.put("apkSha256", (a != null && a.length > 0) ? clip(BuildEnv.sha256(a[0])) : "");
+            o.put("ready", BuildEnv.ready(c) ? 1 : 0);
+        } catch (Throwable t) { }
+        return o;
+    }
+
+    public static File[] apks(Context c) {
+        File[] fs = outDir(c).listFiles();
+        if (fs == null) return null;
+        java.util.ArrayList<File> r = new java.util.ArrayList<File>();
+        for (int i = 0; i < fs.length; i++) if (fs[i].getName().endsWith(".apk")) r.add(fs[i]);
+        if (r.size() == 0) return null;
+        File[] out = r.toArray(new File[0]);
+        java.util.Arrays.sort(out, new java.util.Comparator<File>() { public int compare(File a, File b) { return Long.compare(b.lastModified(), a.lastModified()); } });
+        return out;
+    }
+
+    private static String clip(String s) { return s == null ? "?" : s; }
+
+    static String tail(File f, int lines) {
+        try {
+            if (!f.exists()) return "";
+            java.io.RandomAccessFile ra = new java.io.RandomAccessFile(f, "r");
+            try {
+                long len = ra.length();
+                long from = Math.max(0, len - 8192);
+                ra.seek(from);
+                byte[] b = new byte[(int) (len - from)];
+                ra.readFully(b);
+                String s = new String(b, "UTF-8");
+                String[] ls = s.split("\n");
+                int st = Math.max(0, ls.length - lines);
+                StringBuilder sb = new StringBuilder();
+                for (int i = st; i < ls.length; i++) sb.append(ls[i]).append("\n");
+                return sb.toString();
+            } finally { try { ra.close(); } catch (Throwable t) { } }
+        } catch (Throwable t) { return ""; }
+    }
+
+    /** 77.5 号单：工程来历一句话（包名／文件三件／最近改动）——让陌生 AI 一眼看清这是谁的工程。 */
+    public static String brief(File proj) {
+        if (proj == null || !proj.isDirectory()) return "—";
+        String pk = manifestPkg(new File(proj, "AndroidManifest.xml"));
+        StringBuilder sb = new StringBuilder();
+        sb.append(proj.getAbsolutePath()).append("（包名 ").append(pk.length() > 0 ? pk : "没读到");
+        sb.append("｜文件 AndroidManifest.xml ").append(new File(proj, "AndroidManifest.xml").exists() ? "有" : "缺");
+        sb.append("／res ").append(new File(proj, "res").isDirectory() ? "有" : "缺");
+        sb.append("／src ").append(new File(proj, "src").isDirectory() ? "有" : "缺");
+        long lm = newest(proj, 0);
+        if (lm > 0) sb.append("｜最近改动 ").append(new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm", java.util.Locale.ROOT).format(new java.util.Date(lm)));
+        sb.append("）");
+        return sb.toString();
+    }
+
+    /** 从 AndroidManifest.xml 里取 package="..."（读前 4KB 够用）；读不到＝空串。 */
+    private static String manifestPkg(File m) {
+        try {
+            if (!m.exists()) return "";
+            byte[] b = new byte[(int) Math.min(m.length(), 4096L)];
+            java.io.FileInputStream in = new java.io.FileInputStream(m);
+            int n = 0;
+            try { n = in.read(b); } finally { try { in.close(); } catch (Throwable t) { } }
+            if (n <= 0) return "";
+            String s = new String(b, 0, n, "UTF-8");
+            int i = s.indexOf("package=\"");
+            if (i < 0) return "";
+            int j = s.indexOf('"', i + 9);
+            return j < 0 ? "" : s.substring(i + 9, j);
+        } catch (Throwable t) { return ""; }
+    }
+
+    /** 工程里最新的文件改动时间（深度限 6 层）；读不到＝0。 */
+    private static long newest(File f, int depth) {
+        if (f == null || depth > 6) return 0L;
+        if (f.isFile()) return f.lastModified();
+        File[] fs = f.listFiles();
+        if (fs == null) return 0L;
+        long m = 0L;
+        for (int i = 0; i < fs.length; i++) {
+            long t = newest(fs[i], depth + 1);
+            if (t > m) m = t;
+        }
+        return m;
+    }
+
+    /** 装包：产物在 /sdcard 上（shell 身份读得到）⇒ 直接 pm install -r。 */
+    public static String install(Context c) {
+        File[] a = apks(c);
+        if (a == null || a.length == 0) return "产物目录里还没有 apk（先 build action=start）";
+        File apk = a[0];
+        String tmp = "/data/local/tmp/reticle-" + apk.getName();
+        // ★74 实测：系统安装器（system_server）读不到 /sdcard（FUSE 被拒）⇒ 必须先拷到 /data/local/tmp
+        String r = shx("cp '" + apk.getAbsolutePath() + "' '" + tmp + "' && chmod 644 '" + tmp + "' && pm install -r -d '" + tmp + "' 2>&1");
+        if (r == null) return "shell 通道（Shizuku）不通，装不了；apk 在 " + apk.getAbsolutePath() + "，用文件管理器点它即可";
+        if (r.indexOf("Success") < 0) return "装包没成：\n" + r + "\n（常见原因：同包名已装的是别的签名 ⇒ 先卸掉旧的那个；或系统版本低于包的 minSdkVersion）";
+        return "装好了：" + r.trim();
+    }
+
+    /** 走 Shizuku 以 shell 身份跑一条命令（不通＝null）。 */
+    private static String shx(String cmd) {
+        try {
+            String r = VeriService.shxRun(cmd, 180000L);
+            JSONObject o = new JSONObject(r);
+            if (o.optInt("ok", 0) != 1) return null;
+            String out = o.optString("out", "") + o.optString("err", "");
+            return out.length() == 0 ? "exit=" + o.optInt("exit", -1) : out;
+        } catch (Throwable t) { return null; }
+    }
+}

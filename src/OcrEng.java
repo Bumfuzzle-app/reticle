@@ -1,1 +1,87 @@
-cGFja2FnZSBhcHAucmV0aWNsZTsKCmltcG9ydCBhbmRyb2lkLmdyYXBoaWNzLkJpdG1hcDsKCmltcG9ydCBjb20uZ29vZ2xlLmFuZHJvaWQuZ21zLnRhc2tzLlRhc2tzOwppbXBvcnQgY29tLmdvb2dsZS5tbGtpdC52aXNpb24uY29tbW9uLklucHV0SW1hZ2U7CmltcG9ydCBjb20uZ29vZ2xlLm1sa2l0LnZpc2lvbi50ZXh0LlRleHQ7CmltcG9ydCBjb20uZ29vZ2xlLm1sa2l0LnZpc2lvbi50ZXh0LlRleHRSZWNvZ25pdGlvbjsKaW1wb3J0IGNvbS5nb29nbGUubWxraXQudmlzaW9uLnRleHQuVGV4dFJlY29nbml6ZXI7CmltcG9ydCBjb20uZ29vZ2xlLm1sa2l0LnZpc2lvbi50ZXh0LmNoaW5lc2UuQ2hpbmVzZVRleHRSZWNvZ25pemVyT3B0aW9uczsKCi8vIE1MIEtpdCDkuK3mlofmloflrZfor4bliKvvvIhidW5kbGVkIOemu+e6v+eJiCAxNi4wLjHvvInnnJ/lrp7njrDjgIIKLy8g5L6d6LWW77ya54mp5paZL2NsYXNzZXMg6YeMIE1MIEtpdCDlhajlrrbmobYgKyDnianmlpkvYXNzZXRzIOeahCBPQ1Ig5qih5Z6LICsg54mp5paZL2puaSDnmoTljp/nlJ/lupPjgIIKcHVibGljIGNsYXNzIE9jckVuZyB7CiAgICBwdWJsaWMgc3RhdGljIGZpbmFsIGJvb2xlYW4gQVZBSUxBQkxFID0gdHJ1ZTsKICAgIHByaXZhdGUgc3RhdGljIFRleHRSZWNvZ25pemVyIHJlY29nbml6ZXI7CgogICAgcHJpdmF0ZSBzdGF0aWMgc3luY2hyb25pemVkIFRleHRSZWNvZ25pemVyIHJlYygpIHsKICAgICAgICBpZiAocmVjb2duaXplciA9PSBudWxsKSB7CiAgICAgICAgICAgIHJlY29nbml6ZXIgPSBUZXh0UmVjb2duaXRpb24uZ2V0Q2xpZW50KG5ldyBDaGluZXNlVGV4dFJlY29nbml6ZXJPcHRpb25zLkJ1aWxkZXIoKS5idWlsZCgpKTsKICAgICAgICB9CiAgICAgICAgcmV0dXJuIHJlY29nbml6ZXI7CiAgICB9CgogICAgcHVibGljIHN0YXRpYyBTdHJpbmcgb2NyKEJpdG1hcCBibXApIHsKICAgICAgICB0cnkgewogICAgICAgICAgICBJbnB1dEltYWdlIGltZyA9IElucHV0SW1hZ2UuZnJvbUJpdG1hcChibXAsIDApOwogICAgICAgICAgICBUZXh0IHQgPSBUYXNrcy5hd2FpdChyZWMoKS5wcm9jZXNzKGltZykpOwogICAgICAgICAgICBTdHJpbmdCdWlsZGVyIHNiID0gbmV3IFN0cmluZ0J1aWxkZXIoKTsKICAgICAgICAgICAgZm9yIChUZXh0LlRleHRCbG9jayBiIDogdC5nZXRUZXh0QmxvY2tzKCkpIHsKICAgICAgICAgICAgICAgIGlmIChiLmdldFRleHQoKSAhPSBudWxsKSBzYi5hcHBlbmQoYi5nZXRUZXh0KCkpLmFwcGVuZCgiXG4iKTsKICAgICAgICAgICAgfQogICAgICAgICAgICByZXR1cm4gc2IudG9TdHJpbmcoKTsKICAgICAgICB9IGNhdGNoIChUaHJvd2FibGUgdCkgewogICAgICAgICAgICByZXR1cm4gIm9jciBlcnJvcjogIiArIHQ7CiAgICAgICAgfQogICAgfQoKICAgIC8qKiA1MiDlj7fljZUgwrcg5YaF5a2Y5LqM57qn44CM5pS244CN77ya5pS+5o6JIE9DUiDor4bliKvlmajvvIhNTEtpdCDkuK3mlofmqKHlnovvvIzlh6DljYEgTUIg57qn77yJ77yb5LiL5qyh55So5Lya6Ieq5Yqo6YeN5bu644CCICovCiAgICBwdWJsaWMgc3RhdGljIHN5bmNocm9uaXplZCB2b2lkIGRyb3AoKSB7CiAgICAgICAgdHJ5IHsgaWYgKHJlY29nbml6ZXIgIT0gbnVsbCkgcmVjb2duaXplci5jbG9zZSgpOyB9IGNhdGNoIChUaHJvd2FibGUgdCkgeyB9CiAgICAgICAgcmVjb2duaXplciA9IG51bGw7CiAgICB9CgogICAgcHJpdmF0ZSBzdGF0aWMgU3RyaW5nIGVzYyhTdHJpbmcgcykgewogICAgICAgIGlmIChzID09IG51bGwpIHJldHVybiAiIjsKICAgICAgICBTdHJpbmdCdWlsZGVyIGIgPSBuZXcgU3RyaW5nQnVpbGRlcigpOwogICAgICAgIGZvciAoaW50IGkgPSAwOyBpIDwgcy5sZW5ndGgoKTsgaSsrKSB7CiAgICAgICAgICAgIGNoYXIgYyA9IHMuY2hhckF0KGkpOwogICAgICAgICAgICBpZiAoYyA9PSAnXFwnKSBiLmFwcGVuZCgiXFxcXCIpOwogICAgICAgICAgICBlbHNlIGlmIChjID09ICciJykgYi5hcHBlbmQoIlxcXCIiKTsKICAgICAgICAgICAgZWxzZSBpZiAoYyA9PSAnXG4nKSBiLmFwcGVuZCgiXFxuIik7CiAgICAgICAgICAgIGVsc2UgaWYgKGMgPT0gJ1xyJykgYi5hcHBlbmQoIlxcciIpOwogICAgICAgICAgICBlbHNlIGlmIChjID09ICdcdCcpIGIuYXBwZW5kKCJcXHQiKTsKICAgICAgICAgICAgZWxzZSBiLmFwcGVuZChjKTsKICAgICAgICB9CiAgICAgICAgcmV0dXJuIGIudG9TdHJpbmcoKTsKICAgIH0KCiAgICBwcml2YXRlIHN0YXRpYyBkb3VibGUgcjMoZG91YmxlIHYpIHsgcmV0dXJuIE1hdGgucm91bmQodiAqIDEwMDAuMCkgLyAxMDAwLjA7IH0KCiAgICAvLyDpgJDooYwgT0NS77yM5bim5qGG77ya5qGG55SoIuaVtOW4p+WDj+e0oOWdkOaghyLvvIhvZmZYL29mZlkg5Li66KOB5Ymq5YGP56e777yJ77yM5Y+m57uZ5b2S5LiA5YyW5Lit5b+DIGN4L2N5CiAgICBwdWJsaWMgc3RhdGljIFN0cmluZyBsaW5lc0pzb24oQml0bWFwIGJtcCwgaW50IG9mZlgsIGludCBvZmZZLCBpbnQgVywgaW50IEgpIHsKICAgICAgICBTdHJpbmdCdWlsZGVyIHNiID0gbmV3IFN0cmluZ0J1aWxkZXIoIlsiKTsKICAgICAgICB0cnkgewogICAgICAgICAgICBJbnB1dEltYWdlIGltZyA9IElucHV0SW1hZ2UuZnJvbUJpdG1hcChibXAsIDApOwogICAgICAgICAgICBUZXh0IHQgPSBUYXNrcy5hd2FpdChyZWMoKS5wcm9jZXNzKGltZykpOwogICAgICAgICAgICBib29sZWFuIGZpcnN0ID0gdHJ1ZTsKICAgICAgICAgICAgZm9yIChUZXh0LlRleHRCbG9jayBiIDogdC5nZXRUZXh0QmxvY2tzKCkpIHsKICAgICAgICAgICAgICAgIGZvciAoVGV4dC5MaW5lIGxuIDogYi5nZXRMaW5lcygpKSB7CiAgICAgICAgICAgICAgICAgICAgYW5kcm9pZC5ncmFwaGljcy5SZWN0IHIgPSBsbi5nZXRCb3VuZGluZ0JveCgpOwogICAgICAgICAgICAgICAgICAgIFN0cmluZyBzID0gbG4uZ2V0VGV4dCgpOwogICAgICAgICAgICAgICAgICAgIGlmIChyID09IG51bGwgfHwgcyA9PSBudWxsIHx8IHMubGVuZ3RoKCkgPT0gMCkgY29udGludWU7CiAgICAgICAgICAgICAgICAgICAgaW50IHggPSByLmxlZnQgKyBvZmZYLCB5ID0gci50b3AgKyBvZmZZOwogICAgICAgICAgICAgICAgICAgIGlmICghZmlyc3QpIHNiLmFwcGVuZCgiLCIpOwogICAgICAgICAgICAgICAgICAgIGZpcnN0ID0gZmFsc2U7CiAgICAgICAgICAgICAgICAgICAgc2IuYXBwZW5kKCJ7XCJ0XCI6XCIiKS5hcHBlbmQoZXNjKHMpKS5hcHBlbmQoIlwiLFwiYm94XCI6WyIpLmFwcGVuZCh4KS5hcHBlbmQoIiwiKS5hcHBlbmQoeSkKICAgICAgICAgICAgICAgICAgICAgIC5hcHBlbmQoIiwiKS5hcHBlbmQoci53aWR0aCgpKS5hcHBlbmQoIiwiKS5hcHBlbmQoci5oZWlnaHQoKSkuYXBwZW5kKCJdLFwiY3hcIjoiKQogICAgICAgICAgICAgICAgICAgICAgLmFwcGVuZChyMygoeCArIHIud2lkdGgoKSAvIDIuMCkgLyBXKSkuYXBwZW5kKCIsXCJjeVwiOiIpCiAgICAgICAgICAgICAgICAgICAgICAuYXBwZW5kKHIzKCh5ICsgci5oZWlnaHQoKSAvIDIuMCkgLyBIKSkuYXBwZW5kKCJ9Iik7CiAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgIH0KICAgICAgICB9IGNhdGNoIChUaHJvd2FibGUgdCkgeyB9CiAgICAgICAgc2IuYXBwZW5kKCJdIik7CiAgICAgICAgcmV0dXJuIHNiLnRvU3RyaW5nKCk7CiAgICB9Cn0K
+package app.reticle;
+
+import android.graphics.Bitmap;
+
+import com.google.android.gms.tasks.Tasks;
+import com.google.mlkit.vision.common.InputImage;
+import com.google.mlkit.vision.text.Text;
+import com.google.mlkit.vision.text.TextRecognition;
+import com.google.mlkit.vision.text.TextRecognizer;
+import com.google.mlkit.vision.text.chinese.ChineseTextRecognizerOptions;
+
+// ML Kit 中文文字识别（bundled 离线版 16.0.1）真实现。
+// 依赖：物料/classes 里 ML Kit 全家桶 + 物料/assets 的 OCR 模型 + 物料/jni 的原生库。
+public class OcrEng {
+    public static final boolean AVAILABLE = true;
+    private static TextRecognizer recognizer;
+
+    private static synchronized TextRecognizer rec() {
+        if (recognizer == null) {
+            recognizer = TextRecognition.getClient(new ChineseTextRecognizerOptions.Builder().build());
+        }
+        return recognizer;
+    }
+
+    public static String ocr(Bitmap bmp) {
+        try {
+            InputImage img = InputImage.fromBitmap(bmp, 0);
+            Text t = Tasks.await(rec().process(img));
+            StringBuilder sb = new StringBuilder();
+            for (Text.TextBlock b : t.getTextBlocks()) {
+                if (b.getText() != null) sb.append(b.getText()).append("\n");
+            }
+            return sb.toString();
+        } catch (Throwable t) {
+            return "ocr error: " + t;
+        }
+    }
+
+    /** 52 号单 · 内存二级「收」：放掉 OCR 识别器（MLKit 中文模型，几十 MB 级）；下次用会自动重建。 */
+    public static synchronized void drop() {
+        try { if (recognizer != null) recognizer.close(); } catch (Throwable t) { }
+        recognizer = null;
+    }
+
+    private static String esc(String s) {
+        if (s == null) return "";
+        StringBuilder b = new StringBuilder();
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if (c == '\\') b.append("\\\\");
+            else if (c == '"') b.append("\\\"");
+            else if (c == '\n') b.append("\\n");
+            else if (c == '\r') b.append("\\r");
+            else if (c == '\t') b.append("\\t");
+            else b.append(c);
+        }
+        return b.toString();
+    }
+
+    private static double r3(double v) { return Math.round(v * 1000.0) / 1000.0; }
+
+    // 逐行 OCR，带框：框用"整帧像素坐标"（offX/offY 为裁剪偏移），另给归一化中心 cx/cy
+    public static String linesJson(Bitmap bmp, int offX, int offY, int W, int H) {
+        StringBuilder sb = new StringBuilder("[");
+        try {
+            InputImage img = InputImage.fromBitmap(bmp, 0);
+            Text t = Tasks.await(rec().process(img));
+            boolean first = true;
+            for (Text.TextBlock b : t.getTextBlocks()) {
+                for (Text.Line ln : b.getLines()) {
+                    android.graphics.Rect r = ln.getBoundingBox();
+                    String s = ln.getText();
+                    if (r == null || s == null || s.length() == 0) continue;
+                    int x = r.left + offX, y = r.top + offY;
+                    if (!first) sb.append(",");
+                    first = false;
+                    sb.append("{\"t\":\"").append(esc(s)).append("\",\"box\":[").append(x).append(",").append(y)
+                      .append(",").append(r.width()).append(",").append(r.height()).append("],\"cx\":")
+                      .append(r3((x + r.width() / 2.0) / W)).append(",\"cy\":")
+                      .append(r3((y + r.height() / 2.0) / H)).append("}");
+                }
+            }
+        } catch (Throwable t) { }
+        sb.append("]");
+        return sb.toString();
+    }
+}

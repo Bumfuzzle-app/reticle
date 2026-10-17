@@ -1,1 +1,10 @@
-PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSDlvJXlr7zCt+eci+Wxj+W5le+8iOecvOedm++8ieWNleiJsuefoumHj++8jOmaj+S4u+mimCB0aW50IC0tPgo8dmVjdG9yIHhtbG5zOmFuZHJvaWQ9Imh0dHA6Ly9zY2hlbWFzLmFuZHJvaWQuY29tL2Fway9yZXMvYW5kcm9pZCIKICAgIGFuZHJvaWQ6d2lkdGg9IjI0ZHAiIGFuZHJvaWQ6aGVpZ2h0PSIyNGRwIgogICAgYW5kcm9pZDp2aWV3cG9ydFdpZHRoPSIyNCIgYW5kcm9pZDp2aWV3cG9ydEhlaWdodD0iMjQiPgogIDxwYXRoIGFuZHJvaWQ6ZmlsbENvbG9yPSIjRkZGRkZGRkYiIGFuZHJvaWQ6ZmlsbFR5cGU9ImV2ZW5PZGQiCiAgICAgIGFuZHJvaWQ6cGF0aERhdGE9Ik0xMiw1IEM2LjUsNSAzLDkuNSAyLDEyIEMzLDE0LjUgNi41LDE5IDEyLDE5IEMxNy41LDE5IDIxLDE0LjUgMjIsMTIgQzIxLDkuNSAxNy41LDUgMTIsNSBaIE0xMiw4LjUgQzcuOSw4LjUgNS4xLDEwLjkgNCwxMiBDNS4xLDEzLjEgNy45LDE1LjUgMTIsMTUuNSBDMTYuMSwxNS41IDE4LjksMTMuMSAyMCwxMiBDMTguOSwxMC45IDE2LjEsOC41IDEyLDguNSBaIi8+CiAgPHBhdGggYW5kcm9pZDpmaWxsQ29sb3I9IiNGRkZGRkZGRiIKICAgICAgYW5kcm9pZDpwYXRoRGF0YT0iTTEyLDkuOCBDMTMuMiw5LjggMTQuMiwxMC44IDE0LjIsMTIgQzE0LjIsMTMuMiAxMy4yLDE0LjIgMTIsMTQuMiBDMTAuOCwxNC4yIDkuOCwxMy4yIDkuOCwxMiBDOS44LDEwLjggMTAuOCw5LjggMTIsOS44IFoiLz4KPC92ZWN0b3I+Cg==
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 引导·看屏幕（眼睛）单色矢量，随主题 tint -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp" android:height="24dp"
+    android:viewportWidth="24" android:viewportHeight="24">
+  <path android:fillColor="#FFFFFFFF" android:fillType="evenOdd"
+      android:pathData="M12,5 C6.5,5 3,9.5 2,12 C3,14.5 6.5,19 12,19 C17.5,19 21,14.5 22,12 C21,9.5 17.5,5 12,5 Z M12,8.5 C7.9,8.5 5.1,10.9 4,12 C5.1,13.1 7.9,15.5 12,15.5 C16.1,15.5 18.9,13.1 20,12 C18.9,10.9 16.1,8.5 12,8.5 Z"/>
+  <path android:fillColor="#FFFFFFFF"
+      android:pathData="M12,9.8 C13.2,9.8 14.2,10.8 14.2,12 C14.2,13.2 13.2,14.2 12,14.2 C10.8,14.2 9.8,13.2 9.8,12 C9.8,10.8 10.8,9.8 12,9.8 Z"/>
+</vector>

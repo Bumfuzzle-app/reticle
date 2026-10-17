@@ -1,1 +1,136 @@
-cGFja2FnZSBhcHAucmV0aWNsZTsKCmltcG9ydCBqYXZhLmlvLkJ5dGVBcnJheUlucHV0U3RyZWFtOwppbXBvcnQgamF2YS5pby5CeXRlQXJyYXlPdXRwdXRTdHJlYW07CmltcG9ydCBqYXZhLmlvLkZpbGU7CmltcG9ydCBqYXZhLmlvLkZpbGVPdXRwdXRTdHJlYW07CmltcG9ydCBqYXZhLm1hdGguQmlnSW50ZWdlcjsKaW1wb3J0IGphdmEuc2VjdXJpdHkuS2V5UGFpcjsKaW1wb3J0IGphdmEuc2VjdXJpdHkuS2V5UGFpckdlbmVyYXRvcjsKaW1wb3J0IGphdmEuc2VjdXJpdHkuS2V5U3RvcmU7CmltcG9ydCBqYXZhLnNlY3VyaXR5LlByaXZhdGVLZXk7CmltcG9ydCBqYXZhLnNlY3VyaXR5LlNpZ25hdHVyZTsKaW1wb3J0IGphdmEuc2VjdXJpdHkuY2VydC5DZXJ0aWZpY2F0ZTsKaW1wb3J0IGphdmEuc2VjdXJpdHkuY2VydC5DZXJ0aWZpY2F0ZUZhY3Rvcnk7CmltcG9ydCBqYXZhLnNlY3VyaXR5LmNlcnQuWDUwOUNlcnRpZmljYXRlOwppbXBvcnQgamF2YS5zZWN1cml0eS5pbnRlcmZhY2VzLlJTQVB1YmxpY0tleTsKaW1wb3J0IGphdmEudXRpbC5EYXRlOwoKLyoqCiAqIDc0IOWPt+WNle+8iDIwMjYtMTAtMTbvvInCtyDlupTnlKjlhoXoh6rnrb7osIPor5XpkqXljJnvvIjkuI3pmo/ljIXliIblj5Hku7vkvZXpkqXljJnvvInjgIIKICoKICog44CQ5Li65LuA5LmI6Ieq5bex5YaZIERFUuOAkeWHuuWMheimgeetvuWQje+8m2Fwa3NpZ25lciDpnIDopoEi56eB6ZKl77yL6K+B5LmmIuOAguaJi+acuuS4iuWPquacieS4gOS4qiBKVk0g5LmL5aSW55qEIGRleO+8jAogKiAgIOayoeaciSBrZXl0b29s77yM5Lmf5rKh5pyJIHN1bi5zZWN1cml0eS54NTA5IOKHkiDnlKjmnIDmnLTntKDnmoQgQVNOLjEgREVSIOaJi+WGmeS4gOW8oCBYLjUwOSB2MSDoh6rnrb7or4HkuaYKICogICDvvIhSU0EtMjA0OO+8j1NIQTI1NndpdGhSU0HvvInvvIzlrZjmiJAgUEtDUzEy44CCCiAqIOOAkOWPo+W+hOOAkei/meaYryLnlKjmiLfoh6rlt7HnmoTosIPor5XpkqXljJki77yM6Lef5L2c6ICF5py66YKj5oqK77yI5aSH5Lu9L1JldGljbGUt562+5ZCNL++8ieaXoOWFs++8jOS5n+S4jei/m+WMheOAggogKi8KcHVibGljIGNsYXNzIENlcnRHZW4gewoKICAgIC8qKiDnlJ/miJDpkqXljJnlupPvvIjlt7LlrZjlnKjkuJTog73miZPlvIDvvJ3kuI3ph43lgZrvvInjgILov5Tlm57nqbrkuLLvvJ3miJDlip/jgIIgKi8KICAgIHB1YmxpYyBzdGF0aWMgU3RyaW5nIGVuc3VyZShGaWxlIHAxMiwgU3RyaW5nIHBhc3MsIFN0cmluZyBjbikgewogICAgICAgIHRyeSB7CiAgICAgICAgICAgIGlmIChwMTIuZXhpc3RzKCkgJiYgcDEyLmxlbmd0aCgpID4gMCAmJiBvcGVuKHAxMiwgcGFzcykgIT0gbnVsbCkgcmV0dXJuICIiOwogICAgICAgICAgICBLZXlQYWlyR2VuZXJhdG9yIGcgPSBLZXlQYWlyR2VuZXJhdG9yLmdldEluc3RhbmNlKCJSU0EiKTsKICAgICAgICAgICAgZy5pbml0aWFsaXplKDIwNDgpOwogICAgICAgICAgICBLZXlQYWlyIGtwID0gZy5nZW5lcmF0ZUtleVBhaXIoKTsKICAgICAgICAgICAgWDUwOUNlcnRpZmljYXRlIGNlcnQgPSBzZWxmU2lnbihrcCwgY24pOwogICAgICAgICAgICBLZXlTdG9yZSBrcyA9IEtleVN0b3JlLmdldEluc3RhbmNlKCJQS0NTMTIiKTsKICAgICAgICAgICAga3MubG9hZChudWxsLCBudWxsKTsKICAgICAgICAgICAga3Muc2V0S2V5RW50cnkoInJldGljbGUiLCBrcC5nZXRQcml2YXRlKCksIHBhc3MudG9DaGFyQXJyYXkoKSwgbmV3IENlcnRpZmljYXRlW117Y2VydH0pOwogICAgICAgICAgICBGaWxlIHAgPSBwMTIuZ2V0UGFyZW50RmlsZSgpOwogICAgICAgICAgICBpZiAocCAhPSBudWxsICYmICFwLmV4aXN0cygpKSBwLm1rZGlycygpOwogICAgICAgICAgICBGaWxlT3V0cHV0U3RyZWFtIG9zID0gbmV3IEZpbGVPdXRwdXRTdHJlYW0ocDEyKTsKICAgICAgICAgICAgdHJ5IHsga3Muc3RvcmUob3MsIHBhc3MudG9DaGFyQXJyYXkoKSk7IG9zLmZsdXNoKCk7IH0gZmluYWxseSB7IHRyeSB7IG9zLmNsb3NlKCk7IH0gY2F0Y2ggKFRocm93YWJsZSB0KSB7IH0gfQogICAgICAgICAgICByZXR1cm4gIiI7CiAgICAgICAgfSBjYXRjaCAoVGhyb3dhYmxlIHQpIHsgcmV0dXJuICLnlJ/miJDnrb7lkI3pkqXljJnlpLHotKXvvJoiICsgdDsgfQogICAgfQoKICAgIC8qKiDog73kuI3og73miZPlvIDvvIjlj6Pku6Tlr7nkuI3lr7njgIHmlofku7blnY/msqHlnY/vvInjgIIgKi8KICAgIHB1YmxpYyBzdGF0aWMgS2V5U3RvcmUgb3BlbihGaWxlIHAxMiwgU3RyaW5nIHBhc3MpIHsKICAgICAgICB0cnkgewogICAgICAgICAgICBLZXlTdG9yZSBrcyA9IEtleVN0b3JlLmdldEluc3RhbmNlKCJQS0NTMTIiKTsKICAgICAgICAgICAgamF2YS5pby5GaWxlSW5wdXRTdHJlYW0gaW4gPSBuZXcgamF2YS5pby5GaWxlSW5wdXRTdHJlYW0ocDEyKTsKICAgICAgICAgICAgdHJ5IHsga3MubG9hZChpbiwgcGFzcy50b0NoYXJBcnJheSgpKTsgfSBmaW5hbGx5IHsgdHJ5IHsgaW4uY2xvc2UoKTsgfSBjYXRjaCAoVGhyb3dhYmxlIHQpIHsgfSB9CiAgICAgICAgICAgIHJldHVybiBrcy5nZXRLZXkoInJldGljbGUiLCBwYXNzLnRvQ2hhckFycmF5KCkpID09IG51bGwgPyBudWxsIDoga3M7CiAgICAgICAgfSBjYXRjaCAoVGhyb3dhYmxlIHQpIHsgcmV0dXJuIG51bGw7IH0KICAgIH0KCiAgICAvLyDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIAg6Ieq562+6K+B5Lmm77yIWC41MDkgdjHvvIzlpJ8gYXBrc2lnbmVyIOS4juezu+e7n+WuieijheagoemqjOeUqO+8iSDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIAKCiAgICBzdGF0aWMgWDUwOUNlcnRpZmljYXRlIHNlbGZTaWduKEtleVBhaXIga3AsIFN0cmluZyBjbikgdGhyb3dzIEV4Y2VwdGlvbiB7CiAgICAgICAgbG9uZyBub3cgPSBTeXN0ZW0uY3VycmVudFRpbWVNaWxsaXMoKTsKICAgICAgICBTdHJpbmcgbmIgPSB1dGMobmV3IERhdGUobm93IC0gODY0MDAwMDBMKSk7CiAgICAgICAgU3RyaW5nIG5hID0gdXRjKG5ldyBEYXRlKG5vdyArIDIwTCAqIDM2NSAqIDg2NDAwMDAwTCkpOyAgIC8vIDIwIOW5tO+8iFVUQ1RpbWUg5Y+q5YiwIDIwNDnvvIkKICAgICAgICBieXRlW10gbmFtZSA9IHNlcShzZXQoc2VxKG9pZCgiMi41LjQuMyIpLCB1dGY4KGNuID09IG51bGwgfHwgY24ubGVuZ3RoKCkgPT0gMCA/ICJSZXRpY2xlIERlYnVnIiA6IGNuKSkpKTsKICAgICAgICBieXRlW10gdmFsaWRpdHkgPSBzZXEodXRjUmF3KG5iKSwgdXRjUmF3KG5hKSk7CiAgICAgICAgYnl0ZVtdIGFsZyA9IHNlcShvaWQoIjEuMi44NDAuMTEzNTQ5LjEuMS4xMSIpLCBudWwoKSk7CiAgICAgICAgYnl0ZVtdIHNwa2kgPSBzZXEoc2VxKG9pZCgiMS4yLjg0MC4xMTM1NDkuMS4xLjEiKSwgbnVsKCkpLCBiaXQocnNhUHViKChSU0FQdWJsaWNLZXkpIGtwLmdldFB1YmxpYygpKSkpOwogICAgICAgIGJ5dGVbXSB0YnMgPSBzZXEoCiAgICAgICAgICAgICAgICBpbnR2KEJpZ0ludGVnZXIudmFsdWVPZihTeXN0ZW0uY3VycmVudFRpbWVNaWxsaXMoKSAvIDEwMDBMKSksICAgLy8g5bqP5YiX5Y+377yIdjHvvJrnnIHnlaUgdmVyc2lvbiDlrZfmrrXvvIkKICAgICAgICAgICAgICAgIGFsZywgbmFtZSwgdmFsaWRpdHksIG5hbWUsIHNwa2kpOwogICAgICAgIFNpZ25hdHVyZSBzaWcgPSBTaWduYXR1cmUuZ2V0SW5zdGFuY2UoIlNIQTI1NndpdGhSU0EiKTsKICAgICAgICBzaWcuaW5pdFNpZ24oKFByaXZhdGVLZXkpIGtwLmdldFByaXZhdGUoKSk7CiAgICAgICAgc2lnLnVwZGF0ZSh0YnMpOwogICAgICAgIGJ5dGVbXSBjZXJ0ID0gc2VxKHRicywgYWxnLCBiaXQoc2lnLnNpZ24oKSkpOwogICAgICAgIENlcnRpZmljYXRlRmFjdG9yeSBjZiA9IENlcnRpZmljYXRlRmFjdG9yeS5nZXRJbnN0YW5jZSgiWC41MDkiKTsKICAgICAgICByZXR1cm4gKFg1MDlDZXJ0aWZpY2F0ZSkgY2YuZ2VuZXJhdGVDZXJ0aWZpY2F0ZShuZXcgQnl0ZUFycmF5SW5wdXRTdHJlYW0oY2VydCkpOwogICAgfQoKICAgIC8qKiBSU0FQdWJsaWNLZXkgOjo9IFNFUVVFTkNFIHsgbW9kdWx1cyBJTlRFR0VSLCBwdWJsaWNFeHBvbmVudCBJTlRFR0VSIH0gKi8KICAgIHN0YXRpYyBieXRlW10gcnNhUHViKFJTQVB1YmxpY0tleSBrKSB7CiAgICAgICAgYnl0ZVtdIG4gPSBrLmdldE1vZHVsdXMoKS50b0J5dGVBcnJheSgpOwogICAgICAgIGlmIChuLmxlbmd0aCA+IDEgJiYgblswXSA9PSAwKSB7IGJ5dGVbXSB0ID0gbmV3IGJ5dGVbbi5sZW5ndGggLSAxXTsgU3lzdGVtLmFycmF5Y29weShuLCAxLCB0LCAwLCB0Lmxlbmd0aCk7IG4gPSB0OyB9CiAgICAgICAgcmV0dXJuIHNlcShpbnR2KGsuZ2V0TW9kdWx1cygpKSwgaW50dihrLmdldFB1YmxpY0V4cG9uZW50KCkpKTsKICAgIH0KCiAgICAvLyDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIAg5pyA5bCPIERFUiDnvJbnoIHlmagg4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSACgogICAgc3RhdGljIGJ5dGVbXSBzZXEoYnl0ZVtdLi4uIHBzKSB7IHJldHVybiB0bHYoMHgzMCwgY2F0KHBzKSk7IH0KICAgIHN0YXRpYyBieXRlW10gc2V0KGJ5dGVbXS4uLiBwcykgeyByZXR1cm4gdGx2KDB4MzEsIGNhdChwcykpOyB9CiAgICBzdGF0aWMgYnl0ZVtdIG51bCgpIHsgcmV0dXJuIG5ldyBieXRlW117MHgwNSwgMHgwMH07IH0KICAgIHN0YXRpYyBieXRlW10gdXRmOChTdHJpbmcgcykgeyB0cnkgeyByZXR1cm4gdGx2KDB4MEMsIHMuZ2V0Qnl0ZXMoIlVURi04IikpOyB9IGNhdGNoIChUaHJvd2FibGUgdCkgeyByZXR1cm4gdGx2KDB4MEMsIHMuZ2V0Qnl0ZXMoKSk7IH0gfQogICAgc3RhdGljIGJ5dGVbXSBpbnR2KEJpZ0ludGVnZXIgdikgeyBieXRlW10gYiA9IHYudG9CeXRlQXJyYXkoKTsgcmV0dXJuIHRsdigweDAyLCBiKTsgfQogICAgc3RhdGljIGJ5dGVbXSBiaXQoYnl0ZVtdIGIpIHsgYnl0ZVtdIHIgPSBuZXcgYnl0ZVtiLmxlbmd0aCArIDFdOyBTeXN0ZW0uYXJyYXljb3B5KGIsIDAsIHIsIDEsIGIubGVuZ3RoKTsgcmV0dXJuIHRsdigweDAzLCByKTsgfQoKICAgIHN0YXRpYyBTdHJpbmcgdXRjKERhdGUgZCkgewogICAgICAgIGphdmEudGV4dC5TaW1wbGVEYXRlRm9ybWF0IGYgPSBuZXcgamF2YS50ZXh0LlNpbXBsZURhdGVGb3JtYXQoInl5TU1kZEhIbW1zcyIsIGphdmEudXRpbC5Mb2NhbGUuVVMpOwogICAgICAgIGYuc2V0VGltZVpvbmUoamF2YS51dGlsLlRpbWVab25lLmdldFRpbWVab25lKCJVVEMiKSk7CiAgICAgICAgcmV0dXJuIGYuZm9ybWF0KGQpICsgIloiOwogICAgfQogICAgc3RhdGljIGJ5dGVbXSB1dGNSYXcoU3RyaW5nIHMpIHsgdHJ5IHsgcmV0dXJuIHRsdigweDE3LCBzLmdldEJ5dGVzKCJVUy1BU0NJSSIpKTsgfSBjYXRjaCAoVGhyb3dhYmxlIHQpIHsgcmV0dXJuIHRsdigweDE3LCBzLmdldEJ5dGVzKCkpOyB9IH0KCiAgICBzdGF0aWMgYnl0ZVtdIG9pZChTdHJpbmcgZG90dGVkKSB7CiAgICAgICAgU3RyaW5nW10gcCA9IGRvdHRlZC5zcGxpdCgiXFwuIik7CiAgICAgICAgQnl0ZUFycmF5T3V0cHV0U3RyZWFtIG8gPSBuZXcgQnl0ZUFycmF5T3V0cHV0U3RyZWFtKCk7CiAgICAgICAgby53cml0ZSg0MCAqIEludGVnZXIucGFyc2VJbnQocFswXSkgKyBJbnRlZ2VyLnBhcnNlSW50KHBbMV0pKTsKICAgICAgICBmb3IgKGludCBpID0gMjsgaSA8IHAubGVuZ3RoOyBpKyspIHsKICAgICAgICAgICAgbG9uZyB2ID0gTG9uZy5wYXJzZUxvbmcocFtpXSk7CiAgICAgICAgICAgIGJ5dGVbXSB0bXAgPSBuZXcgYnl0ZVs5XTsKICAgICAgICAgICAgaW50IGsgPSA4OwogICAgICAgICAgICB0bXBbay0tXSA9IChieXRlKSAodiAmIDB4N0YpOwogICAgICAgICAgICB2ID4+PSA3OwogICAgICAgICAgICB3aGlsZSAodiA+IDApIHsgdG1wW2stLV0gPSAoYnl0ZSkgKCh2ICYgMHg3RikgfCAweDgwKTsgdiA+Pj0gNzsgfQogICAgICAgICAgICBvLndyaXRlKHRtcCwgayArIDEsIDggLSBrKTsKICAgICAgICB9CiAgICAgICAgcmV0dXJuIHRsdigweDA2LCBvLnRvQnl0ZUFycmF5KCkpOwogICAgfQoKICAgIHN0YXRpYyBieXRlW10gY2F0KGJ5dGVbXS4uLiBwcykgewogICAgICAgIEJ5dGVBcnJheU91dHB1dFN0cmVhbSBvID0gbmV3IEJ5dGVBcnJheU91dHB1dFN0cmVhbSgpOwogICAgICAgIGZvciAoaW50IGkgPSAwOyBpIDwgcHMubGVuZ3RoOyBpKyspIG8ud3JpdGUocHNbaV0sIDAsIHBzW2ldLmxlbmd0aCk7CiAgICAgICAgcmV0dXJuIG8udG9CeXRlQXJyYXkoKTsKICAgIH0KCiAgICBzdGF0aWMgYnl0ZVtdIHRsdihpbnQgdGFnLCBieXRlW10gYm9keSkgewogICAgICAgIGJ5dGVbXSBoOwogICAgICAgIGludCBuID0gYm9keS5sZW5ndGg7CiAgICAgICAgaWYgKG4gPCAxMjgpIGggPSBuZXcgYnl0ZVtdeyhieXRlKSB0YWcsIChieXRlKSBufTsKICAgICAgICBlbHNlIGlmIChuIDwgMjU2KSBoID0gbmV3IGJ5dGVbXXsoYnl0ZSkgdGFnLCAoYnl0ZSkgMHg4MSwgKGJ5dGUpIG59OwogICAgICAgIGVsc2UgaWYgKG4gPCA2NTUzNikgaCA9IG5ldyBieXRlW117KGJ5dGUpIHRhZywgKGJ5dGUpIDB4ODIsIChieXRlKSAobiA+PiA4KSwgKGJ5dGUpIG59OwogICAgICAgIGVsc2UgaCA9IG5ldyBieXRlW117KGJ5dGUpIHRhZywgKGJ5dGUpIDB4ODMsIChieXRlKSAobiA+PiAxNiksIChieXRlKSAobiA+PiA4KSwgKGJ5dGUpIG59OwogICAgICAgIGJ5dGVbXSByID0gbmV3IGJ5dGVbaC5sZW5ndGggKyBuXTsKICAgICAgICBTeXN0ZW0uYXJyYXljb3B5KGgsIDAsIHIsIDAsIGgubGVuZ3RoKTsKICAgICAgICBTeXN0ZW0uYXJyYXljb3B5KGJvZHksIDAsIHIsIGgubGVuZ3RoLCBuKTsKICAgICAgICByZXR1cm4gcjsKICAgIH0KfQo=
+package app.reticle;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.math.BigInteger;
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
+import java.security.KeyStore;
+import java.security.PrivateKey;
+import java.security.Signature;
+import java.security.cert.Certificate;
+import java.security.cert.CertificateFactory;
+import java.security.cert.X509Certificate;
+import java.security.interfaces.RSAPublicKey;
+import java.util.Date;
+
+/**
+ * 74 号单（2026-10-16）· 应用内自签调试钥匙（不随包分发任何钥匙）。
+ *
+ * 【为什么自己写 DER】出包要签名；apksigner 需要"私钥＋证书"。手机上只有一个 JVM 之外的 dex，
+ *   没有 keytool，也没有 sun.security.x509 ⇒ 用最朴素的 ASN.1 DER 手写一张 X.509 v1 自签证书
+ *   （RSA-2048／SHA256withRSA），存成 PKCS12。
+ * 【口径】这是"用户自己的调试钥匙"，跟作者机那把（备份/Reticle-签名/）无关，也不进包。
+ */
+public class CertGen {
+
+    /** 生成钥匙库（已存在且能打开＝不重做）。返回空串＝成功。 */
+    public static String ensure(File p12, String pass, String cn) {
+        try {
+            if (p12.exists() && p12.length() > 0 && open(p12, pass) != null) return "";
+            KeyPairGenerator g = KeyPairGenerator.getInstance("RSA");
+            g.initialize(2048);
+            KeyPair kp = g.generateKeyPair();
+            X509Certificate cert = selfSign(kp, cn);
+            KeyStore ks = KeyStore.getInstance("PKCS12");
+            ks.load(null, null);
+            ks.setKeyEntry("reticle", kp.getPrivate(), pass.toCharArray(), new Certificate[]{cert});
+            File p = p12.getParentFile();
+            if (p != null && !p.exists()) p.mkdirs();
+            FileOutputStream os = new FileOutputStream(p12);
+            try { ks.store(os, pass.toCharArray()); os.flush(); } finally { try { os.close(); } catch (Throwable t) { } }
+            return "";
+        } catch (Throwable t) { return "生成签名钥匙失败：" + t; }
+    }
+
+    /** 能不能打开（口令对不对、文件坏没坏）。 */
+    public static KeyStore open(File p12, String pass) {
+        try {
+            KeyStore ks = KeyStore.getInstance("PKCS12");
+            java.io.FileInputStream in = new java.io.FileInputStream(p12);
+            try { ks.load(in, pass.toCharArray()); } finally { try { in.close(); } catch (Throwable t) { } }
+            return ks.getKey("reticle", pass.toCharArray()) == null ? null : ks;
+        } catch (Throwable t) { return null; }
+    }
+
+    // ───────────── 自签证书（X.509 v1，够 apksigner 与系统安装校验用） ─────────────
+
+    static X509Certificate selfSign(KeyPair kp, String cn) throws Exception {
+        long now = System.currentTimeMillis();
+        String nb = utc(new Date(now - 86400000L));
+        String na = utc(new Date(now + 20L * 365 * 86400000L));   // 20 年（UTCTime 只到 2049）
+        byte[] name = seq(set(seq(oid("2.5.4.3"), utf8(cn == null || cn.length() == 0 ? "Reticle Debug" : cn))));
+        byte[] validity = seq(utcRaw(nb), utcRaw(na));
+        byte[] alg = seq(oid("1.2.840.113549.1.1.11"), nul());
+        byte[] spki = seq(seq(oid("1.2.840.113549.1.1.1"), nul()), bit(rsaPub((RSAPublicKey) kp.getPublic())));
+        byte[] tbs = seq(
+                intv(BigInteger.valueOf(System.currentTimeMillis() / 1000L)),   // 序列号（v1：省略 version 字段）
+                alg, name, validity, name, spki);
+        Signature sig = Signature.getInstance("SHA256withRSA");
+        sig.initSign((PrivateKey) kp.getPrivate());
+        sig.update(tbs);
+        byte[] cert = seq(tbs, alg, bit(sig.sign()));
+        CertificateFactory cf = CertificateFactory.getInstance("X.509");
+        return (X509Certificate) cf.generateCertificate(new ByteArrayInputStream(cert));
+    }
+
+    /** RSAPublicKey ::= SEQUENCE { modulus INTEGER, publicExponent INTEGER } */
+    static byte[] rsaPub(RSAPublicKey k) {
+        byte[] n = k.getModulus().toByteArray();
+        if (n.length > 1 && n[0] == 0) { byte[] t = new byte[n.length - 1]; System.arraycopy(n, 1, t, 0, t.length); n = t; }
+        return seq(intv(k.getModulus()), intv(k.getPublicExponent()));
+    }
+
+    // ───────────── 最小 DER 编码器 ─────────────
+
+    static byte[] seq(byte[]... ps) { return tlv(0x30, cat(ps)); }
+    static byte[] set(byte[]... ps) { return tlv(0x31, cat(ps)); }
+    static byte[] nul() { return new byte[]{0x05, 0x00}; }
+    static byte[] utf8(String s) { try { return tlv(0x0C, s.getBytes("UTF-8")); } catch (Throwable t) { return tlv(0x0C, s.getBytes()); } }
+    static byte[] intv(BigInteger v) { byte[] b = v.toByteArray(); return tlv(0x02, b); }
+    static byte[] bit(byte[] b) { byte[] r = new byte[b.length + 1]; System.arraycopy(b, 0, r, 1, b.length); return tlv(0x03, r); }
+
+    static String utc(Date d) {
+        java.text.SimpleDateFormat f = new java.text.SimpleDateFormat("yyMMddHHmmss", java.util.Locale.US);
+        f.setTimeZone(java.util.TimeZone.getTimeZone("UTC"));
+        return f.format(d) + "Z";
+    }
+    static byte[] utcRaw(String s) { try { return tlv(0x17, s.getBytes("US-ASCII")); } catch (Throwable t) { return tlv(0x17, s.getBytes()); } }
+
+    static byte[] oid(String dotted) {
+        String[] p = dotted.split("\\.");
+        ByteArrayOutputStream o = new ByteArrayOutputStream();
+        o.write(40 * Integer.parseInt(p[0]) + Integer.parseInt(p[1]));
+        for (int i = 2; i < p.length; i++) {
+            long v = Long.parseLong(p[i]);
+            byte[] tmp = new byte[9];
+            int k = 8;
+            tmp[k--] = (byte) (v & 0x7F);
+            v >>= 7;
+            while (v > 0) { tmp[k--] = (byte) ((v & 0x7F) | 0x80); v >>= 7; }
+            o.write(tmp, k + 1, 8 - k);
+        }
+        return tlv(0x06, o.toByteArray());
+    }
+
+    static byte[] cat(byte[]... ps) {
+        ByteArrayOutputStream o = new ByteArrayOutputStream();
+        for (int i = 0; i < ps.length; i++) o.write(ps[i], 0, ps[i].length);
+        return o.toByteArray();
+    }
+
+    static byte[] tlv(int tag, byte[] body) {
+        byte[] h;
+        int n = body.length;
+        if (n < 128) h = new byte[]{(byte) tag, (byte) n};
+        else if (n < 256) h = new byte[]{(byte) tag, (byte) 0x81, (byte) n};
+        else if (n < 65536) h = new byte[]{(byte) tag, (byte) 0x82, (byte) (n >> 8), (byte) n};
+        else h = new byte[]{(byte) tag, (byte) 0x83, (byte) (n >> 16), (byte) (n >> 8), (byte) n};
+        byte[] r = new byte[h.length + n];
+        System.arraycopy(h, 0, r, 0, h.length);
+        System.arraycopy(body, 0, r, h.length, n);
+        return r;
+    }
+}
