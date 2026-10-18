@@ -12,8 +12,8 @@ public class Words {
 
     // ═══════════ 引导页 · 通用 ═══════════
     public static final String OB_TITLE_C = "Reticle";
-    public static final String OB_BYE = "Reticle 已就绪。如需重新运行引导，请在「配置」中点击「重跑一遍引导」。";
-    public static final String OB_SUB = "先花一分钟看明白它是什么，再一步步开权限、试一试";
+    public static final String OB_BYE = "Reticle 已就绪。\n重跑引导：配置页「重跑一遍引导」。";
+    public static final String OB_SUB = "先看它是什么，再开权限、试一试。";
     public static final String OB_STEP0 = "是什么";
     public static final String OB_STEP1 = "连接 Shizuku";
     public static final String OB_STEP2 = "开无障碍";
@@ -21,86 +21,86 @@ public class Words {
     public static final String OB_STEP4 = "试一试";
     public static final String OB_NEXT = "下一步";
     public static final String OB_DONE = "完成";
-    public static final String OB_SKIP = "暂不配置（可随时在「配置」中重新运行）";
+    public static final String OB_SKIP = "暂不配置，稍后可在配置页重跑。";
     public static final String OB_RETRY = "重新检测";
 
     // ═══════════ 48 号单（2026-10-12）· 引导页 · 第 0 屏：这应用是干嘛的（大白话，先讲清再要权限） ═══════════
     public static final String OB_S0_T = "Reticle 是干嘛的";
-    public static final String OB_S0_P1 = "手机应用商店里的那些 AI 助手 App（豆包、Kimi、DeepSeek 之类）是封闭的：它们不让外部工具插手，接不了。";
-    public static final String OB_S0_P2 = "Reticle 接的是另一类 AI 客户端——能填「服务器地址」和「请求头」的那种（目前只适配过 RikkaHub）。它自己找不来这种客户端，得你先装一个、把它配好。";
-    public static final String OB_S0_P3 = "配好之后，Reticle 就是给 AI 配的手和眼睛：你在对话里让它看一眼屏幕上是什么、帮你点一下，它就能真的做到。它自己不会思考，也不会背着你干活——每一下都是你在对话里让它做的。";
-    public static final String OB_S0_P4 = "下面要开的三样权限，就是给这双手和眼睛用的：";
+    public static final String OB_S0_P1 = "豆包、Kimi 这类 App 不让外部工具插手。";
+    public static final String OB_S0_P2 = "Reticle 接能填地址和请求头的客户端。\n目前适配 RikkaHub。";
+    public static final String OB_S0_P3 = "配好后，它替 AI 看屏、点屏。\n每一下都由你发起。";
+    public static final String OB_S0_P4 = "三样权限，给它当手和眼睛。";
     public static final String OB_S0_L1 = "Shizuku：让它替你点屏幕、替你跑命令";
     public static final String OB_S0_L2 = "无障碍：让它能看见屏幕上的内容、能点";
     public static final String OB_S0_L3 = "文件访问：让它能读写手机里的文件";
 
     // ═══════════ 引导页 · 第 1 步：Shizuku ═══════════
-    public static final String OB_S1_LEAD = "Shizuku 是一款权限桥接工具：无需连接电脑，也无需 root，即可将系统权限授予 Reticle。只有借助 Shizuku，Reticle 才能执行点击与命令操作。";
+    public static final String OB_S1_LEAD = "Shizuku 把系统权限借给 Reticle。\n不用电脑和 root。";
 
     public static final String OB_S1_NONE_T = "尚未安装 Shizuku";
-    public static final String OB_S1_NONE_D = "请先下载并安装 Shizuku，完成后返回此页面。";
+    public static final String OB_S1_NONE_D = "先装 Shizuku，再回本页。";
     public static final String OB_S1_NONE_B1 = "下载 Shizuku";
     public static final String OB_S1_NONE_B2 = "装好了，检测一下";
 
     public static final String OB_S1_OFF_T = "已安装 Shizuku，但服务未运行";
-    public static final String OB_S1_OFF_D = "点击下方按钮打开 Shizuku，并按照其页面提示启动服务（通常选择「通过无线调试启动」），随后返回此页面。部分系统会弹出「应用跳转确认」，请选择「始终打开」，以免每次重复询问。";
+    public static final String OB_S1_OFF_D = "点下面按钮打开 Shizuku，按提示启动。\n然后回本页。";
     public static final String OB_S1_OFF_B1 = "打开 Shizuku";
     public static final String OB_S1_OFF_B2 = "已启动，检测一下";
 
     public static final String OB_S1_NO_T = "最后一步：授权 Reticle";
-    public static final String OB_S1_NO_D = "点击下方按钮，Shizuku 将弹出授权窗口，请选择「允许」。授权完成后，可在 Shizuku 的「应用管理」中查看 Reticle。";
+    public static final String OB_S1_NO_D = "点下面按钮，弹窗选「允许」。";
     public static final String OB_S1_NO_B1 = "请求授权";
-    public static final String OB_S1_WAIT = "等待授权：请在弹出的窗口中选择「允许」……";
-    public static final String OB_S1_DENY = "授权未成功。请再次点击「请求授权」，并在弹出的窗口中选择「允许」。";
-    public static final String OB_S1_NEED_RUN = "Shizuku 当前未在运行：请先点击上方「打开 Shizuku」启动服务，再点击「请求授权」。";
-    public static final String OB_S1_REQ_FAIL = "授权请求发送失败：请确认 Shizuku 正在运行，然后再次点击「请求授权」。";
-    public static final String OB_S1_NO_POPUP = "若点击后未弹出授权窗口：请切换到 Shizuku，进入「应用管理」，手动开启 Reticle 的开关（部分系统不会弹出授权窗口，需在此处手动开启）。";
+    public static final String OB_S1_WAIT = "等授权：弹窗选「允许」。";
+    public static final String OB_S1_DENY = "没成功。\n再点「请求授权」，选「允许」。";
+    public static final String OB_S1_NEED_RUN = "Shizuku 没运行。\n先点「打开 Shizuku」再授权。";
+    public static final String OB_S1_REQ_FAIL = "请求没发出。确认 Shizuku 在运行再点。";
+    public static final String OB_S1_NO_POPUP = "没弹窗？到 Shizuku 应用管理里手动打开。";
 
     public static final String OB_S1_OK_T = "Shizuku 已连接";
-    public static final String OB_S1_OK_D = "Reticle 现已获得系统权限，可以正常执行点击与命令操作。";
+    public static final String OB_S1_OK_D = "已获系统权限，点击与命令可用。";
 
     // ═══════════ 引导页 · 第 2 步：无障碍 ═══════════
-    public static final String OB_S2_LEAD = "Reticle 通过无障碍服务读取屏幕、识别文字并执行点击——这是其所有操作能力的基础。";
+    public static final String OB_S2_LEAD = "无障碍让 Reticle 读屏、认字、点击。";
     public static final String OB_S2_T = "把 Reticle 的开关打开";
-    public static final String OB_S2_D = "点击下方按钮前往系统设置，在列表中找到「Reticle」并开启开关，随后返回此页面。";
-    public static final String OB_S2_FIX = "若开关为灰色、无法开启：请前往「设置 → 应用 → Reticle → 右上角「更多」→ 解除应用限制」，然后返回重试。";
-    public static final String OB_S2_WD = "提示：部分系统会定期自动关闭第三方无障碍服务；Reticle 被关掉后会自己开回来（「配置」里可以关掉这个开关）。";
+    public static final String OB_S2_D = "点下面按钮去设置，打开 Reticle 开关。\n然后回本页。";
+    public static final String OB_S2_FIX = "开关灰色：设置 › 应用 ›\nReticle，点「解除限制」。";
+    public static final String OB_S2_WD = "部分系统会关掉无障碍。\n本应用可自动恢复，能关。";
     public static final String OB_S2_B1 = "去打开";
     public static final String OB_S2_NO_T = "尚未检测到无障碍已开启";
-    public static final String OB_S2_NO_D = "请返回系统设置页面，开启「Reticle」的无障碍开关，然后返回并点击「重新检测」。";
+    public static final String OB_S2_NO_D = "去设置打开无障碍开关，再点「重新检测」。";
     public static final String OB_S2_OK_T = "无障碍已开启";
     public static final String OB_S2_OK_D = "屏幕读取、文字识别与点击能力已就绪。";
 
     // ═══════════ 引导页 · 第 3 步：所有文件访问（35 号单） ═══════════
-    public static final String OB_S3F_LEAD = "Reticle 的工作文件保存在手机存储中专属于它的文件夹里，命令执行与结果保存都依赖它。系统默认不允许应用访问手机存储，需要你手动开启一次；不开的话，命令功能会静默失败（不报错）——建议保持开启。";
+    public static final String OB_S3F_LEAD = "命令和结果存在本应用文件夹。\n开「所有文件访问」才能读写。";
     public static final String OB_S3F_NO_T = "允许 Reticle 访问其专属文件夹";
-    public static final String OB_S3F_NO_D = "点击下方按钮前往系统设置，找到「Reticle」，开启「所有文件访问」开关，随后返回此页面。";
+    public static final String OB_S3F_NO_D = "点下面按钮，开「所有文件访问」。";
     public static final String OB_S3F_B1 = "去打开";
     public static final String OB_S3F_B2 = "已开启，重新检查";
     public static final String OB_S3F_OK_T = "已可访问专属文件夹";
     public static final String OB_S3F_OK_D = "此权限已配置完成，无需再次设置。";
     // 45 号单：「收成一份」——这条与 OB_S3F_LEAD 讲的是同一件事，已并入 LEAD，不再单独显示
-    public static final String OB_S3F_HINT = "若在该页面中找不到 Reticle：请先返回 Reticle 主界面，再次点击「去打开」；部分系统需要数秒才会显示该条目。";
+    public static final String OB_S3F_HINT = "找不到？回主界面再点「去打开」，等几秒。";
     public static final String OB_S3F_OLD_T = "此系统无需单独开启";
-    public static final String OB_S3F_OLD_D = "您的系统版本较低，Reticle 使用常规存储权限即可，点击「下一步」跳过。";
+    public static final String OB_S3F_OLD_D = "本系统用常规存储权限即可。\n点「下一步」。";
 
     // ═══════════ 引导页 · 第 4 步：自检 ═══════════
-    public static final String OB_S3_LEAD = "点击「开始自检」，Reticle 将自动检测四项能力，数秒内即可完成。";
+    public static final String OB_S3_LEAD = "点「开始自检」，自动检测四项。";
     public static final String OB_S3_B1 = "开始自检";
     public static final String OB_S3_RUNNING = "正在检测…（约 5 秒）";
     public static final String OB_S3_AGAIN = "重新检测";
     public static final String OB_S3_ALL_OK = "四项检测全部通过，可以正常使用。";
-    public static final String OB_S3_SOME_BAD = "部分检测未通过——请根据上方提示修复后，点击「再测一遍」。也可以先点「完成」，稍后在「配置」中重新运行引导。";
+    public static final String OB_S3_SOME_BAD = "有项目没过。\n修好再点「再测一遍」。";
 
     public static final String OB_C1 = "看屏幕";
     public static final String OB_C2 = "点屏幕";
     public static final String OB_C3 = "认字";
     public static final String OB_C4 = "跑命令";
 
-    public static final String OB_FIX_A11Y = "修复方法：返回上一步，开启无障碍开关。";
-    public static final String OB_FIX_SHZ = "修复方法：返回第 1 步，启动 Shizuku 并完成授权。";
-    public static final String OB_FIX_OCR = "修复方法：文字识别依赖无障碍截图，请先开启无障碍开关；若仍失败，请重启 Reticle。";
-    public static final String OB_FIX_SHOT = "修复方法：屏幕截图依赖无障碍服务，请先开启无障碍开关。";
+    public static final String OB_FIX_A11Y = "修法：回上一步打开无障碍。";
+    public static final String OB_FIX_SHZ = "修法：回第 1 步启动 Shizuku 并授权。";
+    public static final String OB_FIX_OCR = "修法：先开无障碍；仍失败就重启。";
+    public static final String OB_FIX_SHOT = "修法：先打开无障碍。";
 
     // ═══════════ 引导页 · 第 5 屏：你只需要知道这些（45 号单） ═══════════
     // 标题／副标题／9 条正文都在 Manual.java（唯一数据源＝与「详细说明·上手章」同一份文字）
@@ -112,13 +112,13 @@ public class Words {
     public static final String MN_SUB = "Reticle 是怎么来的、能干什么、干不了什么";
     public static final String MN_BACK_DIR = "← 目录";
     public static final String MN_TAIL = "这一页随应用一起走：文案只维护一处，改一次、两处（引导与这里）一起变。";
-    public static final String MA_HELP_DESC = "详细说明：Reticle 是怎么来的、能干什么、干不了什么";
+    public static final String MA_HELP_DESC = "详细说明：来历、能干什么、干不了什么。";
 
     // ═══════════ 引导页 · 弹出来的短提示（toast） ═══════════
     public static final String OB_TOAST_STORE = "请先下载并安装 Shizuku。";
     public static final String OB_TOAST_SHZ = "无法打开 Shizuku，请从桌面手动启动。";
-    public static final String OB_TOAST_A11Y = "无法打开系统设置，请手动前往「设置 → 快捷与辅助 → 无障碍」，开启 Reticle。";
-    public static final String OB_TOAST_FILES = "无法打开系统设置，请手动前往「设置 → 应用 → Reticle → 权限」，开启「所有文件访问」。";
+    public static final String OB_TOAST_A11Y = "打不开设置。手动去：\n设置 › 快捷与辅助 › 无障碍。";
+    public static final String OB_TOAST_FILES = "打不开设置。手动去：\n设置 › 应用 › Reticle，\n点「权限」。";
 
     // ═══════════ 主界面 · 顶部与首页 ═══════════
     public static final String MA_TITLE_A = "Reticle";
@@ -137,32 +137,32 @@ public class Words {
     public static final String MA_MCP_OFF = "未运行";
     public static final String MA_A11Y_ON = "在册 ✓";
     public static final String MA_A11Y_MAYBE = "疑似在册";
-    public static final String MA_A11Y_OFF = "不在册 ✗";
+    public static final String MA_A11Y_OFF = "不在册";
     public static final String MA_A11Y_EMPTY = "读回为空";
     public static final String MA_A11Y_ERR = "读取失败";
 
     // ───────── 53 号单：无障碍「连接态」（★在册 ≠ 能用） ─────────
     public static final String MA_A11Y_CONN_OK = "已连接 ✓";
-    public static final String MA_A11Y_CONN_DISC = "在册未连接 ⚠";
-    public static final String MA_A11Y_CONN_NOT = "不在册 ✗";
+    public static final String MA_A11Y_CONN_DISC = "在册未连接";
+    public static final String MA_A11Y_CONN_NOT = "不在册";
     public static final String MA_A11Y_CONN_UNK = "读取失败";
-    public static final String MA_A11Y_HINT_DISC = "无障碍还在系统的名单里、但系统没把它接上（通常是被杀过、或被杀后重开 App）。一般十几秒内会自己接回；若一直不回来：点下面「修一次」，或到系统设置里把 Reticle 的无障碍开关关一次再开（也可以直接重启手机）。";
-    public static final String MA_A11Y_HINT_NOT = "无障碍不在系统的名单里——看门狗（开关开着的话）会自己写回；写不回请到系统设置里把 Reticle 的无障碍开关打开一次。";
+    public static final String MA_A11Y_HINT_DISC = "在册但没接上。\n等十几秒，或点「修一次」。";
+    public static final String MA_A11Y_HINT_NOT = "不在册。看门狗会自动写回；\n写不回就去设置打开。";
     public static final String MA_BTN_A11Y_FIX = "修一次（重连无障碍）";
-    public static final String MA_BTN_A11Y_FIX_D = "做法：把 Reticle 自己那条从系统名单里删掉、再写回，逼系统重新连一次。只动 Reticle 自己这条，不影响系统中其他辅助服务。";
+    public static final String MA_BTN_A11Y_FIX_D = "把自己那条删掉再写回。\n只动本应用。";
     public static final String MA_MSG_A11Y_FIXING = "正在重连无障碍…（约 3~8 秒）";
     public static final String MA_MSG_A11Y_FIXED = "无障碍修复：";
-    public static final String MA_SHZ_OFF = "未运行 ✗";
-    public static final String MA_SHZ_OLD = "版本过旧 ✗";
+    public static final String MA_SHZ_OFF = "未运行";
+    public static final String MA_SHZ_OLD = "版本过旧";
     public static final String MA_SHZ_OK = "已授权 ✓";
-    public static final String MA_SHZ_NO = "未授权 ✗";
+    public static final String MA_SHZ_NO = "未授权";
     public static final String MA_SHZ_ERR = "查询异常";
     public static final String MA_NOTI_ON = "已开启";
     public static final String MA_NOTI_OFF = "未开启";
     public static final String MA_NOTI_NA = "无需";
 
     public static final String MA_HINT_TAP_CARD = "轻点任一状态卡片即可刷新";
-    public static final String MA_HINT_LOCAL_BUILD = "这台手机可以自己打包 App，不需要电脑——由 AI 调用";
+    public static final String MA_HINT_LOCAL_BUILD = "本机可自己打包 App。\n由 AI 调用。";
     public static final String MA_MSG_STATUS_REFRESHED = "状态已刷新";
 
     public static final String MA_SEC_TOOLS = "常用";
@@ -179,36 +179,36 @@ public class Words {
     public static final String MA_MSG_SELFTESTING = "正在自检…（约 5 秒）";
     public static final String MA_SELFTEST_HEAD = "自检结果";
     public static final String MA_MSG_SELFTEST_ERR = "自检异常：";
-    public static final String MA_MSG_RESTARTED = "已请求启动/重启（幂等，不会重复启动）。";
+    public static final String MA_MSG_RESTARTED = "已请求重启，不会重复启动。";
     public static final String MA_MSG_RESTART_ERR = "重启失败：";
 
     // ═══════════ 配置页 ═══════════
     public static final String CF_SEC_GUIDE = "引导";
     public static final String CF_GUIDE_T = "重跑一遍引导";
-    public static final String CF_GUIDE_D = "重新运行连接、无障碍、文件访问与自检四个步骤";
-    public static final String CF_GUIDE_D_TODO = "「所有文件访问」未开启——点击此处前往开启";
+    public static final String CF_GUIDE_D = "重跑连接、无障碍、文件访问、自检。";
+    public static final String CF_GUIDE_D_TODO = "「所有文件访问」未开，点这里去开。";
 
     public static final String CF_SEC_CONN = "连接";
     // ═══════════ 50 号单（2026-10-12）· 配置区：三个按钮＝名字即用途，各自写明「粘到哪个框」 ═══════════
     public static final String CF_BTN_HNAME = "复制请求头名称";
     public static final String CF_BTN_HVALUE = "复制请求头值（令牌）";
     public static final String CF_BTN_URL = "复制链接地址";
-    public static final String CF_HINT_HNAME = "粘到 RikkaHub：「设置 → MCP 服务器 → 新建 → 请求头 · 名称」";
-    public static final String CF_HINT_HVALUE = "粘到 RikkaHub：「设置 → MCP 服务器 → 新建 → 请求头 · 值」";
-    public static final String CF_HINT_URL = "粘到 RikkaHub：「设置 → MCP 服务器 → 新建 → 服务器地址」，传输类型选 Streamable HTTP";
-    public static final String CF_CONN_LEAD = "在 RikkaHub 里新增一条 MCP 服务器，照着下面三个按钮挨个复制、挨个粘。";
-    public static final String CF_CONN_OFFICIAL = "还没装过这类 AI 客户端？RikkaHub 官网：https://rikka-ai.com";
+    public static final String CF_HINT_HNAME = "新建服务器后填「请求头 · 名称」。";
+    public static final String CF_HINT_HVALUE = "同一页填「请求头 · 值」。";
+    public static final String CF_HINT_URL = "填「服务器地址」，\n类型选 Streamable HTTP。";
+    public static final String CF_CONN_LEAD = "在 RikkaHub 新建 MCP 服务器。\n下三个按钮逐个复制、粘贴。";
+    public static final String CF_CONN_OFFICIAL = "没装客户端？官网：https://rikka-ai.com";
     public static final String CF_MSG_HNAME_OK_A = "已复制请求头名称：";
-    public static final String CF_MSG_HNAME_OK_B = " → 粘到 RikkaHub → 设置 → MCP 服务器 → 新建 → 请求头 · 名称";
+    public static final String CF_MSG_HNAME_OK_B = "。粘到 RikkaHub 的「请求头 · 名称」。";
     public static final String CF_MSG_HNAME_ERR = "复制请求头名称失败：";
     public static final String CF_MSG_HVALUE_OK_A = "已复制请求头值（含 Bearer，共 ";
-    public static final String CF_MSG_HVALUE_OK_B = " 个字符）→ 粘到 RikkaHub → 设置 → MCP 服务器 → 新建 → 请求头 · 值";
+    public static final String CF_MSG_HVALUE_OK_B = " 个字符）。粘到「请求头 · 值」。";
     public static final String CF_MSG_HVALUE_ERR = "复制请求头值失败：";
     public static final String CF_MSG_URL_OK_A = "已复制链接地址：";
-    public static final String CF_MSG_URL_OK_B = " → 粘到 RikkaHub → 设置 → MCP 服务器 → 新建 → 服务器地址（传输类型选 Streamable HTTP）";
+    public static final String CF_MSG_URL_OK_B = "。粘到 RikkaHub 的「服务器地址」。";
     public static final String CF_MSG_URL_ERR = "复制链接地址失败：";
     public static final String CF_MIN_T = "使用前须知";
-    public static final String CF_MIN_D = "最要紧的几条说明——就是引导最后那一屏";
+    public static final String CF_MIN_D = "最要紧的几条，就是引导最后一屏。";
 
     public static final String CF_SEC_ADDR = "服务地址";
     public static final String CF_ADDR_LINE = "服务地址（仅本机）· 日志更新 ";
@@ -216,7 +216,7 @@ public class Words {
 
     public static final String CF_SEC_BEHAV = "行为";
     public static final String CF_SW_VIB_T = "静音模式下保留震动提醒";
-    public static final String CF_SW_VIB_D = "开启后，静音模式下仍会震动提醒（使用闹钟通道）；关闭后遵循系统静音设置。任何情况下均不会发声。";
+    public static final String CF_SW_VIB_D = "开＝静音时也震。\n关＝跟随系统。都不发声。";
     public static final String CF_MSG_VIB_ON = "已开启：静音时也震";
     public static final String CF_MSG_VIB_OFF = "已关闭：尊重系统静音";
     public static final String CF_ITEM_NOTI_SET = "通知设置";
@@ -224,7 +224,7 @@ public class Words {
 
     public static final String CF_SEC_WD = "无障碍看门狗";
     public static final String CF_SW_WD_T = "掉了自动重开";
-    public static final String CF_SW_WD_D = "部分国产系统会自动关闭本应用的无障碍服务（最长约每 5 小时一次，或当您打开系统「无障碍」设置页时）。开启此开关后，若被关闭，Reticle 将自动恢复——仅恢复本应用，不影响其他辅助服务；关闭开关后，Reticle 不会修改系统设置。";
+    public static final String CF_SW_WD_D = "被系统关掉后自动重开本应用的无障碍。";
     public static final String CF_MSG_WD_ON = "已开启：掉了自动重开";
     public static final String CF_MSG_WD_OFF = "已关闭：不再自动重开";
     public static final String CF_ITEM_WD_CHECK = "立即检查一次";
@@ -238,27 +238,27 @@ public class Words {
     public static final String CF_THEME_LIGHT = "浅色";
     public static final String CF_THEME_DARK = "深色";
     public static final String CF_BLACK_T = "极夜";
-    public static final String CF_BLACK_D_ON = "开启＝纯黑背景（OLED 屏幕省电）；关闭＝深灰背景";
+    public static final String CF_BLACK_D_ON = "开＝纯黑，OLED 更省电。\n关＝深灰。";
     public static final String CF_BLACK_D_OFF = "切换至「深色」主题后可开启此选项";
 
     public static final String CF_NAV_SEC = "底部导航";
-    public static final String CF_NAV_D = "导航条参数：需要更强的玻璃质感，可选择「棱镜强」；需要更柔和的弹性效果，可选择「柔和更弹」。修改立即生效，重启应用后保留。";
+    public static final String CF_NAV_D = "选导航条手感：均衡、棱镜强、柔和更弹。";
     public static final String CF_NAV_P1 = "均衡";
     public static final String CF_NAV_P2 = "棱镜强";
     public static final String CF_NAV_P3 = "柔和更弹";
     // 54 号单 A：底部导航蒙版第二版的两根滑杆（配置页「底部导航」区）
     public static final String CF_MASK_ALPHA_T = "蒙版浓度";
-    public static final String CF_MASK_ALPHA_D = "停住后盖在图标上的那层极淡蒙版的深浅。越淡越看不出边界，太淡又显不出停在哪一页。默认 12%。";
-    public static final String CF_MASK_GAP_T = "滴→蒙版 间隔";
-    public static final String CF_MASK_GAP_D = "滴停稳后先淡出，隔这么久蒙版再淡入；0 ＝ 两者同时（原来的交叉淡化）。默认 120 毫秒。";
+    public static final String CF_MASK_ALPHA_D = "停住后蒙版的深浅。默认 12%。";
+    public static final String CF_MASK_GAP_T = "滴到蒙版间隔";
+    public static final String CF_MASK_GAP_D = "滴停稳后多久蒙版淡入。默认 120 毫秒。";
 
     public static final String CF_SEC_FX = "导航动效";
-    public static final String CF_FX_INTRO = "轻点图标，或将玻璃滴拖动至某个图标上松开时，该图标将旋转并放大；拖动过程中导航条会拉长变细，松开后回弹。下方三个滑杆可随时调整，修改后自动保存。";
+    public static final String CF_FX_INTRO = "点图标或拖玻璃滴到图标上，\n图标会转、会放大。";
     public static final String CF_FX1_TITLE = "弹跳幅度";
     public static final String CF_FX1_HINT = "导航条拉长与回弹幅度（2%–30%）";
     public static final String CF_FX1_UNIT = "%";
     public static final String CF_FX2_TITLE = "扩张幅度";
-    public static final String CF_FX2_HINT = "图标放大峰值（100%–260%），放大范围自动限制在导航条内";
+    public static final String CF_FX2_HINT = "图标放大峰值 100% 到 260%。";
     public static final String CF_FX2_UNIT = "%";
     public static final String CF_FX3_TITLE = "动画时长";
     public static final String CF_FX3_HINT = "图标旋转一周所需时长（520–1200 毫秒）";
@@ -269,12 +269,12 @@ public class Words {
 
     public static final String CF_SEC_MAINT = "维护";
     public static final String CF_STOP_T = "一键停止所有功能初始化";
-    public static final String CF_STOP_D = "关闭看门狗与本地服务，并清除引导标记——恢复至初始状态；重新打开 Reticle 即可恢复";
-    public static final String CF_STOP_ASK = "将执行以下操作：\n① 关闭「无障碍掉线自动重开」；\n② 停止 Reticle 的后台服务与常驻通知；\n③ 下次打开应用时将重新显示引导。\n系统的无障碍开关不在此管理范围内，如需关闭请前往系统设置。\n完成后重新打开 Reticle 即可恢复使用。";
+    public static final String CF_STOP_D = "关看门狗和本地服务，清引导标记。";
+    public static final String CF_STOP_ASK = "将做三件事：\n关掉无障碍自动重开。\n停止后台服务和常驻通知。\n下次打开重走引导。\n无障碍开关不受影响。\n重开应用即恢复。";
     public static final String CF_DLG_CANCEL = "取消";
     public static final String CF_DLG_STOP = "停止";
-    public static final String CF_STOP_DONE = "已停止全部功能。重新打开 Reticle 即可恢复（引导将重新显示）。";
-    public static final String CF_STOP_NOTE = "停止后，助手暂时无法连接 Reticle；重新打开应用即可恢复。";
+    public static final String CF_STOP_DONE = "已停止。重开应用即恢复。";
+    public static final String CF_STOP_NOTE = "停止期间助手连不上。";
     public static final String CF_MSG_DLG_ERR = "弹窗失败：";
 
     // ═══════════ 高级页 ═══════════
@@ -321,14 +321,16 @@ public class Words {
     public static final String NT_CH_TEST = "通知试验";
     public static final String NT_CH_TEST_D = "通知与原子岛能力试验（会提醒）";
     public static final String NT_CH_LIVE = "助手实况";
-    public static final String NT_CH_LIVE_D = "原生实况型通知试验（18 号·ProgressStyle）";
+    public static final String NT_CH_LIVE_D = "实况型通知（试验）";
     public static final String NT_DEF_TITLE = "Reticle";
-    public static final String NT_WD_TEXT = "无障碍看门狗运行中：被系统关闭后将自动恢复";
+    public static final String NT_WD_TEXT = "看门狗运行中，被系统关掉会自动恢复。";
     public static final String NT_ST_IDLE = "Reticle·待命中";
     public static final String NT_ST_WORK = "Reticle·正在";
     public static final String NT_ST_OUT = "Reticle·输出中";
     public static final String NT_ST_BUSY = "忙";
-    public static final String NT_BODY_ONLINE = "助手在线";
+    public static final String NT_BODY_ONLINE = "助手在线 · 点这里打开";
+    public static final String MA_A11Y_BACK_OK = "无障碍已自动恢复";
+    public static final String MA_A11Y_BACK_FAIL = "没恢复。去设置手动打开无障碍。";
     public static final String NT_BODY_ONLINE_LAST = "助手在线 · 最近：";
     public static final String NT_BODY_LAST = "最近：";
     public static final String NT_BODY_WORKED = "已工作 ";
@@ -346,23 +348,74 @@ public class Words {
     public static final String NT_TOOL_BUILD = "打包";
     public static final String NT_TOOL_PING = "回铃";
 
+    // ═══════════ 86 号单 · 26 个工具的中文名（一张表；通知／手册／气泡共用） ═══════════
+    public static final String NT_TOOL_DL = "下载";   // 86：提到表前（ECJ 不许引用后定义的字段）
+    public static final String NT_TOOL_BUZZ = "震动";
+    public static final String NT_TOOL_STATUS = "状态";
+    public static final String NT_TOOL_HELP = "帮助";
+    public static final String NT_TOOL_ACTTEST = "动作自测";
+    public static final String NT_TOOL_TAP_TEXT = "按字点";
+    public static final String NT_TOOL_WAIT_TEXT = "等字";
+    public static final String NT_TOOL_WAIT_STABLE = "等画面";
+    public static final String NT_TOOL_SCROLL = "滚屏";
+    public static final String NT_TOOL_PASTE = "粘贴";
+    public static final String NT_TOOL_SCROLL_TO_TEXT = "滚找字";
+    public static final String NT_TOOL_DO_CHAIN = "批量动作";
+    public static final String NT_TOOL_WINDOWS = "看窗口";
+
+    // ═══════════ 87 号单 · 极简模式（气泡只说人话＋三种状态） ═══════════
+    public static final String MS_MIN_DONE = "已返回";
+    public static final String MS_MIN_FAIL = "失败";
+    public static final String MS_MIN_TIMEOUT = "超时失败";
+
+    /** 工具名 → 中文名。★已译的沿用原译；不在这里＝返回 null（别乱起名）。 */
+    public static final String[][] TOOL_ZH = {
+            {"shot", NT_TOOL_SHOT}, {"tap", NT_TOOL_TAP}, {"swipe", NT_TOOL_SWIPE}, {"key", NT_TOOL_KEY},
+            {"ui", NT_TOOL_UI}, {"ocr", NT_TOOL_OCR}, {"input", NT_TOOL_INPUT}, {"longpress", NT_TOOL_LONGPRESS},
+            {"shell", NT_TOOL_SHELL}, {"notify", NT_TOOL_NOTIFY}, {"build", NT_TOOL_BUILD},
+            {"download", NT_TOOL_DL}, {"download_status", NT_TOOL_DL}, {"ping", NT_TOOL_PING},
+            {"buzz", NT_TOOL_BUZZ}, {"status", NT_TOOL_STATUS}, {"help", NT_TOOL_HELP},
+            {"acttest", NT_TOOL_ACTTEST}, {"tap_text", NT_TOOL_TAP_TEXT}, {"wait_text", NT_TOOL_WAIT_TEXT},
+            {"wait_stable", NT_TOOL_WAIT_STABLE}, {"scroll", NT_TOOL_SCROLL}, {"paste", NT_TOOL_PASTE},
+            {"scroll_to_text", NT_TOOL_SCROLL_TO_TEXT}, {"do_chain", NT_TOOL_DO_CHAIN},
+            {"windows", NT_TOOL_WINDOWS}
+    };
+
+    public static String toolZh(String t) {
+        if (t == null) return null;
+        for (int i = 0; i < TOOL_ZH.length; i++) {
+            if (TOOL_ZH[i][0].equals(t)) return TOOL_ZH[i][1];
+        }
+        return null;
+    }
+
+    // ═══════════ 86 号单 · 大通知的三种结果与守护那行 ═══════════
+    public static final String NT_R_DONE = "完成";
+    public static final String NT_R_FAIL = "没成";
+    public static final String NT_R_TIMEOUT = "超时没成";
+    public static final String NT_R_BUSY = "进行中";
+    public static final String NT_GUARD_ON = "守护：在线";
+    public static final String NT_GUARD_HIDE = "隐藏守护";
+    public static final String NT_GUARD_SHOW = "显示守护";
+    public static final String NT_A11Y_LOST = "无障碍掉线了 正在重连";
+    public static final String NT_A11Y_LOST_SUB = "助手暂时看不见屏幕。接回后消失。";
     public static final String NT_BRIDGE_TITLE = "手机控制通道";
-    public static final String NT_BRIDGE_TEXT = "通道已自动关闭（长时间未使用）。需要时重新启动通道服务即可恢复。";
+    public static final String NT_BRIDGE_TEXT = "通道闲置已关闭，重启服务即恢复。";
 
     // ═══════════ 看门狗那一句（配置页显示） ═══════════
-    public static final String WD_LINE_OFF = "看门狗：已关闭 —— 我们不碰系统设置。";
+    public static final String WD_LINE_OFF = "看门狗：已关闭。不碰系统设置。";
     public static final String WD_LINE_PREFIX = "当前状态：";
     public static final String WD_A11Y_ON = "无障碍已连接 ✓";
-    public static final String WD_A11Y_OFF = "无障碍未开启 ✗";
-    public static final String WD_A11Y_DISC = "无障碍在册但没接上 ⚠";
-    public static final String WD_DISC_HINT = "；按「配置 → 无障碍」里的「修一次」重连，或到系统设置里把开关关一次再开";
-    public static final String CF_A11Y_LINK_LEAD = "无障碍有「在册」和「接上」两件事：在系统名单里只算有资格；系统真的接上了（能读屏、能点）才算能用。上面那句「当前状态」两件事一起报——显示「在册但没接上 ⚠」时，用下面的「修一次」逼它重连。";
+    public static final String WD_A11Y_OFF = "无障碍未开启";
+    public static final String WD_A11Y_DISC = "无障碍在册但没接上";
+    public static final String WD_DISC_HINT = "；点「修一次」，或关开一次无障碍";
+    public static final String CF_A11Y_LINK_LEAD = "在册只是有资格，接上才能读屏和点。\n没接上就点「修一次」。";
     public static final String WD_FIXES_A = "；已自动恢复 ";
     public static final String WD_FIXES_B = " 次";
     public static final String WD_FIXES_C = "（最近 ";
     public static final String WD_FIXES_D = "）";
     public static final String WD_CHECKED = "；最近检查 ";
-    public static final String WD_FAIL = "；⚠ 最近一次自动恢复失败——请前往系统无障碍设置页手动开启";
+    public static final String WD_FAIL = "；上次恢复失败，请手动打开无障碍";
 
     // ═══════════ 系统设置里露出的字都放在 res/values/strings.xml（app_name／a11y_desc／a11y_summary／fgs_watchdog_desc） ═══════════
 
@@ -579,7 +632,6 @@ public class Words {
     public static final String DL_NT_LINE_FMT = "已下 %s / %s（%d%%）· %s";
     public static final String DL_NT_LINE_NOSIZE_FMT = "已下 %s · %s";
     public static final String DL_NT_SPEED_UNKNOWN = "速度--";
-    public static final String NT_TOOL_DL = "下载";
 
     // 下载回话（给助手看的那几句）
     public static final String RP_DL_BAD_URL = "下载失败：url 得是 http/https 开头的完整网址";
@@ -741,44 +793,44 @@ public class Words {
     /** 官网地址（一键复制用；与「复制链接地址」区分：那个复制的是本机服务地址） */
     public static final String CF_OFFICIAL_URL = "https://rikka-ai.com";
     public static final String CF_BTN_OFFICIAL = "复制官网地址";
-    public static final String CF_HINT_OFFICIAL = "复制的是 RikkaHub 官网（用浏览器打开就能下载）——不是上面那个本机服务地址";
-    public static final String CF_MSG_OFFICIAL_OK = "已复制官网地址：https://rikka-ai.com（在浏览器里打开，就是 RikkaHub 的下载页）";
+    public static final String CF_HINT_OFFICIAL = "复制 RikkaHub 官网，不是本机地址。";
+    public static final String CF_MSG_OFFICIAL_OK = "已复制官网地址。";
     public static final String CF_MSG_OFFICIAL_ERR = "复制官网地址失败：";
 
     public static final String CF_SEC_TOKEN = "令牌与地址";
-    public static final String CF_TOKEN_WHAT = "令牌＝只发给本机的通行证：AI 助手每次找 Reticle 都要带上它，对不上就不理。要是令牌被别人拿到、他又能访问你手机的 127.0.0.1，他也能指挥 Reticle。";
-    public static final String CF_TOKEN_HOW = "怀疑被人看到、或者曾经发给过别人：点「重新生成令牌」——旧令牌立刻作废，再到 RikkaHub 里把请求头值重新粘一次就恢复了。";
-    public static final String CF_LINK_WHAT = "服务地址＝Reticle 在本机的地址（只有本机能连）。换一个端口就是换一个新地址，换完 RikkaHub 里的服务器地址也要跟着改。";
+    public static final String CF_TOKEN_WHAT = "令牌是本机通行证，助手每次都要带。\n别外传。";
+    public static final String CF_TOKEN_HOW = "怀疑泄露就重新生成，旧令牌立即作废。";
+    public static final String CF_LINK_WHAT = "地址只在本机可用。\n换端口后 RikkaHub 也要改。";
     public static final String CF_BTN_TOKEN_NEW = "重新生成令牌";
-    public static final String CF_HINT_TOKEN_NEW = "旧令牌立刻失效；换完要到 RikkaHub 里重新粘一次「请求头 · 值」";
-    public static final String CF_TOKEN_ASK = "确定重新生成令牌吗？\n\n① 旧令牌立刻作废，正在用旧令牌的连接会断；\n② 然后到上面点「复制请求头值（令牌）」，在 RikkaHub 的「请求头 · 值」里重新粘一次，就恢复了。";
-    public static final String CF_MSG_TOKEN_NEW = "已生成新令牌（旧的已失效）→ 点「复制请求头值（令牌）」，到 RikkaHub 里重新粘一次";
+    public static final String CF_HINT_TOKEN_NEW = "旧令牌立即失效。\n换完重粘「请求头 · 值」。";
+    public static final String CF_TOKEN_ASK = "确定重新生成？\n旧令牌立即作废，连接会断。\n然后去 RikkaHub 重粘一次。";
+    public static final String CF_MSG_TOKEN_NEW = "新令牌已生成。\n重粘「请求头 · 值」。";
     public static final String CF_BTN_HNAME_SET = "修改请求头名称";
-    public static final String CF_HINT_HNAME_SET = "默认 Authorization；改了以后，RikkaHub 里的「请求头 · 名称」要填一样的";
+    public static final String CF_HINT_HNAME_SET = "默认 Authorization。\n改后 RikkaHub 填同名。";
     public static final String CF_HNAME_DLG_T = "修改请求头名称";
-    public static final String CF_HNAME_DLG_ASK = "只填名称本身，例如 Authorization 或 X-Reticle-Token；改完请到 RikkaHub 的「请求头 · 名称」里填一样的名字。";
-    public static final String CF_HNAME_BAD = "这个名字不能用作请求头：只允许英文字母、数字和「-」，并且要以字母开头";
+    public static final String CF_HNAME_DLG_ASK = "只填名称，例如 Authorization。";
+    public static final String CF_HNAME_BAD = "字母开头，只含字母、数字和「-」。";
     public static final String CF_MSG_HNAME_SET_A = "请求头名称已改为：";
-    public static final String CF_MSG_HNAME_SET_B = " → 记得去 RikkaHub 里把「请求头 · 名称」改成一样的";
+    public static final String CF_MSG_HNAME_SET_B = "。去 RikkaHub 改成同名。";
     public static final String CF_BTN_PORT_NEW = "换个新地址（换端口）";
-    public static final String CF_HINT_PORT_NEW = "换完拿到新地址；RikkaHub 里的服务器地址要改成新的（旧地址立刻失效）";
+    public static final String CF_HINT_PORT_NEW = "换完得到新地址。旧地址失效。\nRikkaHub 里也要改。";
     public static final String CF_PORT_DLG_T = "换个新地址";
     public static final String CF_PORT_DLG_ASK_A = "填 1024~65535 之间的端口号。现在用的是 ";
-    public static final String CF_PORT_DLG_ASK_B = "；填一个没被别的应用占用的号就行（想改回来，再填 8770 就行）。";
-    public static final String CF_PORT_BAD = "这个端口号用不了：请填 1024~65535 之间的数字，且不能是别的应用正在用的";
+    public static final String CF_PORT_DLG_ASK_B = "。填 1024 到 65535 之间未占用的号。";
+    public static final String CF_PORT_BAD = "填 1024 到 65535 之间，且未被占用。";
     public static final String CF_MSG_PORT_SET_A = "服务地址已换成：";
-    public static final String CF_MSG_PORT_SET_B = " → 记得去 RikkaHub 里把「服务器地址」改成新的";
+    public static final String CF_MSG_PORT_SET_B = "。去 RikkaHub 改服务器地址。";
     public static final String CF_DLG_OK = "确定";
     public static final String CF_ADDR_HNAME = "请求头名称：";
 
     // ═══════════ 52 号单（2026-10-12）· 开机自启与内存自保 ═══════════
     public static final String CF_SW_BOOT_T = "开机自动恢复";
-    public static final String CF_SW_BOOT_D = "开机后自动把 Reticle 的无障碍打开、并把后台服务拉起来，让助手一开机就能用。★两个前提（做不到就只能您手动开）：① 要系统权限（Shizuku）配合——手机上不允许应用自己开无障碍；② 部分系统还要另外放行「自启动／允许后台运行」，否则开机时根本收不到通知。此开关与上面的「掉了自动重开」各自独立。";
-    public static final String CF_MSG_BOOT_ON = "已开启：开机自动恢复（记得先去系统里放行「自启动」）";
+    public static final String CF_SW_BOOT_D = "开机自动开无障碍，并拉起服务。\n需要 Shizuku。\n部分系统要放行自启动。";
+    public static final String CF_MSG_BOOT_ON = "已开启。记得去系统里放行「自启动」。";
     public static final String CF_MSG_BOOT_OFF = "已关闭：开机不做任何事";
     public static final String CF_BOOT_GOTO_T = "去系统「自启动」设置";
-    public static final String CF_BOOT_GOTO_D = "打开系统里放行后台运行／自启动的那一页，把 Reticle 加进白名单（不同品牌位置不同；打不开就到系统设置里搜「自启动」）";
-    public static final String CF_BOOT_GOTO_FAIL = "这台机器上没找到「自启动」设置页，请到系统设置里搜「自启动」或「后台运行」";
+    public static final String CF_BOOT_GOTO_D = "去放行后台运行那页，\n把 Reticle 加白名单。";
+    public static final String CF_BOOT_GOTO_FAIL = "没找到。去系统设置搜「自启动」。";
     public static final String MEM_LINE_PREFIX = "内存：";
     public static final String MEM_LV0 = "正常";
     public static final String MEM_LV1 = "放慢（缓）";
@@ -796,11 +848,16 @@ public class Words {
     // ═══════════ 64 号单 · 屏幕上的小形象（看板娘） ═══════════
     public static final String CF_SEC_MASCOT = "屏幕上的小形象";
     public static final String CF_SW_MASCOT_T = "显示小形象";
-    public static final String CF_SW_MASCOT_D = "开着时，屏幕贴边上一个自带的小形象：助手调工具时它冒一句在干什么，助手汇报时它替助手说话；十来秒没事就变淡（只是变淡，颜色还在），再十来秒收成贴边细条。★它可以摸：点一下有回弹、按住能拖（松手吸左／右边缘），拖完位置记着；在气泡上滑是滚文字、在它身上拖是挪位置。★助手汇报 30 秒、失败 60 秒、工具一句话 8 秒；汇报还挂在屏幕上时，工具只在旁边点个小角标，不会把话顶掉。取图（截图／认字）前和它可能挡住的点击前，它会自动让开。";
+    // ★87 极简模式：开关（默认关）。开着时常规那几项全灰，极简自己的参数留给 89 单。
+    public static final String CF_SW_MINIMAL_T = "极简模式";
+    public static final String CF_SW_MINIMAL_D = "开＝只留白条和气泡，不显示形象。\n关＝常规样子。";
+    public static final String CF_MSG_MINIMAL_ON = "极简模式：只留白条和气泡";
+    public static final String CF_MSG_MINIMAL_OFF = "已回到常规样子";
+    public static final String CF_SW_MASCOT_D = "开＝贴边显示小形象。\n工具和汇报会冒一句。\n闲置变淡，再收成细条。\n可点可拖，位置会记住。\n截图和点击前会让开。";
     public static final String CF_MSG_MASCOT_ON = "小形象已打开";
     public static final String CF_MSG_MASCOT_OFF = "小形象已关掉";
     public static final String CF_ITEM_MASCOT_IMG = "给小形象换一张图";
-    public static final String CF_ITEM_MASCOT_IMG_D = "从相册／文件里挑一张图当形象（选完立刻生效）。想换回自带的那张小脸：再挑一张，或把外观文件夹里的形象.png 删掉。";
+    public static final String CF_ITEM_MASCOT_IMG_D = "从相册挑图当形象。\n换回自带小脸：删掉形象.png。";
     public static final String MS_IMG_CANCEL = "没选图片，形象保持原样";
     public static final String MS_IMG_OK = "已换成你选的图（立刻生效，不用重启）";
     public static final String MS_IMG_NOACCESS = "读不到这张图（系统没给访问权），形象保持原样";
@@ -811,84 +868,84 @@ public class Words {
 
     // ═══════════ 65 号单 · 桌面伙伴（可点·可拖·气泡自由·工具标签） ═══════════
     public static final String CF_MASCOT_ALPHA_T = "形象不透明度";
-    public static final String CF_MASCOT_ALPHA_D = "它自己有多明显（默认 85%）：调太低会看不清，调太高会挡住底下的字。";
+    public static final String CF_MASCOT_ALPHA_D = "形象的明显程度，默认 85%。";
     public static final String CF_MASCOT_POS_T = "气泡位置";
-    public static final String CF_MASCOT_POS_D = "气泡从形象的哪边冒出来（默认斜 45°；贴右时自动朝屏内展开）。点这一行循环切换：斜 45° ↔ 正上方。★只在「横向优先」时起作用（纵向优先时气泡固定贴屏幕侧边＋在形象上方）。";
+    public static final String CF_MASCOT_POS_D = "气泡从哪边冒出。\n点这一行切换：斜 45° 或上方。";
     public static final String[] CF_MASCOT_POS_NAMES = { "斜 45°", "正上方" };   // 65 四版：只留这两个（用户拍）
     public static final String CF_HIDE_T = "在 AI 客户端里";
-    public static final String CF_HIDE_D = "你在 RikkaHub 这类客户端里时，它缩成边上一条细线、不冒泡（工具那句与汇报都安静——不是停工：工具照调、日志照记、汇报照存）；点一下细条＝临时出来 5 分钟（切走就恢复）；失败会自己冒头。点这一行循环切换三档。";
+    public static final String CF_HIDE_D = "在客户端里缩成细线，不冒泡。\n点细条出来 5 分钟。\n点这一行切三档。";
     // ★71 B 线（2026-10-15）：让位名单＝勾选应用列表（用户提：别让我自己输包名）
     public static final String CF_HIDE_PKGS_T = "让位名单（勾选应用）";
-    public static final String CF_HIDE_PKGS_D = "默认勾着 RikkaHub。点这一行进应用列表：能启动的应用都在那儿，勾上谁＝谁在前台时它让位（Reticle 自己在前台也一样）；勾完立刻生效，不用重启。找不到的可以手动输包名。";
+    public static final String CF_HIDE_PKGS_D = "进列表勾选应用。\n勾上的在前台时它让位。\n也能手输包名。";
     public static final String CF_HIDE_PKGS_COUNT_FMT = "当前：勾了 %d 个应用";
     public static final String CF_HIDE_PKGS_DLG_T = "让位名单";
-    public static final String CF_HIDE_PKGS_DLG_ASK = "AI 客户端的包名，逗号分隔（例：me.rerere.rikkahub, com.example.client）";
+    public static final String CF_HIDE_PKGS_DLG_ASK = "客户端包名，逗号分隔。";
     public static final String CF_MSG_HIDE_PKGS_A = "已保存，让位名单：";
     public static final String AP_T = "让位名单：勾上谁，谁在前台时它让位";
-    public static final String AP_D = "默认勾着 RikkaHub（AI 客户端）。勾选立刻生效，不必重启。列表只在本机读、只存在本机设置里——不上传、不进通知；日志里只记数量。找不到的应用可以「手动输入包名」。";
+    public static final String AP_D = "默认勾着 RikkaHub（AI 客户端）。\n勾上立刻生效，不用重启。\n名单只在本机读、只存本机。\n找不到的应用可「手动输入包名」。";
     public static final String AP_SEARCH = "搜索应用名或包名";
     public static final String AP_SHOW_SYS = "显示系统应用";
     public static final String AP_MANUAL = "手动输入包名";
     public static final String AP_MANUAL_T = "手动输入包名";
-    public static final String AP_MANUAL_D = "逗号分隔（例：me.rerere.rikkahub, tv.danmaku.bili）。列表里找不到的应用用这里加。";
+    public static final String AP_MANUAL_D = "逗号分隔，例：\nme.rerere.rikkahub\ntv.danmaku.bili\n找不到的应用用这里加。";
     public static final String AP_DONE = "完成";
     public static final String AP_HINT_FMT = "列出来 %d 个，已勾 %d 个";
     public static final String AP_LOADING = "正在读应用列表…";
     public static final String AP_EMPTY = "没读到应用。可以「手动输入包名」。";
     public static final String AP_SRC_PM = "PackageManager";
     public static final String AP_SRC_SHZ = "Shizuku 只读包名";
-    public static final String AP_SHZ_NOTE = "；只拿到包名（系统不让列清单，已改走 Shizuku）";
+    public static final String AP_SHZ_NOTE = "；只拿到包名（系统不让列清单）";
     public static final String AP_SYS_TAG = "（系统应用）";
     public static final String AP_LOG_FMT = "应用列表：%d 个可启动，已勾 %d";
     public static final String CF_MSG_HIDE_MODE_FMT = "在 AI 客户端里：%s";
     public static final String CF_MSG_MASCOT_POS_FMT = "气泡位置：%s";
     public static final String CF_SW_MASCOT_MIRROR_T = "自动镜像";
-    public static final String CF_SW_MASCOT_MIRROR_D = "贴左边时把形象左右翻过来（脸朝着屏幕里），贴右边保持原样。";
+    public static final String CF_SW_MASCOT_MIRROR_D = "贴左边时左右翻转，脸朝屏内。";
     public static final String CF_MSG_MASCOT_MIRROR_ON = "已开：贴左时自动镜像";
     public static final String CF_MSG_MASCOT_MIRROR_OFF = "已关：不再镜像";
     public static final String CF_SW_MASCOT_VERT_T = "气泡形状：纵向优先";
-    public static final String CF_SW_MASCOT_VERT_D = "关着＝横向优先（气泡在形象旁边横着一条）；开着＝纵向优先（气泡完全贴屏幕侧边、在形象上方竖着一条）。两种都自动收住大小——气泡不会占满屏，字多了就用手在气泡里上下滑。";
+    public static final String CF_SW_MASCOT_VERT_D = "关＝气泡在旁边。\n开＝气泡贴屏边、在上方。";
     public static final String CF_MSG_MASCOT_VERT_ON = "气泡形状：纵向优先";
     public static final String CF_MSG_MASCOT_VERT_OFF = "气泡形状：横向优先";
 
     // ═══════════ 73 号单（2026-10-16）· 应用图标 ═══════════
     public static final String CF_SEC_ICON = "应用图标";
-    public static final String CF_ICON_LEAD = "这里能改的是「桌面上的图标长什么样」，两件事：①下面四款自带的，点一下就用（真的换图标——桌面、最近任务里都变，不用重装）；②想用你自己的图，点最后一行，它会生成一个带这张图的桌面图标。★应用图标本身要重新打包才能换（这是系统的规矩），所以自己上传的图只能当桌面入口——桌面入口和应用图标长得一样、点起来也一样。";
+    public static final String CF_ICON_LEAD = "这里换桌面图标。\n四款自带的点一下就用。\n最后一行用自己的图生成入口。\n应用图标要重打包才能换。";
     public static final String CF_ICON_PIN_T = "用我自己的图做个桌面图标";
-    public static final String CF_ICON_PIN_D = "从相册／文件里挑一张图：会居中裁成方（不拉伸变形），然后请你在系统弹窗里点一次「添加」。做完桌面上会多一个带这张图的入口；不想要了，在桌面上把它拖走就行。";
-    public static final String CF_MSG_ICON_FMT = "已切到「%s」——桌面可能要刷新一下（个别桌面要等几秒，或拉一下列表）";
+    public static final String CF_ICON_PIN_D = "选一张图，居中裁成方。\n在弹窗点「添加」，桌面多一个入口。";
+    public static final String CF_MSG_ICON_FMT = "已切到「%s」。";
     public static final String CF_MSG_ICON_FAIL = "图标没换成";
     public static final String CF_ICON_PIN_CANCEL = "没选图片，桌面图标保持原样";
-    public static final String CF_ICON_PIN_OK = "已请求添加：去桌面确认一下（系统会弹一次框，点「添加」就出现在桌面上）";
+    public static final String CF_ICON_PIN_OK = "已请求添加，去桌面点「添加」确认。";
     public static final String CF_ICON_PIN_FAIL = "没能加进桌面（系统没接受这次请求）";
-    public static final String CF_ICON_PIN_NOSUP = "这个桌面不支持自己添加图标（多数是系统桌面不给）——可以用上面四款自带的，或换一个桌面再试";
-    public static final String CF_ICON_PIN_PICKFAIL = "打不开系统的图片选择器——换个文件管理器挑图也行";
+    public static final String CF_ICON_PIN_NOSUP = "这个桌面不支持添加入口。\n换自带图标，或换桌面。";
+    public static final String CF_ICON_PIN_PICKFAIL = "打不开图片选择器，换个文件管理器。";
     public static final String CF_ICON_PIN_TOOBIG = "这张图太大（超过 8MB），换张小点的吧";
-    public static final String CF_ICON_PIN_BAD = "这张图读不出来（可能不是图片或已损坏）";
+    public static final String CF_ICON_PIN_BAD = "这张图读不出来，可能已损坏。";
 
     // ═════════ 74 号单（2026-10-16）· 应用内装环境（打包 App） ═════════
     public static final String MA_SEC_BUILD = "打包 App";
     public static final String MA_SEC_TOOLBOX = "工具";
-    public static final String MA_BUILD_READY = "环境就绪：这台手机可以自己打包 App，不需要电脑。";
-    public static final String MA_BUILD_ADV_LEAD = "Reticle 可以在本机把 Android 工程编译成 APK，不需要电脑。首次使用要下载一份 Android 平台文件（约 26 MB），下完会校验完整性。编译与安装一般由 AI 调用，也可以在这里手动执行。日志与产物都落在本机 /sdcard/Reticle/build 下。";
+    public static final String MA_BUILD_READY = "环境就绪，本机可以自己打包。";
+    public static final String MA_BUILD_ADV_LEAD = "本机可把安卓工程编成 apk。\n首次要下载平台文件，约 26 MB。\n一般由 AI 调用。";
     public static final String MA_BUILD_NOTREADY = "环境还没齐";
     public static final String MA_BUILD_BTN_PREP = "一键准备环境";
-    public static final String MA_BUILD_BTN_PREP_D = "要下载 android.jar（约 25.8MB，官方源；SDK 条款不许随包分发）。下载会在通知栏和形象气泡里报进度，下完自动校验 sha256。";
+    public static final String MA_BUILD_BTN_PREP_D = "要下载 android.jar，约 25.8MB。\n下完校验 sha256。";
     public static final String MA_BUILD_BTN_GO = "打包 App";
-    public static final String MA_BUILD_BTN_GO_D = "用应用里的工具链，把「工程」目录里的安卓工程编成一个 apk（约 1~3 分钟）。";
+    public static final String MA_BUILD_BTN_GO_D = "把「工程」编成 apk，约 1 到 3 分钟。";
     public static final String MA_BUILD_BTN_INSTALL = "装这次出的包";
-    public static final String MA_BUILD_BTN_INSTALL_D = "把刚出的 apk 装到这台手机上（走 shell 身份，需要 Shizuku）。";
+    public static final String MA_BUILD_BTN_INSTALL_D = "把刚出的 apk 装到本机，需要 Shizuku。";
     public static final String MA_BUILD_BTN_OPEN = "看构建日志";
     public static final String MA_BUILD_NO_PROJ = "还没找到工程：把安卓工程放进 ";
-    public static final String MA_BUILD_HINT_LOCK = "灰色＝现在用不了（下面写着缺什么、点一下就补）";
+    public static final String MA_BUILD_HINT_LOCK = "灰色＝现在用不了。\n看下面缺什么，点一下补。";
     public static final String MA_BUILD_TITLE_ENV = "环境";
     public static final String MA_BUILD_MSG_PREP_DONE = "环境准备好了 ✓";
     public static final String MA_BUILD_MSG_PREP_FAIL = "环境没准备好：";
-    public static final String MA_BUILD_MSG_GO = "开始打包（进度看构建日志；通知栏也会报）";
+    public static final String MA_BUILD_MSG_GO = "开始打包。进度看日志或通知栏。";
     public static final String MA_BUILD_MSG_GO_FAIL = "没能开始：";
     public static final String MA_BUILD_MSG_RUNNING = "上一次还在跑，先看日志";
     public static final String MA_BUILD_DLG_T = "准备构建环境";
-    public static final String MA_BUILD_DLG_WHY = "要编安卓 App，缺一件官方件：android.jar（25.8MB）。它是 Android SDK 的一部分，许可禁止随包分发，所以只能第一次联网取一次；取回来会逐字节校验 sha256。工具链（aapt2／编译器／dexer／签名器）已经打进包里，不用下载。";
+    public static final String MA_BUILD_DLG_WHY = "缺 android.jar，约 25.8MB。\n只能联网取一次，下完校验 sha256。";
     public static final String MA_BUILD_DLG_GO = "开始下载";
     public static final String MA_BUILD_DLG_LATER = "以后再说";
     public static final String MA_BUILD_DLG_RUN = "正在准备…";
@@ -1053,33 +1110,33 @@ public class Words {
     // ═══════════ 79 号单（2026-10-17）· 检查更新（第一次主动联网：说清"会联网、多久一次、发什么、怎么关"） ═══════════
     public static final String UPD_SEC = "更新";
     public static final String UPD_SW_T = "检查更新";
-    public static final String UPD_SW_D = "开着时，每次进前台问一句「有没有新版」。\n一个匿名 GET 请求。\n不带设备信息。\n不带令牌和账号。\n两次之间最少隔 10 分钟。\n有新版就弹一次窗。\n点「立即更新」才下载。\n关掉后完全不联网检查。";
+    public static final String UPD_SW_D = "开＝进前台问一次新版。\n匿名请求，最少隔 10 分钟。\n关＝不联网。";
     public static final String UPD_NOW_T = "立即检查";
-    public static final String UPD_NOW_D = "跳过「24 小时一次」的限制，现在就问一次。没有新版或连不上都会静默，不会打扰你。";
+    public static final String UPD_NOW_D = "现在检查一次，不受 24 小时限制。";
     public static final String UPD_STATE_FMT = "上次检查：%s · 上次提示的版本：%s";
     public static final String UPD_STATE_NEVER = "还没检查过";
     public static final String UPD_STATE_NOBUB = "无";
     public static final String UPD_STATE_CHECKING = "正在检查…";
-    public static final String UPD_STATE_FAIL = "刚才没连上（不影响任何功能，下次打开再试）";
+    public static final String UPD_STATE_FAIL = "刚才没连上，下次再试。";
     public static final String UPD_MSG_UP_TO_DATE_FMT = "已是最新版本（本机 v%s）";
     public static final String UPD_NEW_T_FMT = "发现新版本 v%s";
     public static final String UPD_NEW_D_FMT = "当前 v%s · 点这里下载（约 %s）";
     public static final String UPD_NEW_D_NOSIZE_FMT = "当前 v%s · 点这里下载";
-    public static final String UPD_DL_FMT = "正在下载 %d%% · %s／%s";
+    public static final String UPD_DL_FMT = "正在下载 %d%%，%s（共 %s）";
     public static final String UPD_VERIFY = "下载完成，正在核对文件…";
-    public static final String UPD_READY = "下载完成，点这里安装（系统会再问你一次）";
+    public static final String UPD_READY = "下载完成，点这里安装。";
     public static final String UPD_BAD_CHECK = "下载的文件不完整，已删除";
-    public static final String UPD_NEED_PERM = "要在系统设置里允许 Reticle 安装应用，装完这次可以再关掉";
+    public static final String UPD_NEED_PERM = "先允许 Reticle 安装应用。";
     public static final String UPD_BUBBLE_FMT = "Reticle 出了新版本 v%s";
     public static final String UPD_ALREADY = "已是最新，不用更新";
-    public static final String UPD_MSG_ON = "已开启：进前台就问一次，最少隔 10 分钟";
+    public static final String UPD_MSG_ON = "已开启。进前台问一次，隔 10 分钟。";
     public static final String UPD_MSG_OFF = "已关闭：不再联网检查，也不会自动下载";
     public static final String UPD_API_T = "更新源";
-    public static final String UPD_API_D_FMT = "当前：%s\n只换检查地址\n下载地址来自它回的 JSON";
+    public static final String UPD_API_D_FMT = "当前：%s\n只换检查地址\n下载地址取自 JSON";
     public static final String UPD_API_DLG_T = "更新源地址";
-    public static final String UPD_API_DLG_A = "填一个完整网址，一般以 /releases/latest 结尾。\n只换检查地址。\n下载地址仍取它回的 JSON。";
+    public static final String UPD_API_DLG_A = "填完整网址，一般以 /releases/latest 结尾。";
     public static final String UPD_API_SET = "已改，下次检查就用这个地址";
-    public static final String UPD_API_BAD = "这个地址看着不像网址（要以 http:// 或 https:// 开头）";
+    public static final String UPD_API_BAD = "要填 http:// 或 https:// 开头的网址。";
     public static final String UPD_DL_START = "正在下载…";
     public static final String UPD_BODY_EMPTY = "这次没有写说明";
     public static final String UPD_PLAIN_T = "更新说明";
@@ -1098,7 +1155,7 @@ public class Words {
     public static final String UPD_TAG_FMT = "上次检查 %s";
     public static final String UPD_TAG_NEVER = "还没检查";
     public static final String UPD_CLR_T = "清除更新记录";
-    public static final String UPD_CLR_D = "把「上次检查」时间和「上次提示的版本」清空（开关与更新源不动）。验收用的假源跑过的记录也不会留在你眼前。";
+    public static final String UPD_CLR_D = "清空检查时间和提示版本，开关不动。";
     public static final String UPD_CLR_OK = "已清除更新记录";
     // 配置页折叠块（母标题右侧的状态小字）
     public static final String CF_FOLD_WD = "无障碍与自启";

@@ -42,6 +42,8 @@ public class BootReceiver extends BroadcastReceiver {
         if (ctx == null) return;
         final Context c = ctx.getApplicationContext();
         final String act = (it == null || it.getAction() == null) ? "" : it.getAction();
+        // 86.5 号单 · t0：开机广播到点
+        Boot.rx(c, act);
         // tick() 里要 sleep 等写回落地（1~3 秒），不能占着 onReceive 的主线程 → goAsync 挪到后台线程。
         final PendingResult pr = goAsync();
         Thread t = new Thread(new Runnable() {
@@ -55,6 +57,16 @@ public class BootReceiver extends BroadcastReceiver {
     }
 
     private void work(Context c, String act) {
+        // 86.6：只认「真开机」，且一次开机只恢复一次。vivo 会在划掉卡片后重放 BOOT_COMPLETED，
+        // 按它去写无障碍名单＝自己把进程送进「收走—挂回」的拉锯，点图标就点不动。
+        if (!Boot.realBoot(c)) {
+            log(c, "开机广播（" + act + "）是重放的（开机已 " + Boot.upSec() + " 秒）⇒ 不当开机：不写无障碍、不拉服务");
+            return;
+        }
+        if (Boot.bootHandled(c)) {
+            log(c, "开机广播（" + act + "）：本次开机已恢复过一次 ⇒ 不再重复");
+            return;
+        }
         if (WatchdogService.isUserStopped(c)) {
             log(c, "开机广播（" + act + "）：用户此前从最近任务里停过 Reticle ⇒ 不动作（手动打开 App 才恢复）");
             return;

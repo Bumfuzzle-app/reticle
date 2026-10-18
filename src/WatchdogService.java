@@ -30,8 +30,8 @@ import android.os.IBinder;
  */
 public class WatchdogService extends Service {
 
-    /** 前台通知编号（与「眼线」那条 1 号通知分开，免得互相盖）。 */
-    public static final int NID = 2;
+    /** 前台通知编号＝大通知同一条（86 号单前是 2，与眼线 9 分开；现在三条并一条）。 */
+    public static final int NID = Notifier.EYE_ID;   // 86 号单：与「大通知」同一条（原来是 2，三条并一条）
 
     /** 37 号单：上线那条日志只在状态变化时写一次（同一实例只写一条），免得刷屏。 */
     private static volatile boolean upLogged = false;
@@ -75,6 +75,7 @@ public class WatchdogService extends Service {
     @Override public void onCreate() {
         super.onCreate();
         INSTANCE = this;
+        Boot.mark(this, "t1", "WatchdogService.onCreate 进入");   // 86.5：出厂打点
         try { Notifier.purgeLegacyMedia(this); } catch (Throwable t) { }   // 72 号单：启动清掉旧媒体那条（id=9）＋旧渠道 yitong_media
         up();
     }
@@ -100,6 +101,8 @@ public class WatchdogService extends Service {
             try { A11yWatchdog.stopLoop(this); } catch (Throwable t) { }
             try { MemGuard.stopLoop(this); } catch (Throwable t) { }
             try { McpServer.stop(this); } catch (Throwable t) { }
+        try { VeriService.handBackA11y(); } catch (Throwable t) { }
+        try { A11yWatchdog.handBackList(this); } catch (Throwable t) { }
             try { stopForeground(true); } catch (Throwable t) { }
         } catch (Throwable t) { }
         try { stopSelf(); } catch (Throwable t) { }
@@ -122,8 +125,10 @@ public class WatchdogService extends Service {
         try { channel(); } catch (Throwable t) { }
         try {
             startForeground(NID, buildNote());
+            Boot.mark(this, "t2", "startForeground 返回成功（通知 " + NID + "）");   // 86.5
             if (!upLogged) { upLogged = true; A11yWatchdog.log(this, "前台服务已上线（通知 " + NID + "）"); }
         } catch (Throwable t) {
+            Boot.mark(this, "t2", "startForeground 失败：" + t);   // 86.5：失败要留异常原文
             A11yWatchdog.log(this, "前台服务启动失败：" + t);
         }
         try { A11yWatchdog.start(this); } catch (Throwable t) { }
@@ -131,39 +136,16 @@ public class WatchdogService extends Service {
         try { McpServer.start(this); } catch (Throwable t) { }
     }
 
-    /** 52 号单 ④：通知正文＝常态那句 ＋（让路档时）一句人话。 */
+    /** 86 号单：前台服务不再自己画通知——大通知那份（折叠＋列表＋守护）由 Notifier 统一构建，
+     *  同一条 id＝9、同渠道 CH_STAT。内存档位那句拼在「守护」行后面。 */
     private Notification buildNote() {
-        Notification.Builder b = (Build.VERSION.SDK_INT >= 26)
-                ? new Notification.Builder(this, Notifier.CH_STAT) : new Notification.Builder(this);
-        b.setSmallIcon(R.drawable.ic_stat_notify);
-        b.setContentTitle(Words.NT_DEF_TITLE);
-        String txt = Words.NT_WD_TEXT;
-        try { txt = txt + MemGuard.noteSuffix(); } catch (Throwable t) { }
-        b.setContentText(txt);
-        b.setOngoing(true);
-        b.setShowWhen(false);
-        b.setOnlyAlertOnce(true);
-        try {
-            Intent it = new Intent(this, MainActivity.class);
-            it.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            int fl = PendingIntent.FLAG_UPDATE_CURRENT;
-            if (Build.VERSION.SDK_INT >= 23) fl |= PendingIntent.FLAG_IMMUTABLE;
-            b.setContentIntent(PendingIntent.getActivity(this, 0, it, fl));
-        } catch (Throwable t) { }
-        return b.build();
+        return Notifier.buildMain(this);
     }
 
-    /** 52 号单：内存档位变了 → 只刷前台那条通知的正文（不新建通知、不响不震）。 */
+    /** 52 号单：内存档位变了 → 只刷那条通知（不新建第二条、不响不震）。 */
     static void refreshNote(Context ctx) {
-        try {
-            WatchdogService s = INSTANCE;
-            if (s == null) return;
-            NotificationManager m = (NotificationManager) ctx.getSystemService(Context.NOTIFICATION_SERVICE);
-            if (m == null) return;
-            m.notify(NID, s.buildNote());
-        } catch (Throwable t) { }
+        try { Notifier.showNow(ctx); } catch (Throwable t) { }
     }
-
     private void channel() {
         if (Build.VERSION.SDK_INT < 26) return;
         NotificationManager m = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);

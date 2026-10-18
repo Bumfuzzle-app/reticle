@@ -303,7 +303,8 @@ public class McpServer {
             ss.bind(new InetSocketAddress(InetAddress.getByName("127.0.0.1"), getPort(ctx)));
             ssRef = ss;
             running = true;
-            mlog(ctx, "mcp server started on 127.0.0.1:" + getPort(ctx));
+            mlog(ctx, "mcp server started on 127.0.0.1:" + getPort(ctx) + "（进程起后 +" + (android.os.SystemClock.elapsedRealtime() - Boot.PROC) + "ms）");   // 86.5：这句带上毫秒
+            Boot.mark(ctx, "t3", "MCP 监听成功 127.0.0.1:" + getPort(ctx));   // 86.5
             while (true) {
                 final Socket s = ss.accept();
                 final Context c = ctx;
@@ -404,6 +405,12 @@ public class McpServer {
             audit(ctx, req, null, System.currentTimeMillis() - t0);
             try { s.close(); } catch (Throwable t2) { }
             return;
+        }
+        // 86.5 号单 · t5：第一个工具请求真的成功了（只记一次；失败/超时不算）
+        if (resp != null && resp.indexOf("\"isError\":true") < 0) {
+            String tn5 = "首个请求";
+            try { org.json.JSONObject j5 = new org.json.JSONObject(req); org.json.JSONObject p5 = j5.optJSONObject("params"); if (p5 != null) tn5 = p5.optString("name", tn5); } catch (Throwable t5x) { }
+            Boot.firstToolOk(ctx, tn5);
         }
         respond(out, resp == null ? 202 : 200, resp == null ? "" : resp);
         audit(ctx, req, resp, System.currentTimeMillis() - t0);
@@ -679,9 +686,21 @@ public class McpServer {
         }
         boolean yielded = false;
         try { yielded = Mascot.yieldForTouch(req); } catch (Throwable t) { }   // 65：触摸类工具，触点可能压在形象上就先让路
+        try { Notifier.selfMode(selftest); } catch (Throwable t) { }
         try { rp = process0(ctx, req); } catch (Throwable t) { rp = null; }
         finally { if (yielded) { try { Mascot.endYield(); } catch (Throwable t) { } } }
         try { rp = markIsError(req, rp); } catch (Throwable t) { }   // ★70 A 线：工具失败＝MCP 原生的 isError（必须排在 Mascot.watch 之前）
+        // ★86：工具收尾带成败——大通知那一行说人话（完成／没成／超时没成）；失败不受节流限制
+        if (cTool.length() > 0) {   // ★86：所有工具都要收尾（含自检调用，免得列表里留「进行中」）
+            try {
+                boolean okT = rp != null && rp.indexOf("\"isError\":true") < 0;
+                String lfT = null;
+                try { lfT = LASTFAIL.get(); } catch (Throwable t) { }
+                boolean toT = !okT && lfT != null && lfT.toLowerCase(java.util.Locale.ROOT).indexOf("timeout") >= 0;
+                Notifier.toolDone(ctx, cTool, okT, toT);
+            } catch (Throwable t) { }
+        }
+        try { Notifier.selfMode(false); } catch (Throwable t) { }
         try { Mascot.watch(ctx, req, rp); } catch (Throwable t) { }
         if (cd != null && cd.mark.length() > 0 && rp != null) { try { rp = concMarkJson(req, rp, cd.mark, cd.audit); } catch (Throwable t) { } }
         try { Conc.exit(cd); } catch (Throwable t) { }
@@ -801,7 +820,7 @@ public class McpServer {
                 String name = params.optString("name", "");
                 JSONObject args = params.optJSONObject("arguments");
                 if (args == null) args = new JSONObject();
-                if (!name.equals("buzz")) Notifier.toolTouch(ctx, name);
+                Notifier.toolTouch(ctx, name);   // 86：26 个工具都记账（buzz 也记，中文名要能在通知里看见）
                 S_CTX = ctx;
                 if (name.equals("status")) {
                     JSONObject result = new JSONObject();
@@ -964,7 +983,6 @@ public class McpServer {
                         addImage(ctx, ct, rj.optString("file", ""));
                     } else {
                         String whyR = "";
-                        try { JSONObject eo = new JSONObject(rs); whyR = eo.optString("reason", ""); } catch (Throwable t) { }
                         failMark("shot ok=0" + (whyR.length() > 0 ? " reason=" + whyR : ""));
                         ct.put(textBlock(Words.RP_SHOT_ERR + rs + nextStep(whyR)));
                     }
@@ -974,7 +992,7 @@ public class McpServer {
                     return ok(id, result);
                 }
                 if (name.equals("notify")) {
-                    int nid = args.optInt("id", 1);
+                    int nid = args.has("id") ? args.optInt("id", Notifier.DEF_ID) : Notifier.DEF_ID;   // 86：不带 id ⇒ 并进大通知（9）
                     String repN0 = args.optString("report", "");
                     if (repN0.length() > 0) {
                         Notifier.setReport(ctx, repN0);
@@ -1194,7 +1212,7 @@ public class McpServer {
             int timeout = o.optInt("timeout", 0);
             int ms = o.optInt("ms", 0);
             if (timeout == 1) failMark("shell timeout=1");
-            else if (exit != 0) failMark("shell exit=" + exit);
+            else if (exit != 0 && o.optString("err", "").trim().length() > 0) failMark("shell exit=" + exit + "（有 stderr）");   // ★88.7：exit≠0 且 stderr 空＝结果否定，不算失败
             String out = o.optString("out", "");
             String err = o.optString("err", "");
             if (okv != 1) return failR(Words.RP_EXEC_ERR + o.optString("err", "unknown"), "exec ok=0");

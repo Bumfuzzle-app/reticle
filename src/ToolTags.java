@@ -66,6 +66,7 @@ public class ToolTags {
 
     /** 气泡第一行：图标 标签 · 摘要。 */
     public static String line(String name, JSONObject a) {
+        if ("shell".equals(name)) return shellAction(a == null ? "" : a.optString("command", ""));   // ★89.9 用户口径：命令只说功能、参数不上屏
         String ic = icon(name);
         String s = summary(name, a);
         String head = (ic.length() == 0 ? "" : ic + " ") + label(name);
@@ -76,7 +77,7 @@ public class ToolTags {
     public static String summary(String name, JSONObject a) {
         if (name == null) return "";
         try {
-            if (name.equals("shell")) return clip(shellBrief(a.optString("command", "")), 42);
+            if (name.equals("shell")) return "";   // ★89.9：命令由 line() 直出中文功能（shell—读取文件）
             if (name.equals("input")) return "内容不上屏（" + a.optString("text", "").length() + " 字）";
             if (name.equals("paste")) return "内容不上屏（" + a.optString("text", "").length() + " 字）";
             if (name.equals("tap") || name.equals("longpress")) return "(" + a.optString("x", "?") + ", " + a.optString("y", "?") + ")";
@@ -236,6 +237,59 @@ public class ToolTags {
             if (!envOk) return "需要构建环境：点下面的『一键准备环境』下载 android.jar（25.8MB，官方源）";
             if (!shxOk) return "环境齐了，能出包；但『装包』这一步要 shell 身份（Shizuku）——没通就装不上";
             return "";
+        }
+        return "";
+    }
+
+    // ═════════ 89.9 号单（2026-10-18）· shell 说人话：命令第一个词 → 中文功能 ═════════
+    /** 命令开头 → 中文功能；气泡写成 `shell—读取文件`（长破折号连接），参数一律不进气泡。 */
+    static final String[][] SH = {
+        {"ls", "读取文件"}, {"find", "读取文件"}, {"stat", "读取文件"}, {"cat", "读取文件"},
+        {"head", "读取文件"}, {"tail", "读取文件"}, {"wc", "读取文件"}, {"less", "读取文件"},
+        {"more", "读取文件"}, {"sed", "读取文件"}, {"awk", "读取文件"}, {"sort", "读取文件"},
+        {"uniq", "读取文件"}, {"cut", "读取文件"}, {"tr", "读取文件"},
+        {"grep", "查找内容"},
+        {"du", "查看空间"}, {"df", "查看空间"},
+        {"cp", "修改文件"}, {"mv", "修改文件"}, {"rm", "修改文件"}, {"mkdir", "修改文件"},
+        {"touch", "修改文件"}, {"chmod", "修改文件"}, {"ln", "修改文件"},
+        {"am", "操作应用"},
+        {"pm", "管理应用"},
+        {"cmd", "调用系统"},
+        {"settings", "修改设置"}, {"content", "修改设置"},
+        {"dumpsys", "读取系统状态"},
+        {"logcat", "读取日志"},
+        {"getprop", "读取系统属性"}, {"setprop", "读取系统属性"},
+        {"ps", "查看进程"}, {"top", "查看进程"},
+        {"kill", "结束进程"},
+        {"curl", "网络请求"}, {"wget", "网络请求"}, {"ping", "网络请求"}, {"nc", "网络请求"},
+        {"sh", "运行脚本"}, {"bash", "运行脚本"},
+        {"sleep", "等待"},
+        {"date", "读取时间"},
+        {"unzip", "解包"}, {"tar", "解包"},
+        {"sha256sum", "计算校验"}, {"md5sum", "计算校验"}, {"base64", "计算校验"},
+    };
+
+    /** 气泡第一行：`shell—中文功能`；认不出的一律 `shell—执行命令`（回退，不报错）。 */
+    public static String shellAction(String cmd) {
+        String f = shellWord(cmd);
+        return "shell—" + (f.length() == 0 ? "执行命令" : f);
+    }
+
+    /** 第一个能映射的词：跳过 cd／export／env／true／set／sudo／su／nohup 与变量赋值、选项、路径前缀。 */
+    static String shellWord(String cmd) {
+        if (cmd == null) return "";
+        String[] tk = cmd.replace('\n', ' ').split("[\\s;|&()`<>]+");
+        for (int i = 0; i < tk.length; i++) {
+            String t = tk[i].trim();
+            while (t.length() > 0 && (t.charAt(0) == '\'' || t.charAt(0) == '"')) t = t.substring(1);
+            while (t.length() > 0 && (t.charAt(t.length() - 1) == '\'' || t.charAt(t.length() - 1) == '"')) t = t.substring(0, t.length() - 1);
+            if (t.length() == 0 || t.startsWith("-") || t.startsWith("#")) continue;
+            int sl = t.lastIndexOf('/');
+            if (sl >= 0) { if (sl + 1 >= t.length()) continue; t = t.substring(sl + 1); }
+            if (t.indexOf('=') >= 0) continue;   // A=1 变量赋值
+            if (t.equals("cd") || t.equals("export") || t.equals("env") || t.equals("true")
+                || t.equals("set") || t.equals("sudo") || t.equals("su") || t.equals("nohup")) continue;
+            for (int k = 0; k < SH.length; k++) if (SH[k][0].equals(t)) return SH[k][1];
         }
         return "";
     }

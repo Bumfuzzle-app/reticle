@@ -160,7 +160,8 @@ public class A11yLink {
         lastRepairAt = System.currentTimeMillis();
         try {
             String cur = A11yWatchdog.readList(ctx);
-            if (cur == null) { log(ctx, "修复：读不到系统设置，放弃"); return Words.A11Y_REP_NOREAD; }
+            if (A11yWatchdog.ERR.equals(cur)) { log(ctx, "修复：读不到系统设置（读的时候抛异常），放弃"); return Words.A11Y_REP_NOREAD; }
+            // 86.5：cur==null ＝ 名单键被系统删了（强停过）——不是"读不到"，照常往下直接写回主包
             if (!A11yWatchdog.hasSvc(cur)) {
                 // 不在册：直接写回（不走 tick，免得与看门狗互锁）
                 String want = A11yWatchdog.join(cur);
@@ -181,7 +182,8 @@ public class A11yLink {
             String mid = A11yWatchdog.readList(ctx);
             boolean removed = !A11yWatchdog.hasSvc(mid);
             log(ctx, "修复：删名读回＝" + (removed ? "已剔掉" : "还在") + " [" + (mid == null ? "null" : mid) + "]");
-            writeList(ctx, cur);
+            // 86.5 号单 · 写回的是**规整后**的名单：主包排第一、副包项靠后（不再把副包项原样顶在前面）
+            writeList(ctx, A11yWatchdog.join(cur));
             sleep(1300L);
             String back2 = A11yWatchdog.readList(ctx);
             boolean restored = A11yWatchdog.hasSvc(back2);

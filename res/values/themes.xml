@@ -4,18 +4,22 @@
 <resources>
     <!-- 启动窗口主题：只在冷启动那一瞬用；跟随系统（浅色系统闪浅色、深色系统闪深色） -->
     <style name="Theme.Reticle.Launch" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:windowBackground">@color/launch_bg</item>
     </style>
 
     <!-- 浅色 -->
     <style name="Theme.Reticle" parent="Theme.Material3.Light.NoActionBar">
+        <item name="android:windowBackground">@color/launch_bg</item>
     </style>
 
     <!-- 深色（深灰） -->
     <style name="Theme.Reticle.Dark" parent="Theme.Material3.Dark.NoActionBar">
+        <item name="android:windowBackground">@color/launch_bg_dark</item>
     </style>
 
     <!-- 极夜：纯黑（用户要求：深色下可再开「极夜」＝纯黑；不开＝深灰） -->
     <style name="Theme.Reticle.Black" parent="Theme.Material3.Dark.NoActionBar">
+        <item name="android:windowBackground">#FF000000</item>
         <item name="android:colorBackground">#FF000000</item>
         <item name="colorSurface">#FF000000</item>
         <item name="colorOnSurface">#FFE8EAED</item>

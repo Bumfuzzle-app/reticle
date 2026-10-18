@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 86.5 号单：夜间启动窗口底色＝深色（以前 Launch 走 DayNight，vivo 冷启动会先白一帧） -->
+    <color name="launch_bg">#FF101418</color>
+</resources>

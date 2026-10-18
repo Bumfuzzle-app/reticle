@@ -132,7 +132,13 @@ public class A11yWatchdog {
         if (respectSwitch && !isOn(ctx)) { lastNote = "已关闭（不检查）"; return "已关闭（不检查）"; }
         String cur = readList(ctx);
         int st = A11yLink.observe(ctx);   // 53 号单：连接态判据（含「未连接持续多久」的记账）
-        if (cur == null) { lastNote = "读不到系统设置"; return "读不到系统设置"; }
+        // ★86：掉线就发那条会响的告警（CH_TEST）；接回来自动撤掉。主条永远静默。
+        try {
+            boolean lost = (cur == null) || !hasSvc(cur) || st == A11yLink.ST_IN_LIST_NO_CONN;
+            Notifier.guardState(ctx, !lost);
+        } catch (Throwable t) { }
+        if (ERR.equals(cur)) { lastNote = "读不到系统设置"; return "读不到系统设置"; }
+        if (cur == null) log(ctx, "名单键是空的（系统删掉了：强停/装包后常见）→ 按空名单处理，直接写回主包");   // 86.5
         if (hasSvc(cur)) {
             inList = true;
             // 53 号单：★在册 ≠ 能用 —— 再看一眼「系统到底有没有把我们接上」
@@ -198,9 +204,18 @@ public class A11yWatchdog {
     }
 
     // ───────── 读写 ─────────
+    /**
+     * 读系统在册名单。
+     * ★86.5 号单：要区分两种"没有名单"——
+     *   ① 键存在但为空/不存在 ⇒ 系统给 null（**这不算读不到**，是"还没登记"，应该直接写回主包）；
+     *   ② 读的时候抛异常（缺 WRITE_SECURE_SETTINGS、系统拦了）⇒ 返回哨兵 ERR，调用方按"读不到"处理。
+     *   以前两者都返回 null，于是被强停一次（系统会把该无障碍服务从名单里删掉，键整个没了）之后，
+     *   看门狗与「修一次」都只说"读不到系统设置，修不了"，自己永远回不来。
+     */
+    static final String ERR = "\u0000ERR";
     static String readList(Context ctx) {
         try { return Settings.Secure.getString(ctx.getContentResolver(), Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES); }
-        catch (Throwable t) { return null; }
+        catch (Throwable t) { return ERR; }
     }
 
     static boolean hasSvc(String v) {
@@ -208,10 +223,40 @@ public class A11yWatchdog {
     }
 
     static String join(String cur) {
-        if (cur == null) return SVC_FULL;
-        String t = cur.trim();
-        if (t.length() == 0 || t.equalsIgnoreCase("null")) return SVC_FULL;
-        return t + ":" + SVC_FULL;
+        return unionMainFirst(cur);
+    }
+
+    /**
+     * 86.5 号单 · 名单规整（幂等：规整两次结果相同）。
+     *
+     * 老账：名单里曾出现 `app.reticle.b/.VeriService`（副包项）在首、主包不在，装完要等看门狗
+     * 改回主包才连得上。规矩改成——
+     *   ① 主包统一写成一个全名 `app.reticle/app.reticle.VeriService`，并且**排第一位**（主包优先）；
+     *   ② 副包项（`app.reticle.b/…`）**不抢**：保留、但挪到末尾（用户自己装的副包不替他删）；
+     *   ③ 别的应用的无障碍项原样保留、顺序不变（不丢用户的其它无障碍）；
+     *   ④ 历史残留 `reticle-selftest` 剔掉（不是真服务名，系统读到只会当无效项）。
+     * ★改这里要一起想到：A11yLink.stripSelf（删名）与 MainActivity.a11yState（判在册）都以主包名为准。
+     */
+    static String unionMainFirst(String cur) {
+        StringBuilder oth = new StringBuilder();
+        StringBuilder sub = new StringBuilder();
+        String[] parts = (cur == null ? "" : cur).split(":");
+        for (int i = 0; i < parts.length; i++) {
+            String s = parts[i] == null ? "" : parts[i].trim();
+            if (s.length() == 0 || s.equalsIgnoreCase("null")) continue;
+            if (s.startsWith("app.reticle/") || s.equals("reticle-selftest")) continue;   // 本应用主包项：统一成一个全名放最前
+            if (s.startsWith("app.reticle.b/")) {                                          // 副包项：保留、靠后
+                if (sub.length() > 0) sub.append(':');
+                sub.append(s);
+                continue;
+            }
+            if (oth.length() > 0) oth.append(':');
+            oth.append(s);
+        }
+        StringBuilder r = new StringBuilder(SVC_FULL);
+        if (oth.length() > 0) r.append(':').append(oth);
+        if (sub.length() > 0) r.append(':').append(sub);
+        return r.toString();
     }
 
     /** ① 应用内直写（要 WRITE_SECURE_SETTINGS）；返回一句结果。 */
@@ -356,5 +401,29 @@ public class A11yWatchdog {
             o.write((System.currentTimeMillis() + " " + s + "\n").getBytes("UTF-8"));
             o.close();
         } catch (Throwable t) { }
+    }
+    /** 86.6：用户划掉卡片＝把无障碍交还系统。
+     *  先 disableSelf（能连上时最干净：系统自己把我们这条从名单里摘掉并解绑）；
+     *  连不上／还没接上时 disableSelf 叫不动，就直接把名单改成"不含本应用"。
+     *  ★只摘自己，副包与别人的无障碍原样保留；写完不睡、不读回（onTaskRemoved 在主线程，要快）。 */
+    static void handBackList(Context ctx) {
+        try {
+            String cur = readList(ctx);
+            if (ERR.equals(cur)) { log(ctx, "划掉＝交还：读不到系统设置（读时抛异常）⇒ 只能等打开 App 时再恢复"); return; }
+            if (!hasSvc(cur)) { log(ctx, "划掉＝交还：名单里本来就没有本应用（OK）"); return; }
+            String off = A11yLink.stripSelf(cur);
+            try {
+                if (off.length() == 0) {
+                    Settings.Secure.putString(ctx.getContentResolver(), Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES, "");
+                } else {
+                    Settings.Secure.putString(ctx.getContentResolver(), Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES, off);
+                }
+                log(ctx, "划掉＝交还：已把本应用从无障碍名单摘掉 →[" + off + "]");
+            } catch (Throwable t) {
+                log(ctx, "划掉＝交还：摘名单失败（系统拦下了）：" + t);
+            }
+        } catch (Throwable t) {
+            log(ctx, "划掉＝交还：异常 " + t);
+        }
     }
 }

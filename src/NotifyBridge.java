@@ -21,6 +21,9 @@ public class NotifyBridge extends BroadcastReceiver {
      *    把无障碍连接接回（1~3 秒）；只写 -p <包名> 不带 -n 的写法在本机到不了 receiver（实测没落地）。
      *  安全：只认这一句 action、不读任何 extras、10 秒限流；动作＝只动 Reticle 自己那条无障碍，不碰别人。 */
     public static final String ACTION_REPAIR = "app.reticle.action.A11Y_REPAIR";
+    /** 86 号单 · 大通知上的两个按钮：收起守护那行／再放回来。 */
+    public static final String ACTION_HIDE_GUARD = "app.reticle.action.HIDE_GUARD";
+    public static final String ACTION_SHOW_GUARD = "app.reticle.action.SHOW_GUARD";
     private static final int ID = 101;
     private static final String TITLE = Words.NT_BRIDGE_TITLE;
     private static final String TEXT = Words.NT_BRIDGE_TEXT;
@@ -32,6 +35,20 @@ public class NotifyBridge extends BroadcastReceiver {
     public void onReceive(Context ctx, Intent it) {
         try {
             String a = (it == null) ? null : it.getAction();
+            // 86.5 号单 · t0：这条广播就是「装完」那一刻（系统把本进程拉起投递）
+            if ("android.intent.action.MY_PACKAGE_REPLACED".equals(a) || "android.intent.action.BOOT_COMPLETED".equals(a)) Boot.rx(ctx, a);
+
+            // 86 号单：「隐藏守护」/「显示守护」按钮（大通知上唯一的动作，用户能反悔）
+            if (a != null && ACTION_HIDE_GUARD.equals(a)) {
+                Notifier.setGuardHidden(ctx, true);
+                Notifier.nlog(ctx, "bridge hide-guard");
+                return;
+            }
+            if (a != null && ACTION_SHOW_GUARD.equals(a)) {
+                Notifier.setGuardHidden(ctx, false);
+                Notifier.nlog(ctx, "bridge show-guard");
+                return;
+            }
 
             // 53 号单：手动门 ——「修一次无障碍连接」（删名→写回，逼系统重新绑）
             if (a != null && ACTION_REPAIR.equals(a)) {

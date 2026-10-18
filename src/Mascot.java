@@ -22,7 +22,10 @@ import android.os.Looper;
 import android.os.PowerManager;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
+import android.view.Choreographer;
 import android.view.MotionEvent;
+import android.view.VelocityTracker;
+import android.view.animation.OvershootInterpolator;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -71,6 +74,7 @@ public class Mascot {
     static final String K_FRAC = "mascot_frac";       // 纵向位置 0~1（默认 0.34）
     static final String K_HIDE_MODE = "mascot_hide_mode";   // 在 AI 客户端里的表现：0=只留细条（默认）／1=全隐／2=只藏气泡
     static final String K_HIDE_PKGS = "mascot_hide_pkgs";   // 隐藏名单（逗号分隔包名；默认 RikkaHub）
+    static final String K_MINIMAL = "mascot_minimal";      // ★87 极简模式：只有白条＋气泡，没有脸（默认关）
     static final String DEF_HIDE_PKGS = "me.rerere.rikkahub";
     static final String[] HIDE_MODE_NAMES = {"只留细条", "全隐", "只藏气泡"};
     static final long EXEMPT_MS = 300000L;                  // 门铃：点一下细条＝本次前台豁免 5 分钟
@@ -113,7 +117,46 @@ public class Mascot {
     private FrameLayout figWin;
     private ImageView img;
     private Face face;
-    private View edgeBar;
+    private Bar edgeBar;
+    // ★89 白条的手：手势状态 ＋ 拖动层（拖动时整屏一次开够，只画面平移，绝不每帧改窗口）
+    private static final int G_NONE = 0, G_SWIPE = 1, G_DRAG = 2;
+    private static final int BAR_LONG_MS = 300;        // 长按挤压（可调常量 1）
+    private static final float BAR_SLOP_DP = 8f;       // 离开"点"的判定（可调常量 2）
+    private static final float BAR_SWIPE_DP = 44f;     // 内滑阈值参考（成形按进度 55% 判；可调常量 3）
+    // ★89.5 整改（19 号验收）：慢拖最多离边 1cm（tanh 硬阻尼，前段 1:1 跟手）；松手 200ms 回弹；换边靠甩 350ms 飞对面
+    private static final float BAR_DETACH_CM = 1.0f;    // 慢拖：白条离边上限（cm）
+    private static final float BAR_DAMP_SW = 0.55f;     // ★89.7 阻尼上限 Dmax＝屏宽 55%（指数渐近，不是硬顶）
+    private static final float BAR_BARRIER_SW = 0.40f;  // ★89.7 判定线＝屏宽 40%（按 applied 算；不显示）
+    private static final int BAR_BACK_MS = 200;         // 慢拖松手：位置＋尺寸同一段动画回边（easeOutCubic，无过冲）
+    private static final int BAR_FLY_MS = 350;          // 越过判定线：飞到对面（easeOutCubic，无过冲）
+    private static final long MORPH_MAX_MS = 200L;      // morph 动画最大存活＝时长＋200ms，超时强制收尾
+    // ★89.7 整改三：grow 一条 easeOutCubic（460ms），不再有过冲段（原来 682+242+176ms 两波已删）
+    private static final int MORPH_GROW_MS = 460;      // ★89.7：一条 easeOutCubic（无过冲，出手快收尾慢）
+    // ★89.6 整改七：按下一条减速曲线到顶（长按只解锁「可以拖」）
+    private static final int BAR_PRESS_MS = 450;
+    private int gMode = G_NONE;
+    private boolean gPreDrag = false;          // ★89.6：已上拖动层但位移还没超过 8dp（松手仍算「点」）
+    private float gPrevFx = 0f, gPrevCx = 0f;   // ★89.6：1:1 跟手证据（上一帧手指 x／白条中心 x）
+    private boolean gMoved = false, gLongFired = false;
+    private float gDownX = 0f, gDownY = 0f, gDownCy = 0f, gLastCy = 0f, gApplied = 0f;
+    private float gOffsetX = 0f, gOffsetY = 0f, gDownCx = 0f;   // ★89.5 按下那一刻：手指与白条中心的偏移
+    private float gGainLast = 1f;                              // ★89.5 逐段增益（证据用）
+    private float gDbgLastD = -1f;                             // ★89.5 逐段增益算用
+    private float gHalf0 = 14f;                                 // ★89.5 拖动时白条半粗（按手指贴合用，不随 boost 变）
+    private long gDownAt = 0L, gNoteAt = 0L;
+    private int gFigY0 = 0;
+    private final long[] gFrames = new long[900];
+    private int gFrameN = 0;
+    private FrameLayout dragWin;
+    private Bar dragBar;
+    private WindowManager.LayoutParams dragLp;
+    private boolean dragAdded = false;
+    private ValueAnimator dragAnim = null;      // ★89.5 松手回弹／甩飞对面
+    private ValueAnimator barPressAnim = null;  // ★89.5 按下⇒缓缓变粗（300ms 线性，不跳）
+    private VelocityTracker gVt = null;         // ★89.5 甩判据（速度）
+    private String lastL1 = "", lastL2 = "";   // ★89 内滑拉出「最近一条」用
+    private int lastKind = M_NORMAL;
+    private ValueAnimator barAnim = null;
     private FrameLayout bubWin;
     private ScrollView bubbleWrap;
     private TextView bubble, badge;
@@ -125,8 +168,48 @@ public class Mascot {
     private long lastSayAt = 0L;
     private int msgKind = -1;                  // 当前气泡里的消息种类；-1＝没有
     private String pendingTool = null;         // 高优先级在屏期间攒下的最新工具摘要
+    // ★87 极简模式：没有脸、白条常驻、气泡照冒
+    private boolean minMode = false;          // 极简模式生效中（setup／改开关时读偏好）
+    // ★88 气泡从白条长出来（morph）：大窗不可触摸、尺寸提前定死；窄窗永远可点
+    private Morph morph;
+    private FrameLayout morphWin;
+    private WindowManager.LayoutParams morphLp;
+    private boolean morphAdded = false;
+    private ValueAnimator morphAnim = null;
+    private long morphSeq = 0L;
+    private int morphState = 0;   // 0＝白条态（无大窗）／1＝生长中／2＝成框／3＝收起中
+    // ★89.9 整改二：1.5 秒内两条并列（只留最近两条）／整改一：白条视觉互斥／整改五：名单闸门
+    private static final long STACK_MS = 1500L;
+    private String stackPrev = null;      // 上一条（正文，状态已接在行末）
+    private long stackAt = 0L;            // 上一条出现的时刻
+    private boolean noStack = false;      // 一次性：notify 单行、不参与叠加
+    static final int BV_NONE = 0, BV_BAR = 1, BV_MORPH = 2, BV_DRAG = 3, BV_FLY = 4;
+    private int bvLast = -1;
+    // ★90：飞行层自成一格；barFrozen＝切换中（窗建好了先不点亮，或已切到无还没收内容）
+    private boolean flying = false;
+    private boolean barFrozen = false;
+    // ★89.5 整改一：动画最大存活（时长＋200ms）超时强制收尾；任何打断都走到终态，不许停在中间
+    private Runnable morphWatch = null;
+    private long morphWatchSeq = 0L;
+    private boolean morphWatchGrow = true;
+    // ★89.5 整改六.3：框成形后叠一个真正的 ScrollView+TextView 做内容层（可滚、随框走、随动画淡入）
+    private ScrollView morphScroll = null;
+    private TextView morphText = null;
+    private int morphPadPx = 0;
+    // ★88.5（§八 用户拍 B）：框整窗可触摸——点＝收起，按住往边框滑＝跟着反向缩回
+    private float mTouchX = 0f, mTouchY = 0f, mTouchP = 1f;
+    private boolean mTouchDrag = false;
+    private boolean mScrollDrag = false;   // ★89.5 内容层滚动中（触摸不漏给下层）
+    private boolean morphNeedScroll = false;   // ★89.5：内容高 > 可视高（layoutContent 实测，不依赖 getHeight）
+    private float mLastScrollY = 0f;
+
+    private boolean bubNeedTouch = false;     // 气泡内容超出可视高 ⇒ 要能滚（可触摸）；不超 ⇒ 整窗不接收触摸
+    private long quietUntil = 0L;             // 拖动收起后的静默期（60 秒）：普通调用不弹，notify 与失败照冒
+    private float bubDragX0, bubDragY0;
+    private boolean bubDragging = false;
     private boolean badgeOn = false;
     private boolean dragging = false, moved = false;
+    private boolean bubTouchInit = false;     // 气泡触摸标志位是否已同步过一次
     private float downRawX, downRawY;
     private int dragFigX0, dragFigY0, dragBubX0, dragBubY0;
     private long lastDragNote = 0L;
@@ -244,6 +327,55 @@ public class Mascot {
 
     static String hideModeName(int v) { return (v >= 0 && v < HIDE_MODE_NAMES.length) ? HIDE_MODE_NAMES[v] : HIDE_MODE_NAMES[0]; }
 
+    // ───────────── ★87 极简模式：偏好（配置页与运行期共用） ─────────────
+    public static boolean minimal(Context c) {
+        try { return c.getSharedPreferences(PREFS, Context.MODE_PRIVATE).getBoolean(K_MINIMAL, false); }
+        catch (Throwable t) { return false; }
+    }
+
+    public static void setMinimal(Context c, boolean v) {
+        try { c.getSharedPreferences(PREFS, Context.MODE_PRIVATE).edit().putBoolean(K_MINIMAL, v).apply(); } catch (Throwable t) { }
+        final Mascot m = S;
+        if (m != null) m.ui.post(new Runnable() { public void run() { m.applyMinimal("开关"); } });
+    }
+
+    /** 极简模式的运行时切换：开＝收成白条（没有脸）、白条常驻、不参与三态与让位；关＝回到正常三态。 */
+    private void applyMinimal(String why) {
+        try {
+            boolean on = minimal(svc);
+            boolean was = minMode;
+            minMode = on;
+            note("极简模式 " + (on ? "开" : "关") + "（" + why + "，原=" + (was ? "开" : "关") + "）");
+            if (on) {
+                state = ACTIVE;
+                ui.removeCallbacks(goDim);
+                ui.removeCallbacks(goEdge);
+                setFigBox(dp(EDGE_W_DP), dp(EDGE_H_DP));
+                // ★88：极简不用气泡窗；morph 层从白条态开始
+                if (bubAdded) hideBubWin();
+                if (morphState != 0) { morphState = 0; morphRemove(); }
+                setEdgeBarSide();
+                if (bubble != null) bubble.setTextSize(10.3f);   // ★87：字号同步缩到 ≈89.4%
+                barVisual("极简开");
+                if (img != null) img.setVisibility(View.GONE);
+                if (face != null) face.setVisibility(View.GONE);
+                ensure();
+                layOutChildren("极简开");
+            } else {
+                // ★88 切回常规：大窗必须摘掉，气泡窗接管
+                if (morphState != 0) { morphState = 0; morphRemove(); }
+                barVisual("极简关");
+                if (bubble != null) bubble.setTextSize(11.5f);
+                setFigBox(dp(FIG_DP), dp(FIG_DP));
+                showFig();
+                ensure();
+                layOutChildren("极简关");
+                scheduleIdle();
+            }
+            applyAlpha();
+        } catch (Throwable t) { noteFail("applyMinimal", t); }
+    }
+
     public static String imagePath(Context c) {
         return new File(Home.sub(c, DIRNAME), IMG).getAbsolutePath();
     }
@@ -287,9 +419,10 @@ public class Mascot {
         if (m == null) return;
         m.ui.post(new Runnable() {
             public void run() {
+                if (m.morphState == 1) m.morphSettle(m.morph.progress() > 0.5f, "转屏");
                 DisplayMetrics dm = m.svc.getResources().getDisplayMetrics();
                 if (dm != null) { m.sw = dm.widthPixels; m.sh = dm.heightPixels; }
-                int fy = (int) (m.sh * m.fracPref());
+                int fy = Math.round(m.fracPref() * Math.max(0, m.sh - m.figH));   // ★89：同口径
                 m.figLp.y = fy;
                 m.layOutChildren("转屏");
             }
@@ -311,14 +444,10 @@ public class Mascot {
             img.setScaleType(ImageView.ScaleType.FIT_CENTER);
             figWin.addView(img, new FrameLayout.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-            edgeBar = new View(svc);
-            GradientDrawable eg = new GradientDrawable();
-            eg.setColor(0x99FFFFFF);
-            eg.setCornerRadius(dp(2));
-            eg.setStroke(dp(1), 0x40000000);
-            edgeBar.setBackground(eg);
+            edgeBar = new Bar(svc);                    // ★89 白条自己画（粗细/长短可变，窗口一动不动）
             edgeBar.setVisibility(View.GONE);
             figWin.addView(edgeBar, edgeBarParams());
+            barLayerSetup();                           // ★89 拖动层（整屏、不可触摸）
             figWin.setOnTouchListener(new View.OnTouchListener() {
                 public boolean onTouch(View v, MotionEvent e) { return onFigTouch(e); }
             });
@@ -328,6 +457,8 @@ public class Mascot {
             figLp = baseLp();
             figW = dp(FIG_DP);
             figH = dp(FIG_DP);
+            minMode = minimal(svc);                       // ★87：极简模式初始就是白条尺寸
+            if (minMode) { figW = dp(EDGE_W_DP); figH = dp(EDGE_H_DP); }
             figLp.width = figW;
             figLp.height = figH;
 
@@ -343,7 +474,9 @@ public class Mascot {
             bubble.setTextColor(0xFF1B1B1B);
             bubble.setTextSize(11.5f);
             bubbleWrap = new ScrollView(svc);
-            bubbleWrap.setVerticalScrollBarEnabled(true);
+            bubbleWrap.setVerticalScrollBarEnabled(false);   // ★89.9 整改三：只在真能滚时开（见 measureBubble）
+            bubbleWrap.setScrollbarFadingEnabled(true);
+            try { int bw0 = bubbleWrap.getVerticalScrollbarWidth(); if (bw0 > 0) bubbleWrap.setScrollBarSize(Math.max(2, Math.round(bw0 / 3f))); } catch (Throwable t) { }
             bubbleWrap.addView(bubble, new ScrollView.LayoutParams(
                     ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
             badge = new TextView(svc);
@@ -362,8 +495,18 @@ public class Mascot {
             bubWin.addView(badge);
             bubbleWrap.setOnTouchListener(new View.OnTouchListener() {
                 public boolean onTouch(View v, MotionEvent e) {
-                    if (e.getActionMasked() == MotionEvent.ACTION_DOWN) {
+                    int act = e.getActionMasked();
+                    if (act == MotionEvent.ACTION_DOWN) {
+                        bubDragX0 = e.getRawX(); bubDragY0 = e.getRawY();
                         note("bubble touch"); if (state != ACTIVE) setState(ACTIVE, "碰了气泡"); scheduleIdle();
+                    } else if (act == MotionEvent.ACTION_MOVE) {
+                        // ★87：按住气泡往最近的屏幕边缘横着滑 ⇒ 收起（只有"要滚"时窗口才收得到触摸）
+                        float dx = e.getRawX() - bubDragX0, dy = e.getRawY() - bubDragY0;
+                        if (Math.abs(dx) > dp(60) && Math.abs(dx) > Math.abs(dy) * 1.5f) {
+                            note("气泡拖动收起（往" + (dx > 0 ? "右" : "左") + "滑 " + Math.round(dx) + "px）");
+                            collapseBubbleByGesture();
+                            return true;
+                        }
                     }
                     return false;   // 不吃事件：气泡里照样滚文字
                 }
@@ -371,8 +514,11 @@ public class Mascot {
             bubWin.setLayoutParams(new FrameLayout.LayoutParams(dp(120), dp(40)));
             bubLp = baseLp();
 
+            // ★88：极简的自绘大窗（不接收触摸，开播前定尺寸）
+            morphSetup();
+
             // 初始位置（之后由 layOutChildren 维护；★运行期只有拖动/换边/转屏/换状态才改）
-            int fy = (int) (sh * fracPref());
+            int fy = Math.round(fracPref() * Math.max(0, sh - figH));   // ★89：frac＝沿边比例（0~1，按可用高算）
             if (fy < 0) fy = 0;
             if (fy + figH > sh) fy = Math.max(0, sh - figH);
             figLp.y = fy;
@@ -383,6 +529,8 @@ public class Mascot {
             layOutChildren("setup");
             try { applyTrusted(); } catch (Throwable t) { noteFail("trusted", t); }
             applyAlpha();
+            applyMinimal("setup");
+            barVisual("setup 完");
             ensure();
             scheduleIdle();
         } catch (Throwable t) {
@@ -408,13 +556,15 @@ public class Mascot {
         String r;
         try {
             java.lang.reflect.Method mm = WindowManager.LayoutParams.class.getMethod("setTrustedOverlay", boolean.class);
-            mm.invoke(figLp, Boolean.TRUE);
-            mm.invoke(bubLp, Boolean.TRUE);
-            r = "trustedOverlay=ok(api" + Build.VERSION.SDK_INT + ")";
+            if (figLp != null) mm.invoke(figLp, Boolean.TRUE);
+            if (bubLp != null) mm.invoke(bubLp, Boolean.TRUE);
+            // ★89.6：气泡窗也要 trusted —— 不然真机触摸根本不进气泡（"能上下滚"永远验不出来）
+            if (morphLp != null) mm.invoke(morphLp, Boolean.TRUE);
+            r = "trustedOverlay=ok(api" + Build.VERSION.SDK_INT + "，morph=" + (morphLp != null) + ")";
         } catch (Throwable t) {
             r = "trustedOverlay=NO(" + t.getClass().getSimpleName() + "：" + t.getMessage() + "／api" + Build.VERSION.SDK_INT + ")";
         }
-        if (!trustedLogged) { trustedLogged = true; note(r); }
+        note(r);
     }
 
     private void destroy() {
@@ -465,12 +615,14 @@ public class Mascot {
     // ───────────────────────── 三态 ─────────────────────────
 
     private void scheduleIdle() {
+        if (minMode) return;   // ★87：极简的白条常驻，不降档
         ui.removeCallbacks(goDim);
         ui.removeCallbacks(goEdge);
         if (state == ACTIVE) ui.postDelayed(goDim, T_DIM);
     }
 
     private void stepDown() {
+        if (minMode) return;   // ★87：极简不降档
         if (state == ACTIVE) { setState(DIMMED, "10 秒无指令无点击"); ui.postDelayed(goEdge, T_EDGE); return; }
         if (state == DIMMED) {
             // 长时限消息（汇报 30 秒／失败 60 秒）还挂着：EDGE 等它收场，但每 3 秒只让一步（绝不永久等）
@@ -480,13 +632,14 @@ public class Mascot {
     }
 
     private void setState(int st, String why) {
+        if (minMode) { state = ACTIVE; ui.removeCallbacks(goDim); ui.removeCallbacks(goEdge); return; }   // ★87：极简不进三态
         if (state == st) { ui.postDelayed(verifyBoxR, VERIFY_MS); return; }   // ★70 C 线：同态也校一次（竞态正是「状态没变、尺寸错了」）
         ui.postDelayed(verifyBoxR, VERIFY_MS);   // ★70 C 线：三态切换后自校一次窗口尺寸
         int old = state;
         state = st;
         note("state " + STATE_NAME[old] + " -> " + STATE_NAME[st] + "（" + why + "）");
         if (st == ACTIVE) {
-            if (edgeBar != null) edgeBar.setVisibility(View.GONE);
+            barVisual("回前台态");
             setEdgeBarSide();
             showFig();
             if (old == EDGE && expanding) {
@@ -524,6 +677,7 @@ public class Mascot {
      *  ★67：收起也走动画（不许瞬间跳变）；贴边态一律不留气泡（"线＋气泡"这种半吊子状态不许存在）。 */
     private void enterEdge() {
         if (figWin == null) return;
+        if (minMode) { note("极简模式：不进退边（白条本来就在）"); return; }
         if (expanding) {   // 展开动画被贴边打断：丢弃排队消息，别让回调在半路再冒泡
             expanding = false;
             queuedSay = null;
@@ -531,7 +685,7 @@ public class Mascot {
             note("展开动画被贴边打断，丢弃排队消息");
         }
         if (bubShown()) hideBubble("贴边");
-        if (edgeBar != null) edgeBar.setVisibility(View.VISIBLE);
+        barVisual("进贴边");
         setEdgeBarSide();
         hideFig();
         note("collapse start（进 EDGE，" + COLLAPSE_MS + "ms 动画）");
@@ -550,6 +704,15 @@ public class Mascot {
         try {
             if (boxAnim != null) { ui.postDelayed(verifyBoxR, VERIFY_MS); return; }   // 动画还在飞：等它飞完再看
             if (cliHide && hideMode(svc) == 1) return;                              // 全隐档：窗口已摘，不校
+            if (minMode) {   // ★87：极简的窗口常驻白条尺寸
+                int mw = dp(EDGE_W_DP), mh = dp(EDGE_H_DP);
+                if (figW != mw || figH != mh) {
+                    note("自校（极简）：win=" + figW + "x" + figH + " → 纠正为 " + mw + "x" + mh);
+                    setFigBox(mw, mh);
+                    placeFig();
+                }
+                return;
+            }
             int ew = (state == EDGE) ? dp(EDGE_W_DP) : dp(FIG_DP);
             int eh = (state == EDGE) ? dp(EDGE_H_DP) : dp(FIG_DP);
             if (figW != ew || figH != eh) {
@@ -633,22 +796,35 @@ public class Mascot {
     private void setEdgeBarSide() {
         try {
             if (edgeBar == null) return;
-            FrameLayout.LayoutParams p = new FrameLayout.LayoutParams(dpf(EDGE_BAR_W_DP), dpf(EDGE_BAR_H_DP));
-            p.gravity = (isRightSide() ? Gravity.END : Gravity.START) | Gravity.CENTER_VERTICAL;
-            edgeBar.setLayoutParams(p);
+            if (minMode) {   // ★88/89：极简的白条＝自己画的一条，粗细/颜色跟着 morph（收放最后一帧接得上，不闪）
+                barStyle(edgeBar);
+            } else {
+                edgeBar.setSide(isRightSide());
+                edgeBar.setMetrics(dpf(EDGE_BAR_W_DP), dpf(EDGE_BAR_H_DP));
+                edgeBar.setStyle(0x99FFFFFF, 0x40000000, dp(1));
+                edgeBar.setCornerPx(dpf(2f));   // ★89.6 整改五：常规模式（有脸）恢复 2dp 圆角，不再画成半圆端头
+            }
         } catch (Throwable t) { }
     }
-
     private FrameLayout.LayoutParams edgeBarParams() {
-        FrameLayout.LayoutParams p = new FrameLayout.LayoutParams(dpf(EDGE_BAR_W_DP), dpf(EDGE_BAR_H_DP));
-        p.gravity = Gravity.END | Gravity.CENTER_VERTICAL;
+        // ★89：宽度铺满窄窗（20dp），粗细由 Bar 自己画 ⇒ 挤压加粗不会被窗口裁掉
+        FrameLayout.LayoutParams p = new FrameLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, dpf(EDGE_BAR_H_DP + 12f));
+        p.gravity = Gravity.CENTER_VERTICAL;
         return p;
     }
 
     /** 65：图形（自带脸／自选图）显示与收起——EDGE 态只留细线。 */
     private void showFig() {
         try {
-            if (edgeBar != null) edgeBar.setVisibility(View.GONE);
+            if (minMode) {   // ★87：极简＝没有脸，白条常驻
+                if (img != null) img.setVisibility(View.GONE);
+                if (face != null) face.setVisibility(View.GONE);
+                barVisual("showFig 极简");
+                setEdgeBarSide();
+                return;
+            }
+            barVisual("回前台态");
             boolean hasImg = img != null && img.getDrawable() != null;
             if (img != null) img.setVisibility(hasImg ? View.VISIBLE : View.GONE);
             if (face != null) face.setVisibility(hasImg ? View.GONE : View.VISIBLE);
@@ -657,6 +833,10 @@ public class Mascot {
 
     private void hideFig() {
         try {
+            if (minMode) {   // ★87：极简的白条常驻——收脸不收条
+                barVisual("hideFig 极简");
+                return;
+            }
             if (img != null) img.setVisibility(View.GONE);
             if (face != null) face.setVisibility(View.GONE);
         } catch (Throwable t) { }
@@ -687,8 +867,37 @@ public class Mascot {
             final String talk = ToolTags.line(name, a);
             final boolean bad = looksBad(resp);
             final String badTail = bad ? tailText(resp) : "";
+            final String zh = Words.toolZh(name);
+            final String mline = "shell".equals(name) ? ToolTags.line(name, a) : ((zh == null || zh.length() == 0) ? name : name + " " + zh);   // ★89.9 shell 说人话
+            final boolean timesUp = resp != null && (resp.indexOf("timeout=1") >= 0 || resp.indexOf("超时") >= 0);
+            final boolean isNotify = name.equals("notify");
+            String nRaw = a.optString("content", "");
+            if (nRaw == null || nRaw.length() == 0) nRaw = rep;
+            if (nRaw == null) nRaw = "";
+            final String nText = nRaw.replace('\n', ' ').trim();   // ★88.5：notify 第一行说人话（content／report）
+
             m.ui.post(new Runnable() {
                 public void run() {
+                    if (m.minMode) {
+                        // ★87 极简：只有「工具名 中文名」＋三种状态，不跟命令、不跟退出码、不跟返回内容
+                        String st = bad ? (timesUp ? Words.MS_MIN_TIMEOUT : Words.MS_MIN_FAIL) : "";   // ★89.9：成功只剩第一行（不显示"已返回"）
+                        boolean quiet = System.currentTimeMillis() < m.quietUntil;
+                        if (quiet && !bad && !isNotify) { m.note("静默期不冒泡（极简）：" + name); return; }
+                        // ★88.5：notify 是助手对用户说话的通道 ⇒ 第一行就是 content（没 content 用 report），
+                        //         成功不再补「已返回」；失败／超时仍显示「失败」「超时失败」。
+                        if (isNotify) {   // ★89.9：notify 仍单行显示 content 原文，不参与叠加、不过名单闸门
+                            String head = nText.length() > 0 ? nText : mline;
+                            m.noStack = true;
+                            try {
+                                if (bad) m.say(head + "\n" + st, M_FAIL, false);
+                                else m.say(head, M_NORMAL, false);
+                            } finally { m.noStack = false; }
+                            return;
+                        }
+                        m.say(bad ? mline + "\n" + st : mline, bad ? M_FAIL : M_NORMAL, false);
+                        return;
+                    }
+
                     if (bad) { m.say("⚠ " + ToolTags.label(name) + " 没成：" + badTail, M_FAIL, false); return; }   // ★70 A 线：失败优先于汇报，不许被 report 盖掉
                     if (rep != null && rep.length() > 0) { m.say(rep, M_REPORT, false); return; }
                     m.say(talk, M_NORMAL, false);
@@ -706,20 +915,15 @@ public class Mascot {
         if (text == null || text.length() == 0 || bubWin == null) return;
         long now = System.currentTimeMillis();
         if (kind == M_NORMAL && now - lastSayAt < 120) { if (face != null) face.setMood(Face.TALK); return; }
-        // ★69.5：客户端让位期间，报告与工具摘要一律不冒泡（只记日志）；唯一穿孔＝失败（M_FAIL）
-        boolean vis = visible(force);
-        if (!vis) {
-            if (kind == M_FAIL && canFailBreakout()) {
-                failBreak = true;
-                note("失败破例冒头（客户端让位中）");
-                ensure();
-                if (!figAdded) { failBreak = false; return; }
-            } else {
-                note("让位中不冒泡（kind=" + kind + "）：" + clip(text, 24));
-                return;
-            }
+        // ★89.9 整改五：自动冒泡（普通／失败／超时）**只走一个闸门** allowedByList（现读前台包，不缓存）；
+        //   手拉（内边滑拉最近一条）与 notify 例外。名单命中 ⇒ 不冒（失败也不冒，坏消息仍在大通知里）＋收掉已有内容。
+        String whySay = kind == M_FAIL ? "失败" : (kind == M_REPORT ? "汇报" : "工具");
+        if (!force && !noStack) {
+            if (!allowedByList(whySay)) { dropShownForList(whySay); note("名单闸门 ⇒ 不冒（" + whySay + "）：" + clip(text, 24)); return; }
         }
+        if (!visible(force)) { note("闭嘴不冒（" + whySay + "）：" + clip(text, 24)); return; }
         ensure();
+        if (minMode) { morphSay(text, kind); return; }   // ★88 极简：一个元素从白条长成框
         if (!figAdded) return;
 
         // ★B 线：高优先级（汇报／失败）还在屏上、又没到点 ⇒ 工具摘要只更新角标
@@ -765,6 +969,12 @@ public class Mascot {
         msgKind = kind;
         long ttl = kind == M_REPORT ? T_REPORT : (kind == M_FAIL ? T_FAIL : T_TALK);
         String show = ToolTags.clean(text);   // 令牌／口令一律不上屏；超上限交给 ScrollView 滚
+        if (minMode && text.indexOf('\n') > 0) {   // ★87：极简两行（工具名＋状态）不许被 clean 压成一行
+            String[] parts = text.split("\n");
+            StringBuilder sb2 = new StringBuilder();
+            for (int i = 0; i < parts.length; i++) { if (i > 0) sb2.append('\n'); sb2.append(ToolTags.clean(parts[i])); }
+            show = sb2.toString();
+        }
         if (bubble != null) bubble.setText(show.length() > 1500 ? show.substring(0, 1500) + "…" : show);
         if (face != null) face.setMood(kind == M_FAIL ? Face.FAIL : Face.TALK);
         boolean needAdd = !bubAdded;
@@ -786,10 +996,21 @@ public class Mascot {
     }
 
     private boolean bubShown() {
-        return msgKind >= 0;
+        return msgKind >= 0 && !minMode;   // ★88：极简由 morph 层画，气泡窗永不参与
     }
 
     private void hideBubble(String why) {
+        stackPrev = null; stackAt = 0L;   // ★89.9：气泡收场 ⇒ 下一条不叠加
+        if (minMode) {   // ★88 极简：气泡是 morph 画出来的，收起＝反向变形（框→白条）
+            boolean was0 = msgKind >= 0;
+            msgKind = -1;
+            pendingTool = null;
+            ui.removeCallbacks(hideMsg);
+            ui.removeCallbacks(hideBadgeTask);
+            morphHide(why);
+            if (was0) note("bubble hide（" + why + "）");
+            return;
+        }
         boolean was = msgKind >= 0;
         msgKind = -1;
         pendingTool = null;
@@ -889,6 +1110,17 @@ public class Mascot {
 
     /** 让位：按档收成细条／摘窗／只禁冒泡。★报告与工具摘要一律不冒泡。 */
     private void applyClientHide(String pk) {
+        if (minMode) {
+            // ★90：进名单只改一次可见性——先切「无」，再收内容，最后摘窗
+            note("极简 · 名单命中 ⇒ 全隐（白条与框都不出现）：" + pk);
+            barFrozen = true;
+            barVisual("名单命中·先切无");
+            dropShownForList(pk);
+            if (figAdded) takeAway();
+            barFrozen = false;
+            barVisual("名单命中全隐");
+            return;
+        }
         try {
             int m = hideMode(svc);
             if (m == 1) {                                  // 全隐：连条也没有
@@ -905,6 +1137,21 @@ public class Mascot {
     /** 解除让位：窗口放回＋按正常三态（回来时亮一下）。 */
     private void clearClientHide(String why) {
         try {
+            if (minMode) {
+                // ★90：出名单只改一次可见性——先建窄窗（条先暗着），下一帧再点亮
+                barFrozen = true;
+                ensure();
+                if (img != null) img.setVisibility(View.GONE);
+                if (face != null) face.setVisibility(View.GONE);
+                barVisual("离开名单·先建窗");
+                ui.post(new Runnable() { public void run() {
+                    if (dragAdded || flying || !figAdded) { barFrozen = false; return; }
+                    barFrozen = false;
+                    barVisual("离开名单·白条显示");
+                }});
+                note("极简 · 离开名单 ⇒ 白条恢复（" + why + "）");
+                return;
+            }
             ensure();
             if (!figAdded) return;
             if (state == EDGE) setState(ACTIVE, "让位解除：" + why);
@@ -940,6 +1187,7 @@ public class Mascot {
                     m.cliHide = true; m.cliPkg = pk;
                     m.note("客户端让位：" + pk + "（档=" + hideModeName(hideMode(m.svc)) + "）");
                     m.applyClientHide(pk);
+                    m.dropShownForList(pk);
                 } else if (!named && m.cliHide) {
                     String old = m.cliPkg;
                     m.cliHide = false; m.cliPkg = null;
@@ -956,23 +1204,105 @@ public class Mascot {
             if (!isOn(svc)) return false;                                   // 4) 手动关（最高否决）
             String pk = fgPkg();
             boolean self = pk != null && pk.startsWith(svc.getPackageName());
-            if (self && !force) return false;                               // 1) Reticle 自己在前台
-            boolean named = !self && namedStable(inHideList(pk));
-            if (named && !force && !exemptNow(pk)) {                        // 2) 客户端名单 ⇒ 让位
-                if (!cliHide || cliPkg == null || !cliPkg.equals(pk)) {
-                    cliHide = true; cliPkg = pk;
-                    note("客户端让位：" + pk + "（档=" + hideModeName(hideMode(svc)) + "）");
-                }
-                applyClientHide(pk);
-                return failBreak;                                           // ★唯一穿孔：失败破例中才放行
-            }
-            if (cliHide) { String old = cliPkg; cliHide = false; cliPkg = null; note("离开客户端：" + old + " → 解除让位"); clearClientHide("离开客户端"); }
+            if (self && !force && !minMode) return false;                  // 1) Reticle 自己在前台（★89.5：极简照样冒，用户才能看到每个工具）
+            // ★89.9 整改五：名单判定不在这里（冒泡前只过 allowedByList 一个闸门；这里只留"不在名单了要解除让位"）
+            boolean named = !self && inHideList(pk);
+            if (!named && cliHide) { String old = cliPkg; cliHide = false; cliPkg = null; note("离开客户端：" + old + " → 解除让位"); clearClientHide("离开客户端"); }
             PowerManager pm = (PowerManager) svc.getSystemService(Context.POWER_SERVICE);
             if (pm != null && !pm.isInteractive()) return false;            // 3) 息屏
             KeyguardManager km = (KeyguardManager) svc.getSystemService(Context.KEYGUARD_SERVICE);
             if (km != null && km.isKeyguardLocked()) return false;          //    锁屏
             return true;
         } catch (Throwable t) { return true; }
+    }
+
+    // ───────────────── ★89.9 整改五：名单闸门（一个闸门、现读前台包） ─────────────────
+
+    /** 前台包**当场读**（不走缓存）：读不到／为空 ⇒ null。 */
+    private String fgPkgFresh() {
+        try {
+            android.view.accessibility.AccessibilityNodeInfo r = svc.getRootInActiveWindow();
+            CharSequence p = r == null ? null : r.getPackageName();
+            String pk = p == null ? null : p.toString();
+            return (pk != null && pk.length() > 0) ? pk : null;
+        } catch (Throwable t) { return null; }
+    }
+
+    /** ★89.9 整改五：冒泡的唯一闸门。读不到／为空 ⇒ 按「在名单里」处理（保守：宁可不冒）。 */
+    private boolean allowedByList(String why) {
+        String pk = fgPkgFresh();
+        if (pk == null) { note("名单闸门：前台=读不到 名单命中=是（保守） ⇒ 不冒（" + why + "）"); return false; }
+        boolean self = pk.startsWith(svc.getPackageName());
+        boolean named = !self && inHideList(pk);
+        boolean allow = !named;
+        note("名单闸门：前台=" + pk + " 名单命中=" + (named ? "是" : "否") + " ⇒ " + (allow ? "冒" : "不冒") + "（" + why + "）");
+        return allow;
+    }
+
+    /** ★89.9 整改五.3：名单命中 ⇒ 把已在显示的内容直接收掉（不许"切进去了还留着上一条"）。 */
+    private void dropShownForList(String why) {
+        try {
+            if (!minMode) { if (msgKind >= 0 || bubAdded) hideBubble("名单命中：" + why); return; }
+            boolean was = msgKind >= 0 || morphAdded;
+            msgKind = -1;
+            pendingTool = null;
+            ui.removeCallbacks(hideMsg);
+            if (morphAnim != null) { try { morphAnim.cancel(); } catch (Throwable t) { } morphAnim = null; }
+            morphSeq++;
+            morphState = 0;
+            if (morph != null) morph.setP(0f);
+            morphRemove();
+            stackPrev = null; stackAt = 0L;
+            if (was) note("名单命中 ⇒ 已在显示的内容直接收掉（" + why + "）");
+        } catch (Throwable t) { noteFail("dropShownForList", t); }
+    }
+
+    // ───────────────── ★89.9 整改一：白条视觉互斥（唯一开关） ─────────────────
+
+    private static String bvName(int v) {
+        if (v == BV_BAR) return "窄窗";
+        if (v == BV_MORPH) return "morph";
+        if (v == BV_DRAG) return "拖动";
+        if (v == BV_FLY) return "飞行";
+        return "无";
+    }
+
+    private int bvWant() {
+        if (flying) return BV_FLY;                                  // 飞行那一秒：只有飞行层
+        if (dragAdded) return BV_DRAG;                              // 拖动层里的条
+        if (morphAdded) return BV_MORPH;                            // morph 里的贴边条
+        if (!barFrozen && figAdded && (minMode || state == EDGE)) return BV_BAR;   // 窄窗白条
+        return BV_NONE;
+    }
+
+    /** 白条视觉的唯一开关：窄窗／morph／拖动／飞行四层互斥；切换中（barFrozen）一律按"无"。
+     *  每次调用记一行 `白条视觉=…`；数到两个就当场掐掉多余，并记断言失败。 */
+    private void barVisual(String why) {
+        try {
+            int want = bvWant();
+            if (edgeBar != null) {
+                int vis;
+                if (want == BV_BAR) vis = View.VISIBLE;
+                else if (want == BV_NONE && !figAdded) vis = View.GONE;
+                else vis = View.INVISIBLE;      // 留着占位，回头点亮不重新测量
+                edgeBar.setVisibility(vis);
+            }
+            if (dragBar != null && dragAdded) dragBar.setVisibility(View.VISIBLE);
+            int n = (want == BV_BAR ? 1 : 0) + (morphAdded ? 1 : 0)
+                    + (flying ? 1 : 0) + ((dragAdded && !flying) ? 1 : 0);
+            if (n > 1) {
+                if (edgeBar != null && want != BV_BAR) edgeBar.setVisibility(View.INVISIBLE);
+                if (morphAdded && want != BV_MORPH && morphWin != null && wm != null) {
+                    try { wm.removeView(morphWin); } catch (Throwable t) { }
+                    morphAdded = false; morphState = 0; morphSeq++;
+                }
+                note("白条视觉断言失败（" + n + " 个）⇒ 已掐掉多余：want=" + bvName(want) + "（" + why + "）");
+                n = (want == BV_BAR ? 1 : 0) + (morphAdded ? 1 : 0)
+                        + (flying ? 1 : 0) + ((dragAdded && !flying) ? 1 : 0);
+            }
+            bvLast = want;
+            note("白条视觉=" + bvName(want) + "（" + n + " 个；" + why + "）");
+        } catch (Throwable t) { noteFail("barVisual", t); }
     }
 
     // ───────────────────────── 位置／朝向／透明度 ─────────────────────────
@@ -1058,6 +1388,7 @@ public class Mascot {
                         + " win=" + figW + "x" + figH + " at " + figLp.x + "," + figLp.y
                         + " bub=" + bw + "x" + bh + " at " + bx + "," + by);
             applyMirror();   // ★66：位置一变就重新镜像
+            applyBubTouch();   // ★87：内容不超出 ⇒ 气泡窗不接收触摸（不挡手）
         } catch (Throwable t) { noteFail("layout", t); }
     }
 
@@ -1068,6 +1399,11 @@ public class Mascot {
         int maxW = vert ? Math.min((int) (sw * 0.36f), dp(200)) : Math.min(dp(170), (int) (sw * 0.45f));
         int maxH = vert ? (int) (sh * 0.20f) : (int) (sh * 0.14f);
         int padL = dp(10), padR = dp(10), padT = dp(7), padB = dp(7);
+        if (minMode) {   // ★87 极简：气泡整体缩到常规的 ≈89.4%（宽×高面积 ≈80%）
+            maxW = Math.round(maxW * 0.894f);
+            maxH = Math.round(maxH * 0.894f);
+            padL = dpf(8.9f); padR = dpf(8.9f); padT = dpf(6.3f); padB = dpf(6.3f);
+        }
         if (bubble == null) return new int[] { Math.max(dp(80), maxW), maxH };
         boolean hasBadge = badgeOn && (msgKind == M_REPORT || msgKind == M_FAIL);
         int bH = 0, gapV = 0, bW = 0;
@@ -1104,7 +1440,9 @@ public class Mascot {
             wlp.topMargin = bH + gapV;
             bubbleWrap.setLayoutParams(wlp);
             bubble.setLayoutParams(new ScrollView.LayoutParams(tw, ViewGroup.LayoutParams.WRAP_CONTENT));
-            boolean scroll = bubble.getMeasuredHeight() > th;
+            bubNeedTouch = bubble.getMeasuredHeight() > th;   // ★87：内容高度 vs 窗口高度（不按字数猜）
+            boolean scroll = bubNeedTouch;
+            bubbleWrap.setVerticalScrollBarEnabled(bubNeedTouch && bubble.getMeasuredHeight() > th + dp(4));
             if (scroll && !scrollLogged) { scrollLogged = true; note("bubble 滚动到上限（文字高 " + bubble.getMeasuredHeight() + " > 可视 " + th + "，可滚）"); }
         } catch (Throwable t) { noteFail("measureBubble", t); }
         return new int[] { w, h };
@@ -1184,11 +1522,1195 @@ public class Mascot {
         } catch (Throwable t) { }
     }
 
+    /** ★87：气泡挡不挡手——内容不超出可视高（不用滚）⇒ 整窗不接收触摸，手指落到底下的应用；
+     *  内容超出（要能滚）⇒ 恢复可触摸。判据＝measureBubble 的「内容高 vs 窗口高」，不按字数猜。 */
+    private void applyBubTouch() {
+        if (bubWin == null || bubLp == null) return;
+
+        try {
+            boolean want = bubNeedTouch;   // true＝要触摸
+            boolean has = (bubLp.flags & WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE) == 0;
+            if (want == has && bubTouchInit) return;
+            bubTouchInit = true;
+            if (want) bubLp.flags &= ~WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE;
+            else bubLp.flags |= WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE;
+            if (bubAdded) wm.updateViewLayout(bubWin, bubLp);
+            note("bub touch=" + (want ? "on（要滚・可触摸）" : "off（不挡手・整窗穿透）")
+                    + " flags=0x" + Integer.toHexString(bubLp.flags) + " win=" + bubLp.width + "x" + bubLp.height);
+        } catch (Throwable t) { noteFail("applyBubTouch", t); }
+    }
+
+    /** ★87：按住气泡往边滑（或点白条）⇒ 收起气泡，并静默 60 秒：
+     *  普通工具调用不再弹、notify 照弹、失败照冒；期间白条照旧可点，安静期不出任何提示。 */
+    private void collapseBubbleByGesture() {
+        quietStart("收起（往边滑／点白条）");
+    }
+
+    /** ★88.6：所有「收起」入口（点白条／划框／点框）走同一套——收起 ＋ 进 60 秒静默：
+     *  普通调用不弹、notify 照弹、失败照冒；静默期白条照旧可点。 */
+    private void quietStart(String why) {
+        try {
+            hideBubble(why);
+            quietUntil = System.currentTimeMillis() + 60000L;
+            note("静默 60 秒开始（" + why + "）：普通调用不弹／notify 与失败照冒");
+            ui.postDelayed(new Runnable() { public void run() { note("静默 60 秒结束，恢复正常冒泡"); } }, 60000L);
+        } catch (Throwable t) { noteFail("quietStart", t); }
+    }
+
     private void toastSelf(String s) { note("click " + s); }
+    // ───────────────── ★88：气泡从白条长出来（极简 morph 层：一个元素两形态连续变形） ─────────────────
+
+    private boolean morphShown() { return morphState == 1 || morphState == 2; }
+
+    /** 大窗＝极简的自绘层。★88.5（用户拍 B）：框整窗可触摸——按住往边框滑＝跟着反向缩回，点一下＝收起；尺寸开播前一次定好。 */
+    private void morphSetup() {
+        try {
+            morph = new Morph(svc);
+            morphWin = new FrameLayout(svc);
+            morphWin.addView(morph.view(), new FrameLayout.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+            // ★89.5 整改六.3：框上叠一个真正的 TextView（放在 ScrollView 里）当内容层：可滚、随框走、随动画淡入
+            morphText = new TextView(svc);
+            morphText.setTextSize(android.util.TypedValue.COMPLEX_UNIT_SP, 13f);
+            morphText.setTextColor(Morph.textColor(svc));
+            morphText.setLineSpacing(dpf(2f), 1f);
+            morphScroll = new ScrollView(svc);
+            morphScroll.setFillViewport(true);
+            morphScroll.setVerticalScrollBarEnabled(true);
+            morphScroll.setScrollbarFadingEnabled(true);   // ★89.9 整改三：停手约 1 秒淡出
+            try {                                            // ★89.9 整改三：粗细＝系统默认的 1/3
+                int sbW0 = morphScroll.getVerticalScrollbarWidth();
+                if (sbW0 > 0) morphScroll.setScrollBarSize(Math.max(2, Math.round(sbW0 / 3f)));
+                note("morph 滚动条：默认宽 " + sbW0 + "px ⇒ 设为 " + Math.max(2, Math.round(sbW0 / 3f)) + "px，停手淡出");
+            } catch (Throwable t) { noteFail("scrollbar size", t); }
+            morphScroll.addView(morphText, new FrameLayout.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+            morphScroll.setVisibility(View.INVISIBLE);
+            morphScroll.setEnabled(false);   // ★89.5 内容层不自己吃触摸（滚动由 Mascot 代做，触摸绝不漏给下层）
+            morphScroll.setAlpha(0f);
+            morphWin.addView(morphScroll, new FrameLayout.LayoutParams(dp(120), dp(60)));
+            morph.setContent(morphScroll);
+            morphWin.setOnTouchListener(new View.OnTouchListener() {
+                public boolean onTouch(View v, MotionEvent e) { return onMorphTouch(e); }
+            });
+            morphWin.setLayoutParams(new FrameLayout.LayoutParams(dp(120), dp(120)));
+            morphLp = baseLp();
+            note("morph ready（点＝收起／按住往边框滑＝跟着缩；★89.5 叠了 ScrollView+TextView 内容层，可滚）flags=0x" + Integer.toHexString(morphLp.flags));
+            try { applyTrusted(); } catch (Throwable t) { noteFail("trusted-morph", t); }   // ★89.6：气泡窗 trusted ⇒ 能收触摸（滚动）
+        } catch (Throwable t) { noteFail("morphSetup", t); }
+    }
+
+    /** ★89.5 整改六.3：内容层大小／位置跟着框（终态）走；文本用完整内容（能换行、能滚）。 */
+    private void layoutContent() {
+        try {
+            if (morph == null || morphScroll == null || morphText == null) return;
+            float padX = dpf(13), padY = dpf(9);
+            int cw = Math.max(1, Math.round(morph.frameW - padX * 2f));
+            int chh = Math.max(1, Math.round(morph.frameH - padY * 2f));
+            int ml = isRightSide() ? Math.round(morph.winW - morph.frameW + padX) : Math.round(padX);
+            int mt = Math.round(morph.winCy() - morph.frameH / 2f + padY);
+            FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(cw, chh);
+            lp.leftMargin = ml; lp.topMargin = mt;
+            morphScroll.setLayoutParams(lp);
+            morphScroll.scrollTo(0, 0);
+            morph.contentCy = morph.winCy();
+            String t1 = ToolTags.clean(morph.l1), t2 = ToolTags.clean(morph.l2);
+            android.text.SpannableStringBuilder sb = new android.text.SpannableStringBuilder(t1);
+            sb.setSpan(new android.text.style.StyleSpan(android.graphics.Typeface.BOLD),
+                    0, sb.length(), android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            if (t2 != null && t2.length() > 0) {
+                int at = sb.length();
+                sb.append('\n');
+                sb.append(t2);
+                sb.setSpan(new android.text.style.AbsoluteSizeSpan(11, true),
+                        at + 1, sb.length(), android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            }
+            morphText.setText(sb);
+            morphText.setTextColor(Morph.textColor(svc));
+            morphText.measure(View.MeasureSpec.makeMeasureSpec(cw, View.MeasureSpec.EXACTLY),
+                    View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+            int needH = morphText.getMeasuredHeight();
+            // ★89.9 整改三：只在真的能滚时才出现（内容高 > 可视高 + 4px），否则关掉
+            boolean canScroll = needH > chh + dp(4);
+            morphNeedScroll = canScroll;
+            morphScroll.setVerticalScrollBarEnabled(canScroll);
+            note("morph 内容层：TextView 可视 " + cw + "x" + chh + " at " + ml + "," + mt + "；内容高 " + needH
+                    + "（+4px 判据 ⇒ " + (canScroll ? "可滚，滚动条开" : "不用滚，滚动条关") + "）；文本=" + clip(t1 + "／" + t2, 34));
+        } catch (Throwable t) { noteFail("layoutContent", t); }
+    }
+
+    /** ★89.5 整改一：手指接管后停住／事件丢了 ⇒ 1.2 秒后强制收尾（不许停在中间态）。 */
+    private Runnable morphStuck = null;
+    private void armStuckWatch(final long seq) { armStuckWatch(seq, 1200L); }
+    private void armStuckWatch(final long seq, final long ms) {
+        disarmStuckWatch();
+        morphStuck = new Runnable() { public void run() {
+            if (seq != morphSeq) return;
+            if (morphState != 1 && morphState != 3) return;
+            boolean toBubble = morphState == 1 && morph != null && morph.progress() > 0.5f;
+            morphSettle(toBubble, "手指接管后停住／事件丢了 1.2s");
+        } };
+        ui.postDelayed(morphStuck, ms);
+    }
+    private void disarmStuckWatch() {
+        if (morphStuck != null) { ui.removeCallbacks(morphStuck); morphStuck = null; }
+    }
+
+    /** ★88.5：框上的手指——点＝收起；按住往边框滑＝实时反向缩回；上下划＝滚内容层。
+     *  ★89.5：动画中途被按住 ⇒ 明确"跟手接管"，并挂 1.2 秒兜底看门狗（松手/事件丢都走终态）。 */
+    private int mScrollEdge = -99999;
+    /** ★89.6 整改三：滚到顶／底给一次边界反馈（轻震＋日志），证明判据和滚动都真在跑。 */
+    private void scrollEdgeCheck() {
+        try {
+            int sy = morphScroll.getScrollY();
+            int ch = morphScroll.getChildAt(0) == null ? 0 : morphScroll.getChildAt(0).getHeight();
+            int maxY = Math.max(0, ch - morphScroll.getHeight());
+            if (sy <= 0 || sy >= maxY) {
+                if (mScrollEdge != sy) {
+                    mScrollEdge = sy;
+                    morphScroll.performHapticFeedback(android.view.HapticFeedbackConstants.CLOCK_TICK);
+                    note("morph 滚到" + (sy <= 0 ? "顶" : "底") + "（边界反馈：scrollY=" + sy + "／范围 0~" + maxY + "，内容高 " + ch + " 可视 " + morphScroll.getHeight() + "）");
+                }
+            } else mScrollEdge = -99999;
+        } catch (Throwable t) { }
+    }
+
+    private boolean onMorphTouch(MotionEvent e) {
+        try {
+            int act = e.getActionMasked();
+            if (act == MotionEvent.ACTION_DOWN) {
+                mTouchX = e.getRawX(); mTouchY = e.getRawY();
+                mTouchP = morph.progress();
+                mTouchDrag = false;
+                mScrollDrag = false;
+                mLastScrollY = e.getRawY();
+                if (morphAnim != null) {   // 生长到一半被按住 ⇒ 先停帧（不许和手指抢）
+                    morphSeq++;
+                    try { morphAnim.cancel(); } catch (Throwable t) { }
+                    morphAnim = null;
+                    if (morphWatch != null) { ui.removeCallbacks(morphWatch); morphWatch = null; }
+                    note("morph 动画被手指打断 ⇒ 跟手接管（p=" + Math.round(mTouchP * 100f) + "%，松手后统一走到终态）");
+                }
+                ui.removeCallbacks(hideMsg);
+                armStuckWatch(morphSeq);
+                note("morph touch down（p=" + Math.round(mTouchP * 100f) + "%）");
+                return true;
+            }
+            if (act == MotionEvent.ACTION_MOVE) {
+                float rawDx = e.getRawX() - mTouchX, rawDy = e.getRawY() - mTouchY;
+                if (!mTouchDrag && !mScrollDrag && Math.abs(rawDy) > dp(10) && Math.abs(rawDy) > Math.abs(rawDx)) {
+                    boolean canScroll = morphNeedScroll;   // ★89.6：layoutContent 实测「内容高 > 可视高」
+                    if (canScroll && morphState == 2) {
+                        mScrollDrag = true;
+                        morphScroll.scrollBy(0, (int) (mLastScrollY - e.getRawY()));
+                        mLastScrollY = e.getRawY();
+                        note("morph 内容层跟着手指滚：scrollY=" + morphScroll.getScrollY() + "（触摸没漏给下层）");
+                        scrollEdgeCheck();
+                        return true;
+                    }
+                }
+                if (mScrollDrag) {
+                    morphScroll.scrollBy(0, (int) (mLastScrollY - e.getRawY()));
+                    mLastScrollY = e.getRawY();
+                    scrollEdgeCheck();
+                    return true;
+                }
+                float dx = isRightSide() ? rawDx : -rawDx;
+                float dy = Math.abs(rawDy);
+                float gap = Math.max(dp(24), morph.frameW - morph.barW);
+                if (!mTouchDrag && dx > dp(6) && dx > dy) mTouchDrag = true;
+                if (mTouchDrag) {
+                    morphState = 1;
+                    morph.setP(mTouchP - dx / gap);
+                    note("morph 跟手缩 t=" + Math.round(morph.progress() * 100f) + "%（往" + (isRightSide() ? "右" : "左") + "滑 " + Math.round(dx) + "px）");
+                }
+                return true;
+            }
+            if (act == MotionEvent.ACTION_UP || act == MotionEvent.ACTION_CANCEL) {
+                disarmStuckWatch();
+            gMode = G_NONE;   // ★89.5：强制收尾时手势状态一起复位（不许后续 MOVE 再改 p）
+                note("morph touch up（" + (mScrollDrag ? "滚内容" : (mTouchDrag ? "划框" : "点框")) + " ⇒ 收起）");
+                quietStart(mScrollDrag ? "滚完内容收起" : (mTouchDrag ? "划框收起" : "点框收起"));
+                return true;
+            }
+        } catch (Throwable t) { noteFail("onMorphTouch", t); }
+        return true;
+    }
+    private void morphAdd(int[] r) {
+        if (morph == null || morphWin == null || wm == null) return;
+        morphLp.x = r[0]; morphLp.y = r[1]; morphLp.width = r[2]; morphLp.height = r[3];
+        try {
+            if (!morphAdded) { wm.addView(morphWin, morphLp); morphAdded = true; }
+            else wm.updateViewLayout(morphWin, morphLp);
+            layoutContent();   // ★89.5：内容层（TextView）跟着框的位置／大小／文字走
+            note("morph win=" + r[2] + "x" + r[3] + " at " + r[0] + "," + r[1] + "（提前定好，全程不改；框 " + morph.frameW + "x" + morph.frameH + " 行=" + morph.lineCount + "）");
+        } catch (Throwable t) { noteFail("morphAdd", t); }
+    }
+    private void morphRemove() {
+        try { if (morphAdded && morphWin != null && wm != null) wm.removeView(morphWin); } catch (Throwable t) { }
+        morphAdded = false;
+        barVisual("morph 摘窗");
+    }
+
+    /** 极简下的冒泡：白条 → 框（首次）；框已在就只换字（不重播、不动窗口）。
+     *  ★89.9 整改二：1.5 秒内来的第二条与上一条**并列两行**（各带自己的状态），只留最近两条；
+     *  超过 1.5 秒＝照旧替换；notify 不参与叠加（单行原文）。 */
+    private void morphSay(String text, int kind) {
+        if (morphWin == null || !isOn(svc)) return;
+        if (kind == M_NORMAL && msgKind >= 0 && (msgKind == M_REPORT || msgKind == M_FAIL)) {   // ★89.5 六.1：改成照显（每个工具都要看到），只记一笔
+            note("morph 顶掉上一条（" + (msgKind == 2 ? "失败" : "汇报") + "→ 普通）：" + clip(text, 24));
+        }
+        lastSayAt = System.currentTimeMillis();
+        msgKind = kind;
+
+        // ── 本条：正文一行；状态（失败／超时失败）接在**行末**，不占第二行 ──
+        String raw = text == null ? "" : text;   // ★88.5：先按行拆、再逐行 clean（clean 会把换行压成空格）
+        int nl = raw.indexOf('\n');
+        String base = ToolTags.clean(nl >= 0 ? raw.substring(0, nl) : raw);
+        String st = nl >= 0 ? ToolTags.clean(raw.substring(nl + 1)) : "";
+        if (base.length() == 0) base = "Reticle";
+        String cur = st.length() > 0 ? base + " " + st : base;
+
+        // ── 叠加：1.5 秒内的第二条 ⇒ 上一行＋这一行（第三条起把最老的挤掉） ──
+        long now2 = System.currentTimeMillis();
+        String l1, l2;
+        if (!noStack && stackPrev != null && stackAt > 0L && now2 - stackAt < STACK_MS) {
+            l1 = stackPrev;
+            l2 = cur;
+            note("叠加两行（间隔 " + (now2 - stackAt) + "ms < " + STACK_MS + "ms）：" + clip(l1 + "／" + l2, 44));
+        } else {
+            l1 = cur;
+            l2 = "";
+        }
+        if (noStack) { stackPrev = null; stackAt = 0L; }
+        else { stackPrev = cur; stackAt = now2; }
+
+        long ttl = kind == M_REPORT ? T_REPORT : (kind == M_FAIL ? T_FAIL : T_TALK);
+        ui.removeCallbacks(hideMsg);
+        ui.postDelayed(hideMsg, ttl);
+
+        lastL1 = l1; lastL2 = l2; lastKind = kind;   // ★89：内滑拉出「最近一条」（自动消失过也留着）
+
+        if (morphState == 2) {   // 已在框：换字，并按新内容重算矩形（框随内容大小）
+            int[] r2 = morph.prepare(isRightSide(), sw, sh, figLp.y, figH, l1, l2, kind);
+            morphAdd(r2);
+            morph.setP(1f);
+            barVisual("morph 换字");
+            note("morph text update（已在框，按新内容重算）框 " + morph.frameW + "x" + morph.frameH + "px：" + clip(l1 + "／" + l2, 40));
+            return;
+        }
+        int[] r = morph.prepare(isRightSide(), sw, sh, figLp.y, figH, l1, l2, kind);
+        // ★89.9 整改一：进 morph 前**先藏窄窗白条**（不许重叠一帧，屏幕上任何时候只有一个白条视觉）
+        if (edgeBar != null) edgeBar.setVisibility(View.INVISIBLE);
+        morphAdd(r);
+        barVisual("morph 开播");
+        note("morph prepare 框=" + morph.frameW + "x" + morph.frameH + "px maxW=" + Morph.maxWdp(svc) + "dp maxH=" + Morph.maxHdp(svc) + "dp 窗=" + r[2] + "x" + r[3] + " 行=" + morph.lineCount);
+        if (morphState == 0) morph.setP(0f);   // ★88：从当前进度接着长（收起中途又冒泡不跳回白条）
+        morphState = 1;
+        morphAnim(true, new Runnable() { public void run() {
+            morphState = 2;
+            barVisual("morph 成框");
+            note("morph grow end（框 " + morph.frameW + "x" + morph.frameH + "px，白条 " + Math.round(morph.barW) + "x" + Math.round(morph.barH) + "）");
+        } });
+        note("morph show kind=" + kind + " ttl=" + ttl + " text=" + clip(text, 40));
+    }
+    /** 形变动画的唯一通道（grow／shrink）。
+     *  ★89.7 整改三（19 号第三轮，用户已授权）：**彻底抛掉尺寸过冲**——
+     *   p 沿一条 easeOutCubic 单调走（grow 0→1、shrink →0），从不越过终态；出手快、收尾慢，看着"不硬"但不抽。
+     *   白条自身的"变细变粗"保留：flick 按 sin(πt) 走（两端都是 0），只画在厚度上，框上不做。
+     */
+    private void morphAnim(final boolean grow, final Runnable end) {
+        try {
+            final long seq = ++morphSeq;   // ★88：先作废旧回调用（cancel 会触发旧动画的 onAnimationEnd）
+            if (morphAnim != null) { try { morphAnim.cancel(); } catch (Throwable t) { } morphAnim = null; }
+            final int dur = grow ? Math.max(Morph.dur(svc), MORPH_GROW_MS) : Morph.dur(svc);
+            armMorphWatch(seq, grow, dur);
+            if (!Morph.enabled(svc)) {
+                morph.setP(grow ? 1f : 0f);
+                morph.setFlick(0f);
+                note("morph " + (grow ? "grow" : "shrink") + " 跳过（动效关）");
+                if (morphWatch != null) { ui.removeCallbacks(morphWatch); morphWatch = null; }
+                if (end != null) end.run();
+                return;
+            }
+            final StringBuilder trace = new StringBuilder(8192);
+            final long[] ts = new long[640];
+            final int[] tn = {0};
+            final int[] lines = {0};
+            final float p0 = morph.progress();
+            final float[] lastW = {-1f};
+            final float[] dwMax = {0f};
+            ValueAnimator va = ValueAnimator.ofFloat(0f, 1f);
+            va.setDuration(dur);
+            va.setInterpolator(new android.view.animation.LinearInterpolator());   // 曲线自己算（easeOutCubic，无过冲）
+            va.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                public void onAnimationUpdate(ValueAnimator a) {
+                    if (seq != morphSeq) return;
+                    float t = (Float) a.getAnimatedValue();
+                    float v, fl;
+                    float k = easeOutCubic(t);                       // ★89.7：删掉全部尺寸过冲，只留一条减速曲线
+                    if (grow) {
+                        v = p0 + (1f - p0) * k;                       // 单调爬到 1，从不越过终态
+                        fl = -0.20f * (float) Math.sin(Math.PI * t);  // 变细只做在白条厚度上，两端为 0（收尾不跳）
+                    } else {
+                        v = p0 * (1f - k);                            // 单调收回 0，从不越过
+                        fl = 0.12f * (float) Math.sin(Math.PI * t);   // 变粗也只做在白条厚度上
+                    }
+                    morph.setP(v);
+                    morph.setFlick(fl);
+                    float wNow = morph.curW;
+                    float d = (lastW[0] > 0f) ? Math.abs(wNow - lastW[0]) : 0f;
+                    if (d > dwMax[0]) dwMax[0] = d;
+                    lastW[0] = wNow;
+                    if (tn[0] < 640) ts[tn[0]++] = System.nanoTime();
+                    if (lines[0] < 180) {
+                        lines[0]++;
+                        trace.append("morph ").append(grow ? "grow" : "shrink")
+                                .append(" t=").append(Math.round(t * 100f)).append("%")
+                                .append(" p=").append(Math.round(morph.progress() * 100f)).append("%")
+                                .append(" 厚=").append(fmt1(morph.barW * (1f + morph.flick()) / dens())).append("dp")
+                                .append(" 帧=").append(Math.round(morph.curW)).append("x").append(Math.round(morph.curH))
+                                .append(" 帧差=").append(Math.round(d)).append("px")
+                                .append(" win=").append(morphLp.width).append("x").append(morphLp.height)
+                                .append(" ").append(morph.outline()).append("\n");
+                    }
+                }
+            });
+            va.addListener(new AnimatorListenerAdapter() {
+                @Override public void onAnimationEnd(Animator a) {
+                    if (seq != morphSeq) return;
+                    morphAnim = null;
+                    if (morphWatch != null) { ui.removeCallbacks(morphWatch); morphWatch = null; }
+                    morph.setFlick(0f);
+                    flushTrace(trace);
+                    frameStat(ts, tn[0]);
+                    note("morph " + (grow ? "grow" : "shrink") + " end：p=" + Math.round(morph.progress() * 100f) + "% 帧="
+                            + Math.round(morph.curW) + "x" + Math.round(morph.curH) + "（单调到终态，无过冲）"
+                            + " 最大逐帧差=" + Math.round(dwMax[0]) + "px＝终态宽 " + Math.round(morph.frameW) + " 的 "
+                            + fmt1(morph.frameW <= 0 ? 0f : dwMax[0] * 100f / morph.frameW) + "%");
+                    if (end != null) end.run();
+                }
+            });
+            morphAnim = va;
+            va.start();
+            note("morph " + (grow ? "grow" : "shrink") + " start（" + dur + "ms 线宽=" + Morph.lineW(svc) + "dp 圆角=" + Morph.radius(svc)
+                    + "dp 最大宽=" + Morph.maxWdp(svc) + "dp 最大高=" + Morph.maxHdp(svc) + "dp 手感=" + Morph.presetName(svc)
+                    + " 曲线=easeOutCubic（无过冲）" + "）");
+        } catch (Throwable t) { noteFail("morphAnim", t); if (end != null) end.run(); }
+    }
+
+    /** ★89.7：无过冲的减速曲线（出手快、收尾慢，且永远不越过终态）。 */
+    private float easeOutCubic(float x) {
+        if (x <= 0f) return 0f;
+        if (x >= 1f) return 1f;
+        float u = 1f - x;
+        return 1f - u * u * u;
+    }
+
+    /** ★89.6 主体曲线：x∈[0,1] 的「缓起 5% → 匀速 → 缓停 5%」（每帧位移最小，不跳不抖）。 */
+    private float growBase(float x) {
+        final float A = 0.05f, T1 = 0.10f, T2 = 0.86f;
+        if (x <= 0f) return 0f;
+        if (x >= 1f) return 1f;
+        if (x < T1) { float k = x / T1; return A * k * k * (3f - 2f * k); }
+        if (x > T2) { float k = (x - T2) / (1f - T2); return 0.95f + A * k * k * (3f - 2f * k); }
+        return A + (0.95f - A) * (x - T1) / (T2 - T1);
+    }
+
+    /** ★89.6 半个正弦的平方：两端斜率都是 0（接得上，不产生拐点），中间 1。 */
+    private float pulse(float t, float a, float b) {
+        if (t <= a || t >= b) return 0f;
+        return sq((t - a) / Math.max(0.0001f, b - a));
+    }
+    private float sq(float u) {
+        float s = (float) Math.sin(Math.PI * u);
+        return s * s;
+    }
+
+    /** ★89.5 整改一：动画最大存活（时长＋200ms）——到点强制收尾到终态。 */
+    private void armMorphWatch(final long seq, final boolean grow, int dur) {
+        if (morphWatch != null) { ui.removeCallbacks(morphWatch); morphWatch = null; }
+        morphWatchSeq = seq;
+        morphWatchGrow = grow;
+        morphWatch = new Runnable() { public void run() {
+            if (seq != morphSeq) return;
+            if (morphState != 1 && morphState != 3) return;
+            morphSettle(grow, "超时 " + (Morph.dur(svc) + MORPH_MAX_MS) + "ms");
+        } };
+        ui.postDelayed(morphWatch, dur + MORPH_MAX_MS);
+    }
+
+    /** ★89.5 整改一：任何打断都走到终态（要么成框，要么干净回到白条），绝不停在中间。 */
+    private void morphSettle(boolean toBubble, String why) {
+        try {
+            if (morph == null) return;
+            morphSeq++;                                  // 作废旧回调
+            if (morphAnim != null) { try { morphAnim.cancel(); } catch (Throwable t) { } morphAnim = null; }
+            if (morphWatch != null) { ui.removeCallbacks(morphWatch); morphWatch = null; }
+            disarmStuckWatch();
+            gMode = G_NONE;   // ★89.5：强制收尾时手势状态一起复位（不许后续 MOVE 再改 p）
+            morph.setFlick(0f);
+            if (toBubble) {
+                morph.setP(1f);
+                morphState = 2;
+                note("morph 强制收尾（" + why + "）⇒ 终态＝框 p=100%");
+            } else {
+                morph.setP(0f);
+                morphState = 0;
+                morphRemove();
+                barVisual("morph 强制收尾");
+                note("morph 强制收尾（" + why + "）⇒ 终态＝白条 p=0%");
+            }
+        } catch (Throwable t) { noteFail("morphSettle", t); }
+    }
+    /** ★88.8 逐帧轨迹一次落盘（一次 open／write／close）。 */
+    /** ★88.8 动画期间的帧时间（每帧一次 update 的时间戳）：均值／最差／超过 16.7ms 的帧数。 */
+    private void frameStat(long[] ts, int n) {
+        try {
+            if (n < 3) return;
+            long sum = 0, max = 0;
+            int over = 0;
+            for (int i = 1; i < n; i++) {
+                long d = ts[i] - ts[i - 1];
+                sum += d;
+                if (d > max) max = d;
+                if (d > 16700000L) over++;
+            }
+            int cnt = n - 1;
+            note(String.format(java.util.Locale.ROOT, "morph frame stat 帧=%d 均值=%.1fms 最差=%.1fms 超16.7ms=%d", cnt, (sum / 1000000.0) / cnt, max / 1000000.0, over));
+        } catch (Throwable t) { }
+    }
+
+    private void flushTrace(StringBuilder sb) {
+        try { if (sb != null && sb.length() > 0) writeLog(sb.toString().trim()); } catch (Throwable t) { }
+    }
+
+    /** 极简下收起：反向变形（框 → 白条），演完摘大窗、把白条还给窄窗。 */
+    /** 极简下收起：反向变形（框 → 白条），演完摘大窗、把白条还给窄窗。 */
+    private void morphHide(String why) {
+        if (morph == null || morphWin == null) return;
+        if (morphState == 0) { if (morphAdded) morphRemove(); return; }
+        if (morphState == 3 && morphAnim != null) return;   // ★89.5：被打断后 state 卡在 3（旧动画 end 作废）不许把收起挡死
+        note("morph hide（" + why + "）");
+        morphState = 3;
+        morphAnim(false, new Runnable() { public void run() {
+            morphState = 0;
+            morphRemove();
+            barVisual("morph 收起完");
+            if (morphText != null) morphText.setText("");
+        } });
+    }
+    /** 配置页「播一遍」：白条 → 框 → 白条，跑 2 个来回（不用重装）。 */
+    static void morphPlay() {
+        final Mascot m = S;
+        if (m == null) return;
+        m.ui.post(new Runnable() { public void run() {
+            try {
+                if (!m.minMode) { m.note("morph 播一遍：极简模式没开，先开极简"); return; }
+                m.note("morph 播一遍 start（2 个来回）");
+                m.morphDemo(2);
+            } catch (Throwable t) { m.noteFail("morphPlay", t); }
+        } });
+    }
+
+    private void morphDemo(final int rounds) {
+        if (morph == null || !minMode) return;
+        if (morphState == 0) {
+            int[] r = morph.prepare(isRightSide(), sw, sh, figLp.y, figH, "动效演示 · 播一遍", "白条收放", M_NORMAL);
+            morphAdd(r);
+        note("morph prepare 框=" + morph.frameW + "x" + morph.frameH + "px maxW=" + Morph.maxWdp(svc) + "dp maxH=" + Morph.maxHdp(svc) + "dp 窗=" + r[2] + "x" + r[3]);
+            // ★88.7：同 morphSay——大窗先接管白条，下一帧再把窄窗白条藏起来（不闪）
+            final View eb2 = edgeBar;
+            if (eb2 != null) {
+                eb2.setVisibility(View.VISIBLE);
+                ui.post(new Runnable() { public void run() {
+                    try { if (eb2 == edgeBar && morphState != 0) eb2.setVisibility(View.INVISIBLE); } catch (Throwable t) { }
+                } });
+            }
+        }
+        if (morphState == 1) return;
+        morphState = 1;
+        morph.setP(0f);
+        morphDemoGrow(rounds);
+    }
+
+    private void morphDemoGrow(final int rounds) {
+        morphAnim(true, new Runnable() { public void run() {
+            morphState = 2;
+            morphAnim(false, new Runnable() { public void run() {
+                morphState = 0;
+                if (rounds > 1) { morphState = 1; morphDemoGrow(rounds - 1); }
+                else { morphRemove(); note("morph 播一遍 end（2 个来回完）"); }
+            } });
+        } });
+    }
+
+    /** 调参板改完立刻生效：成框时按新线宽／圆角重算窗口并重画；白条态只记一笔（下次播放生效）。 */
+    static void morphReload() {
+        final Mascot m = S;
+        if (m == null) return;
+        m.ui.post(new Runnable() { public void run() {
+            try {
+                if (m.morph == null) return;
+                m.setEdgeBarSide();   // 白条粗细跟着线宽（收放首尾一帧要接得上）
+                if (m.morphState == 2) {
+                    int[] r = m.morph.prepare(m.isRightSide(), m.sw, m.sh, m.figLp.y, m.figH, m.morph.l1, m.morph.l2, m.morph.kind);
+                    m.morphAdd(r);
+                    m.morph.setP(1f);
+                    m.note("morph 调参生效（重画）win=" + r[2] + "x" + r[3]);
+                } else {
+                    m.note("morph 调参已存（下次播放生效）dur=" + Morph.dur(m.svc) + "ms 线宽=" + Morph.lineW(m.svc)
+                            + "dp 圆角=" + Morph.radius(m.svc) + "dp 鼓出=" + Morph.bulge(m.svc) + "% 回弹=" + Morph.bounce(m.svc));
+                }
+            } catch (Throwable t) { m.noteFail("morphReload", t); }
+        } });
+    }
+
 
     // ───────────────────────── 触摸：点击／拖动（★气泡不参与碰撞） ─────────────────────────
 
+    // ───────────────── ★89 白条的手（极简：点／内滑／长按／拖动） ─────────────────
+    // 三条可调常量（只真机调得出来）：离开"点"的判定 BAR_SLOP_DP／内滑成形阈值 BAR_SWIPE_DP／长按时长 BAR_LONG_MS
+    // 阻尼：实际位移 = Dmax·(1-e^(-d/Dmax))，Dmax=0.55·屏宽（★89.7 指数渐近：越往外越沉，但能拖到 40% 判定线）。
+
+    private float dens() { try { return svc.getResources().getDisplayMetrics().density; } catch (Throwable t) { return 3f; } }
+    static String fmt1(float v) { return String.format(java.util.Locale.ROOT, "%.1f", v); }
+    static String fmt2(float v) { return String.format(java.util.Locale.ROOT, "%.2f", v); }
+    static String fmt3(float v) { return String.format(java.util.Locale.ROOT, "%.3f", v); }
+
+    /** ★89.5 整改四：慢拖离边上限 1cm（用屏幕真实 dpi 换算，不用 dp 猜）。 */
+    private float cmPx() {
+        try {
+            DisplayMetrics dm = svc.getResources().getDisplayMetrics();
+            float dpi = dm.xdpi > 0 ? dm.xdpi : 400f;
+            return dpi / 2.54f * BAR_DETACH_CM;
+        } catch (Throwable t) { return dpf(38f); }
+    }
+
+    /** 白条的粗细／颜色／贴边：一律跟 Morph 参数走（与框的白条态像素一致，收放最后一帧不闪）。 */
+    private void barStyle(Bar b) {
+        if (b == null) return;
+        b.setMetrics(dpf(Math.max(1f, (float) Morph.lineW(svc))), dpf(Bar.LEN_DP));
+        b.setStyle(Morph.fillColor(svc), Morph.strokeColor(svc), Math.max(1, dpf(Morph.strokeW(svc))));
+        b.setCornerPx(-1f);                      // ★89.6：极简白条＝圆头（半径＝粗细/2）
+        b.setSide(isRightSide());
+    }
+
+    /** 拖动层：整屏、不可触摸、只画一条白条。拖动开始时一次开够 ⇒ 拖动期间只改画的东西，不改窗口。 */
+    private void barLayerSetup() {
+        try {
+            dragBar = new Bar(svc);
+            dragBar.setFloating(true);
+            dragWin = new FrameLayout(svc);
+            dragWin.addView(dragBar, new FrameLayout.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+            dragWin.setLayoutParams(new FrameLayout.LayoutParams(sw, sh));
+            dragLp = baseLp();
+            dragLp.flags |= WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE;   // ★拖动层永不吃触摸
+            dragLp.width = sw; dragLp.height = sh; dragLp.x = 0; dragLp.y = 0;
+            note("bar 拖动层 ready（flags=0x" + Integer.toHexString(dragLp.flags) + "，整屏一次开够，拖动期间不改窗口）");
+        } catch (Throwable t) { noteFail("barLayerSetup", t); }
+    }
+
+    /** 点一下（框不在屏）⇒ 弹一下：从当前粗细冲到峰再回原样，140ms；不拉气泡。 */
+    private void barTapBounce() {
+        try {
+            if (edgeBar == null) return;
+            if (barAnim != null) { try { barAnim.cancel(); } catch (Throwable t) { } barAnim = null; }
+            final long[] ts = new long[240];
+            final int[] n = new int[] {0};
+            final float peakT = (edgeBar.baseThick + dens() * Bar.BOOST_THICK_DP) / dens();
+            final float peakL = (edgeBar.baseLen + dens() * Bar.BOOST_LEN_DP) / dens();
+            ValueAnimator va = ValueAnimator.ofFloat(edgeBar.boost(), 1f, 0f);
+            va.setDuration(140);
+            va.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                public void onAnimationUpdate(ValueAnimator a) {
+                    if (edgeBar != null) edgeBar.setBoost((Float) a.getAnimatedValue());
+                    if (n[0] < ts.length) ts[n[0]++] = System.nanoTime();
+                }
+            });
+            va.addListener(new AnimatorListenerAdapter() {
+                @Override public void onAnimationEnd(Animator a) {
+                    if (edgeBar != null) edgeBar.setBoost(0f);
+                    barAnim = null;
+                    note("bar 点白条 ⇒ 弹一下：厚 " + fmt1(edgeBar == null ? 0f : edgeBar.baseThick / dens()) + "dp → 峰 " + fmt1(peakT)
+                            + "dp → 回原样；长 → 峰 " + fmt1(peakL) + "dp；用时=140ms；气泡没拉");
+                    frameStatTag("bar frame stat（弹一下）", ts, n[0]);
+                }
+            });
+            barAnim = va;
+            va.start();
+            note("bar tap bounce start（140ms，纯视觉，从当前 boost=" + fmt2(edgeBar.boost()) + " 起）");
+        } catch (Throwable t) { noteFail("barTapBounce", t); }
+    }
+
+    /** 挤压／回弹／收回的唯一通道（boost 0~1）。★89.5：逐帧记厚度，证明单调、不跳变。 */
+    private void barBoost(final float to, final int ms, final String tag) {
+        try {
+            if (edgeBar == null) return;
+            if (barAnim != null) { try { barAnim.cancel(); } catch (Throwable t) { } barAnim = null; }
+            if (barPressAnim != null) { try { barPressAnim.cancel(); } catch (Throwable t) { } barPressAnim = null; }
+            final long[] ts = new long[240];
+            final int[] n = new int[] {0};
+            final StringBuilder fr = new StringBuilder(2048);
+            final int[] fn = {0};
+            final long t0 = System.nanoTime();
+            float from = edgeBar.boost();
+            if (Math.abs(to - from) < 0.02f) { edgeBar.setBoost(to); note(tag + "（已在该状态 boost=" + fmt1(to) + "）"); return; }
+            ValueAnimator va = ValueAnimator.ofFloat(from, to);
+            va.setDuration(ms);
+            va.setInterpolator(new DecelerateInterpolator());
+            va.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                public void onAnimationUpdate(ValueAnimator a) {
+                    if (edgeBar != null) edgeBar.setBoost((Float) a.getAnimatedValue());
+                    if (n[0] < ts.length) ts[n[0]++] = System.nanoTime();
+                    if (fn[0] < 40 && edgeBar != null) {   // 逐帧：厚度／长度随时间（单调性从这里读）
+                        fn[0]++;
+                        fr.append("bar 逐帧 ms=").append((System.nanoTime() - t0) / 1000000L)
+                                .append(" boost=").append(fmt2(edgeBar.boost()))
+                                .append(" 厚=").append(fmt2(edgeBar.thickPx() / dens())).append("dp")
+                                .append(" 长=").append(fmt2(edgeBar.lenPx() / dens())).append("dp")
+                                .append(" 离边=").append(fmt2(edgeBar.liftPx() / dens())).append("dp\n");
+                    }
+                }
+            });
+            va.addListener(new AnimatorListenerAdapter() {
+                @Override public void onAnimationEnd(Animator a) {
+                    if (edgeBar != null) edgeBar.setBoost(to);
+                    barAnim = null;
+                    note(tag + "：厚 " + fmt1(edgeBar == null ? 0f : edgeBar.thickPx() / dens())
+                            + "dp 长 " + fmt1(edgeBar == null ? 0f : edgeBar.lenPx() / dens()) + "dp 用时=" + ms + "ms");
+                    flushTrace(fr);
+                    frameStatTag("bar frame stat（挤压）", ts, n[0]);
+                }
+            });
+            barAnim = va;
+            va.start();
+        } catch (Throwable t) { noteFail("barBoost", t); }
+    }
+
+    /** ★89.6 整改七：一条曲线到底——按下就开始 450ms **减速**曲线 boost 0→1（先快后慢、单峰单调下降、中途不换段）。
+     *  长按 300ms 只解锁"可以拖"，不再额外加 boost（上一版到点又推一把＝"两座山峰"的根因）。 */
+    private void barPressRamp() {
+        try {
+            if (edgeBar == null) return;
+            if (barPressAnim != null) { try { barPressAnim.cancel(); } catch (Throwable t) { } barPressAnim = null; }
+            final long[] ts = new long[240];
+            final int[] n = {0};
+            final StringBuilder fr = new StringBuilder(3072);
+            final int[] fn = {0};
+            final long t0 = System.nanoTime();
+            final long[] lastMs = {0L};
+            final float[] prevTh = {edgeBar.thickPx() / dens()};
+            ValueAnimator va = ValueAnimator.ofFloat(edgeBar.boost(), 1f);
+            va.setDuration(BAR_PRESS_MS);
+            va.setInterpolator(new DecelerateInterpolator());   // speed ∝ 2(1−t)：单峰、单调下降
+            va.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                public void onAnimationUpdate(ValueAnimator a) {
+                    if (edgeBar == null) return;
+                    edgeBar.setBoost((Float) a.getAnimatedValue());
+                    if (n[0] < ts.length) ts[n[0]++] = System.nanoTime();
+                    if (fn[0] < 40) {
+                        fn[0]++;
+                        long ms = (System.nanoTime() - t0) / 1000000L;
+                        float th = edgeBar.thickPx() / dens();
+                        float sp = (ms > lastMs[0]) ? (th - prevTh[0]) / (ms - lastMs[0]) : 0f;
+                        prevTh[0] = th; lastMs[0] = ms;
+                        fr.append("bar 按下逐帧 ms=").append(ms)
+                                .append(" boost=").append(fmt2(edgeBar.boost()))
+                                .append(" 厚=").append(fmt2(th)).append("dp")
+                                .append(" 长=").append(fmt2(edgeBar.lenPx() / dens())).append("dp")
+                                .append(" 速度=").append(fmt3(sp)).append("dp/ms\n");
+                    }
+                }
+            });
+            va.addListener(new AnimatorListenerAdapter() {
+                @Override public void onAnimationEnd(Animator a) {
+                    barPressAnim = null;
+                    note("bar 按下 ⇒ 一路变粗到 " + fmt1(edgeBar == null ? 0f : edgeBar.thickPx() / dens())
+                            + "dp（" + BAR_PRESS_MS + "ms 减速曲线，单峰单调下降，中途不换段；长按不再额外推）");
+                    flushTrace(fr);
+                }
+            });
+            barPressAnim = va;
+            va.start();
+        } catch (Throwable t) { noteFail("barPressRamp", t); }
+    }
+
+    private final Runnable barLongPressR = new Runnable() {
+        public void run() {
+            try {
+                if (gMode != G_NONE || gMoved || morphState != 0) return;
+                gLongFired = true;
+                note("bar 长按 " + BAR_LONG_MS + "ms ⇒ 只解锁「可以拖」（boost 继续走按下那条曲线，当前=" + fmt2(edgeBar == null ? 0f : edgeBar.boost()) + "，不再额外加力）");
+            } catch (Throwable t) { noteFail("barLongPress", t); }
+        }
+    };
+
+    private final Choreographer.FrameCallback dragFrameCb = new Choreographer.FrameCallback() {
+        public void doFrame(long ns) {
+            try {
+                if (gFrameN < gFrames.length) gFrames[gFrameN++] = ns;
+                if (gMode == G_DRAG || dragAnim != null) Choreographer.getInstance().postFrameCallback(this);
+            } catch (Throwable t) { }
+        }
+    };
+
+    /** ★89.6 极简白条的手：点＝弹一下／收起；往屏内滑＝拉出气泡；长按＝一路变粗（单峰）；拖＝**第一帧就 1:1 跟手**。
+     *  整改八（19 号第二轮）：8dp 只判「点还是拖」，不再当"开始动"的门槛——有位移就上拖动层，
+     *  白条当场按偏移对齐；偏移在 DOWN 记下后整段手势绝不再改（长按达标／进拖动层／第一次 MOVE 都不改）。 */
+    private boolean onBarTouch(MotionEvent e) {
+        try {
+            switch (e.getActionMasked()) {
+                case MotionEvent.ACTION_DOWN: {
+                    gMode = G_NONE; gMoved = false; gLongFired = false; gPreDrag = false;
+                    gDownX = e.getRawX(); gDownY = e.getRawY();
+                    gDownAt = System.currentTimeMillis(); gNoteAt = 0L;
+                    gApplied = 0f; gFigY0 = figLp.y; gDbgLastD = -1f; gGainLast = 1f;
+                    float bx = figLp.x + (edgeBar == null ? figW / 2f : edgeBar.centerX());
+                    float by = figLp.y + figH / 2f;
+                    gDownCx = bx; gDownCy = by;
+                    gOffsetX = gDownX - bx;    // ★89.6：偏移＝手指−白条中心，整段手势里绝不再改
+                    gOffsetY = gDownY - by;
+                    if (gVt == null) gVt = VelocityTracker.obtain();
+                    gVt.clear();
+                    gVt.addMovement(e);
+                    barPressRamp();
+                    note("bar down 按下：手指(" + Math.round(gDownX) + "," + Math.round(gDownY) + ") 白条中心(" + Math.round(bx) + ","
+                            + Math.round(by) + ") 偏移=(" + Math.round(gOffsetX) + "," + Math.round(gOffsetY) + ")（本段手势内不再改）");
+                    ui.removeCallbacks(barLongPressR);
+                    ui.postDelayed(barLongPressR, BAR_LONG_MS);
+                    return true;
+                }
+                case MotionEvent.ACTION_MOVE: {
+                    if (gVt != null) gVt.addMovement(e);
+                    float dx = e.getRawX() - gDownX, dy = e.getRawY() - gDownY;
+                    float ax = Math.abs(dx), ay = Math.abs(dy);
+                    float inward = isRightSide() ? -dx : dx;
+                    if (gMode == G_NONE) {
+                        // ★89.6：有位移就上拖动层（例外：像"往屏内横划拉气泡"，等内滑判据，条不乱跳）
+                        boolean maybeSwipe = inward > dpf(6f) && ax > ay;
+                        if (!maybeSwipe && (ax > 1f || ay > 1f)) {
+                            ui.removeCallbacks(barLongPressR);
+                            if (barPressAnim != null) { try { barPressAnim.cancel(); } catch (Throwable t) { } barPressAnim = null; }
+                            if (morphShown()) hideBubble("拖白条收起");
+                            gPreDrag = true;
+                            barDragBegin();
+                            gMode = G_DRAG;
+                            barDragMove(e);
+                            note("bar 第一帧跟手：位移(" + Math.round(dx) + "," + Math.round(dy) + ") ⇒ 白条已按偏移对齐（无死区、无瞬移）");
+                            return true;
+                        }
+                        int decided = barDecide(dx, dy);
+                        if (decided == G_NONE) return true;
+                        ui.removeCallbacks(barLongPressR);
+                        if (barPressAnim != null) { try { barPressAnim.cancel(); } catch (Throwable t) { } barPressAnim = null; }
+                        if (decided == G_SWIPE) { gMode = G_SWIPE; barSwipeBegin(); return true; }
+                        if (morphShown()) hideBubble("拖白条收起");
+                        gPreDrag = true;
+                        barDragBegin();
+                        gMode = G_DRAG;
+                        barDragMove(e);
+                        return true;
+                    }
+                    if (gMode == G_SWIPE) { barSwipeMove(e); return true; }
+                    if (gMode == G_DRAG) {
+                        if (gPreDrag && !gLongFired && morphState == 0 && inward > dpf(20f) && ax > ay * 1.2f) {
+                            dragAbort();
+                            gPreDrag = false;
+                            gMode = G_SWIPE;
+                            barSwipeBegin();
+                            note("bar 拖动转内滑：横移 " + Math.round(inward) + "px ⇒ 拉气泡（拖动层已撤）");
+                            return true;
+                        }
+                        if (gPreDrag && (ax > dpf(BAR_SLOP_DP) || ay > dpf(BAR_SLOP_DP))) gMoved = true;
+                        barDragMove(e);
+                        return true;
+                    }
+                    return true;
+                }
+                case MotionEvent.ACTION_UP:
+                case MotionEvent.ACTION_CANCEL: {
+                    ui.removeCallbacks(barLongPressR);
+                    if (gVt != null) gVt.addMovement(e);
+                    int mode = gMode;
+                    boolean pre = gPreDrag;
+                    gMode = G_NONE;
+                    gPreDrag = false;
+                    if (mode == G_SWIPE) { barSwipeEnd(); releaseVt(); return true; }
+                    if (mode == G_DRAG) {
+                        if (pre && !gMoved) {   // 位移没超过 8dp ⇒ 还算「点」：撤拖动层，白条回边，走点的路
+                            dragAbort();
+                            note("bar 松手：位移 < " + fmt1(BAR_SLOP_DP) + "dp ⇒ 仍按「点」处理（拖动层已撤）");
+                        } else { barDragEnd(e); releaseVt(); return true; }
+                    }
+                    if (gLongFired) {   // 长按后松手：回弹，位置不动
+                        barBoost(0f, 120, "bar 长按松手 ⇒ 回弹（白条位置没动：" + figLp.x + "," + figLp.y + "）");
+                        releaseVt();
+                        return true;
+                    }
+                    if (barPressAnim != null) { try { barPressAnim.cancel(); } catch (Throwable t) { } barPressAnim = null; }
+                    if (morphShown()) {   // 框在屏：点＝收起＋进 60 秒静默（88.9 口径不动）
+                        barBoost(0f, 100, "bar 点白条 ⇒ 变粗收回（框开着）");
+                        quietStart("点白条收起");
+                        releaseVt();
+                        return true;
+                    }
+                    String fpk = fgPkg();
+                    if (fpk != null && !fpk.startsWith(svc.getPackageName()) && inHideList(fpk)) {
+                        exemptPkg = fpk;
+                        exemptUntil = System.currentTimeMillis() + EXEMPT_MS;
+                        cliHide = false; cliPkg = null; failBreak = false;
+                        note("门铃：点白条 ⇒ 本次前台豁免 " + (EXEMPT_MS / 1000L) + " 秒（" + fpk + "）");
+                    }
+                    barTapBounce();
+                    releaseVt();
+                    return true;
+                }
+                default: return false;
+            }
+        } catch (Throwable t) { noteFail("barTouch", t); return false; }
+    }
+
+    private void releaseVt() {
+        try { if (gVt != null) { gVt.recycle(); gVt = null; } } catch (Throwable t) { }
+    }
+
+    /** ★89 三种手势的判定（可调）：纵向为主／横向朝外／已长按过 ⇒ 拖；近水平朝屏内 ⇒ 内滑拉气泡。
+     *  判不清就返回 G_NONE（继续等手指给更明确的方向），绝不在 8dp 抖动上抢跑。
+     *  ★89.5：死区只在这一个判定里；判定为拖的那一刻起按偏移 1:1 跟手（见 barDragMove）。 */
+    private int barDecide(float dx, float dy) {
+        float ax = Math.abs(dx), ay = Math.abs(dy);
+        float slop = dpf(BAR_SLOP_DP);
+        if (ax <= slop && ay <= slop) return G_NONE;
+        gMoved = true;
+        boolean right = isRightSide();
+        float inward = right ? -dx : dx;
+        if (gLongFired) return G_DRAG;                                   // 长按过＝明说要拖
+        if (ay > ax * 0.9f) return G_DRAG;                                // 纵向为主／斜着 ⇒ 拖
+        if (inward > dpf(20f) && morphState == 0) return G_SWIPE;         // 近水平朝屏内 ⇒ 拉气泡
+        if (inward < -dpf(14f)) return G_DRAG;                            // 往屏外拽 ⇒ 拖（贴着边不动）
+        return G_NONE;
+    }
+    // ── 内滑：从边框往屏幕内滑 ⇒ 把气泡拉出来（内容＝最近一条，跟着手走） ──
+    private void barSwipeBegin() {
+        try {
+            if (morph == null || morphWin == null) { gMode = G_DRAG; barDragBegin(); return; }
+            String l1 = lastL1.length() > 0 ? lastL1 : "还没有消息";
+            String l2 = lastL2;
+            int[] r = morph.prepare(isRightSide(), sw, sh, figLp.y, figH, l1, l2, lastKind);
+            morphAdd(r);
+            if (morphAnim != null) { try { morphAnim.cancel(); } catch (Throwable t) { } morphAnim = null; }
+            morphSeq++;
+            morph.setP(0f);
+            morphState = 1;
+            barVisual("内滑拉出");
+            if (edgeBar != null) edgeBar.setBoost(0f);
+            armStuckWatch(morphSeq, 2500L);   // ★89.5：内滑后手指停住／UP 丢了 ⇒ 2.5s 强制收尾
+            note("bar swipe 开始（往屏内滑＝拉出最近一条）：" + clip(l1 + "／" + l2, 40) + " 窗=" + r[2] + "x" + r[3] + " 行=" + morph.lineCount);
+        } catch (Throwable t) { noteFail("barSwipeBegin", t); }
+    }
+
+    private void barSwipeMove(MotionEvent e) {
+        try {
+            if (morph == null) return;
+            float dx = e.getRawX() - gDownX;
+            float inward = isRightSide() ? -dx : dx;
+            float gap = Math.max(dpf(72f), Math.max(1f, morph.frameW - morph.barW));
+            float p = (inward - dpf(10f)) / gap;
+            if (p < 0f) p = 0f;
+            if (p > 1f) p = 1f;
+            morph.setP(p);
+            long now = System.currentTimeMillis();
+            if (now - gNoteAt > 120L) {
+                gNoteAt = now;
+                note("bar swipe 跟手：手指内滑 " + Math.round(Math.max(0f, inward)) + "px ⇒ p=" + Math.round(p * 100f) + "%（成形 55%）");
+            }
+        } catch (Throwable t) { noteFail("barSwipeMove", t); }
+    }
+
+    private void barSwipeEnd() {
+        disarmStuckWatch();   // ★89.5
+        try {
+            if (morph == null) return;
+            float p = morph.progress();
+            if (p >= 0.55f) {
+                morphState = 1;
+                final int pw = Math.round(p * 100f);
+                morphAnim(true, new Runnable() { public void run() {
+                    morphState = 2;
+                    note("bar swipe 成形：框 " + morph.frameW + "x" + morph.frameH + "px，内容＝最近一条（松手时 " + pw + "%）");
+                }});
+                note("bar swipe 松手 ≥55% ⇒ 直接成形");
+            } else {
+                morphState = 1;
+                final int pw = Math.round(p * 100f);
+                morphAnim(false, new Runnable() { public void run() {
+                    morphState = 0;
+                    morphRemove();
+                    note("bar swipe 松手 <55%（" + pw + "%）⇒ 回弹归位，没有残留半开的框");
+                }});
+                note("bar swipe 松手 p=" + pw + "% <55% ⇒ 回弹归位");
+            }
+        } catch (Throwable t) { noteFail("barSwipeEnd", t); }
+    }
+
+    // ── 拖动：★89.6 按偏移 1:1 跟手（第一帧就对齐、无死区）＋ 离边 ≤1cm 硬阻尼（tanh）；松手 200ms 回弹／甩 350ms 飞对面 ──
+    private void barDragBegin() {
+        try {
+            if (dragBar == null || dragWin == null) barLayerSetup();
+            if (dragBar == null || dragWin == null) return;
+            if (edgeBar != null) {
+                dragBar.copyLookFrom(edgeBar);      // ★89.6：粗细／长短／颜色／圆角整套照抄 ⇒ 切层那一帧不跳
+                dragBar.setBoost(edgeBar.boost());  // 接着按下的粗细走
+            } else {
+                barStyle(dragBar);
+                dragBar.setBoost(0.35f);
+            }
+            gHalf0 = dragBar.thickPx() / 2f;        // 拖动期间固定半粗（boost 变化不吃掉跟手位移）
+            dragBar.setCenter(gDownCx, gDownCy);    // 起点＝按下那一刻的白条中心
+            gLastCy = gDownCy;
+            gPrevFx = gDownX; gPrevCx = gDownCx;
+            gApplied = 0f;
+            dragLp.x = 0; dragLp.y = 0; dragLp.width = sw; dragLp.height = sh;
+            barFrozen = false; flying = false;
+            if (!dragAdded) { wm.addView(dragWin, dragLp); dragAdded = true; }
+            barVisual("拖动开始");
+            gFrameN = 0;
+            Choreographer.getInstance().postFrameCallback(dragFrameCb);
+            note("bar drag 拎起来：偏移=(" + Math.round(gOffsetX) + "," + Math.round(gOffsetY) + ")，起点中心(" + Math.round(gDownCx)
+                    + "," + Math.round(gDownCy) + ") 半粗=" + fmt1(gHalf0) + "px（拖动层与白条同一套屏幕坐标，不换算）");
+        } catch (Throwable t) { noteFail("barDragBegin", t); }
+    }
+
+    /** 撤销拖动层（"点"或转内滑时用）：白条还给窄窗，位置回边。 */
+    private void dragAbort() {
+        try {
+            if (dragAnim != null) { try { dragAnim.cancel(); } catch (Throwable t) { } dragAnim = null; }
+            if (dragAdded && dragWin != null && wm != null) { try { wm.removeView(dragWin); } catch (Throwable t) { } }
+            dragAdded = false;
+            flying = false; barFrozen = false;
+            barVisual("拖动撤销");
+        } catch (Throwable t) { noteFail("dragAbort", t); }
+    }
+
+    /** ★89.7 整改二：指数渐近阻尼 applied = Dmax·(1 − e^(−d/Dmax))，Dmax＝55% 屏宽。
+     *  越往外越沉（跟手增益越来越小），但**能一路拖到判定线**；不再有 1cm 硬顶。 */
+    private float barDamp(float d) {
+        if (d <= 0f) return 0f;
+        float Dmax = Math.max(1f, sw * BAR_DAMP_SW);
+        return Dmax * (1f - (float) Math.exp(-d / Dmax));
+    }
+
+    private void barDragMove(MotionEvent e) {
+        try {
+            boolean right = isRightSide();
+            float half = gHalf0;                     // 固定半粗（boost 变化不吃掉跟手位移）
+            float fx = e.getRawX() - gOffsetX;       // ★89.6：白条中心＝手指−偏移（偏移整段手势不变）
+            float fy = e.getRawY() - gOffsetY;
+            float dWant = right ? (sw - half - fx) : (fx - half);
+            float d = dWant < 0f ? 0f : dWant;
+            float before = gApplied;
+            gApplied = barDamp(d);
+            gGainLast = (d > 1f && (d - gDbgLastD) > 1f) ? (gApplied - before) / (d - gDbgLastD) : gGainLast;
+            gDbgLastD = d;
+            float cx = right ? (sw - half - gApplied) : (half + gApplied);
+            float lenHalf = (dragBar == null ? dpf(80f) : dragBar.lenPx()) / 2f;
+            float cy = fy;
+            float lim = lenHalf + dpf(6f);
+            if (cy < lim) cy = lim;
+            if (cy > sh - lim) cy = sh - lim;
+            gLastCy = cy;
+            if (dragBar != null) dragBar.setCenter(cx, cy);
+            float dF = e.getRawX() - gPrevFx, dC = cx - gPrevCx;   // ★89.6 1:1 证据：手指走了多少、白条走了多少
+            gPrevFx = e.getRawX(); gPrevCx = cx;
+            long now = System.currentTimeMillis();
+            if (now - gNoteAt > 120L) {
+                gNoteAt = now;
+                note("bar drag 跟手：手指(" + Math.round(e.getRawX()) + "," + Math.round(e.getRawY()) + ") ⇒ 白条中心("
+                        + Math.round(cx) + "," + Math.round(cy) + ") 理论=" + Math.round(fx) + " 差=" + Math.round(cx - fx)
+                        + "px 本次手指Δ=" + Math.round(dF) + " 白条Δ=" + Math.round(dC) + " 离边=" + Math.round(gApplied)
+                        + "px 增益=" + fmt2(gGainLast) + "（Dmax " + Math.round(sw * BAR_DAMP_SW) + "px）");
+            }
+        } catch (Throwable t) { noteFail("barDragMove", t); }
+    }
+
+    private void barDragEnd(MotionEvent e) {
+        try {
+            float vx = 0f;
+            if (gVt != null) { try { gVt.computeCurrentVelocity(1000); vx = gVt.getXVelocity(); } catch (Throwable t) { } }
+            boolean right = isRightSide();
+            float fingerDx = e.getRawX() - gDownX;
+            float line = sw * BAR_BARRIER_SW;      // ★89.7：判定线＝屏宽 40%（按 applied 算；不画出来）
+            boolean cross = gApplied >= line;
+            note("bar drag 松手：applied=" + Math.round(gApplied) + "px（判定线 " + Math.round(line) + "px＝屏宽 40%）"
+                    + " 手指横移=" + Math.round(fingerDx) + "px 速度=" + Math.round(vx) + "px/s（只记数据，不作判据）⇒ "
+                    + (cross ? "越过判定线 ⇒ 去对面" : "没越过 ⇒ 回原边"));
+            if (cross) barFlyTo(!right, vx);
+            else barSpringBack(right);
+        } catch (Throwable t) { noteFail("barDragEnd", t); }
+    }
+
+    /** ★89.7 整改一（19 号第三轮）：慢拖松手 ⇒ **200ms 一段动画**：位置回边 ＋ boost 从当前值 → 0（尺寸同时缩回常态），
+     *  同一个 ValueAnimator、同一个时钟、同一条 easeOutCubic（无过冲、绝不越过终态）。逐帧记厚／长，证明单调无跳变。 */
+    private void barSpringBack(final boolean right) {
+        try {
+            if (dragBar == null) { dragEndCommon(); return; }
+            if (dragAnim != null) { try { dragAnim.cancel(); } catch (Throwable t) { } dragAnim = null; }
+            final float from = gApplied;
+            final float fromCy = gLastCy;
+            final float b0 = dragBar.boost();
+            final StringBuilder fr = new StringBuilder(2048);
+            final int[] fn = {0};
+            final long t0 = System.nanoTime();
+            if (gFrameN == 0) Choreographer.getInstance().postFrameCallback(dragFrameCb);
+            ValueAnimator va = ValueAnimator.ofFloat(0f, 1f);
+            va.setDuration(BAR_BACK_MS);
+            va.setInterpolator(new android.view.animation.LinearInterpolator());   // 曲线自己算（easeOutCubic，无过冲）
+            va.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                public void onAnimationUpdate(ValueAnimator a) {
+                    if (dragBar == null) return;
+                    float k = easeOutCubic((Float) a.getAnimatedValue());
+                    float applied = from * (1f - k);      // 位置：单调回边，不越过（没有负过冲）
+                    dragBar.setBoost(b0 * (1f - k));      // 尺寸：同一段动画、同一个 k 缩回常态
+                    float half = dragBar.thickPx() / 2f;
+                    float cx = right ? (sw - half - applied) : (half + applied);
+                    dragBar.setCenter(cx, fromCy);
+                    if (fn[0] < 40) {
+                        fn[0]++;
+                        fr.append("bar 回位逐帧 ms=").append((System.nanoTime() - t0) / 1000000L)
+                                .append(" k=").append(fmt2(k))
+                                .append(" 厚=").append(fmt2(dragBar.thickPx() / dens())).append("dp")
+                                .append(" 长=").append(fmt2(dragBar.lenPx() / dens())).append("dp")
+                                .append(" 离边=").append(Math.round(applied)).append("px\n");
+                    }
+                }
+            });
+            va.addListener(new AnimatorListenerAdapter() {
+                @Override public void onAnimationEnd(Animator a) {
+                    dragAnim = null;
+                    note("bar 回位到边：离边 " + Math.round(from) + "px → 0、boost " + fmt2(b0) + " → 0（同一段 " + BAR_BACK_MS
+                            + "ms easeOutCubic：位置与尺寸同一个时钟，单调、不过冲）");
+                    flushTrace(fr);
+                    settleDragRight(right);
+                }
+            });
+            dragAnim = va;
+            va.start();
+            note("bar 回位 start（" + BAR_BACK_MS + "ms，起：离边 " + Math.round(from) + "px／boost " + fmt2(b0) + "）");
+        } catch (Throwable t) { noteFail("barSpringBack", t); }
+    }
+
+    /** ★89.7 整改二 / 三：越过判定线 ⇒ 350ms easeOutCubic 飞到对面（无过冲）；boost 同一段动画回落到 0。 */
+    private void barFlyTo(final boolean toRight, final float vx) {
+        try {
+            if (dragBar == null) { dragEndCommon(); return; }
+            if (dragAnim != null) { try { dragAnim.cancel(); } catch (Throwable t) { } dragAnim = null; }
+            // ★90：飞行层自成一格——旧边窄窗立刻收干净，飞行中只许它画条
+            flying = true;
+            barVisual("飞行开始·旧边收起");
+            final float x0 = dragBar.centerX();
+            final float cy = gLastCy;
+            final float b0 = dragBar.boost();
+            final StringBuilder fr = new StringBuilder(2048);
+            final int[] fn = {0};
+            final long t0 = System.nanoTime();
+            if (gFrameN == 0) Choreographer.getInstance().postFrameCallback(dragFrameCb);
+            ValueAnimator va = ValueAnimator.ofFloat(0f, 1f);
+            va.setDuration(BAR_FLY_MS);
+            va.setInterpolator(new android.view.animation.LinearInterpolator());
+            va.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                public void onAnimationUpdate(ValueAnimator a) {
+                    if (dragBar == null) return;
+                    float k = easeOutCubic((Float) a.getAnimatedValue());
+                    dragBar.setBoost(b0 * (1f - k));                    // 先按常态半粗算终点，边走边缩
+                    float half = dragBar.thickPx() / 2f;
+                    float xt = toRight ? (sw - half) : half;
+                    dragBar.setCenter(x0 + (xt - x0) * k, cy);          // 单调到达对面，不越过
+                    if (fn[0] < 40) {
+                        fn[0]++;
+                        fr.append("bar 飞对面逐帧 ms=").append((System.nanoTime() - t0) / 1000000L)
+                                .append(" k=").append(fmt2(k))
+                                .append(" x=").append(Math.round(dragBar.centerX()))
+                                .append(" 厚=").append(fmt2(dragBar.thickPx() / dens())).append("dp\n");
+                    }
+                }
+            });
+            va.addListener(new AnimatorListenerAdapter() {
+                @Override public void onAnimationEnd(Animator a) {
+                    dragAnim = null;
+                    note("bar 飞到对面：中心 x " + Math.round(x0) + " → " + Math.round(dragBar == null ? 0 : dragBar.centerX())
+                            + "（" + BAR_FLY_MS + "ms easeOutCubic，无过冲；厚度同段回落到常态）");
+                    flushTrace(fr);
+                    settleDragRight(toRight);   // ★90：落地在 dragEndCommon 里分两步显示新边
+                }
+            });
+            dragAnim = va;
+            va.start();
+            note("bar 去对面 start（" + BAR_FLY_MS + "ms，从 x=" + Math.round(x0) + " 去「" + (toRight ? "右" : "左") + "」边，"
+                    + "旧边窄窗已隐藏，新边等落地）");
+        } catch (Throwable t) { noteFail("barFlyTo", t); }
+    }
+
+    /** 拖／甩结束：定案到某条边，存「哪边＋沿边比例」，再摘拖动层、放回白条。 */
+    private void settleDragRight(boolean right) {
+        try {
+            float lenHalf = dragBar == null ? dpf(40f) : dragBar.lenPx() / 2f;
+            int y = Math.round(gLastCy - figH / 2f);   // 白条中心对窗口中心（松手不跳）
+            y = clampI(y, 0, Math.max(0, sh - figH));
+            float range = Math.max(1f, sh - figH);
+            float frac = y / range;
+            if (frac < 0f) frac = 0f;
+            if (frac > 1f) frac = 1f;
+            savePlace(right ? 2 : 1, frac);
+            figLp.x = right ? Math.max(0, sw - figW) : 0;
+            figLp.y = y;
+            placeFig();
+            note("bar drag 定案：吸「" + (right ? "右" : "左") + "」边（只吸左右）；位置存 side=" + (right ? 2 : 1)
+                    + " frac=" + fmt2(frac) + "（沿边 " + Math.round(frac * 100f) + "% 段，y=" + y + "／屏高 " + sh + "）");
+        } catch (Throwable t) { noteFail("settleDragRight", t); }
+        dragEndCommon();
+    }
+
+    private void dragEndCommon() {
+        if (dragAnim != null) { try { dragAnim.cancel(); } catch (Throwable t) { } dragAnim = null; }
+        if (dragAdded && dragWin != null && wm != null) { try { wm.removeView(dragWin); } catch (Throwable t) { } }
+        dragAdded = false;
+        flying = false;
+        // ★90：落地只改一次可见性——先按「无」收干净（旧边已摘、新边还没亮）
+        barFrozen = true;
+        setEdgeBarSide();
+        if (edgeBar != null) edgeBar.setBoost(0f);
+        barVisual("拖动结束归位·先切无");
+        frameStatTag("bar drag frame stat", gFrames, gFrameN);
+        gFrameN = 0;
+        gDbgLastD = -1f;
+        // ★90：下一帧才让新边窄窗出现（飞行结束 → 显示，分两步）
+        ui.post(new Runnable() { public void run() {
+            if (dragAdded || flying) return;
+            barFrozen = false;
+            barVisual("飞行落地·新边显示");
+        }});
+    }
+
+    private void frameStatTag(String tag, long[] ts, int n) {
+        try {
+            if (n < 3) { note(tag + " 样本太少（" + n + " 帧），不算"); return; }
+            long sum = 0, max = 0;
+            int over = 0;
+            for (int i = 1; i < n; i++) {
+                long d = ts[i] - ts[i - 1];
+                sum += d;
+                if (d > max) max = d;
+                if (d > 16700000L) over++;
+            }
+            int cnt = n - 1;
+            note(String.format(java.util.Locale.ROOT, "%s 帧=%d 均值=%.1fms 最差=%.1fms 超16.7ms=%d",
+                    tag, cnt, (sum / 1000000.0) / cnt, max / 1000000.0, over));
+        } catch (Throwable t) { }
+    }
     private boolean onFigTouch(MotionEvent e) {
+        if (minMode) return onBarTouch(e);   // ★89 极简＝白条的手（点/滑/按/拖）；常规模式原样不动
         try {
             switch (e.getActionMasked()) {
                 case MotionEvent.ACTION_DOWN:
@@ -1201,6 +2723,7 @@ public class Mascot {
                 case MotionEvent.ACTION_MOVE: {
                     float dx = e.getRawX() - downRawX, dy = e.getRawY() - downRawY;
                     if (!moved && (Math.abs(dx) > dp(6) || Math.abs(dy) > dp(6))) { moved = true; dragging = true; }
+                    if (moved && morphShown()) hideBubble("拖白条收起");   // ★88：拖白条的时候框不许留在原地
                     if (dragging) {
                         // ★限位只认"图形（人）自己的矩形"——气泡没有碰撞箱（用户原话），所以长气泡顶到边也走得过半屏
                         int nx = clampI((int) (dragFigX0 + dx), 0, Math.max(0, sw - figW));
@@ -1239,7 +2762,10 @@ public class Mascot {
                             note("门铃：点细条 ⇒ 本次前台豁免 " + (EXEMPT_MS / 1000L) + " 秒（" + fpk + "）");
                         }
                         if (state != ACTIVE) setState(ACTIVE, "用户点了一下");
-                        if (bubShown()) hideBubble("点一下收起");
+                        if (bubShown() || morphShown()) {   // ★88：白条／框在屏时点一下＝收起（动画中途点也算）
+                            if (minMode) collapseBubbleByGesture();
+                            else hideBubble("点一下收起");
+                        }
                         scheduleIdle();
                     }
                     return true;
@@ -1370,7 +2896,9 @@ public class Mascot {
     private void takeAway() {
         try {
             if (bubAdded) { wm.removeView(bubWin); bubAdded = false; }
+            if (morphAdded && morphWin != null) { wm.removeView(morphWin); morphAdded = false; morphState = 0; morphSeq++; if (morphAnim != null) { morphAnim.cancel(); morphAnim = null; } }   // ★88：截图／触摸让路时大窗一起摘
             if (figAdded) { wm.removeView(figWin); figAdded = false; }
+            barVisual("让路摘窗");
         } catch (Throwable t) { noteFail("takeAway", t); }
     }
 
@@ -1379,6 +2907,7 @@ public class Mascot {
             if (wm == null || !isOn(svc)) return;
             if (!figAdded) { wm.addView(figWin, figLp); figAdded = true; }
             if (bubShown() && !bubAdded) { wm.addView(bubWin, bubLp); bubAdded = true; }
+            barVisual("让路放回");
         } catch (Throwable t) { noteFail("putBack", t); }
     }
 

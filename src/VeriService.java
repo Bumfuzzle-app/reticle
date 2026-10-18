@@ -63,6 +63,7 @@ public class VeriService extends AccessibilityService {
 
     @Override
     public void onServiceConnected() {
+        Boot.mark(this, "t4", "无障碍 onServiceConnected");   // 86.5
         connected = true;
         A11yLink.onUp("onServiceConnected");   // 53 号单：连接态判据（进程内真值）
         INSTANCE = this;
@@ -2566,5 +2567,19 @@ public class VeriService extends AccessibilityService {
             }
         } catch (Throwable t) { }
         return null;
+    }
+    /** 86.6：用户划掉卡片＝把手交还系统。
+     *  disableSelf() 让系统把我们这条从 enabled_accessibility_services 里摘掉并解绑；只 stopSelf
+     *  而把无障碍留在系统里，系统为「绑无障碍」会把进程一遍遍拉回来（本单那场拉锯的根）。
+     *  ★只摘自己，不碰副包、不碰别人的无障碍。 */
+    public static void handBackA11y() {
+        VeriService s = INSTANCE;
+        if (s == null) return;
+        try {
+            s.disableSelf();
+            A11yWatchdog.log(s, "已把无障碍交还系统（disableSelf）");
+        } catch (Throwable t) {
+            A11yWatchdog.log(s, "交还无障碍失败：" + t);
+        }
     }
 }
