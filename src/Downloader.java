@@ -392,6 +392,19 @@ public class Downloader {
 
     // ══════════ 下载主循环 ══════════
 
+    /** 93：apk 头＝zip 本头 'PK'（0x50 0x4B）。下到错误页时在下载环节就说清，别拖到"解析失败"。 */
+    private static boolean hasApkMagic(File f) {
+        java.io.FileInputStream in = null;
+        try {
+            in = new java.io.FileInputStream(f);
+            int a = in.read(), b = in.read();
+            return a == 0x50 && b == 0x4B;
+        } catch (Throwable t) { return false; }
+        finally { try { if (in != null) in.close(); } catch (Throwable t2) { } }
+    }
+
+    private static boolean isApkName(String n) { return n != null && n.toLowerCase(Locale.ROOT).endsWith(".apk"); }
+
     /**
      * 下载循环（同步与后台同一份代码）：返回 null ＝ 被限时／限字节打断（可续传，转后台）；
      * 返回非 null ＝ 结果文本（下好了 或 明确失败）。
@@ -518,6 +531,9 @@ public class Downloader {
         try {
             if (checkLen && t.total > 0 && have != t.total) {
                 return fail(ctx, t, String.format(Locale.ROOT, Words.RP_DL_LEN_FMT, human(have), human(t.total)), bg);
+            }
+            if (isApkName(t.name) && !hasApkMagic(part)) {
+                return fail(ctx, t, String.format(Locale.ROOT, Words.RP_DL_NOT_APK_FMT, pretty(part.getAbsolutePath())), bg);
             }
             String sha = hexDigest(md);
             if (target.exists()) target.delete();

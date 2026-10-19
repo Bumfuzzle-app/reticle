@@ -98,7 +98,6 @@ public class Mascot {
     // ★67 A 线：贴边态被消息唤醒 = 先展开（动画）再冒泡
     static final long EXPAND_MS = 180L;    // 展开时长（派单要求 150~200ms 量级）
     static final long COLLAPSE_MS = 160L;  // 收起进 EDGE 也带动画：不许瞬间跳变
-    static final boolean SHOT_BY_ALPHA = false;  // 66 返工：alpha=0 实测 4 次里 1 次仍被截到 ⇒ 回退摘视图（65 已验证可靠）
     static final boolean TOUCH_BY_ALPHA = false; // 触摸让路：true＝只设 NOT_TOUCHABLE（不摘）；false＝摘视图（65 已验证稳）
 
     // 尺寸（dp）
@@ -222,9 +221,11 @@ public class Mascot {
     // ★67 A 线：EDGE ↔ ACTIVE 的尺寸变化走动画；动画期间气窗一律不动
     private boolean expanding = false;      // 展开动画进行中（期间来的消息只排队，不重复展开）
     private long lastExpandAt = 0L;         // 上次展开动画的时间（2 秒内再被唤醒＝直接冒泡）
-    private String queuedSay = null;        // 展开动画期间攒下的消息（只留最新一条）
-    private int queuedKind = -1;
-    private boolean queuedForce = false;
+    // ★93：动画期间来的消息按序排队（不是只留最新）——最多 8 条，满了丢最旧并记一行
+    private final java.util.ArrayList<String> queuedSay = new java.util.ArrayList<String>();
+    private final java.util.ArrayList<Integer> queuedKind = new java.util.ArrayList<Integer>();
+    private final java.util.ArrayList<Boolean> queuedForce = new java.util.ArrayList<Boolean>();
+    private static final int QUEUE_MAX = 8;
     private ValueAnimator boxAnim = null;   // 人窗尺寸动画的唯一句柄（新动画前先取消旧的）
     private long animSeq = 0L;              // 过期动画回调作废用
     // ★69.5：在 AI 客户端里让位（只留细条／全隐／只藏气泡）——门铃＝点细条
@@ -649,14 +650,8 @@ public class Mascot {
                 animateFigBox(dp(FIG_DP), dp(FIG_DP), EXPAND_MS, new Runnable() { public void run() {
                     expanding = false;
                     note("expand end（win=" + figW + "x" + figH + "，接着冒泡）");
-                    String t = queuedSay;
-                    int k = queuedKind;
-                    boolean f = queuedForce;
-                    queuedSay = null;
-                    queuedKind = -1;
-                    queuedForce = false;
                     scheduleIdle();
-                    if (t != null) say(t, k, f);
+                    sayNextQueued();
                 }});
                 applyAlpha();
                 return;
@@ -680,9 +675,9 @@ public class Mascot {
         if (minMode) { note("极简模式：不进退边（白条本来就在）"); return; }
         if (expanding) {   // 展开动画被贴边打断：丢弃排队消息，别让回调在半路再冒泡
             expanding = false;
-            queuedSay = null;
-            queuedKind = -1;
-            note("展开动画被贴边打断，丢弃排队消息");
+            int droppedSay = queuedSay.size();
+            queuedSay.clear(); queuedKind.clear(); queuedForce.clear();
+            note("展开动画被贴边打断，丢弃排队消息 " + droppedSay + " 条");
         }
         if (bubShown()) hideBubble("贴边");
         barVisual("进贴边");
@@ -911,6 +906,22 @@ public class Mascot {
      *   M_FAIL(60s) ＞ M_REPORT(30s) ＞ M_NORMAL(8s)；★低优先级不许顶掉未到点的高优先级（改走角标）。
      *   ★工具摘要（M_NORMAL）既不回 ACTIVE、也不重置三态计时（用户拍：气泡照显示 8 秒，形象该淡就淡）。
      */
+    /** ★93：动画期间来的消息按序排队（满了丢最旧），动画结束后逐条冒。 */
+    private void queueSay(String text, int kind, boolean force) {
+        if (queuedSay.size() >= QUEUE_MAX) { queuedSay.remove(0); queuedKind.remove(0); queuedForce.remove(0); note("消息排队已满，丢最旧一条"); }
+        queuedSay.add(text); queuedKind.add(kind); queuedForce.add(force);
+        note("动画中来的消息先排队（第 " + queuedSay.size() + " 条）：" + clip(text, 24));
+    }
+
+    /** 队列里下一条：有就冒（按到达顺序）。 */
+    private void sayNextQueued() {
+        if (queuedSay.size() == 0) return;
+        String t = queuedSay.remove(0);
+        int k = queuedKind.remove(0);
+        boolean f = queuedForce.remove(0);
+        say(t, k, f);
+    }
+
     private void say(String text, int kind, boolean force) {
         if (text == null || text.length() == 0 || bubWin == null) return;
         long now = System.currentTimeMillis();
@@ -936,10 +947,7 @@ public class Mascot {
 
         // ★67 遗留一行修（69.5 D 线）：动画进行中来的任何消息都先排队 —— 这一判断必须在 state == EDGE 之外
         if (expanding) {
-            queuedSay = text;
-            queuedKind = kind;
-            queuedForce = force;
-            note("expand 中来的消息先排队（只留最新）：" + clip(text, 24));
+            queueSay(text, kind, force);
             return;
         }
 
@@ -949,9 +957,7 @@ public class Mascot {
                 note("edge wake（2 秒内已展开过：直接冒泡，不再展开）");
                 setState(ACTIVE, "贴边态遇消息（刚展开过）");
             } else {
-                queuedSay = text;
-                queuedKind = kind;
-                queuedForce = force;
+                queueSay(text, kind, force);
                 lastExpandAt = now;
                 expanding = true;
                 note("edge wake（贴边态遇消息：先展开，" + EXPAND_MS + "ms 动画）");
@@ -988,6 +994,7 @@ public class Mascot {
     /** 消息到点：只收气泡。★不再 setState(ACTIVE)（"消息到点"不算活动——抽搐的另一半根因）。 */
     private void onMsgTimeout() {
         hideBubble("到点");
+        if (queuedSay.size() > 0) { sayNextQueued(); return; }
         if (pendingTool != null) {   // 排队里最新的那条工具摘要，这时才顶上
             String t = pendingTool;
             pendingTool = null;
@@ -2090,9 +2097,12 @@ public class Mascot {
     /** 白条的粗细／颜色／贴边：一律跟 Morph 参数走（与框的白条态像素一致，收放最后一帧不闪）。 */
     private void barStyle(Bar b) {
         if (b == null) return;
-        b.setMetrics(dpf(Math.max(1f, (float) Morph.lineW(svc))), dpf(Bar.LEN_DP));
-        b.setStyle(Morph.fillColor(svc), Morph.strokeColor(svc), Math.max(1, dpf(Morph.strokeW(svc))));
-        b.setCornerPx(-1f);                      // ★89.6：极简白条＝圆头（半径＝粗细/2）
+        // ★93.6：极简白条的粗细／长度／圆角／透明度都可调（配置页「极简白条」那几根滑杆）
+        b.setMetrics(dpf(Math.max(1f, (float) Morph.barThickDp(svc))), dpf(Morph.barLenDp(svc)));
+        int a = Morph.barAlpha(svc);
+        b.setStyle(Morph.withAlpha(Morph.fillColor(svc), a), Morph.withAlpha(Morph.strokeColor(svc), a),
+                Math.max(1, dpf(Morph.strokeW(svc))));
+        b.setCornerPx(dpf(Morph.barRadiusDp(svc)));   // 0＝直角；默认＝粗细的一半（圆头）
         b.setSide(isRightSide());
     }
 
@@ -2795,20 +2805,13 @@ public class Mascot {
 
     // ───────────────────────── 让路（截图 ＋ 触摸类工具） ─────────────────────────
 
-    /** 截图让路：alpha=0（不摘视图 ⇒ 没有"摘掉再放回"的闪）。65 只证过"挪窗口无效"，alpha 从没试过。 */
-    /** ★67 B 线（66 残留）：截图让路**回退成摘视图**（`SHOT_BY_ALPHA=false`）。
-     *  66 实测 alpha=0 让路 4 次里 1 次仍把气泡截进图 ⇒ "自读自话"的风险没消；摘视图会闪一下，但可靠。 */
+    /** 截图让路：摘视图（用完放回；alpha=0 实测 4 次里 1 次仍被截进图，不可靠）。 */
     static void hideForShot() {
         final Mascot m = S;
         if (m == null) return;
         m.runSync(new Runnable() {
             public void run() {
                 m.shotHidden = true;
-                if (SHOT_BY_ALPHA) {
-                    m.applyAlpha();
-                    m.note("yield on（截图·alpha=0 不摘视图）");
-                    return;
-                }
                 if (m.yielded) { m.note("yield on（截图·复用触摸让路，窗口已摘）"); return; }
                 m.takeAway();
                 m.note("yield on（截图·摘视图）");
@@ -2822,11 +2825,6 @@ public class Mascot {
         m.runSync(new Runnable() {
             public void run() {
                 m.shotHidden = false;
-                if (SHOT_BY_ALPHA) {
-                    m.applyAlpha();
-                    m.note("yield off（截图·恢复 alpha）");
-                    return;
-                }
                 if (m.yielded) { m.note("yield off（截图·触摸让路还占着，窗口先不放）"); return; }
                 m.putBack();
                 m.applyAlpha();

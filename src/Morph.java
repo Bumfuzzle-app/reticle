@@ -29,7 +29,7 @@ class Morph {
     static final String K_ON = "morph_on";          // ★88.8 动效开关（默认开）
     static final String K_PRE = "morph_preset";     // ★88.8 当前手感（0 轻快／1 标准／2 柔和／-1 自定义）
     static final String K_DUR = "morph_dur";        // 总时长 ms（120~1200）
-    static final String K_EASE = "morph_ease";      // 0 线性／1 缓出／2 回弹／3 弹性／4 自定义贝塞尔
+    static final String K_EASE = "morph_ease";      // 0 匀速／1 先快后慢／2 冲过再回／3 先慢后快／4 旧自定义贝塞尔（UI 不暴露）
     static final String K_BEZ = "morph_bez";        // 自定义贝塞尔 "x1,y1,x2,y2"（0~1）
     static final String K_W = "morph_w";            // 线宽 dp（3~16）
     static final String K_R = "morph_r";            // 圆角半径 dp（0~40）
@@ -42,11 +42,18 @@ class Morph {
     static final String K_TEXT_C = "morph_text_color";      // ★88.5 文字颜色
     static final String K_MAXW = "morph_maxw";              // ★88.5 内容自适应最大宽 dp（100~260）
     static final String K_MAXH = "morph_maxh";              // ★88.5 内容自适应最大高 dp（40~140）
+    // ★93.6：极简白条与气泡框的观感参数（只在自己画的那条白条／那个框上生效）
+    static final String K_BAR_ALPHA = "bar_alpha";    // 白条透明度 %（20~100）
+    static final String K_BAR_THICK = "bar_thick";    // 白条粗细 dp（3~16）
+    static final String K_BAR_LEN   = "bar_len";      // 白条长度 dp（40~96，窗口 100dp 装得下）
+    static final String K_BAR_R     = "bar_r";        // 白条圆角 dp（0~24，最大到粗细的一半）
+    static final String K_BUB_ALPHA = "bub_alpha";    // 气泡框透明度 %（20~100）
+    static final int DEF_BAR_ALPHA = 100, DEF_BAR_THICK = 7, DEF_BAR_LEN = 80, DEF_BAR_R = 24, DEF_BUB_ALPHA = 100;
 
-    static final String[] EASE_NAMES = {"线性", "缓出", "回弹", "弹性", "自定义贝塞尔"};
+    static final String[] EASE_NAMES = {"匀速", "先快后慢", "冲过再回", "先慢后快", "自定义贝塞尔"};
 
     // ★88.8 默认＝「标准」那套（19 号总控定的值）
-    static final int DEF_DUR = 320, DEF_EASE = 2, DEF_W = 7, DEF_R = 30,
+    static final int DEF_DUR = 340, DEF_EASE = 2, DEF_W = 7, DEF_R = 30,
             DEF_BOUNCE = 45, DEF_TEXT = 55, DEF_BULGE = 45;
     static final String DEF_BEZ = "0.22,1,0.36,1";
     static final int DEF_STROKE = 1, DEF_MAXW = 220, DEF_MAXH = 120;
@@ -55,8 +62,8 @@ class Morph {
     // ★88.8 三套手感（时长／缓动／线宽／圆角／鼓出）
     static final int PRE_LIGHT = 0, PRE_STD = 1, PRE_SOFT = 2, PRE_CUSTOM = -1;
     static final String[] PRESET_NAMES = {"轻快", "标准", "柔和"};
-    static final int[] P_DUR = {220, 320, 480};
-    static final int[] P_EASE = {1, 2, 1};
+    static final int[] P_DUR = {200, 340, 480};   // ★93.5：相邻两档差 ≥120ms
+    static final int[] P_EASE_OLD = {1, 2, 3};   // ★93.6 作废：曲线已与手感解耦（保留防误读）
     static final int[] P_W = {6, 7, 8};
     static final int[] P_R = {24, 30, 36};
     static final int[] P_BULGE = {60, 45, 30};
@@ -98,7 +105,7 @@ class Morph {
         int r = clampI(gi(c, K_R, DEF_R), 0, 40);
         int b = clampI(gi(c, K_BULGE, DEF_BULGE), 0, 100);
         for (int i = 0; i <= PRE_SOFT; i++) {
-            if (d == P_DUR[i] && e == P_EASE[i] && w == P_W[i] && r == P_R[i] && b == P_BULGE[i]) return i;
+            if (d == P_DUR[i] && w == P_W[i] && r == P_R[i] && b == P_BULGE[i]) return i;   // ★93.6：曲线独立，不再参与手感判定
         }
         return PRE_CUSTOM;
     }
@@ -112,7 +119,7 @@ class Morph {
     static void applyPreset(Context c, int i) {
         if (i < 0 || i > PRE_SOFT) return;
         si(c, K_DUR, P_DUR[i]);
-        si(c, K_EASE, P_EASE[i]);
+
         si(c, K_W, P_W[i]);
         si(c, K_R, P_R[i]);
         si(c, K_BULGE, P_BULGE[i]);
@@ -124,6 +131,7 @@ class Morph {
     /** 恢复默认＝「标准」＋描边／填充／文字色＋最大宽高＋曲线。当场生效靠调用方 morphReload。 */
     static void applyDefaults(Context c) {
         applyPreset(c, PRE_STD);
+        si(c, K_EASE, DEF_EASE);   // ★93.6：曲线也回默认（现在它独立于手感）
         ss(c, K_BEZ, DEF_BEZ);
         si(c, K_STROKE, DEF_STROKE);
         si(c, K_MAXW, DEF_MAXW);
@@ -131,6 +139,11 @@ class Morph {
         si(c, K_STROKE_C, DEF_STROKE_C);
         si(c, K_FILL_C, DEF_FILL_C);
         si(c, K_TEXT_C, DEF_TEXT_C);
+        si(c, K_BAR_ALPHA, DEF_BAR_ALPHA);
+        si(c, K_BAR_THICK, DEF_BAR_THICK);
+        si(c, K_BAR_LEN, DEF_BAR_LEN);
+        si(c, K_BAR_R, DEF_BAR_R);
+        si(c, K_BUB_ALPHA, DEF_BUB_ALPHA);
         setEnabled(c, true);   // ★88.9：K_ON 是 boolean，原来用 si() 写 int，之后 getBoolean 会抛 ClassCastException（开关读成"永远开"）
         si(c, K_PRE, PRE_STD);
     }
@@ -164,6 +177,23 @@ class Morph {
         try { return sp(c).getInt(k, d); } catch (Throwable t) { return d; }
     }
     static void setColor(Context c, String k, int v) { si(c, k, v); }
+
+    // ───────── ★93.6 白条／气泡框观感（极简模式） ─────────
+    static int barAlpha(Context c) { return clampI(gi(c, K_BAR_ALPHA, DEF_BAR_ALPHA), 20, 100); }
+    static int barThickDp(Context c) { return clampI(gi(c, K_BAR_THICK, DEF_BAR_THICK), 3, 16); }
+    static int barLenDp(Context c) { return clampI(gi(c, K_BAR_LEN, DEF_BAR_LEN), 40, 96); }
+    /** 圆角最大到粗细的一半（再多画不出圆角，只会被夹成胶囊）。 */
+    static int barRadiusDp(Context c) {
+        int r = clampI(gi(c, K_BAR_R, DEF_BAR_R), 0, 24);
+        int half = Math.max(0, barThickDp(c) / 2);
+        return r > half ? half : r;
+    }
+    static int bubAlpha(Context c) { return clampI(gi(c, K_BUB_ALPHA, DEF_BUB_ALPHA), 20, 100); }
+    /** 把 0~100 的百分比折成 0~255 的 alpha，再套到颜色上。 */
+    static int withAlpha(int color, int pct) {
+        int a = Math.round(clampI(pct, 0, 100) * 255f / 100f);
+        return (color & 0x00FFFFFF) | (a << 24);
+    }
     static int strokeColor(Context c) { return color(c, K_STROKE_C, DEF_STROKE_C); }
     static int fillColor(Context c) { return color(c, K_FILL_C, DEF_FILL_C); }
     static int textColor(Context c) { return color(c, K_TEXT_C, DEF_TEXT_C); }
@@ -271,8 +301,8 @@ class Morph {
         l2 = line2 == null ? "" : line2;
         kind = kindV;
 
-        barW = dp(lineW(ctx));
-        barH = dp(80);
+        barW = dp(barThickDp(ctx));   // ★93.6 粗细可调
+        barH = dp(barLenDp(ctx));      // ★93.6 长度可调
         float padX = dp(13), padY = dp(9);
         float maxW = Math.min(dp(maxWdp(ctx)), sw * 0.62f);
         float maxH = dp(maxHdp(ctx));
@@ -397,7 +427,7 @@ class Morph {
         float ta = clampF((p - textAt(ctx) / 100f) / 0.22f, 0f, 1f);
         if (p <= 0.03f) ta = 0f;
         try {
-            content.setAlpha(ta);
+            content.setAlpha(ta * (bubAlpha(ctx) / 100f));   // ★93.6 气泡框透明度带着文字一起
             content.setTranslationY(cy - contentCy);
             content.setVisibility(ta <= 0.01f ? View.INVISIBLE : View.VISIBLE);
         } catch (Throwable t) { }
@@ -435,17 +465,17 @@ class Morph {
         if (t <= 0f) return 0f;
         if (t >= 1f) return 1f;
         switch (easeMode(ctx)) {
-            case 0: return t;
-            case 1: return 1f - (1f - t) * (1f - t);
-            case 2: {   // 回弹：缓出 + 过冲（阻尼越小过冲越大）
+            case 0: return t;                                    // 匀速：速度一直不变
+            case 1: return 1f - (1f - t) * (1f - t);              // 先快后慢：一上来就快，尾巴慢慢收
+            case 2: {                                            // 冲过再回：out-back，中段就冲过 100%，峰值≥108%
                 float b = bounce(ctx) / 100f;
-                return (1f - (1f - t) * (1f - t)) + (float) Math.sin(Math.PI * t) * b * 0.16f;
+                float c1 = 1.0f + b * 1.6f;                      // 默认回弹 45 ⇒ c1≈1.72，峰值≈110%
+                float c3 = c1 + 1f;
+                float u = t - 1f;
+                return 1f + c3 * u * u * u + c1 * u * u;
             }
-            case 3: {   // 弹性：末尾来回抖
-                float b = 0.04f + bounce(ctx) / 100f * 0.30f;
-                return (float) (1f - Math.pow(1f - t, 3) + Math.sin(t * Math.PI * 3.4) * b * (1f - t) * 0.55f);
-            }
-            default: return cubic(t, bez(ctx));
+            case 3: return t * t;                                // 先慢后快：起步慢，越走越快
+            default: return cubic(t, bez(ctx));                  // 旧「自定义贝塞尔」：UI 已不暴露，参数保留
         }
     }
 
@@ -497,7 +527,7 @@ class Morph {
             curL = L; curT = top; curR = R; curB = bot;
 
             float rWant = Math.min(dp(radius(ctx)), Math.min(frameW, frameH) / 2f);
-            float r0 = barW / 2f;
+            float r0 = dp(barRadiusDp(ctx));   // ★93.6 白条圆角可调（默认＝粗细的一半）
             float rad = clampF(r0 + (rWant - r0) * Math.min(e, 1f), 0f, Math.min(w, h) / 2f);
             curRad = rad;
             curClamped = rad < rWant - 0.5f;
@@ -505,6 +535,12 @@ class Morph {
             float st = dp(strokeW(ctx));
             float ins = Math.min(st, Math.max(0f, Math.min(w, h) / 2f - 1f));
             int fillC = fillColor(ctx), strokeC = strokeColor(ctx);
+            // ★93.6 透明度：白条态按「白条透明度」、成框态按「气泡框透明度」，中间按进度插值
+            float mixA = clampF(Math.min(e, 1f), 0f, 1f);
+            int aBar = barAlpha(ctx), aBub = bubAlpha(ctx);
+            int aPct = Math.round(aBar + (aBub - aBar) * mixA);
+            fillC = withAlpha(fillC, aPct);
+            strokeC = withAlpha(strokeC, aPct);
             if (ins > 0.05f) {
                 rfO.set(L + ins / 2f, top + ins / 2f, R - ins / 2f, bot - ins / 2f);
                 float ri = Math.max(0f, rad - ins / 2f);

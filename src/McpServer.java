@@ -1661,7 +1661,15 @@ public class McpServer {
                 return String.format(java.util.Locale.ROOT, Words.RP_SCROLLTO_FMT, o.optInt("screens"), o.optString("target_text", ""), viaCn(o.optString("via", "")), tail);
             }
             if (name.equals("do_chain")) {
-                if (o.optInt("ok", 0) == 1) return String.format(java.util.Locale.ROOT, Words.RP_CHAIN_FMT, o.optInt("steps_done"), o.optInt("ms"));
+                if (o.optInt("ok", 0) == 1) {
+                    String okLine = String.format(java.util.Locale.ROOT, Words.RP_CHAIN_FMT, o.optInt("steps_done"), o.optInt("ms"));
+                    JSONObject okSc = o.optJSONObject("screen");
+                    if (okSc == null) return okLine;
+                    String okT = "";
+                    JSONArray okA = okSc.optJSONArray("texts");
+                    if (okA != null) for (int i = 0; i < okA.length() && i < 6; i++) okT += okA.optString(i) + " / ";
+                    return okLine + String.format(java.util.Locale.ROOT, Words.RP_CHAIN_SCREEN_FMT, okSc.optString("pkg", ""), okT);
+                }
                 int cStop = o.optInt("stop_at", 0);
                 int cDone = o.optInt("steps_done", 0);
                 JSONObject sc = o.optJSONObject("screen");

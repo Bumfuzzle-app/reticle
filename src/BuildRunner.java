@@ -180,8 +180,17 @@ public class BuildRunner {
         File[] apks = apks(c);
         if (apks != null && apks.length > 0) {
             sb.append("--- 产物 ---\n");
+            String pv = projectVersionName(c);
+            long pnew = sourceNewest(projectDir(c), 0);
             for (int i = 0; i < apks.length; i++) {
-                sb.append(apks[i].getName()).append("  ").append(apks[i].length()).append(" B  sha256=").append(clip(BuildEnv.sha256(apks[i]))).append("\n");
+                String av = apkVersionName(c, apks[i]);
+                String warn = "";
+                if (pv.length() > 0 && av.length() > 0 && !av.equals(pv)) warn = "  ← 版本与工程不一致（工程写 " + pv + "）";
+                else if (pnew > apks[i].lastModified()) warn = "  ← 比工程改动还旧";
+                if (warn.length() > 0) warn = warn + "，这可能不是本次产物";
+                sb.append(apks[i].getName()).append("  ").append(apks[i].length()).append(" B  改于 ").append(fmtTime(apks[i].lastModified()))
+                  .append("  版本 ").append(av.length() > 0 ? av : "（包里没写）")
+                  .append("  sha256=").append(clip(BuildEnv.sha256(apks[i]))).append(warn).append("\n");
             }
         }
         if (running()) sb.append(Words.RP_BUILD_NEXT_RUN);
@@ -202,6 +211,78 @@ public class BuildRunner {
             o.put("ready", BuildEnv.ready(c) ? 1 : 0);
         } catch (Throwable t) { }
         return o;
+    }
+
+    /** 93：当前工程目录（build.conf 的 PROJECT_DIR= 优先，否则运行目录/工程）。 */
+    static File projectDir(Context c) {
+        try {
+            File cf = new File(Home.get(c), "build.conf");
+            if (cf.exists() && cf.length() < 65536) {
+                java.io.FileInputStream fi = new java.io.FileInputStream(cf);
+                byte[] b = new byte[(int) cf.length()];
+                int off = 0, r;
+                while (off < b.length && (r = fi.read(b, off, b.length - off)) > 0) off += r;
+                fi.close();
+                String[] ls = new String(b, 0, off, "UTF-8").split("\n");
+                for (int i = 0; i < ls.length; i++) {
+                    String ln = ls[i].trim();
+                    if (ln.startsWith("#")) continue;
+                    int eq = ln.indexOf('=');
+                    if (eq < 0) eq = ln.indexOf('＝');
+                    if (eq <= 0) continue;
+                    String k = ln.substring(0, eq).trim();
+                    if (!k.equals("PROJECT_DIR")) continue;
+                    String v = ln.substring(eq + 1).trim();
+                    if (v.length() > 0) return new File(v);
+                }
+            }
+        } catch (Throwable t) { }
+        return defaultProject(c);
+    }
+
+    /** 93：包内 versionName（系统解析 apk，不靠文件名）。 */
+    private static String apkVersionName(Context c, File f) {
+        try {
+            android.content.pm.PackageInfo pi = c.getPackageManager().getPackageArchiveInfo(f.getAbsolutePath(), 0);
+            return (pi == null || pi.versionName == null) ? "" : pi.versionName;
+        } catch (Throwable t) { return ""; }
+    }
+
+    /** 93：工程 manifest 里写的 versionName。 */
+    private static String projectVersionName(Context c) {
+        try {
+            File mf = new File(projectDir(c), "AndroidManifest.xml");
+            if (!mf.exists()) return "";
+            java.io.FileInputStream fi = new java.io.FileInputStream(mf);
+            byte[] b = new byte[(int) Math.min(mf.length(), 65536L)];
+            int off = 0, r;
+            while (off < b.length && (r = fi.read(b, off, b.length - off)) > 0) off += r;
+            fi.close();
+            String s = new String(b, 0, off, "UTF-8");
+            int p = s.indexOf("versionName=");
+            if (p < 0) return "";
+            int q1 = s.indexOf('\"', p);
+            int q2 = q1 < 0 ? -1 : s.indexOf('\"', q1 + 1);
+            return (q1 < 0 || q2 <= q1) ? "" : s.substring(q1 + 1, q2).trim();
+        } catch (Throwable t) { return ""; }
+    }
+
+    /** 93：源码树最新改动时间（跳过 .bak／build 一类的旁路文件与目录）。 */
+    private static long sourceNewest(File f, int depth) {
+        if (f == null || depth > 6) return 0L;
+        if (f.isFile()) return f.getName().indexOf(".bak") >= 0 ? 0L : f.lastModified();
+        String n = f.getName();
+        if (depth == 0 && f.isDirectory()) { }
+        else if (n.equals("build") || n.equals(".git") || n.startsWith(".")) return 0L;
+        File[] fs = f.listFiles();
+        if (fs == null) return 0L;
+        long m = 0L;
+        for (int i = 0; i < fs.length; i++) { long t = sourceNewest(fs[i], depth + 1); if (t > m) m = t; }
+        return m;
+    }
+
+    private static String fmtTime(long ms) {
+        return new java.text.SimpleDateFormat("MM-dd HH:mm", java.util.Locale.ROOT).format(new java.util.Date(ms));
     }
 
     public static File[] apks(Context c) {

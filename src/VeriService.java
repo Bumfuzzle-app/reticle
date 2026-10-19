@@ -2038,6 +2038,7 @@ public class VeriService extends AccessibilityService {
         int observe = parseInt(kv.get("observe"), 0);
         org.json.JSONArray detail = new org.json.JSONArray();
         int done = 0;
+        String midScreen = null;
         int actFail = 0, expFail = 0;   // ★77.6：动作／后置条件失败计数（顶层 ok 如实反映，不再一律 ok:1）
         long t0 = SystemClock.uptimeMillis();
         for (int i = 0; i < steps.length(); i++) {
@@ -2096,6 +2097,7 @@ public class VeriService extends AccessibilityService {
             } catch (Throwable t) { }
             detail.put(d);
             done = i + 1;
+            if (observe > 0 && done == observe && done < steps.length()) { midScreen = screenBrief(); }
             if (actOk != 1) actFail++;
             if (expOk != 1) expFail++;
             if (actOk != 1 || expOk != 1) {
@@ -2110,7 +2112,7 @@ public class VeriService extends AccessibilityService {
           .append(",\"ms\":").append(SystemClock.uptimeMillis() - t0)
           .append(",\"detail\":").append(detail.toString());
         if (anyFail) sb.append(",\"reason\":\"").append(expFail > 0 && actFail == 0 ? "expect_timeout" : "act_failed").append("\",\"failed_steps\":").append(actFail + expFail);
-        if (observe > 0) sb.append(",\"screen\":").append(screenBrief());
+        if (observe > 0) sb.append(",\"screen_at\":").append(observe).append(",\"screen\":").append(midScreen != null ? midScreen : screenBrief());
         sb.append("}");
         return sb.toString();
     }

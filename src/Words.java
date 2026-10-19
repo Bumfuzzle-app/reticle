@@ -651,6 +651,7 @@ public class Words {
     public static final String RP_DL_TO_BG_FMT = "这份偏大或下得慢（已下 %s），已转后台继续：任务 %s\n进度看通知栏；查进度：download_status id=%s";
     public static final String RP_DL_ERR_FMT = "下载失败：%s";
     public static final String RP_DL_LEN_FMT = "长度不符（实收 %s，源站声明 %s）";
+    public static final String RP_DL_NOT_APK_FMT = "这不是 apk：文件头不是 zip 包（可能下到了错误页）。文件留在 %s，可删掉重下";
     public static final String RP_DL_SIZE_UNKNOWN = "大小未知";
     public static final String RP_DL_UNZIP_FMT = "已解包 %d 个文件 → %s";
     public static final String RP_DL_UNZIP_ERR_FMT = "文件下好了，但解包失败：%s";
@@ -779,6 +780,7 @@ public class Words {
     public static final String RP_CHAIN_ACTFAIL = "第 %d 步（动作 %s）没执行成功";
     public static final String RP_CHAIN_EXPFAIL = "第 %d 步做完后没等到『%s』（等了 %dms）";
     public static final String RP_CHAIN_FMT = "链走完：%d 步（本机共 %dms）";
+    public static final String RP_CHAIN_SCREEN_FMT = "\n当时前台 %s，屏上文字：%s";
     public static final String RP_VIA_PASTE_NODE = "控件级粘贴（无障碍）";
     public static final String RP_VIA_PASTE_MENU = "长按输入框→点「粘贴」菜单";
     public static final String RP_VIA_PASTE_KEY = "按键粘贴（279）";
@@ -1157,6 +1159,14 @@ public class Words {
     public static final String UPD_CLR_T = "清除更新记录";
     public static final String UPD_CLR_D = "清空检查时间和提示版本，开关不动。";
     public static final String UPD_CLR_OK = "已清除更新记录";
+    // 96 号单：更新栏固定地址＋复制、下载中说话
+    public static final String UPD_ADDR_VER_FMT = "本机 v%s · 线上 v%s";
+    public static final String UPD_ADDR_NONE_FMT = "本机 v%s · 没查到新版";
+    public static final String UPD_COPY_T = "复制下载地址";
+    public static final String UPD_COPY_OK = "已复制，粘到浏览器就能下";
+    public static final String UPD_COPY_FAIL = "没复制上，再点一次";
+    public static final String UPD_COPY_NONE = "现在还没有下载地址";
+    public static final String UPD_MSG_DL_WAIT = "正在下载，先等它下完";
     // 配置页折叠块（母标题右侧的状态小字）
     public static final String CF_FOLD_WD = "无障碍与自启";
     public static final String CF_FOLD_NAVFX = "底部导航与动效";
@@ -1166,4 +1176,12 @@ public class Words {
     public static final String CF_FOLD_NIGHT = "深色";
     public static final String CF_FOLD_BLACK = " · 极夜";
     public static final String CF_FOLD_LIGHT = "浅色";
+    // ★93.5：八个折叠分组的副标题（人话、≤20 字、不带技术词）
+    public static final String CF_FOLD_SUB_TOKEN = "改端口或换令牌，改完要重连客户端";
+    public static final String CF_FOLD_SUB_MASCOT = "显示与换图、极简模式、让位名单";
+    public static final String CF_FOLD_SUB_WD = "掉线后自动把无障碍接回来";
+    public static final String CF_FOLD_SUB_LOOK = "主题、极夜与导航条样式";
+    public static final String CF_FOLD_SUB_NAVFX = "导航图标的弹跳与扩张";
+    public static final String CF_FOLD_SUB_ICON = "换一个桌面图标";
+    public static final String CF_FOLD_SUB_UPD = "看有没有新版、读公告";
 }

@@ -92,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
     // 79 号单：检查更新（首页那行＋配置页状态）
     View cardUpd;
     TextView tvUpdTitle, tvUpdDesc, tvUpdState, tvUpdSeen, tvUpdFoldTag;
+    TextView tvUpdVer, tvUpdAddr, btnUpdCopy;   // 96 号单：更新栏的版本／地址／复制
     boolean uiFg = false;                          // 79 号单返工：在前台才弹窗（后台查到的先存着）
     UpdateCheck.Info pendingUpd;                   // 待弹的那一次：进前台再弹
     android.widget.ProgressBar pbUpd;
@@ -654,7 +655,7 @@ public class MainActivity extends AppCompatActivity {
         } }));
 
         // ── 折叠：令牌与地址 ──
-        c.addView(foldSection(Words.CF_SEC_TOKEN, Words.CF_FOLD_PORT_FMT + McpServer.getPort(this), new FoldBody() {
+        c.addView(foldSection(Words.CF_SEC_TOKEN, Words.CF_FOLD_PORT_FMT + McpServer.getPort(this), Words.CF_FOLD_SUB_TOKEN, new FoldBody() {
             public void build(LinearLayout fb) {
                 fb.addView(quiet13(Words.CF_TOKEN_WHAT));
                 fb.addView(quiet13(Words.CF_TOKEN_HOW));
@@ -666,9 +667,10 @@ public class MainActivity extends AppCompatActivity {
             }
         }));
 
-        // ── 折叠：桌面伙伴（形象／气泡／让位名单）──
-        c.addView(foldSection(Words.CF_SEC_MASCOT, Mascot.isOn(MainActivity.this) ? Words.CF_FOLD_ON : Words.CF_FOLD_OFF, new FoldBody() {
+        // ── 折叠：屏幕上的小形象（★93.5：极简开着＝只留白条这一套；形象专属项不显示）──
+        c.addView(foldSection(Words.CF_SEC_MASCOT, Mascot.minimal(MainActivity.this) ? Words.CF_FOLD_ON : Words.CF_FOLD_OFF, Words.CF_FOLD_SUB_MASCOT, new FoldBody() {
             public void build(final LinearLayout fb) {
+                final boolean min = Mascot.minimal(MainActivity.this);
                 fb.addView(switchItem(Words.CF_SW_MASCOT_T,
                         Words.CF_SW_MASCOT_D,
                         Mascot.isOn(MainActivity.this), true, new SwitchCB() {
@@ -677,47 +679,52 @@ public class MainActivity extends AppCompatActivity {
                                 toast(v ? Words.CF_MSG_MASCOT_ON : Words.CF_MSG_MASCOT_OFF);
                             }
                         }));
-                fb.addView(listItem(Words.CF_ITEM_MASCOT_IMG, Words.CF_ITEM_MASCOT_IMG_D, new Runnable() { public void run() { pickMascotImage(); } }));
+                // ★93.5：极简开关本身永远在（它就是回常规的入口）
                 fb.addView(switchItem(Words.CF_SW_MINIMAL_T, Words.CF_SW_MINIMAL_D, Mascot.minimal(MainActivity.this), true, new SwitchCB() {
                     public void onChanged(boolean v) {
                         Mascot.setMinimal(MainActivity.this, v);
                         toast(v ? Words.CF_MSG_MINIMAL_ON : Words.CF_MSG_MINIMAL_OFF);
-                        applyMinimalGray(fb, v);   // ★87：开着＝常规那几项全灰
+                        rebuildConfUi();      // ★93.5：极简＝换一整套设置项 ⇒ 就地重建（不再置灰凑数）
                     }
                 }));
-                fb.addView(fxSlider(Words.CF_MASCOT_ALPHA_T, Words.CF_MASCOT_ALPHA_D, 20, 100, 5, Math.round(Mascot.alpha(MainActivity.this) * 100), "%", new FXCB() {
-                    public void onChanged(int v) { Mascot.setAlpha(MainActivity.this, v / 100f); }
-                }));
-                final TextView[] posDesc = new TextView[1];
-                fb.addView(listItem(Words.CF_MASCOT_POS_T,
-                        posDescText(),
-                        new Runnable() { public void run() { cyclePos(posDesc[0]); } }, posDesc));
-                final TextView[] hideDesc = new TextView[1];
-                fb.addView(listItem(Words.CF_HIDE_T,
-                        hideDescText(),
-                        new Runnable() { public void run() { cycleHideMode(hideDesc[0]); } }, hideDesc));
+                if (!min) {
+                    // ── 形象专属（极简＝只有白条，这些不显示）──
+                    fb.addView(listItem(Words.CF_ITEM_MASCOT_IMG, Words.CF_ITEM_MASCOT_IMG_D, new Runnable() { public void run() { pickMascotImage(); } }));
+                    fb.addView(fxSlider(Words.CF_MASCOT_ALPHA_T, Words.CF_MASCOT_ALPHA_D, 20, 100, 5, Math.round(Mascot.alpha(MainActivity.this) * 100), "%", new FXCB() {
+                        public void onChanged(int v) { Mascot.setAlpha(MainActivity.this, v / 100f); }
+                    }));
+                    final TextView[] posDesc = new TextView[1];
+                    fb.addView(listItem(Words.CF_MASCOT_POS_T,
+                            posDescText(),
+                            new Runnable() { public void run() { cyclePos(posDesc[0]); } }, posDesc));
+                    final TextView[] hideDesc = new TextView[1];
+                    fb.addView(listItem(Words.CF_HIDE_T,
+                            hideDescText(),
+                            new Runnable() { public void run() { cycleHideMode(hideDesc[0]); } }, hideDesc));
+                    fb.addView(switchItem(Words.CF_SW_MASCOT_VERT_T, Words.CF_SW_MASCOT_VERT_D, Mascot.vertPref(MainActivity.this), true, new SwitchCB() {
+                        public void onChanged(boolean v) {
+                            Mascot.setVert(MainActivity.this, v);
+                            toast(v ? Words.CF_MSG_MASCOT_VERT_ON : Words.CF_MSG_MASCOT_VERT_OFF);
+                            Mascot.preview(Words.CF_MASCOT_POS_T + "：" + Words.CF_MASCOT_POS_NAMES[Mascot.posMode(MainActivity.this)]);
+                        }
+                    }));
+                    fb.addView(switchItem(Words.CF_SW_MASCOT_MIRROR_T, Words.CF_SW_MASCOT_MIRROR_D, Mascot.mirror(MainActivity.this), true, new SwitchCB() {
+                        public void onChanged(boolean v) {
+                            Mascot.setMirror(MainActivity.this, v);
+                            toast(v ? Words.CF_MSG_MASCOT_MIRROR_ON : Words.CF_MSG_MASCOT_MIRROR_OFF);
+                        }
+                    }));
+                }
+                // 让位名单不受极简左右（★88.6）：通知与气泡的让位照旧
                 final TextView[] hidePkgsDesc = new TextView[1];
                 minimalKeepRow = listItem(Words.CF_HIDE_PKGS_T,
                         hidePkgsDescText(),
                         new Runnable() { public void run() { AppPickActivity.open(MainActivity.this); } }, hidePkgsDesc);
                 hidePkgsDescLive = hidePkgsDesc[0];
-                fb.addView(minimalKeepRow);   // ★88.6：让位名单不受极简左右（applyMinimalGray 里跳过这一行）
-                fb.addView(switchItem(Words.CF_SW_MASCOT_VERT_T, Words.CF_SW_MASCOT_VERT_D, Mascot.vertPref(MainActivity.this), true, new SwitchCB() {
-                    public void onChanged(boolean v) {
-                        Mascot.setVert(MainActivity.this, v);
-                        toast(v ? Words.CF_MSG_MASCOT_VERT_ON : Words.CF_MSG_MASCOT_VERT_OFF);
-                        Mascot.preview(Words.CF_MASCOT_POS_T + "：" + Words.CF_MASCOT_POS_NAMES[Mascot.posMode(MainActivity.this)]);
-                    }
-                }));
-                fb.addView(switchItem(Words.CF_SW_MASCOT_MIRROR_T, Words.CF_SW_MASCOT_MIRROR_D, Mascot.mirror(MainActivity.this), true, new SwitchCB() {
-                    public void onChanged(boolean v) {
-                        Mascot.setMirror(MainActivity.this, v);
-                        toast(v ? Words.CF_MSG_MASCOT_MIRROR_ON : Words.CF_MSG_MASCOT_MIRROR_OFF);
-                    }
-                }));
-                applyMinimalGray(fb, Mascot.minimal(MainActivity.this));   // ★87：极简开着时进页面就是灰的
-                // ───────── ★88.8 动效（外面只留：开关／手感／高级参数 ›，最下面「恢复默认」） ─────────
-                fb.addView(quiet13("动效（极简，白条收放）"));
+                fb.addView(minimalKeepRow);
+
+                // ───────── 动效（★93.5：取消「高级参数」那层折叠，参数直接摊在这里）─────────
+                fb.addView(quiet13("动效（白条收放）"));
                 fb.addView(switchItem("动效", "开着：白条长成框、框缩回白条。关着：不做变形，直接出框／收框。",
                         Morph.enabled(MainActivity.this), true, new SwitchCB() {
                             public void onChanged(boolean v) {
@@ -726,80 +733,34 @@ public class MainActivity extends AppCompatActivity {
                                 toast(v ? "动效已开" : "动效已关（不做变形）");
                             }
                         }));
-                final TextView[] feelDesc = new TextView[1];
-                fb.addView(listItem("手感", feelDescText(), new Runnable() { public void run() {
-                    int now = Morph.preset(MainActivity.this);
-                    int next = (now < 0) ? Morph.PRE_STD : (now + 1) % Morph.PRESET_NAMES.length;
-                    Morph.applyPreset(MainActivity.this, next);
-                    Mascot.morphReload();
-                    // ★88.9：标题与下面所有滑杆立刻按新一套刷新（不是退出重进才对）
-                    Mascot.logLine(MainActivity.this, "conf: 手感→" + Morph.PRESET_NAMES[next] + "（时长=" + Morph.dur(MainActivity.this)
-                            + "ms 曲线=" + Morph.EASE_NAMES[Morph.easeMode(MainActivity.this)] + " 线宽=" + Morph.lineW(MainActivity.this)
-                            + "dp 圆角=" + Morph.radius(MainActivity.this) + "dp 鼓出=" + Morph.bulge(MainActivity.this) + "）");
-                    rebuildConfUi();
-                    confFlash("手感：" + Morph.PRESET_NAMES[next]);
-                } }, feelDesc));
-
-                // ── 高级参数（折叠：点开才是所有滑杆） ──
-                fb.addView(foldSection("高级参数", "时长／曲线／线宽／圆角／鼓出／颜色／最大宽高", new FoldBody() {
-                    public void build(final LinearLayout gb) {
-                        gb.addView(fxSlider("动效总时长", "白条长成框／框缩回白条各用这么久。改完下一次播放就生效。", 150, 900, 10, Morph.dur(MainActivity.this), " ms", new FXCB() {
-                            public void onChanged(int v) { Morph.si(MainActivity.this, Morph.K_DUR, v); morphManual(feelDesc[0]); Mascot.morphReload(); }
-                        }));
-                        final TextView[] easeDesc = new TextView[1];
-                        gb.addView(listItem("缓动曲线", easeDescText(), new Runnable() { public void run() {
-                            int n = (Morph.easeMode(MainActivity.this) + 1) % Morph.EASE_NAMES.length;
-                            Morph.si(MainActivity.this, Morph.K_EASE, n);
-                            morphManual(feelDesc[0]);
-                            if (easeDesc[0] != null) easeDesc[0].setText(easeDescText());
-                            Mascot.morphReload();
-                        } }, easeDesc));
-                        gb.addView(fxSlider("贝塞尔 x1", "自定义曲线的四个控制点（0~100）；拖任意一个就自动切到「自定义贝塞尔」。", 0, 100, 1, Math.round(Morph.bez(MainActivity.this)[0] * 100f), "%", new FXCB() {
-                            public void onChanged(int v) { setBezPart(0, v); morphManual(feelDesc[0]); }
-                        }));
-                        gb.addView(fxSlider("贝塞尔 y1", "控制点纵坐标（0~100）；越大起步越快。", 0, 100, 1, Math.round(Morph.bez(MainActivity.this)[1] * 100f), "%", new FXCB() {
-                            public void onChanged(int v) { setBezPart(1, v); morphManual(feelDesc[0]); }
-                        }));
-                        gb.addView(fxSlider("贝塞尔 x2", "控制点横坐标（0~100）；越小收尾越慢。", 0, 100, 1, Math.round(Morph.bez(MainActivity.this)[2] * 100f), "%", new FXCB() {
-                            public void onChanged(int v) { setBezPart(2, v); morphManual(feelDesc[0]); }
-                        }));
-                        gb.addView(fxSlider("贝塞尔 y2", "控制点纵坐标（0~100）；100＝收尾平。", 0, 100, 1, Math.round(Morph.bez(MainActivity.this)[3] * 100f), "%", new FXCB() {
-                            public void onChanged(int v) { setBezPart(3, v); morphManual(feelDesc[0]); }
-                        }));
-                        gb.addView(fxSlider("线宽", "白条粗细（3~16dp，不会变成看不见）；框边那道线的粗细见下面「描边粗细」。", 3, 16, 1, Morph.lineW(MainActivity.this), " dp", new FXCB() {
-                            public void onChanged(int v) { Morph.si(MainActivity.this, Morph.K_W, v); morphManual(feelDesc[0]); Mascot.morphReload(); }
-                        }));
-                        gb.addView(fxSlider("圆角半径", "框的四个角（0~40dp）；0＝直角。线宽 >12dp 时下限 12dp（不许细长胶囊）。", 0, 40, 1, Morph.radius(MainActivity.this), " dp", new FXCB() {
-                            public void onChanged(int v) { Morph.si(MainActivity.this, Morph.K_R, v); morphManual(feelDesc[0]); Mascot.morphReload(); }
-                        }));
-                        gb.addView(fxSlider("展开回弹", "回弹／弹性曲线的过冲幅度（0~100）；0＝不过冲。时长 <200ms 时上限 40（短时长配大回弹＝看着抽）。", 0, 100, 5, Morph.bounce(MainActivity.this), "", new FXCB() {
-                            public void onChanged(int v) { Morph.si(MainActivity.this, Morph.K_BOUNCE, v); morphManual(feelDesc[0]); Mascot.morphReload(); }
-                        }));
-                        gb.addView(fxSlider("文字淡入时机", "变形到百分之几时文字开始淡入（0~90%）。", 0, 90, 5, Morph.textAt(MainActivity.this), "%", new FXCB() {
-                            public void onChanged(int v) { Morph.si(MainActivity.this, Morph.K_TEXT, v); morphManual(feelDesc[0]); Mascot.morphReload(); }
-                        }));
-                        gb.addView(fxSlider("鼓出程度", "0＝宽高同步；越大越像气球从管口吹出来（宽先鼓、高后跟），0~100。", 0, 100, 5, Morph.bulge(MainActivity.this), "", new FXCB() {
-                            public void onChanged(int v) { Morph.si(MainActivity.this, Morph.K_BULGE, v); morphManual(feelDesc[0]); Mascot.morphReload(); }
-                        }));
-                        gb.addView(fxSlider("描边粗细", "框边／白条边那道线的粗细（1~6dp，默认极细 1dp）。线宽只管白条粗细。", 1, 6, 1, Morph.strokeW(MainActivity.this), " dp", new FXCB() {
-                            public void onChanged(int v) { Morph.si(MainActivity.this, Morph.K_STROKE, v); Morph.markCustom(MainActivity.this); if (feelDesc[0] != null) feelDesc[0].setText(feelDescText()); Mascot.morphReload(); }
-                        }));
-                        gb.addView(colorItem("描边颜色", "点这一行循环换色（只换那道极细的边）。", Morph.K_STROKE_C, C_STROKE, Morph.DEF_STROKE_C));
-                        gb.addView(colorItem("填充颜色", "点这一行循环换色（框内与白条本体）。", Morph.K_FILL_C, C_FILL, Morph.DEF_FILL_C));
-                        gb.addView(colorItem("文字颜色", "点这一行循环换色（失败仍是红色）。", Morph.K_TEXT_C, C_TEXT, Morph.DEF_TEXT_C));
-                        gb.addView(fxSlider("内容最大宽", "框宽按文字实测；超过这个宽度就截断加省略号（100~260dp）。", 100, 260, 5, Morph.maxWdp(MainActivity.this), " dp", new FXCB() {
-                            public void onChanged(int v) { Morph.si(MainActivity.this, Morph.K_MAXW, v); Morph.markCustom(MainActivity.this); if (feelDesc[0] != null) feelDesc[0].setText(feelDescText()); Mascot.morphReload(); }
-                        }));
-                        gb.addView(fxSlider("内容最大高", "框高的上限（40~140dp）。框高＝行数×行高＋padding，按内容实测；40dp 大约两行就顶格。", 40, 140, 2, Morph.maxHdp(MainActivity.this), " dp", new FXCB() {
-                            public void onChanged(int v) { Morph.si(MainActivity.this, Morph.K_MAXH, v); Morph.markCustom(MainActivity.this); if (feelDesc[0] != null) feelDesc[0].setText(feelDescText()); Mascot.morphReload(); }
-                        }));
-                    }
+                fb.addView(feelChooser());
+                fb.addView(curveChooser());
+                fb.addView(durSlider());
+                fb.addView(fxSlider("内容最大宽", "框宽按文字实测；超过这个宽度就截断加省略号（100~260dp）。", 100, 260, 5, Morph.maxWdp(MainActivity.this), " dp", new FXCB() {
+                    public void onChanged(int v) { Morph.si(MainActivity.this, Morph.K_MAXW, v); Mascot.morphReload(); }
                 }));
-
-                fb.addView(confBtn("恢复默认", "会把手感与所有参数还原（时长／曲线／线宽／圆角／鼓出／描边／填充／文字色／最大宽高），点了立刻生效", new Runnable() { public void run() {
+                fb.addView(fxSlider("内容最大高", "框高的上限（40~140dp，实际至少 120dp）。框高＝行数×行高＋padding，按内容实测。", 40, 140, 2, Morph.maxHdp(MainActivity.this), " dp", new FXCB() {
+                    public void onChanged(int v) { Morph.si(MainActivity.this, Morph.K_MAXH, v); Mascot.morphReload(); }
+                }));
+                fb.addView(quiet13("白条与气泡框（极简）"));
+                fb.addView(fxSlider("白条粗细", "贴着屏幕边那条白条有多粗（3~16dp）。", 3, 16, 1, Morph.barThickDp(MainActivity.this), " dp", new FXCB() {
+                    public void onChanged(int v) { Morph.si(MainActivity.this, Morph.K_BAR_THICK, v); Mascot.morphReload(); }
+                }));
+                fb.addView(fxSlider("白条长度", "白条有多长（40~96dp）。", 40, 96, 2, Morph.barLenDp(MainActivity.this), " dp", new FXCB() {
+                    public void onChanged(int v) { Morph.si(MainActivity.this, Morph.K_BAR_LEN, v); Mascot.morphReload(); }
+                }));
+                fb.addView(fxSlider("白条圆角", "白条的四个角（0~24dp）。超过粗细的一半会按一半算。", 0, 24, 1, Morph.barRadiusDp(MainActivity.this), " dp", new FXCB() {
+                    public void onChanged(int v) { Morph.si(MainActivity.this, Morph.K_BAR_R, v); Mascot.morphReload(); }
+                }));
+                fb.addView(fxSlider("白条透明度", "白条有多透（20%~100%）。", 20, 100, 5, Morph.barAlpha(MainActivity.this), "%", new FXCB() {
+                    public void onChanged(int v) { Morph.si(MainActivity.this, Morph.K_BAR_ALPHA, v); Mascot.morphReload(); }
+                }));
+                fb.addView(fxSlider("气泡框透明度", "白条长出来的那个框有多透（20%~100%），框里的字跟着一起淡。", 20, 100, 5, Morph.bubAlpha(MainActivity.this), "%", new FXCB() {
+                    public void onChanged(int v) { Morph.si(MainActivity.this, Morph.K_BUB_ALPHA, v); Mascot.morphReload(); }
+                }));
+                fb.addView(confBtn("恢复默认", "手感与所有参数一起还原（界面上不显示的线宽／圆角／鼓出／颜色也一并还原），点了立刻生效", new Runnable() { public void run() {
                     Morph.applyDefaults(MainActivity.this);
                     Mascot.morphReload();
-                    // ★88.8：页面上的数值也要跟着回默认（重建配置页，滚动位置尽量留住）
                     // ★88.9：重建＝就地换页 ⇒ 先重建、再往新建的那一行写反馈
                     rebuildConfUi();
                     confFlash("已恢复默认（标准手感）");
@@ -813,7 +774,7 @@ public class MainActivity extends AppCompatActivity {
         }));
 
         // ── 折叠：无障碍与自启（看门狗 ＋ 开机自启 ＋ 内存自保那一行）──
-        c.addView(foldSection(Words.CF_FOLD_WD, A11yWatchdog.isOn(this) ? Words.CF_FOLD_ON : Words.CF_FOLD_OFF, new FoldBody() {
+        c.addView(foldSection(Words.CF_FOLD_WD, A11yWatchdog.isOn(this) ? Words.CF_FOLD_ON : Words.CF_FOLD_OFF, Words.CF_FOLD_SUB_WD, new FoldBody() {
             public void build(final LinearLayout fb) {
                 fb.addView(switchItem(Words.CF_SW_WD_T,
                         Words.CF_SW_WD_D,
@@ -847,7 +808,7 @@ public class MainActivity extends AppCompatActivity {
         }));
 
         // ── 折叠：外观（主题 ＋ 极夜）──
-        c.addView(foldSection(Words.CF_SEC_LOOK, nightActive() ? Words.CF_FOLD_NIGHT + (blackOn() ? Words.CF_FOLD_BLACK : "") : Words.CF_FOLD_LIGHT, new FoldBody() {
+        c.addView(foldSection(Words.CF_SEC_LOOK, nightActive() ? Words.CF_FOLD_NIGHT + (blackOn() ? Words.CF_FOLD_BLACK : "") : Words.CF_FOLD_LIGHT, Words.CF_FOLD_SUB_LOOK, new FoldBody() {
             public void build(final LinearLayout fb) {
                 fb.addView(themeChooser());
                 final boolean night = nightActive();
@@ -861,7 +822,7 @@ public class MainActivity extends AppCompatActivity {
         }));
 
         // ── 折叠：底部导航与动效（参数 ＋ 两根蒙版滑杆 ＋ 三根动效滑杆）──
-        c.addView(foldSection(Words.CF_FOLD_NAVFX, null, new FoldBody() {
+        c.addView(foldSection(Words.CF_FOLD_NAVFX, null, Words.CF_FOLD_SUB_NAVFX, new FoldBody() {
             public void build(final LinearLayout fb) {
                 fb.addView(quiet13(Words.CF_NAV_D));
                 fb.addView(navParamChooser());
@@ -909,7 +870,7 @@ public class MainActivity extends AppCompatActivity {
         }));
 
         // ── 折叠：应用图标 ──
-        c.addView(foldSection(Words.CF_SEC_ICON, null, new FoldBody() {
+        c.addView(foldSection(Words.CF_SEC_ICON, null, Words.CF_FOLD_SUB_ICON, new FoldBody() {
             public void build(final LinearLayout fb) {
                 fb.addView(quiet13(Words.CF_ICON_LEAD));
                 fb.addView(iconChooser());
@@ -920,7 +881,7 @@ public class MainActivity extends AppCompatActivity {
         // ── 折叠：更新（母标题右侧常显「上次检查 15:31」；展开有开关／立即检查／源／状态／清除记录）──
         {
             final TextView[] tagOut = new TextView[1];
-            c.addView(foldSection(Words.UPD_SEC, updTagText(), new FoldBody() {
+            c.addView(foldSection(Words.UPD_SEC, updTagText(), Words.CF_FOLD_SUB_UPD, new FoldBody() {
                 public void build(final LinearLayout fb) {
                     fb.addView(switchItem(Words.UPD_SW_T, Words.UPD_SW_D, UpdateCheck.on(MainActivity.this), true, new SwitchCB() {
                         public void onChanged(boolean v) {
@@ -941,94 +902,114 @@ public class MainActivity extends AppCompatActivity {
         c.addView(listItem(Words.CF_STOP_T, Words.CF_STOP_D, new Runnable() { public void run() { confirmStopAll(); } }));
         c.addView(quiet(Words.CF_STOP_NOTE));
 
-        ScrollView sv = new ScrollView(this);
+        ScrollView sv = svConf;
+        if (sv == null || sv.getParent() != pageConf) {
+            sv = new ScrollView(this);
+            pageConf.addView(sv, new LinearLayout.LayoutParams(-1, -1));
+        } else {
+            sv.removeAllViews();          // ★93.6：就地重建时复用同一个 ScrollView，滚动位置不会跳
+        }
         sv.addView(c);
-        pageConf.addView(sv, new LinearLayout.LayoutParams(-1, -1));
         svConf = sv;
     }
 
     // ═════════ 79 号单返工：配置页折叠块（一个 FoldSection，处处复用） ═════════
     // 口径（用户 2026-10-17 验收反馈）：母标题一整行可点、右侧箭头（收起 ∨／展开 ∧）、
-    //   高度动画 200ms 与箭头旋转同步；母标题 15sp 中等粗＋薰衣草紫，展开后的正文 13sp 常规；
+    //   高度动画 200ms 与箭头旋转同步；展开后的正文用小字说明；
     //   子项沿用「高级页那四个选项」的卡片样式（listItem／switchItem／confBtn），不另创一套；
     //   默认全收起；关键状态挂在母标题右侧，收起也看得见。
+    // ★93.5：母标题重做成「卡片行」——与高级页 listItem 同一套卡片（同 radius／stroke／背景／左右 padding），
+    //   粗标题 16sp BOLD（明显压过副标题）＋ 下一行 12sp 小字说明（单行、超长省略）＋ 右侧状态小字＋chevron。
     interface FoldBody { void build(LinearLayout body); }
 
     static final int FOLD_MS = 200;                 // 高度动画与箭头旋转同一个时长
     final java.util.HashMap<String, Boolean> foldOpen = new java.util.HashMap<>();   // 标题 → 是否展开（会话内记住）
 
-    /** 母标题的薰衣草紫：与统一对话框的强调色同一族（浅色深一点、深色/极夜亮一点） */
+    /** 母标题的薰衣草紫：与统一对话框的强调色同一族（配置页顶部那句反馈用它） */
     int foldTitleColor() { return DLG_ACCENT[dlgTheme()]; }
 
-    View foldSection(String title, String status, FoldBody body) { return foldSection(title, status, body, null); }
+    View foldSection(String title, String state, String subtitle, FoldBody body) { return foldSection(title, state, subtitle, body, null); }
 
-    View foldSection(final String title, String status, final FoldBody body, TextView[] tagOut) {
+    View foldSection(final String title, String state, String subtitle, final FoldBody body, TextView[] tagOut) {
         final boolean open = Boolean.TRUE.equals(foldOpen.get(title));
 
-        LinearLayout wrap = column();
-        LinearLayout.LayoutParams wlp = new LinearLayout.LayoutParams(-1, -2);
-        wlp.bottomMargin = dp(4);
-        wrap.setLayoutParams(wlp);
+        MaterialCardView cardV = card(false);
+        LinearLayout cardCol = column();
+        cardV.addView(cardCol);
 
         final LinearLayout header = new LinearLayout(this);
         header.setOrientation(LinearLayout.HORIZONTAL);
         header.setGravity(Gravity.CENTER_VERTICAL);
-        header.setPadding(dp(6), dp(14), dp(6), dp(12));
+        header.setPadding(dp(16), dp(11), dp(12), dp(11));
         header.setClickable(true);
         header.setFocusable(true);
         header.setContentDescription("折叠：" + title);
         ripple(header);
 
-        TextView tvTitle = txt(title, 15, foldTitleColor());
-        tvTitle.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
+        LinearLayout titleCol = column();
+        titleCol.setLayoutParams(new LinearLayout.LayoutParams(0, -2, 1f));
+        TextView tvTitle = txt(title, 16, col(com.google.android.material.R.attr.colorOnSurface, 0xFFECF0F6));
+        tvTitle.setTypeface(null, Typeface.BOLD);
         tvTitle.setSingleLine(true);
-        header.addView(tvTitle);
+        titleCol.addView(tvTitle);
+        if (subtitle != null && subtitle.length() > 0) {
+            TextView tvSub = txt(subtitle, 12, colVariant());
+            tvSub.setSingleLine(true);
+            tvSub.setEllipsize(android.text.TextUtils.TruncateAt.END);
+            tvSub.setPadding(0, dp(3), 0, 0);
+            titleCol.addView(tvSub);
+        }
+        header.addView(titleCol);
 
         TextView tvTag = null;
-        if (status != null && status.length() > 0) {
-            tvTag = txt(status, 12, colVariant());
+        if (state != null && state.length() > 0) {
+            tvTag = txt(state, 12, colVariant());
             tvTag.setSingleLine(true);
-            tvTag.setEllipsize(android.text.TextUtils.TruncateAt.END);
-            LinearLayout.LayoutParams tlp = new LinearLayout.LayoutParams(0, -2, 1f);
-            tlp.leftMargin = dp(10);
+            LinearLayout.LayoutParams tlp = new LinearLayout.LayoutParams(-2, -2);
+            tlp.leftMargin = dp(8);
             header.addView(tvTag, tlp);
-        } else {
-            View sp = new View(this);
-            header.addView(sp, new LinearLayout.LayoutParams(0, 1, 1f));
         }
         if (tagOut != null && tagOut.length > 0) tagOut[0] = tvTag;
 
         final ImageView arrow = new ImageView(this);
         arrow.setImageResource(R.drawable.ic_chevron);
-        arrow.setImageTintList(ColorStateList.valueOf(foldTitleColor()));
+        arrow.setImageTintList(ColorStateList.valueOf(colVariant()));
         LinearLayout.LayoutParams alp = new LinearLayout.LayoutParams(dp(18), dp(18));
-        alp.leftMargin = dp(6);
+        alp.leftMargin = dp(4);
         arrow.setLayoutParams(alp);
         arrow.setRotation(open ? 270f : 90f);       // 收起＝∨（朝下）；展开＝∧（朝上）
         header.addView(arrow);
 
-        wrap.addView(header);
+        cardCol.addView(header);
 
         final LinearLayout box = column();
+        box.setPadding(dp(14), 0, dp(14), dp(6));
         body.build(box);
         box.setVisibility(open ? View.VISIBLE : View.GONE);
-        wrap.addView(box);
+        cardCol.addView(box);
 
-        header.setOnClickListener(new View.OnClickListener() {
+        // ★93.5：整行任意处都点得动——行里每个子控件都挂同一个动作（标题／副标题／状态小字／箭头／空白）
+        View.OnClickListener tog = new View.OnClickListener() {
             public void onClick(View v) { toggleFold(header, box, arrow, title); }
-        });
-        tvTitle.setOnClickListener(new View.OnClickListener() {      // 标题本身也点得动（AI 的 tap_text 直点文字）
-            public void onClick(View v) { toggleFold(header, box, arrow, title); }
-        });
-        return wrap;
+        };
+        header.setOnClickListener(tog);
+        for (int i = 0; i < header.getChildCount(); i++) {
+            View ch = header.getChildAt(i);
+            ch.setClickable(true);
+            ch.setOnClickListener(tog);
+        }
+        LinearLayout.LayoutParams clp = new LinearLayout.LayoutParams(-1, -2);
+        clp.bottomMargin = dp(8);
+        cardV.setLayoutParams(clp);
+        return cardV;
     }
 
     /** 展开／收起：高度 200ms 动画 ＋ 箭头 200ms 旋转，同一时长同步走完。 */
     void toggleFold(final View header, final LinearLayout box, final ImageView arrow, String title) {
         final boolean willOpen = box.getVisibility() != View.VISIBLE;
         foldOpen.put(title, Boolean.valueOf(willOpen));
-        int w = header.getWidth();
-        if (w <= 0) w = getResources().getDisplayMetrics().widthPixels - dp(36);
+        int w = header.getWidth() - dp(28);          // ★93.5：卡片左右各 14dp 内边距
+        if (w <= 0) w = getResources().getDisplayMetrics().widthPixels - dp(36) - dp(28);
         box.setVisibility(View.VISIBLE);
         int from = willOpen ? 0 : box.getHeight();
         if (!willOpen && from <= 0) {
@@ -1087,6 +1068,21 @@ public class MainActivity extends AppCompatActivity {
         tvUpdSeen = txt("", 13, colVariant());
         tvUpdSeen.setPadding(0, dp(4), 0, 0);
         in.addView(tvUpdSeen);
+        tvUpdVer = txt("", 13, col(com.google.android.material.R.attr.colorOnSurface, 0xFFECF0F6));
+        tvUpdVer.setPadding(0, dp(8), 0, 0);
+        in.addView(tvUpdVer);
+        tvUpdAddr = txt("", 12, colVariant());
+        tvUpdAddr.setSingleLine(true);
+        tvUpdAddr.setEllipsize(android.text.TextUtils.TruncateAt.MIDDLE);
+        tvUpdAddr.setPadding(0, dp(4), 0, 0);
+        in.addView(tvUpdAddr);
+        btnUpdCopy = txt(Words.UPD_COPY_T, 13, foldTitleColor());
+        btnUpdCopy.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
+        btnUpdCopy.setPadding(0, dp(10), dp(12), dp(6));
+        btnUpdCopy.setClickable(true);
+        btnUpdCopy.setFocusable(true);
+        btnUpdCopy.setOnClickListener(new View.OnClickListener() { public void onClick(View v) { copyUpdUrl(); } });
+        in.addView(btnUpdCopy);
         TextView clr = txt(Words.UPD_CLR_T, 13, foldTitleColor());
         clr.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
         clr.setPadding(0, dp(12), 0, dp(2));
@@ -1359,36 +1355,193 @@ public class MainActivity extends AppCompatActivity {
         return Words.CF_MASCOT_POS_D + "\n当前：" + Words.CF_MASCOT_POS_NAMES[Mascot.posMode(this)];
     }
 
-    /** ★87 极简模式：开着时常规那几项全灰不可选（第 0 项＝显示小形象、第 1 项＝换图、第 2 项＝极简开关，这两个永远可点）。 */
-    void applyMinimalGray(LinearLayout fb, boolean on) {
-        if (fb == null) return;
-        try {
-            for (int i = 3; i < fb.getChildCount(); i++) {
-                View v = fb.getChildAt(i);
-                v.setAlpha(on ? 0.38f : 1f);
-                if (v == minimalKeepRow) { v.setAlpha(1f); setEnabledDeep(v, true); continue; }   // ★88.6：让位名单始终可选可用
-                setEnabledDeep(v, !on);
-            }
-            Mascot.logLine(this, "mascot: 极简灰=" + (on ? "开（常规项不可选）" : "关（恢复可选）") + " 项数=" + Math.max(0, fb.getChildCount() - 3));
-        } catch (Throwable t) { }
-    }
+    // ★93.5：极简模式不再靠「置灰」——极简开着＝换一整套设置项（buildConf 里直接不建形象那几行），
+    //   所以 87 的 applyMinimalGray 与 88.8 的 morphManual 随 UI 一起退场（参数与能力一个没删）。
 
-    /** ★88：缓动那一行的说明（含当前）。 */
-    String easeDescText() {
-        int m = Morph.easeMode(this);
-        String extra = (m == 4) ? "（" + Morph.bezStr(this) + "）" : "";
-        return "点一行循环切换：线性／缓出／回弹／弹性／自定义贝塞尔\n当前：" + Morph.EASE_NAMES[m] + extra;
-    }
+    // ───────── ★93.5 动效：手感 3 档／曲线 4 档，都用 MaterialButtonToggleGroup（与外观里选主题同一套控件） ─────────
+    static final int FEEL_BTN_ID = 3000;
+    static final int CURVE_BTN_ID = 4000;
+    /** 曲线按钮的显示顺序（id＝真实档位号）：匀速／先快后慢／先慢后快／冲过再回 */
+    static final int[] CURVE_ORDER = {0, 1, 3, 2};
 
-    /** ★88.8：手感那行标题下面的一行小字（「当前：标准」／「当前：自定义」）。 */
+    MaterialButtonToggleGroup feelGroup;
+    TextView tvDurVal; android.widget.SeekBar sbDur;   // ★93.6 时长滑杆的就地刷新（换手感不再重建整页）
+    TextView tvFeelDesc, tvCurveDesc;
+
+    /** 手感那行小字：说体感，不写"点一下换一套"；自定义时明说"再选会覆盖"。 */
     String feelDescText() {
-        return "点一下换一套：轻快／标准／柔和。\n当前：" + Morph.presetName(this);
+        int p = Morph.preset(this);
+        if (p < 0) return "已手动调整：选任一档会覆盖现在的时长。";
+        String[] feel = {"起步利落、收得干脆，像抽一下。", "先冲过头再回来，有弹性。", "慢慢起、稳稳落，最软。"};
+        return (p >= 0 && p < feel.length) ? feel[p] : feel[1];
     }
 
-    /** ★88.8：手动动了任何参数 ⇒ 手感变「自定义」，那行小字跟着改（不让"当前：标准"说谎）。 */
-    void morphManual(TextView feel) {
-        Morph.markCustom(this);
-        if (feel != null) feel.setText(feelDescText());
+    /** 曲线那行小字：这一档走起来是什么样。 */
+    String curveDescText() {
+        String[] c = {"速度一直不变，从头到尾一个劲。", "一上来就快，尾巴慢慢收。", "冲过头再弹回来，有点弹手。", "起步慢，越走越快。"};
+        int e = Morph.easeMode(this);
+        return (e >= 0 && e < c.length) ? c[e] : "自定义曲线（界面上不显示）。";
+    }
+
+    /** 手感三档：单选必选，等分宽度，outlined。当前是「自定义」就不高亮任何一档（不静默归到"标准"）。 */
+    View feelChooser() {
+        LinearLayout col = column();
+        TextView tv = txt("手感", 15, col(com.google.android.material.R.attr.colorOnSurface, 0xFFECF0F6));
+        tv.setTypeface(null, Typeface.BOLD);
+        tv.setPadding(dp(4), dp(16), dp(4), dp(6));
+        col.addView(tv);
+
+        final MaterialButtonToggleGroup g = new MaterialButtonToggleGroup(this);
+        g.setSingleSelection(true);
+        g.setSelectionRequired(true);
+        g.setLayoutParams(new LinearLayout.LayoutParams(-1, -2));
+        for (int i = 0; i < Morph.PRESET_NAMES.length; i++) {
+            MaterialButton b = new MaterialButton(this, null, com.google.android.material.R.attr.materialButtonOutlinedStyle);
+            b.setText(Morph.PRESET_NAMES[i]);
+            b.setId(FEEL_BTN_ID + i);
+            b.setLayoutParams(new LinearLayout.LayoutParams(0, -2, 1f));
+            g.addView(b);
+        }
+        g.addOnButtonCheckedListener(new MaterialButtonToggleGroup.OnButtonCheckedListener() {
+            public void onButtonChecked(MaterialButtonToggleGroup grp, int id, boolean isChecked) {
+                if (!isChecked) return;
+                if (suppressCheck) return;                       // 程序性恢复选中，别当用户点击
+                int i = id - FEEL_BTN_ID;
+                if (i < 0 || i >= Morph.PRESET_NAMES.length) return;
+                if (Morph.preset(MainActivity.this) == i) return; // 值未变 → 不处理
+                Morph.applyPreset(MainActivity.this, i);
+                refreshDurRow();                       // ★93.6：时长跟着手感走，但只改这一行，不重建整页
+                morphChanged(true, "手感→" + Morph.PRESET_NAMES[i], "手感：" + Morph.PRESET_NAMES[i] + " · " + Morph.dur(MainActivity.this) + "ms");
+            }
+        });
+        feelGroup = g;
+        suppressCheck = true;
+        int p = Morph.preset(this);
+        if (p >= 0 && p < Morph.PRESET_NAMES.length) { try { g.check(FEEL_BTN_ID + p); } catch (Throwable t) { } }
+        g.post(new Runnable() { public void run() { suppressCheck = false; } });
+        col.addView(g);
+
+        tvFeelDesc = txt(feelDescText(), 12, colVariant());
+        tvFeelDesc.setPadding(dp(4), dp(6), dp(4), dp(4));
+        col.addView(tvFeelDesc);
+        return col;
+    }
+
+    /** 曲线四档：匀速／先快后慢／先慢后快／冲过再回（四个均分屏宽）。 */
+    View curveChooser() {
+        LinearLayout col = column();
+        TextView tv = txt("缓动曲线", 15, col(com.google.android.material.R.attr.colorOnSurface, 0xFFECF0F6));
+        tv.setTypeface(null, Typeface.BOLD);
+        tv.setPadding(dp(4), dp(16), dp(4), dp(6));
+        col.addView(tv);
+
+        final MaterialButtonToggleGroup g = new MaterialButtonToggleGroup(this);
+        g.setSingleSelection(true);
+        g.setSelectionRequired(true);
+        g.setLayoutParams(new LinearLayout.LayoutParams(-1, -2));
+        String[] labels = {"匀速", "先快", "先慢", "过冲"};
+        for (int k = 0; k < CURVE_ORDER.length; k++) {
+            MaterialButton b = new MaterialButton(this, null, com.google.android.material.R.attr.materialButtonOutlinedStyle);
+            b.setText(labels[k]);
+            b.setId(CURVE_BTN_ID + CURVE_ORDER[k]);
+            b.setLayoutParams(new LinearLayout.LayoutParams(0, -2, 1f));
+            g.addView(b);
+        }
+        g.addOnButtonCheckedListener(new MaterialButtonToggleGroup.OnButtonCheckedListener() {
+            public void onButtonChecked(MaterialButtonToggleGroup grp, int id, boolean isChecked) {
+                if (!isChecked) return;
+                if (suppressCheck) return;
+                int e = id - CURVE_BTN_ID;
+                if (e < 0 || e > 3) return;
+                if (Morph.easeMode(MainActivity.this) == e) return;
+                Morph.si(MainActivity.this, Morph.K_EASE, e);
+                if (tvCurveDesc != null) tvCurveDesc.setText(curveDescText());
+                morphChanged(false, "曲线→" + Morph.EASE_NAMES[e], "曲线：" + Morph.EASE_NAMES[e]);
+            }
+        });
+        suppressCheck = true;
+        int e = Morph.easeMode(this);
+        if (e >= 0 && e <= 3) { try { g.check(CURVE_BTN_ID + e); } catch (Throwable t) { } }
+        g.post(new Runnable() { public void run() { suppressCheck = false; } });
+        col.addView(g);
+
+        tvCurveDesc = txt(curveDescText(), 12, colVariant());
+        tvCurveDesc.setPadding(dp(4), dp(6), dp(4), dp(4));
+        col.addView(tvCurveDesc);
+        return col;
+    }
+
+    /** 时长滑杆改了 ⇒ 手感成「自定义」：那排单选不许再显示着"标准"说谎，小字也跟着改。 */
+
+    /** ★93.6：动效总时长（自己带引用，换手感时就地改这一行，不重建整页 ⇒ 不跳屏）。 */
+    View durSlider() {
+        LinearLayout col = column();
+        tvDurVal = txt("", 15, col(com.google.android.material.R.attr.colorOnSurface, 0xFFECF0F6));
+        tvDurVal.setTypeface(null, Typeface.BOLD);
+        tvDurVal.setPadding(dp(4), dp(16), dp(4), dp(2));
+        col.addView(tvDurVal);
+        SeekBar sb = new SeekBar(this);
+        sbDur = sb;
+        sb.setMax((900 - 150) / 10);
+        sb.setProgress((Morph.dur(this) - 150) / 10);
+        int accent = col(com.google.android.material.R.attr.colorPrimary, 0xFF6C8CFF);
+        sb.setProgressTintList(ColorStateList.valueOf(accent));
+        sb.setThumbTintList(ColorStateList.valueOf(accent));
+        sb.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            public void onProgressChanged(SeekBar s, int p, boolean fromUser) {
+                int v = 150 + p * 10;
+                Morph.si(MainActivity.this, Morph.K_DUR, v);
+                if (tvDurVal != null) tvDurVal.setText("动效总时长 · " + v + " ms");
+                if (fromUser) {
+                    Morph.markCustom(MainActivity.this);   // 时长是手感的一部分 ⇒ 手动改过就是「自定义」
+                    refreshFeelRow();
+                }
+                Mascot.morphReload();
+            }
+            public void onStartTrackingTouch(SeekBar s) { }
+            public void onStopTrackingTouch(SeekBar s) { }
+        });
+        col.addView(sb);
+        col.addView(quiet("白条长成框／框缩回白条各用这么久。换手感时会跟着变。"));
+        refreshDurRow();
+        return col;
+    }
+
+    /** 换手感后把时长这一行改成新值（不重建页面）。 */
+    void refreshDurRow() {
+        if (tvDurVal != null) tvDurVal.setText("动效总时长 · " + Morph.dur(this) + " ms");
+        if (sbDur != null) {
+            int want = (Morph.dur(this) - 150) / 10;
+            if (sbDur.getProgress() != want) sbDur.setProgress(want);
+        }
+    }
+    void refreshFeelRow() {
+        if (tvFeelDesc != null) tvFeelDesc.setText(feelDescText());
+        if (feelGroup == null) return;
+        suppressCheck = true;
+        try {
+            int p = Morph.preset(this);
+            if (p >= 0 && p < Morph.PRESET_NAMES.length) feelGroup.check(FEEL_BTN_ID + p);
+            else feelGroup.clearChecked();                        // 自定义：一档都不高亮（不是静默归到标准）
+        } catch (Throwable t) { }
+        final MaterialButtonToggleGroup g = feelGroup;
+        g.post(new Runnable() { public void run() { suppressCheck = false; } });
+    }
+
+    /** ★93.5：换手感／曲线之后——写日志、刷新小字；极简开着就当场播一遍（不用再滚到底点「播一遍」）。 */
+    void morphChanged(boolean rebuild, String what, String flash) {
+        try {
+            Mascot.logLine(this, "conf: " + what + "（时长=" + Morph.dur(this) + "ms 曲线=" + Morph.EASE_NAMES[Morph.easeMode(this)]
+                    + " 手感=" + Morph.presetName(this) + "）");
+        } catch (Throwable t) { }
+        Mascot.morphReload();
+        if (rebuild) rebuildConfUi(); else refreshFeelRow();
+        if (Mascot.minimal(this)) {
+            confFlash(flash);
+            if (cConf != null) cConf.postDelayed(new Runnable() { public void run() { Mascot.morphPlay(); } }, rebuild ? 420 : 260);
+        } else {
+            confFlash(flash + " · 白条收放要在极简模式里看");
+        }
     }
 
     /** ★88：改自定义贝塞尔的某一段（0~3），并自动切到「自定义贝塞尔」。 */
@@ -1510,11 +1663,17 @@ public class MainActivity extends AppCompatActivity {
         try {
             if (pageConf == null) return;
             final int y = (svConf != null) ? svConf.getScrollY() : 0;
-            pageConf.removeAllViews();
-            svConf = null;
-            buildConf();
-            if (svConf != null) {
-                final ScrollView s = svConf;
+            buildConf();                        // ★93.6：复用同一个 ScrollView，只换里头的页
+            final ScrollView s = svConf;
+            if (s != null) {
+                // 先把新页同步量一遍、再滚回去：这一帧画出来就已经在原位，看不到"跳顶又弹回"
+                int w = s.getWidth(), h = s.getHeight();
+                if (w > 0 && h > 0) {
+                    s.measure(View.MeasureSpec.makeMeasureSpec(w, View.MeasureSpec.EXACTLY),
+                            View.MeasureSpec.makeMeasureSpec(h, View.MeasureSpec.EXACTLY));
+                    s.layout(0, 0, w, h);
+                }
+                s.scrollTo(0, y);
                 s.post(new Runnable() { public void run() { try { s.scrollTo(0, y); } catch (Throwable t) { } } });
             }
             Mascot.logLine(this, "conf: 配置页已就地重建（滚动y=" + y + " 手感=" + Morph.presetName(this)
@@ -2467,7 +2626,14 @@ public class MainActivity extends AppCompatActivity {
         if (updDownloading) { UpdateCheck.log(this, "正在下载更新 ⇒ 这次不查也不弹"); return; }
         UpdateCheck.checkOnOpen(this, new UpdateCheck.CB() {
             public void onResult(final UpdateCheck.Info inf, boolean skipped) {
-                if (inf == null || inf.err.length() > 0 || !inf.newer) return;   // 无新版／失败：什么都不说
+                if (inf == null || inf.err.length() > 0) return;
+                if (!inf.newer) {   // 96 号单 D：没新版 ⇒ 地址行清空，不留旧地址
+                    if (!updDownloading) {
+                        UpdateCheck.clearInfo(MainActivity.this);
+                        runOnUiThread(new Runnable() { public void run() { refreshUpdState(); } });
+                    }
+                    return;
+                }
                 runOnUiThread(new Runnable() { public void run() { try { showUpdate(inf, false); } catch (Throwable t) { } } });
             }
         });
@@ -2476,13 +2642,20 @@ public class MainActivity extends AppCompatActivity {
     /** 配置页「立即检查」：用户明确要查，跳过节流；结果当场说一句。 */
     void checkUpdateManual() {
         if (!UpdateCheck.on(this)) { toast(Words.UPD_MSG_OFF); return; }
+        if (updDownloading) { toast(Words.UPD_MSG_DL_WAIT); return; }   // 96 号单 C：下载中点检查，不许静默
         toast(Words.UPD_STATE_CHECKING);
         UpdateCheck.checkNow(this, new UpdateCheck.CB() {
             public void onResult(final UpdateCheck.Info inf, boolean skipped) {
                 runOnUiThread(new Runnable() { public void run() {
+                    if (inf != null && inf.err.length() > 0) { refreshUpdState(); toast(Words.UPD_STATE_FAIL); return; }
+                    if (inf != null && inf.newer) {
+                        UpdateCheck.saveInfo(MainActivity.this, inf.tag, inf.url);   // 96 号单 D：地址留着，成功失败都能复制
+                        refreshUpdState();
+                        showUpdate(inf, true);
+                        return;
+                    }
+                    UpdateCheck.clearInfo(MainActivity.this);   // 没新版 ⇒ 清掉上一次的旧地址，别误导
                     refreshUpdState();
-                    if (inf != null && inf.err.length() > 0) { toast(Words.UPD_STATE_FAIL); return; }
-                    if (inf != null && inf.newer) { showUpdate(inf, true); return; }
                     toast(String.format(java.util.Locale.ROOT, Words.UPD_MSG_UP_TO_DATE_FMT, UpdateCheck.localVer(MainActivity.this)));
                 } });
             }
@@ -2495,6 +2668,7 @@ public class MainActivity extends AppCompatActivity {
      */
     void showUpdate(final UpdateCheck.Info inf, boolean force) {
         updInfo = inf;
+        UpdateCheck.saveInfo(this, inf.tag, inf.url);   // 96 号单 D：查到过就留地址（成功失败都能复制）
         updApkPath = null;
         String v = inf.tag;
         if (v.length() > 0 && (v.charAt(0) == 'v' || v.charAt(0) == 'V')) v = v.substring(1);
@@ -2513,7 +2687,11 @@ public class MainActivity extends AppCompatActivity {
             cardUpd.setVisibility(View.VISIBLE);
         }
         refreshUpdState();
-        if (updDownloading) { UpdateCheck.log(this, "正在下载更新 ⇒ 不弹窗"); return; }
+        if (updDownloading) {
+            UpdateCheck.log(this, "正在下载更新 ⇒ 不弹窗");
+            if (force) toast(Words.UPD_MSG_DL_WAIT);   // 96 号单 C：用户主动查的，不许静默
+            return;
+        }
         if (UpdateCheck.seenAlready(this, inf.tag)) { UpdateCheck.log(this, "这个版本点过「不再提示」⇒ 不弹"); return; }
         if (updShownSession && !force) { UpdateCheck.log(this, "本会话已经弹过 ⇒ 不弹"); return; }
         showUpdateDialog(inf, v);
@@ -2595,8 +2773,10 @@ public class MainActivity extends AppCompatActivity {
         } });
         row.addView(no);
 
-        final TextView yes = dlgBtn(Words.UPD_DLG_NOW, t, true);
+        final boolean subApp = subPkg();   // 96 号单 E：副包只给地址
+        final TextView yes = dlgBtn(subApp ? Words.UPD_COPY_T : Words.UPD_DLG_NOW, t, true);
         yes.setOnClickListener(new View.OnClickListener() { public void onClick(View x) {
+            if (subApp) { copyUpdUrl(); try { d.dismiss(); } catch (Throwable e) { } return; }
             if (inf.url.length() == 0) { toast(Words.UPD_STATE_FAIL); return; }
             if (!UpdateCheck.canInstall(MainActivity.this)) { toast(Words.UPD_NEED_PERM); UpdateCheck.openInstallSetting(MainActivity.this); return; }
             startDownloadInDialog(d, inf, pb, progTv, yes);
@@ -2645,6 +2825,11 @@ public class MainActivity extends AppCompatActivity {
                             + "\n" + etaLine(eta));
                 } });
             }
+            public void onNote(final String msg) {   // 96 号单 A：换中转时说一句
+                runOnUiThread(new Runnable() { public void run() {
+                    if (progTv != null) { progTv.setVisibility(View.VISIBLE); progTv.setText(msg); }
+                } });
+            }
             public void onDone(final File f, final boolean ok, final String msg) {
                 runOnUiThread(new Runnable() { public void run() {
                     updDownloading = false;
@@ -2667,6 +2852,7 @@ public class MainActivity extends AppCompatActivity {
 
     /** 点首页那一行：没下载过就下（带进度），下好了拉安装器。 */
     void downloadUpdate() {
+        if (subPkg()) { copyUpdUrl(); return; }   // 96 号单 E：副包不给装，只给地址
         if (updDownloading) { toast(Words.UPD_DL_START); return; }
         if (updApkPath != null) {
             String err = UpdateCheck.install(this, new File(updApkPath));
@@ -2687,6 +2873,11 @@ public class MainActivity extends AppCompatActivity {
                     pbUpd.setProgress(pct);
                     if (tvUpdDesc != null) tvUpdDesc.setText(String.format(java.util.Locale.ROOT, Words.UPD_DL_PCT_FMT, pct)
                             + "，" + speedText(bps) + "，" + etaLine(eta));
+                } });
+            }
+            public void onNote(final String msg) {   // 96 号单 A：换中转时说一句
+                runOnUiThread(new Runnable() { public void run() {
+                    if (tvUpdDesc != null) tvUpdDesc.setText(msg);
                 } });
             }
             public void onDone(final File f, final boolean ok, final String msg) {
@@ -2754,7 +2945,50 @@ public class MainActivity extends AppCompatActivity {
             if (tvUpdState != null) tvUpdState.setText(String.format(java.util.Locale.ROOT, Words.UPD_LAST_FMT, updWhenText()));
             if (tvUpdSeen != null) tvUpdSeen.setText(String.format(java.util.Locale.ROOT, Words.UPD_SEEN_FMT, updSeenText()));
             if (tvUpdFoldTag != null) tvUpdFoldTag.setText(updTagText());
+            String ug = UpdateCheck.infoTag(this), uu = UpdateCheck.infoUrl(this);
+            boolean hasIp = ug != null && ug.length() > 0 && uu != null && uu.length() > 0;
+            String lv = UpdateCheck.localVer(this);
+            if (tvUpdVer != null) tvUpdVer.setText(hasIp
+                    ? String.format(java.util.Locale.ROOT, Words.UPD_ADDR_VER_FMT, lv, stripV(ug))
+                    : String.format(java.util.Locale.ROOT, Words.UPD_ADDR_NONE_FMT, lv));
+            if (tvUpdAddr != null) {
+                tvUpdAddr.setText(hasIp ? uu : "");
+                tvUpdAddr.setVisibility(hasIp ? View.VISIBLE : View.GONE);
+            }
+            if (btnUpdCopy != null) btnUpdCopy.setVisibility(hasIp ? View.VISIBLE : View.GONE);
         } catch (Throwable t) { }
+    }
+
+    /** 线上版本号去掉前缀 v（显示用）。 */
+    static String stripV(String v) {
+        if (v == null) return "";
+        String s = v.trim();
+        if (s.length() > 0 && (s.charAt(0) == 'v' || s.charAt(0) == 'V')) s = s.substring(1);
+        return s;
+    }
+
+    /** 96 号单 D：复制下载地址 —— 写完读回剪贴板，读回一致才算成。 */
+    void copyUpdUrl() {
+        String u = UpdateCheck.infoUrl(this);
+        if (u == null || u.length() == 0) { toast(Words.UPD_COPY_NONE); return; }
+        try {
+            ClipboardManager cm = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+            cm.setPrimaryClip(ClipData.newPlainText("reticle-update-url", u));
+            String back = "";
+            try {
+                ClipData cd = cm.getPrimaryClip();
+                if (cd != null && cd.getItemCount() > 0) back = String.valueOf(cd.getItemAt(0).coerceToText(this));
+            } catch (Throwable t) { }
+            if (back != null && back.equals(u)) { toast(Words.UPD_COPY_OK); }
+            else { toast(Words.UPD_COPY_FAIL); UpdateCheck.log(this, "复制地址后读回不一致"); }
+        } catch (Throwable t) {
+            toast(Words.UPD_COPY_FAIL);
+        }
+    }
+
+    /** 96 号单 E：副包 app.reticle.b 点更新会下主包（包名冲突）⇒ 只给地址，不在这里装。 */
+    boolean subPkg() {
+        try { return getPackageName().endsWith(".b"); } catch (Throwable t) { return false; }
     }
 
     /** 改更新源（镜像／内网／验收用假源）；留空＝官方。只换检查地址，不换下载地址。 */
