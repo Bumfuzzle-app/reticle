@@ -22,6 +22,7 @@ public class Notifier {
     public static final String CH_STAT = "yitong_stat";
     public static final String CH_TEST = "yitong_test";
     public static final String CH_LIVE = "yitong_live";
+    public static final String CH_LIVE2 = "yitong_live2";   // ★102：实况提升专用（LOW 档会被系统剥掉 PROMOTED_ONGOING）
     public static final int DEF_ID = 9;   // 86：notify 默认 id ⇒ 并进大通知（EYE_ID）
 
     /** ★87（86 遗留）：主通知显式成组——别让系统把「主通知＋工具通知」自动折成「Reticle 2」。 */
@@ -46,6 +47,14 @@ public class Notifier {
         cl.setDescription(Words.NT_CH_LIVE_D);
         cl.setShowBadge(false);
         m.createNotificationChannel(cl);
+        // ★102：实况提升专用档——DEFAULT 但全程静音（LOW 档会被系统剥掉 PROMOTED_ONGOING）
+        NotificationChannel cl2 = new NotificationChannel(CH_LIVE2, Words.NT_CH_LIVE, NotificationManager.IMPORTANCE_DEFAULT);
+        cl2.setDescription(Words.NT_CH_LIVE_D);
+        cl2.setShowBadge(false);
+        cl2.setSound(null, null);
+        cl2.enableVibration(false);
+        cl2.enableLights(false);
+        m.createNotificationChannel(cl2);
     }
 
     private static Notification.Builder base(Context c, String ch) {
@@ -99,6 +108,7 @@ public class Notifier {
         try {
         if (id == EYE_ID) { sReport = ""; sNote = ""; refresh(c, true); nlog(c, "cancel slot #" + id); return "ok"; }   // 86：clear 只清槽，不动整条
             nm(c).cancel(id);
+            sLiveIds.remove(Integer.valueOf(id));
             nlog(c, "cancel id=" + id);
             return "ok";
         } catch (Throwable t) { return "err: " + t; }
@@ -220,13 +230,19 @@ public class Notifier {
     }
 
     // ==== 18 号：原生实况型通知试验（ProgressStyle＋requestPromoted；反射实现，编译期不依赖 API36）====
+    /** ★120：已发过实况的 id（只第一次发时点岛展开，避免更新时反复点）。 */
+    static final java.util.HashSet<Integer> sLiveIds = new java.util.HashSet<Integer>();
     public static String promoted(Context c, int id, String title, String content, int progress) {
+        // ★120·岛宽：胶囊文本用短词（vivo 岛展开后左右槽位各固定 208px，总宽下限 528px）
+        String capT = Words.ISLAND_CAP;
+        boolean chipIcon = true;
+        String styMode = "";
         try {
             channels(c);
-            Notification.Builder b = base(c, CH_LIVE);
-            b.setGroup("app.reticle.n" + id);   // ★87：显式成组，不留"自动摘要"
-            b.setContentTitle(safe(title, Words.NT_DEF_TITLE));
-            b.setContentText(safe(content, ""));
+            Notification.Builder b = base(c, CH_LIVE2);
+            b.setDefaults(0);
+            b.setContentTitle(safe(title, Words.NT_DEF_TITLE));   // ★120：卡片标题用长文案；岛胶囊吃 shortCriticalText（短）
+            b.setContentText(safe(content, safe(title, "")));
             b.setContentIntent(openApp(c));
             b.setOngoing(true);
             b.setOnlyAlertOnce(true);
@@ -235,18 +251,36 @@ public class Notifier {
             try { Notification.Builder.class.getMethod("setRequestPromotedOngoing", boolean.class).invoke(b, true); }
             catch (NoSuchMethodException ns) { nlog(c, "promoted: setRequestPromotedOngoing 不存在，降级 extra"); }
             catch (Throwable t) { nlog(c, "promoted: setRequestPromotedOngoing err " + t); }
-            try { Notification.Builder.class.getMethod("setShortCriticalText", CharSequence.class).invoke(b, "Reticle"); }
+            try { Notification.Builder.class.getMethod("setShortCriticalText", CharSequence.class).invoke(b, capT); }
             catch (Throwable t) { }
             try {
+                if ("big".equals(styMode)) {
+                    Notification.BigTextStyle bs2 = new Notification.BigTextStyle();
+                    if (content != null) bs2.bigText(content);
+                    Notification.Builder.class.getMethod("setStyle", Notification.Style.class).invoke(b, bs2);
+                } else if (!"std".equals(styMode)) {
                 Class<?> psC = Class.forName("android.app.Notification$ProgressStyle");
                 Object ps = psC.getDeclaredConstructor().newInstance();
                 psC.getMethod("setProgress", int.class).invoke(ps, progress);
+                try { psC.getMethod("setChipIconVisible", boolean.class).invoke(ps, chipIcon); } catch (Throwable t2) { }
+                try { psC.getMethod("setShortCriticalText", CharSequence.class).invoke(ps, capT); } catch (Throwable t2) { }
                 Class<?> stC = Class.forName("android.app.Notification$Style");
                 Notification.Builder.class.getMethod("setStyle", stC).invoke(b, ps);
+                }
             } catch (Throwable t) { nlog(c, "promoted: ProgressStyle err " + t); }
             Notification n = b.build();
-            try { if (n.extras != null && !n.extras.containsKey("android.requestPromotedOngoing")) n.extras.putBoolean("android.requestPromotedOngoing", true); } catch (Throwable t) { }
+            try { if (n.extras != null) {
+                if (!n.extras.containsKey("android.requestPromotedOngoing")) n.extras.putBoolean("android.requestPromotedOngoing", true);
+                n.extras.putCharSequence("android.shortCriticalText", capT);   // ★120：vivo 岛胶囊就吃这个（放长标题会把岛撑到 776px）
+                if (!n.extras.containsKey("android.selfDisplayName")) n.extras.putCharSequence("android.selfDisplayName", capT);
+                n.extras.putCharSequence("android.title.capsule", capT);
+            } } catch (Throwable t) { }
+            n.flags |= 0x40000;   // ★102：FLAG_PROMOTED_ONGOING 直设（API35 编译环境下反射拿不到）
+            { int pf = 0; try { pf = Notification.class.getField("FLAG_PROMOTED_ONGOING").getInt(null); } catch (Throwable t) { }
+              nlog(c, "promoted flags=0x" + Integer.toHexString(n.flags) + " pf=0x" + Integer.toHexString(pf) + " hit=" + ((n.flags & pf) != 0)); }
             nm(c).notify(id, n);
+            // ���：发完立刻点一下状态栏的岛，让它展开成卡片（vivo 没公开 API，只能靠无障碍手势）
+            if (sLiveIds.add(Integer.valueOf(id))) { try { VeriService.pokeIsland(c, id, 700); } catch (Throwable t) { } }
             nlog(c, "promoted ok id=" + id + " progress=" + progress);
             return "ok";
         } catch (Throwable t) { nlog(c, "promoted err " + t); return "err: " + t; }

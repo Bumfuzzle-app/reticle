@@ -130,7 +130,25 @@ public class BuildRunner {
             if (!BuildEnv.ready(c)) return "环境没就绪：\n" + BuildEnv.missing(c) + "→ 先在应用里点『打包 App · 一键准备环境』（或 build action=env）";
             if (sb == null || !new File(sb, "AndroidManifest.xml").exists())
                 return "没找到工程：要一个含 AndroidManifest.xml 的目录（现在是 " + (sb == null ? "—" : sb.getAbsolutePath()) + "）";
-            String kr = CertGen.ensure(BuildEnv.key(c), keyPass(), "Reticle Debug");
+            java.io.File _rk = null; String _rp = "";
+            String _kd = conf(c, "KEY_DIR");
+            String[] _kds = new String[] { _kd, "/sdcard/Rikkahub工作/钥匙", "/sdcard/工作区/钥匙" };
+            for (int _i = 0; _i < _kds.length; _i++) {
+                if (_kds[_i] == null || _kds[_i].length() == 0) continue;
+                java.io.File _d = new java.io.File(_kds[_i]);
+                java.io.File _p = new java.io.File(_d, "reticle-release.p12");
+                if (!_p.isFile()) continue;
+                String[] _pf = new String[] { "口令.txt", "钥匙说明.txt" };
+                for (int _j = 0; _j < _pf.length; _j++) {
+                    java.io.File _f = new java.io.File(_d, _pf[_j]);
+                    if (!_f.isFile()) continue;
+                    String _v = readPass(_f.getAbsolutePath());
+                    if (_v.length() > 0) { _rk = _p; _rp = _v; break; }
+                }
+                if (_rk != null) break;
+            }
+            boolean _useRk = (release || "1".equals(conf(c, "RELEASE"))) && _rp.length() > 0;
+            String kr = _useRk ? "" : CertGen.ensure(BuildEnv.key(c), keyPass(), "Reticle Debug");
             if (kr.length() > 0) return kr;
             try {
                 BuildEnv.unpack(c);
@@ -149,8 +167,8 @@ public class BuildRunner {
                 e.put("KEEP", keep == null ? "" : keep.getAbsolutePath());
                 e.put("OUT", outDir(c).getAbsolutePath());
                 e.put("W", new File(BuildEnv.work(c), "run").getAbsolutePath());
-                e.put("KEY", BuildEnv.key(c).getAbsolutePath());
-                e.put("KPASS", keyPass());
+                e.put("KEY", _useRk ? _rk.getAbsolutePath() : BuildEnv.key(c).getAbsolutePath());
+                e.put("KPASS", _useRk ? _rp : keyPass());
                 e.put("RELEASE", release ? "1" : "0");
                 proc = pb.start();
                 startedAt = System.currentTimeMillis();
@@ -167,6 +185,8 @@ public class BuildRunner {
 
 
     public static String keyPass() { return "reticle"; }
+
+    private static String readPass(String p) { String b = ""; try { java.io.BufferedReader r = new java.io.BufferedReader(new java.io.InputStreamReader(new java.io.FileInputStream(p), "UTF-8")); String l; while ((l = r.readLine()) != null) { int i = l.indexOf("="); if (i > 0) { String v = l.substring(i + 1).trim(); if (v.length() >= 6 && v.indexOf(" ") < 0) b = v; } } r.close(); } catch (Throwable t) { } return b; }
 
     public static long secs() { return startedAt == 0 ? 0 : (System.currentTimeMillis() - startedAt) / 1000; }
 
@@ -213,6 +233,7 @@ public class BuildRunner {
         return o;
     }
 
+    static String conf(Context c, String key) { try { java.io.File cf = new java.io.File(Home.get(c), "build.conf"); if (!cf.exists() || cf.length() >= 65536) return ""; java.io.FileInputStream fi = new java.io.FileInputStream(cf); byte[] b = new byte[(int) cf.length()]; int off = 0, r; while (off < b.length && (r = fi.read(b, off, b.length - off)) > 0) off += r; fi.close(); String[] ls = new String(b, 0, off, "UTF-8").split("\n"); for (int i = 0; i < ls.length; i++) { String ln = ls[i].trim(); if (ln.startsWith("#")) continue; int eq = ln.indexOf("="); if (eq < 0) eq = ln.indexOf("＝"); if (eq <= 0) continue; if (!ln.substring(0, eq).trim().equals(key)) continue; String v = ln.substring(eq + 1).trim(); if (v.length() > 0) return v; } } catch (Throwable t) { } return ""; }
     /** 93：当前工程目录（build.conf 的 PROJECT_DIR= 优先，否则运行目录/工程）。 */
     static File projectDir(Context c) {
         try {

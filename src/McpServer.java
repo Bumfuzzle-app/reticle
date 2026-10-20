@@ -1036,7 +1036,7 @@ public class McpServer {
                     result.put("isError", false);
                     return ok(id, result);
                 }
-                if (name.equals("tap") || name.equals("swipe") || name.equals("key") || name.equals("ui") || name.equals("ocr") || name.equals("longpress") || name.equals("tap_text") || name.equals("wait_text") || name.equals("wait_stable") || name.equals("scroll") || name.equals("paste") || name.equals("scroll_to_text") || name.equals("do_chain") || name.equals("windows")) {
+                if (name.equals("tap") || name.equals("swipe") || name.equals("key") || name.equals("ui") || name.equals("ocr") || name.equals("longpress") || name.equals("tap_text") || name.equals("wait_text") || name.equals("wait_stable") || name.equals("scroll") || name.equals("paste") || name.equals("scroll_to_text") || name.equals("clip") || name.equals("texts") || name.equals("do_chain") || name.equals("windows")) {
                     String cmd;
                     if (name.equals("key")) {
                         String k = args.optString("key", "").trim();
@@ -1635,6 +1635,7 @@ public class McpServer {
         try {
             JSONObject o = new JSONObject(r);
             if (name.equals("ui")) return r;
+            if (name.equals("clip") || name.equals("texts")) return r;
             if (name.equals("ocr")) {
                 if (o.optInt("ok", 0) != 1) return r;
                 String tx = o.optString("text", "");
@@ -1830,6 +1831,8 @@ public class McpServer {
         tools.put(tool("scroll_to_text", Words.TL_SCROLL_TO_TEXT, objSchema(new String[]{"text", "desc", "id", "exact", "index", "direction", "max_scroll", "timeout_ms", "tap", "expect", "expect_pkg", "ocr"}, new String[]{"string", "string", "string", "number", "number", "string", "number", "number", "number", "string", "string", "number"}, new String[]{Words.TL_SCROLLTO_TEXT, Words.TL_SCROLLTO_DESC, Words.TL_SCROLLTO_ID, Words.TL_SCROLLTO_EXACT, Words.TL_SCROLLTO_INDEX, Words.TL_SCROLLTO_DIR, Words.TL_SCROLLTO_MAX, Words.TL_SCROLLTO_TIMEOUT, Words.TL_SCROLLTO_TAP, Words.TL_TAP_TEXT_EXPECT, Words.TL_SCROLLTO_PKG, Words.TL_TAP_TEXT_OCR}, null)));
         tools.put(tool("do_chain", Words.TL_DO_CHAIN, objSchema(new String[]{"steps", "stop_on_error", "observe"}, new String[]{"string", "number", "number"}, new String[]{Words.TL_DO_CHAIN_STEPS, Words.TL_DO_CHAIN_STOP, Words.TL_DO_CHAIN_OBSERVE}, new String[]{"steps"})));
         tools.put(tool("windows", Words.TL_WINDOWS, objSchema(new String[]{}, new String[]{}, new String[]{}, null)));
+        tools.put(tool("clip", Words.TL_CLIP, objSchema(new String[]{}, new String[]{}, new String[]{}, null)));
+        tools.put(tool("texts", Words.TL_TEXTS, objSchema(new String[]{"max"}, new String[]{"number"}, new String[]{Words.TD_TEXTS_MAX}, null)));
         } catch (Throwable t) { }
         return tools;
     }

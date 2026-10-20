@@ -241,24 +241,43 @@ public class MainActivity extends AppCompatActivity {
     /** 30 号单：顶部标题避开状态栏；29 号单：导航改成悬浮胶囊 → 安全区落在「条的底边距」上，
      *  并且给页面底部留出同高的让位，内容末行不会被条压住（条压住的地方正是要"透过玻璃"看的内容）。 */
     void applyInsetsPad() {
-        if (topBarView != null) topBarView.setPadding(dp(20), dp(24) + sbTop, dp(20), dp(8));
+        int topPad = sbTop + titleLineH();   // 100 F：状态栏之下再留一个标题字高
+        if (topBarView != null) topBarView.setPadding(dp(20), topPad, dp(20), dp(8));
         if (navGlass != null) navGlass.setLayoutParams(navGlassLp());
         if (cFunc != null) cFunc.setPadding(dp(18), dp(6), dp(18), pagePadBottom());
         if (cConf != null) cConf.setPadding(dp(18), dp(6), dp(18), pagePadBottom());
         if (cAdv != null) cAdv.setPadding(dp(18), dp(6), dp(18), pagePadBottom());
     }
 
-    /** 悬浮玻璃条：左右各留 16dp、离屏底＝系统 insets ＋ 8dp、高 64dp（左右上下对称的胶囊） */
+    /** 100 F：标题真实行高（字体上下沿之间）——顶部安全区"一个标题字高"就是它。 */
+    int titleLineH() {
+        try {
+            if (titleView != null && titleView.getPaint() != null) {
+                android.graphics.Paint.FontMetricsInt fm = titleView.getPaint().getFontMetricsInt();
+                int h = fm.descent - fm.ascent;
+                if (h > 0) return h;
+                return (int) Math.ceil(titleView.getTextSize());
+            }
+        } catch (Throwable t) { }
+        return dp(52);
+    }
+
+    /** 100 F：菜单条离屏底＝max(系统导航栏, 条高×2/3)。 */
+    int navBottomMargin() {
+        return Math.max(sbBottom, Math.round(dp(64) * 2f / 3f));
+    }
+
+    /** 悬浮玻璃条：左右各留 16dp、高 64dp；离屏底按 100 F 的口径算。 */
     FrameLayout.LayoutParams navGlassLp() {
         FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(-1, dp(64), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL);
         lp.leftMargin = dp(16);
         lp.rightMargin = dp(16);
-        lp.bottomMargin = dp(8) + sbBottom;
+        lp.bottomMargin = navBottomMargin();
         return lp;
     }
 
-    /** 页面底部留白：条高 64 ＋ 离屏底 8 ＋ 与条再留 8（＋ 底部 insets） */
-    int pagePadBottom() { return dp(28) + dp(80) + sbBottom; }
+    /** 页面底部留白：条高 64 ＋ 条底边距 ＋ 与条再留 8 */
+    int pagePadBottom() { return dp(28) + dp(64) + navBottomMargin() + dp(8); }
 
     void hookInsets() {
         ViewCompat.setOnApplyWindowInsetsListener(root, new OnApplyWindowInsetsListener() {
@@ -1076,13 +1095,23 @@ public class MainActivity extends AppCompatActivity {
         tvUpdAddr.setEllipsize(android.text.TextUtils.TruncateAt.MIDDLE);
         tvUpdAddr.setPadding(0, dp(4), 0, 0);
         in.addView(tvUpdAddr);
-        btnUpdCopy = txt(Words.UPD_COPY_T, 13, foldTitleColor());
-        btnUpdCopy.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
-        btnUpdCopy.setPadding(0, dp(10), dp(12), dp(6));
+        btnUpdCopy = new TextView(this);
+        btnUpdCopy.setText(Words.UPD_COPY_T);
+        btnUpdCopy.setTextSize(15);
+        btnUpdCopy.setTypeface(null, Typeface.BOLD);
+        btnUpdCopy.setGravity(Gravity.CENTER);
+        btnUpdCopy.setTextColor(DLG_ON_ACC[dlgTheme()]);
+        GradientDrawable cg = new GradientDrawable();
+        cg.setCornerRadius(dp(22));
+        cg.setColor(DLG_ACCENT[dlgTheme()]);
+        btnUpdCopy.setBackground(cg);
+        btnUpdCopy.setPadding(dp(16), dp(12), dp(16), dp(12));
         btnUpdCopy.setClickable(true);
         btnUpdCopy.setFocusable(true);
         btnUpdCopy.setOnClickListener(new View.OnClickListener() { public void onClick(View v) { copyUpdUrl(); } });
-        in.addView(btnUpdCopy);
+        LinearLayout.LayoutParams clp2 = new LinearLayout.LayoutParams(-1, -2);
+        clp2.topMargin = dp(10);
+        in.addView(btnUpdCopy, clp2);
         TextView clr = txt(Words.UPD_CLR_T, 13, foldTitleColor());
         clr.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
         clr.setPadding(0, dp(12), 0, dp(2));
@@ -2692,7 +2721,7 @@ public class MainActivity extends AppCompatActivity {
             if (force) toast(Words.UPD_MSG_DL_WAIT);   // 96 号单 C：用户主动查的，不许静默
             return;
         }
-        if (UpdateCheck.seenAlready(this, inf.tag)) { UpdateCheck.log(this, "这个版本点过「不再提示」⇒ 不弹"); return; }
+        if (!force && UpdateCheck.seenAlready(this, inf.tag)) { UpdateCheck.log(this, "这个版本点过「不再提示」⇒ 不弹"); return; }
         if (updShownSession && !force) { UpdateCheck.log(this, "本会话已经弹过 ⇒ 不弹"); return; }
         showUpdateDialog(inf, v);
     }
@@ -2701,6 +2730,7 @@ public class MainActivity extends AppCompatActivity {
     void showUpdateDialog(final UpdateCheck.Info inf, String v) {
         updShownSession = true;
         final int t = dlgTheme();
+        final boolean subApp = subPkg();   // 96 号单 E：副包只给地址
         final android.app.Dialog d = new android.app.Dialog(this);
         d.requestWindowFeature(android.view.Window.FEATURE_NO_TITLE);
 
@@ -2717,6 +2747,13 @@ public class MainActivity extends AppCompatActivity {
         TextView title = txt(String.format(java.util.Locale.ROOT, Words.UPD_DLG_T_FMT, v), 18, DLG_ACCENT[t]);
         title.setTypeface(null, Typeface.BOLD);
         box.addView(title, new LinearLayout.LayoutParams(-1, -2));
+        if (!subApp) {   // 99 号单 A：主包走应用内下载通道时的劝退语
+            TextView warn = txt(Words.UPD_INAPP_WARN, 12, col(com.google.android.material.R.attr.colorOnSurfaceVariant, 0xFFAAB4C0));
+            warn.setLineSpacing(dp(3), 1f);
+            LinearLayout.LayoutParams wlp = new LinearLayout.LayoutParams(-1, -2);
+            wlp.topMargin = dp(8);
+            box.addView(warn, wlp);
+        }
 
         String sz = mb(inf.size);
         String sub = (sz.length() == 0)
@@ -2758,14 +2795,25 @@ public class MainActivity extends AppCompatActivity {
         tlp.topMargin = dp(6);
         box.addView(progTv, tlp);
 
+        // 99 号单 A：复制官网地址＝主按钮（大、占满宽度）；立即更新／不再提示降级靠边
+        final TextView copyBtn = dlgBtn(Words.UPD_COPY_T, t, true);
+        copyBtn.setTextSize(16);
+        copyBtn.setPadding(dp(20), dp(14), dp(20), dp(14));
+        copyBtn.setOnClickListener(new View.OnClickListener() { public void onClick(View x) { copyUpdUrl(); } });
+        LinearLayout.LayoutParams clp = new LinearLayout.LayoutParams(-1, -2);
+        clp.topMargin = dp(16);
+        box.addView(copyBtn, clp);
+
         LinearLayout row = new LinearLayout(this);
         row.setOrientation(LinearLayout.HORIZONTAL);
         row.setGravity(Gravity.RIGHT | Gravity.CENTER_VERTICAL);
         LinearLayout.LayoutParams rowLp = new LinearLayout.LayoutParams(-1, -2);
-        rowLp.topMargin = dp(16);
+        rowLp.topMargin = dp(8);
         box.addView(row, rowLp);
 
         TextView no = dlgBtn(Words.UPD_DLG_LATER, t, false);
+        no.setTextSize(13);
+        no.setPadding(dp(14), dp(8), dp(14), dp(8));
         no.setOnClickListener(new View.OnClickListener() { public void onClick(View x) {
             try { d.dismiss(); } catch (Throwable e) { }
             UpdateCheck.markSeen(MainActivity.this, inf.tag);   // 同版本永久不弹，下个版本照弹
@@ -2773,17 +2821,19 @@ public class MainActivity extends AppCompatActivity {
         } });
         row.addView(no);
 
-        final boolean subApp = subPkg();   // 96 号单 E：副包只给地址
-        final TextView yes = dlgBtn(subApp ? Words.UPD_COPY_T : Words.UPD_DLG_NOW, t, true);
-        yes.setOnClickListener(new View.OnClickListener() { public void onClick(View x) {
-            if (subApp) { copyUpdUrl(); try { d.dismiss(); } catch (Throwable e) { } return; }
-            if (inf.url.length() == 0) { toast(Words.UPD_STATE_FAIL); return; }
-            if (!UpdateCheck.canInstall(MainActivity.this)) { toast(Words.UPD_NEED_PERM); UpdateCheck.openInstallSetting(MainActivity.this); return; }
-            startDownloadInDialog(d, inf, pb, progTv, yes);
-        } });
-        LinearLayout.LayoutParams olp = new LinearLayout.LayoutParams(-2, -2);
-        olp.leftMargin = dp(10);
-        row.addView(yes, olp);
+        if (!subApp) {   // 副包本来就没有「立即更新」，保持只给复制
+            final TextView yes = dlgBtn(Words.UPD_DLG_NOW, t, false);
+            yes.setTextSize(13);
+            yes.setPadding(dp(14), dp(8), dp(14), dp(8));
+            yes.setOnClickListener(new View.OnClickListener() { public void onClick(View x) {
+                if (inf.url.length() == 0) { toast(Words.UPD_STATE_FAIL); return; }
+                if (!UpdateCheck.canInstall(MainActivity.this)) { toast(Words.UPD_NEED_PERM); UpdateCheck.openInstallSetting(MainActivity.this); return; }
+                startDownloadInDialog(d, inf, pb, progTv, yes);
+            } });
+            LinearLayout.LayoutParams olp = new LinearLayout.LayoutParams(-2, -2);
+            olp.leftMargin = dp(10);
+            row.addView(yes, olp);
+        }
 
         d.setContentView(box);
         d.setCanceledOnTouchOutside(true);   // 点外面／返回＝这次不弹，下次进前台再弹
@@ -2946,6 +2996,14 @@ public class MainActivity extends AppCompatActivity {
             if (tvUpdSeen != null) tvUpdSeen.setText(String.format(java.util.Locale.ROOT, Words.UPD_SEEN_FMT, updSeenText()));
             if (tvUpdFoldTag != null) tvUpdFoldTag.setText(updTagText());
             String ug = UpdateCheck.infoTag(this), uu = UpdateCheck.infoUrl(this);
+            // 100 G：假源留下的「线上版本」若不再高于本机，就当没有——别让用户看到幽灵版本
+            try {
+                if (ug != null && ug.length() > 0
+                        && UpdateCheck.cmp(UpdateCheck.parseVer(ug), UpdateCheck.parseVer(UpdateCheck.localVer(this))) <= 0) {
+                    UpdateCheck.clearInfo(this);
+                    ug = ""; uu = "";
+                }
+            } catch (Throwable t) { }
             boolean hasIp = ug != null && ug.length() > 0 && uu != null && uu.length() > 0;
             String lv = UpdateCheck.localVer(this);
             if (tvUpdVer != null) tvUpdVer.setText(hasIp

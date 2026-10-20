@@ -288,6 +288,8 @@ public class Words {
     public static final String MA_ITEM_LIVE_D = "ProgressStyle 实况通知";
     public static final String MA_MSG_LIVE = "实况：";
     public static final String MA_LIVE_T = "Reticle·正在处理";
+    /** ★120：原子岛胶囊上的短文本（vivo 岛宽左右槽位各固定 208px，长文案会把岛撑到 776px）。 */
+    public static final String ISLAND_CAP = "处理";
     public static final String MA_LIVE_C = "实况通知试验（18 号）";
     public static final String MA_ITEM_TESTNOTI = "测试通知";
     public static final String MA_ITEM_TESTNOTI_D = "发一条普通通知";
@@ -708,6 +710,11 @@ public class Words {
     public static final String RP_TT_NEED = "要给我 text／desc／id 里至少一个，我才知道点哪儿";
     public static final String RP_TT_NOTFOUND = "没找到『%s』：等了 %dms，控件树里没有、截图认字也没认到——我没点，先不乱点";
     public static final String RP_TT_CLICK_FAIL = "找到目标了，但点击没下发成功（被系统拦了？）";
+    public static final String RP_CLIP_NOSVC = "这台机器没给剪贴板服务，读不到";
+    public static final String RP_CLIP_NOTEXT = "剪贴板里是图片／文件这类，读不出文字";
+    public static final String RP_CLIP_DENIED = "读不到剪贴板：系统只让前台应用或输入法读，这次拿不到（不是空剪贴板）";
+    public static final String RP_TT_OFFSCREEN = "『%s』在屏幕外（屏 %d×%d），先滚到它再点——这次没发手势";
+    public static final String RP_TT_NOTE_NOCHANGE = "页面没变化只说明这次没看见变化，不等于没点中（可能被拦或只是页面内提示）；看 target 的 clk/en 与 target.b";
     public static final String RP_TT_WRONG_PKG = "前台不是目标应用：要 %s，实际 %s——已拒绝，没动手";
     public static final String RP_TT_PKG_UNK = "读不到";
     public static final String RP_TT_DESC_PREFIX = "描述:";
@@ -759,6 +766,8 @@ public class Words {
     public static final String TL_DO_CHAIN_OBSERVE = "第 N 步后回屏上现状（0＝不回）";
 
     public static final String TL_WINDOWS = "列出可见窗口（查分屏／小窗／悬浮窗）";
+    public static final String TL_CLIP = "读剪贴板（只读）：拿到文字与长度；读不到会明说";
+    public static final String TL_TEXTS = "整屏文字行＋坐标（不依赖可点性；树读不到就截图认字）";
 
     public static final String RP_PASTE_NEEDTEXT = "要给我 text（要贴进去的内容）";
     public static final String RP_PASTE_NOFOCUS = "没找到输入框：这次没动手。可给我输入框的位置（x/y，屏幕比例 0~1）让我先点一下再贴";
@@ -794,7 +803,7 @@ public class Words {
     // ═══════════ 51 号单（2026-10-12）· 令牌与链接管理 ═══════════
     /** 官网地址（一键复制用；与「复制链接地址」区分：那个复制的是本机服务地址） */
     public static final String CF_OFFICIAL_URL = "https://rikka-ai.com";
-    public static final String CF_BTN_OFFICIAL = "复制官网地址";
+    public static final String CF_BTN_OFFICIAL = "复制 RikkaHub 官网";
     public static final String CF_HINT_OFFICIAL = "复制 RikkaHub 官网，不是本机地址。";
     public static final String CF_MSG_OFFICIAL_OK = "已复制官网地址。";
     public static final String CF_MSG_OFFICIAL_ERR = "复制官网地址失败：";
@@ -977,6 +986,9 @@ public class Words {
     public static final String TD_KEY = "按系统按键：返回(back)/主页(home)/最近任务(recents)。";
     public static final String TD_KEY_VALUE = "back 或 home 或 recents";
     public static final String TD_UI = "读取当前界面的控件（文字/描述/边界/是否可点），用于定位要点哪里；读不到会如实说明（游戏等自绘界面读不到）。";
+    public static final String TD_CLIP = "只读剪贴板里的文字。用于验证「点复制」到底复制进去了什么（自己点、自己读）。非前台／系统限制读不到时会明说读不到，不会拿空串冒充成功。";
+    public static final String TD_TEXTS = "把当前屏幕上的文字按行读出来，每行给文字、中心坐标、边界（像素）。不依赖控件能不能点，页面内提示（App 自己画的 TextView）也能读到；控件树里一行都没有时用离线认字兜底（src=ocr）。";
+    public static final String TD_TEXTS_MAX = "最多返回几行（可选，默认 400）";
     public static final String TD_UI_MAX = "最多返回几个控件（可选，默认 120）";
     public static final String TD_OCR = "识别屏幕上或指定区域的文字（离线中文）；region 用 0~1 比例 x,y,w,h，可选。";
     public static final String TD_OCR_REGION = "区域 0~1 比例：x,y,w,h（可选，不填＝整屏）";
@@ -1162,10 +1174,11 @@ public class Words {
     // 96 号单：更新栏固定地址＋复制、下载中说话
     public static final String UPD_ADDR_VER_FMT = "本机 v%s · 线上 v%s";
     public static final String UPD_ADDR_NONE_FMT = "本机 v%s · 没查到新版";
-    public static final String UPD_COPY_T = "复制下载地址";
+    public static final String UPD_COPY_T = "复制 GitHub 下载地址";
     public static final String UPD_COPY_OK = "已复制，粘到浏览器就能下";
     public static final String UPD_COPY_FAIL = "没复制上，再点一次";
     public static final String UPD_COPY_NONE = "现在还没有下载地址";
+    public static final String UPD_INAPP_WARN = "不建议走应用内下载，如若速度很慢或无法下载，请复制链接自行前往 GitHub";
     public static final String UPD_MSG_DL_WAIT = "正在下载，先等它下完";
     // 配置页折叠块（母标题右侧的状态小字）
     public static final String CF_FOLD_WD = "无障碍与自启";

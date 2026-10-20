@@ -273,6 +273,8 @@ public class VeriService extends AccessibilityService {
             if (cmd.equals("scroll_to_text")) return scrollToText(kv);
             if (cmd.equals("do_chain")) return doChain(kv);
             if (cmd.equals("windows")) return windowsCmd(kv);
+            if (cmd.equals("clip")) return clipRead(kv);
+            if (cmd.equals("texts")) return textLines(kv);
             if (cmd.equals("shx")) return shxCmd(kv);
             if (cmd.equals("notify")) return notifyCmd(kv);
             if (cmd.equals("report")) return reportCmd(kv);
@@ -846,6 +848,50 @@ public class VeriService extends AccessibilityService {
         return s;
     }
 
+    /** ★121：点岛展开，但先过三道闸——①通知真被提升 ②岛在显示 ③岛上这条就是自己、且还收起着。
+     *  任一不满足就放弃（点已展开的岛会收起并跳进 App；岛没显示时点是摄像头那块）。
+     *  点完 800ms 复核，还没展开就再点一次，最多两次。 */
+    static void pokeIsland(final android.content.Context ctx, final int id, final int delayMs) {
+        final VeriService s = INSTANCE;
+        if (s == null) return;
+        new Thread(new Runnable() { public void run() {
+            try { Thread.sleep(Math.max(0, delayMs)); } catch (Throwable t) { }
+            boolean promoted = false;
+            try {
+                android.app.NotificationManager nm = (android.app.NotificationManager)
+                        ctx.getSystemService(android.content.Context.NOTIFICATION_SERVICE);
+                android.service.notification.StatusBarNotification[] arr = nm.getActiveNotifications();
+                if (arr != null) for (int i = 0; i < arr.length; i++) {
+                    if (arr[i].getId() == id && (arr[i].getNotification().flags & 0x40000) != 0) promoted = true;
+                }
+            } catch (Throwable t) { s.log("pokeIsland flags err " + t); }
+            if (!promoted) { s.log("pokeIsland skip：通知没被提升（岛上没有它）"); return; }
+            String key = "live_notification-" + ctx.getPackageName() + "-" + id;
+            for (int attempt = 0; attempt < 2; attempt++) {
+                boolean vis = false, mine = false, exp = false;
+                try {
+                    String r = shxRun("dumpsys activity service com.vivo.systemuiplugin 2>/dev/null | grep -oE 'mVisible: [a-z]+|mMainIsland: id = [^,]*|mIslandExpand = [a-z]+' | head -4", 4000L);
+                    vis = r.indexOf("mVisible: true") >= 0;
+                    mine = r.indexOf(key) >= 0;
+                    exp = r.indexOf("mIslandExpand = true") >= 0;
+                } catch (Throwable t) { s.log("pokeIsland probe err " + t); return; }
+                if (!vis) { s.log("pokeIsland skip：岛没显示"); return; }
+                if (!mine) { s.log("pokeIsland skip：岛上不是自己这条"); return; }
+                if (exp) { s.log("pokeIsland skip：岛已经是展开的"); return; }
+                try {
+                    DisplayMetrics dm = s.getResources().getDisplayMetrics();
+                    final float px = dm.widthPixels / 2f;
+                    final float py = dm.heightPixels * 0.0306f;
+                    new android.os.Handler(android.os.Looper.getMainLooper()).post(new Runnable() { public void run() {
+                        try { s.runGesture(s.clickStroke(px, py, 60)); } catch (Throwable t) { }
+                    }});
+                    s.log("pokeIsland tap #" + (attempt + 1));
+                } catch (Throwable t) { s.log("pokeIsland tap err " + t); return; }
+                try { Thread.sleep(800); } catch (Throwable t) { }
+            }
+            s.log("pokeIsland 结束：点了两下仍没确认展开");
+        }}).start();
+    }
     static class GRes { boolean ok; long ms; int err = -1; }
     private void throttleShot() {
         long t = SystemClock.uptimeMillis();
@@ -1065,6 +1111,7 @@ public class VeriService extends AccessibilityService {
     }
 
     private String dumpUi(java.util.Map<String, String> kv) {
+        ensureScreen();
         int maxNodes = parseInt(kv.get("max"), 120);
         int maxDepth = parseInt(kv.get("depth"), 20);
         AccessibilityNodeInfo root = null;
@@ -1072,12 +1119,38 @@ public class VeriService extends AccessibilityService {
         if (root == null) return "{\"ok\":0,\"err\":\"" + Words.RP_UI_EMPTY + "\"}";
         StringBuilder sb = new StringBuilder();
         int[] cnt = new int[]{0};
-        try { walkUi(root, 0, maxDepth, maxNodes, sb, cnt); } catch (Throwable t) { log("dumpUi err " + t); }
+        int[] total = new int[]{0};
+        try { walkUi(root, 0, maxDepth, maxNodes, sb, cnt, total); } catch (Throwable t) { log("dumpUi err " + t); }
         String pkg = "";
         try { CharSequence p = root.getPackageName(); if (p != null) pkg = p.toString(); } catch (Throwable t) { }
-        return "{\"ok\":1,\"package\":\"" + esc(pkg) + "\",\"count\":" + cnt[0] + ",\"nodes\":[" + sb.toString() + "]}";
+        int more = total[0] - cnt[0];
+        if (more < 0) more = 0;
+        return "{\"ok\":1,\"package\":\"" + esc(pkg) + "\",\"count\":" + cnt[0] + ",\"more\":" + more
+                + ",\"screen\":[" + screenW + "," + screenH + "]"
+                + ",\"viewport\":[0,0," + screenW + "," + screenH + "]"
+                + ",\"scroll\":" + scrollInfo(root)
+                + ",\"nodes\":[" + sb.toString() + "]}";
     }
 
+    /** 100 A5：有滚动容器就把它的位置报出来（scroll_y 取不到时给 -1，不猜）。 */
+    private String scrollInfo(AccessibilityNodeInfo root) {
+        AccessibilityNodeInfo sc = null;
+        try { sc = findScrollable(root, 0); } catch (Throwable t) { sc = null; }
+        if (sc == null) return "null";
+        android.graphics.Rect rc = new android.graphics.Rect();
+        try { sc.getBoundsInScreen(rc); } catch (Throwable t) { }
+        int cn = 0;
+        try { cn = sc.getChildCount(); } catch (Throwable t) { }
+        int sy = -1;
+        try {
+            java.lang.reflect.Method m = sc.getClass().getMethod("getScrollY");
+            Object v = m.invoke(sc);
+            if (v instanceof Integer) sy = ((Integer) v).intValue();
+        } catch (Throwable t) { sy = -1; }
+        return "{\"b\":[" + rc.left + "," + rc.top + "," + rc.right + "," + rc.bottom
+                + "],\"c\":\"" + esc(shortCls(nodeCls(sc))) + "\",\"children\":" + cn
+                + ",\"scroll_y\":" + sy + "}";
+    }
     private void walkUiOld(AccessibilityNodeInfo n, int depth, int maxDepth, int maxNodes, StringBuilder sb, int[] cnt) {
         if (n == null || cnt[0] >= maxNodes || depth > maxDepth) return;
         String tx = "", dc = "", vid = "", cls = "";
@@ -1104,7 +1177,7 @@ public class VeriService extends AccessibilityService {
         for (int i = 0; i < cn && cnt[0] < maxNodes; i++) {
             AccessibilityNodeInfo ch = null;
             try { ch = n.getChild(i); } catch (Throwable e) { }
-            if (ch != null) walkUi(ch, depth + 1, maxDepth, maxNodes, sb, cnt);
+            if (ch != null) walkUi(ch, depth + 1, maxDepth, maxNodes, sb, cnt, new int[]{0});
         }
     }
 
@@ -1324,10 +1397,34 @@ public class VeriService extends AccessibilityService {
         try { CharSequence c = n.getText(); if (c != null) t = clipS(c.toString(), 40); } catch (Throwable e) { }
         try { CharSequence c = n.getContentDescription(); if (c != null) d = clipS(c.toString(), 40); } catch (Throwable e) { }
         try { String v = n.getViewIdResourceName(); if (v != null) id = shortId(v); } catch (Throwable e) { }
+        boolean clk = false, en = false;
+        try { clk = n.isClickable(); } catch (Throwable e) { }
+        try { en = n.isEnabled(); } catch (Throwable e) { }
+        int[] cr = nodeRectVis(n);
         return "{\"t\":\"" + esc(t) + "\",\"d\":\"" + esc(d) + "\",\"id\":\"" + esc(id)
-                + "\",\"cls\":\"" + esc(shortCls(nodeCls(n))) + "\",\"b\":[" + nodeBounds(n) + "]}";
+                + "\",\"cls\":\"" + esc(shortCls(nodeCls(n))) + "\",\"b\":[" + cr[0] + "," + cr[1] + "," + cr[2] + "," + cr[3] + "]"
+                + ",\"vis\":" + cr[4] + ",\"off\":" + cr[5] + ",\"clk\":" + (clk ? 1 : 0) + ",\"en\":" + (en ? 1 : 0) + "}";
     }
 
+
+    /** 100 B：点到了谁——可点祖先的属性，但文字/描述取"命中的那个节点"补上（祖先常常没字）。
+     *  hit 原样附在后面，供人对照是"按钮本身"还是"按钮的容器"。 */
+    private String nodeBriefMerge(AccessibilityNodeInfo tgt, AccessibilityNodeInfo hit) {
+        String b = nodeBrief(tgt);
+        try {
+            org.json.JSONObject o = new org.json.JSONObject(b);
+            if (o.optString("t", "").length() == 0) {
+                CharSequence c1 = hit.getText();
+                if (c1 != null) o.put("t", clipS(c1.toString(), 40));
+            }
+            if (o.optString("d", "").length() == 0) {
+                CharSequence c2 = hit.getContentDescription();
+                if (c2 != null) o.put("d", clipS(c2.toString(), 40));
+            }
+            o.put("hit", new org.json.JSONObject(nodeBrief(hit)));
+            return o.toString();
+        } catch (Throwable t) { return b; }
+    }
     private boolean textPresent(String s) {
         if (s == null || s.length() == 0) return false;
         return findNodes(s, false, "", "", 1).size() > 0;
@@ -1461,24 +1558,38 @@ public class VeriService extends AccessibilityService {
         String via = "";
         String target = "null";
         int ocrUsed = 0;
+        boolean offscreen = false;
+        int[] rect = new int[6];
+        int[] hitRect = new int[6];
         if (hit != null) {
-            AccessibilityNodeInfo tgt = clickableAncestor(hit);
-            int isAnc = 0;
-            if (tgt == null) { tgt = hit; }
-            else if (tgt != hit) { isAnc = 1; }
-            target = nodeBrief(tgt);
-            try { clickOk = tgt.performAction(AccessibilityNodeInfo.ACTION_CLICK); } catch (Throwable t) { clickOk = false; }
-            via = isAnc == 1 ? "action_click_ancestor" : "action_click";
-            if (!clickOk) {
-                try {
-                    android.graphics.Rect rc = new android.graphics.Rect();
-                    tgt.getBoundsInScreen(rc);
-                    if (rc.width() > 0 && rc.height() > 0) {
-                        GRes g = runGesture(clickStroke(rc.centerX(), rc.centerY(), dur));
-                        clickOk = g.ok;
-                        via = isAnc == 1 ? "gesture_ancestor_center" : "gesture_center";
+            hitRect = nodeRectVis(hit);
+            if (hitRect[4] != 1) {
+                offscreen = true;          // 100 A2：目标文字本身在屏外 ⇒ 不发手势、也不点父容器
+                target = nodeBrief(hit);
+            } else {
+                AccessibilityNodeInfo tgt = clickableAncestor(hit);
+                int isAnc = 0;
+                if (tgt == null) { tgt = hit; }
+                else if (tgt != hit) { isAnc = 1; }
+                int L = 0, T = 0, R = 0, Bd = 0;
+                try { android.graphics.Rect rc = new android.graphics.Rect(); tgt.getBoundsInScreen(rc); L = rc.left; T = rc.top; R = rc.right; Bd = rc.bottom; } catch (Throwable t) { }
+                rect = nodeRectVis(tgt);
+                target = nodeBriefMerge(tgt, hit);
+                if (rect[4] != 1) {
+                    offscreen = true;
+                } else {
+                    try { clickOk = tgt.performAction(AccessibilityNodeInfo.ACTION_CLICK); } catch (Throwable t) { clickOk = false; }
+                    via = isAnc == 1 ? "action_click_ancestor" : "action_click";
+                    if (!clickOk) {
+                        try {
+                            if (rect[2] - rect[0] > 0 && rect[3] - rect[1] > 0) {
+                                GRes g = runGesture(clickStroke((rect[0] + rect[2]) / 2, (rect[1] + rect[3]) / 2, dur));
+                                clickOk = g.ok;
+                                via = isAnc == 1 ? "gesture_ancestor_center" : "gesture_center";
+                            }
+                        } catch (Throwable t) { }
                     }
-                } catch (Throwable t) { }
+                }
             }
         } else {
             ocrUsed = 1;
@@ -1486,6 +1597,11 @@ public class VeriService extends AccessibilityService {
             GRes g = runGesture(clickStroke(ocrX * screenW, ocrY * screenH, dur));
             clickOk = g.ok;
             via = "ocr_center";
+        }
+        if (offscreen) {
+            return "{\"ok\":0,\"reason\":\"offscreen\",\"err\":\"" + esc(String.format(Words.RP_TT_OFFSCREEN, describeQuery(text, desc, id), screenW, screenH))
+                    + "\",\"target\":" + target + ",\"tree_hits\":" + seen + ",\"find_ms\":" + findMs
+                    + ",\"screen\":[" + screenW + "," + screenH + "]}";
         }
         String verdict = waitVerdict(beforePkg, beforeSig, expect, parseInt(kv.get("wait_ms"), 1200));
         int retried = 0;
@@ -1507,6 +1623,7 @@ public class VeriService extends AccessibilityService {
         boolean needExp = expect.length() > 0;
         boolean expOk = verdict.indexOf("\"expect_hit\":1") >= 0;
         boolean okAll = clickOk && (!needExp || expOk);
+        boolean changed = verdict.indexOf("\"changed\":1") >= 0;
         StringBuilder sb = new StringBuilder();
         sb.append("{\"ok\":").append(okAll ? 1 : 0)
           .append(",\"via\":\"").append(via).append("\"")
@@ -1517,12 +1634,15 @@ public class VeriService extends AccessibilityService {
           .append(",\"find_ms\":").append(findMs)
           .append(",\"click_ok\":").append(clickOk ? 1 : 0)
           .append(",\"retried\":").append(retried)
-          .append(verdict);
+          .append(verdict)
+          .append(",\"page_changed\":").append(changed ? 1 : 0);
+        if (!changed) sb.append(",\"note\":\"").append(esc(Words.RP_TT_NOTE_NOCHANGE)).append("\"");
         if (!clickOk) sb.append(",\"err\":\"").append(esc(Words.RP_TT_CLICK_FAIL)).append("\"");
         else if (!expOk) sb.append(",\"reason\":\"expect_timeout\",\"err\":\"").append(esc(String.format(Words.RP_TT_EXPECT_FAIL, expect))).append("\"");
         sb.append("}");
         return sb.toString();
     }
+
 
     // ---- T2a：等出现 / 等消失 ----
     private String waitText(Map<String, String> kv) {
@@ -1962,7 +2082,7 @@ public class VeriService extends AccessibilityService {
     }
     // ═══════════ 44.5 C：do_chain（一次提交多步；每步各带后置条件，不成立就停在那步并报屏幕现状） ═══════════
     /** 只允许"动作类"命令进链（不许从链里跑 shell／notify／build／download，防越权与递归）。 */
-    private static final String CHAIN_ALLOW = " tap tap_text input paste longpress swipe key scroll wait_text wait_stable ui ocr shot ";
+    private static final String CHAIN_ALLOW = " tap tap_text input paste longpress swipe key scroll wait_text wait_stable ui ocr shot clip texts ";
 
     private void collectTexts(AccessibilityNodeInfo n, int depth, List<String> out, int max) {
         if (n == null || depth > 24 || out.size() >= max) return;
@@ -2331,45 +2451,52 @@ public class VeriService extends AccessibilityService {
                 + "\",\"verified\":1,\"clip_restored\":" + clipRestored + ",\"ime_wait_ms\":" + imeMs + "}";
     }
 
-    // ---- S5：ui 节点补 scrollable（scr）与"最近可点祖先"序号（ck），让助手一眼看出该点谁 ----
-    private void walkUi(AccessibilityNodeInfo n, int depth, int maxDepth, int maxNodes, StringBuilder sb, int[] cnt) {
-        walkUiFull(n, depth, maxDepth, maxNodes, sb, cnt, -1);
+    private void walkUi(AccessibilityNodeInfo n, int depth, int maxDepth, int maxNodes, StringBuilder sb, int[] cnt, int[] total) {
+        walkUiFull(n, depth, maxDepth, maxNodes, sb, cnt, total, -1);
     }
 
-    private void walkUiFull(AccessibilityNodeInfo n, int depth, int maxDepth, int maxNodes, StringBuilder sb, int[] cnt, int clickableIdx) {
-        if (n == null || cnt[0] >= maxNodes || depth > maxDepth) return;
+    /** 100 A1/A3：每个节点带 vis（按当前视口裁）／off（裁不动＝完全屏外）；颠倒或越屏的两端一起裁到屏内。
+     *  同时统计 total，供 max 截断时回报「还有 N 个没给」。 */
+    private void walkUiFull(AccessibilityNodeInfo n, int depth, int maxDepth, int maxNodes, StringBuilder sb, int[] cnt, int[] total, int clickableIdx) {
+        if (n == null || depth > maxDepth || total[0] >= 5000) return;
         String tx = "", dc = "", vid = "", cls = "";
         try { CharSequence c1 = n.getText(); if (c1 != null) tx = c1.toString(); } catch (Throwable e) { }
         try { CharSequence c2 = n.getContentDescription(); if (c2 != null) dc = c2.toString(); } catch (Throwable e) { }
         try { String v = n.getViewIdResourceName(); if (v != null) vid = v; } catch (Throwable e) { }
         try { CharSequence c3 = n.getClassName(); if (c3 != null) cls = c3.toString(); } catch (Throwable e) { }
-        boolean clk = false, scr = false;
+        boolean clk = false, scr = false, en = false;
         try { clk = n.isClickable(); } catch (Throwable e) { }
         try { scr = n.isScrollable(); } catch (Throwable e) { }
+        try { en = n.isEnabled(); } catch (Throwable e) { }
         int myIdx = -1;
         if (tx.length() > 0 || dc.length() > 0 || vid.length() > 0 || clk) {
-            int L = 0, T = 0, R = 0, Bd = 0;
-            try { Rect rc = new Rect(); n.getBoundsInScreen(rc); L = rc.left; T = rc.top; R = rc.right; Bd = rc.bottom; } catch (Throwable e) { }
-            if (cnt[0] > 0) sb.append(",");
-            sb.append("{\"t\":\"").append(esc(clipS(tx, 100)))
-              .append("\",\"d\":\"").append(esc(clipS(dc, 80)))
-              .append("\",\"id\":\"").append(esc(shortId(vid)))
-              .append("\",\"c\":\"").append(esc(shortCls(cls)))
-              .append("\",\"b\":[").append(L).append(",").append(T).append(",").append(R).append(",").append(Bd)
-              .append("],\"clk\":").append(clk ? 1 : 0)
-              .append(",\"scr\":").append(scr ? 1 : 0)
-              .append(",\"ck\":").append(clickableIdx)
-              .append("}");
-            myIdx = cnt[0];
-            cnt[0]++;
+            total[0]++;
+            if (cnt[0] < maxNodes) {
+                int[] cr = nodeRectVis(n);
+                if (cnt[0] > 0) sb.append(",");
+                sb.append("{\"t\":\"").append(esc(clipS(tx, 100)))
+                  .append("\",\"d\":\"").append(esc(clipS(dc, 80)))
+                  .append("\",\"id\":\"").append(esc(shortId(vid)))
+                  .append("\",\"c\":\"").append(esc(shortCls(cls)))
+                  .append("\",\"b\":[").append(cr[0]).append(",").append(cr[1]).append(",").append(cr[2]).append(",").append(cr[3])
+                  .append("],\"vis\":").append(cr[4])
+                  .append(",\"off\":").append(cr[5])
+                  .append(",\"clk\":").append(clk ? 1 : 0)
+                  .append(",\"en\":").append(en ? 1 : 0)
+                  .append(",\"scr\":").append(scr ? 1 : 0)
+                  .append(",\"ck\":").append(clickableIdx)
+                  .append("}");
+                myIdx = cnt[0];
+                cnt[0]++;
+            }
         }
         int childClk = clk ? myIdx : clickableIdx;
         int cn = 0;
         try { cn = n.getChildCount(); } catch (Throwable e) { }
-        for (int i = 0; i < cn && cnt[0] < maxNodes; i++) {
+        for (int i = 0; i < cn; i++) {
             AccessibilityNodeInfo ch = null;
             try { ch = n.getChild(i); } catch (Throwable e) { }
-            if (ch != null) walkUiFull(ch, depth + 1, maxDepth, maxNodes, sb, cnt, childClk);
+            if (ch != null) walkUiFull(ch, depth + 1, maxDepth, maxNodes, sb, cnt, total, childClk);
         }
     }
 
@@ -2583,5 +2710,140 @@ public class VeriService extends AccessibilityService {
         } catch (Throwable t) {
             A11yWatchdog.log(s, "交还无障碍失败：" + t);
         }
+    }
+
+    // ═══ 100 C：只读剪贴板（读不到就说读不到，不拿空串冒充） ═══
+    private String clipRead(Map<String, String> kv) {
+        try {
+            android.content.ClipboardManager cm = (android.content.ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+            if (cm == null) return "{\"ok\":0,\"err\":\"" + esc(Words.RP_CLIP_NOSVC) + "\"}";
+            if (!cm.hasPrimaryClip()) return "{\"ok\":1,\"empty\":1,\"len\":0,\"text\":\"\"}";
+            android.content.ClipData cd = cm.getPrimaryClip();
+            if (cd == null || cd.getItemCount() == 0) return "{\"ok\":1,\"empty\":1,\"len\":0,\"text\":\"\"}";
+            CharSequence cs = null;
+            try { cs = cd.getItemAt(0).coerceToText(this); } catch (Throwable t) { cs = null; }
+            if (cs == null) return "{\"ok\":0,\"err\":\"" + esc(Words.RP_CLIP_NOTEXT) + "\"}";
+            String t = cs.toString();
+            return "{\"ok\":1,\"empty\":" + (t.length() == 0 ? 1 : 0) + ",\"len\":" + t.length() + ",\"text\":\"" + esc(t) + "\"}";
+        } catch (Throwable t) {
+            return "{\"ok\":0,\"err\":\"" + esc(Words.RP_CLIP_DENIED) + "\"}";
+        }
+    }
+
+    // ═══ 100 D：整屏文字行＋坐标（不依赖可点性；树上一行都没有就用截图认字） ═══
+    private String textLines(Map<String, String> kv) {
+        ensureScreen();
+        int limit = parseInt(kv.get("max"), 400);
+        if (limit <= 0) limit = 400;
+        java.util.List<Object[]> lines = new java.util.ArrayList<Object[]>();
+        java.util.HashSet<String> seen = new java.util.HashSet<String>();
+        AccessibilityNodeInfo root = rootNow();
+        if (root != null) { try { collectTextLines(root, 0, lines, seen, limit); } catch (Throwable t) { } }
+        String src = "tree";
+        if (lines.isEmpty()) {
+            Shot s = takeShotSync();
+            if (s.bmp != null) {
+                int W = s.bmp.getWidth(), H = s.bmp.getHeight();
+                String js = null;
+                try { js = OcrEng.linesJson(s.bmp, 0, 0, W, H); } catch (Throwable t) { }
+                try { s.bmp.recycle(); } catch (Throwable t) { }
+                if (js != null) try {
+                    org.json.JSONArray arr = new org.json.JSONArray(js);
+                    for (int i = 0; i < arr.length() && lines.size() < limit; i++) {
+                        org.json.JSONObject o = arr.getJSONObject(i);
+                        String t = o.optString("t", "").trim();
+                        if (t.length() == 0) continue;
+                        int cx = (int) o.optDouble("cx", 0), cy = (int) o.optDouble("cy", 0);
+                        int[] bb = new int[]{0, 0, 0, 0};
+                        org.json.JSONArray bx = o.optJSONArray("box");
+                        if (bx != null && bx.length() >= 4) {
+                            bb[0] = (int) bx.optDouble(0, 0); bb[1] = (int) bx.optDouble(1, 0);
+                            bb[2] = (int) (bx.optDouble(0, 0) + bx.optDouble(2, 0));
+                            bb[3] = (int) (bx.optDouble(1, 0) + bx.optDouble(3, 0));
+                        }
+                        src = "ocr";
+                        lines.add(new Object[]{t, Integer.valueOf(cx), Integer.valueOf(cy), bb});
+                    }
+                } catch (Throwable t) { }
+            }
+        }
+        try {
+            java.util.Collections.sort(lines, new java.util.Comparator<Object[]>() {
+                public int compare(Object[] a, Object[] b) { return ((Integer) a[2]).intValue() - ((Integer) b[2]).intValue(); }
+            });
+        } catch (Throwable t) { }
+        StringBuilder sb = new StringBuilder();
+        sb.append("{\"ok\":1,\"src\":\"").append(src).append("\",\"screen\":[").append(screenW).append(",").append(screenH).append("],\"count\":").append(lines.size()).append(",\"lines\":[");
+        for (int i = 0; i < lines.size(); i++) {
+            Object[] L = lines.get(i);
+            String t = (String) L[0];
+            int cx = ((Integer) L[1]).intValue(), cy = ((Integer) L[2]).intValue();
+            int[] bb = (int[]) L[3];
+            if (i > 0) sb.append(",");
+            sb.append("{\"t\":\"").append(esc(clipS(t, 120))).append("\"")
+              .append(",\"x\":").append(cx).append(",\"y\":").append(cy)
+              .append(",\"b\":[").append(bb[0]).append(",").append(bb[1]).append(",").append(bb[2]).append(",").append(bb[3]).append("]")
+              .append("}");
+        }
+        sb.append("]}");
+        return sb.toString();
+    }
+
+    private void collectTextLines(AccessibilityNodeInfo n, int depth, java.util.List<Object[]> out, java.util.HashSet<String> seen, int limit) {
+        if (n == null || depth > 24 || out.size() >= limit) return;
+        String tx = "", dc = "";
+        try { CharSequence c = n.getText(); if (c != null) tx = c.toString().trim(); } catch (Throwable t) { }
+        if (tx.length() == 0) { try { CharSequence c = n.getContentDescription(); if (c != null) dc = c.toString().trim(); } catch (Throwable t) { } }
+        if (tx.length() > 0 || dc.length() > 0) {
+            String t = tx.length() > 0 ? tx : dc;
+            int[] cr = nodeRectVis(n);
+            if (cr[4] == 1) {   // 100 D：只给真正在屏幕上的行（屏外伪影不进清单，坐标才可信）
+                String key = t + "@" + cr[0] + "," + cr[1];
+                if (!seen.contains(key)) {
+                    seen.add(key);
+                    int cx = (cr[0] + cr[2]) / 2;
+                    int cy = (cr[1] + cr[3]) / 2;
+                    out.add(new Object[]{t, Integer.valueOf(cx), Integer.valueOf(cy), new int[]{cr[0], cr[1], cr[2], cr[3]}});
+                }
+            }
+        }
+        int cn = 0;
+        try { cn = n.getChildCount(); } catch (Throwable e) { }
+        for (int i = 0; i < cn && out.size() < limit; i++) {
+            AccessibilityNodeInfo ch = null;
+            try { ch = n.getChild(i); } catch (Throwable e) { }
+            if (ch != null) collectTextLines(ch, depth + 1, out, seen, limit);
+        }
+    }
+    /** 100 A3：矩形与屏幕求交。out＝{l,t,r,b,vis,off}；vis=1 时一定是屏内矩形；
+     *  完全在屏外或裁不动 ⇒ vis=0 off=1，b 原样给（先修上下／左右颠倒）。 */
+    /** 100 A1：节点矩形＋可见性。isVisibleToUser 是系统自己的判据——滚动后 ROM 会把屏外节点的
+     *  bounds 压成 0..容器顶 之类的伪影，这种"看着落在屏内"的节点必须靠它挡掉。 */
+    private int[] nodeRectVis(AccessibilityNodeInfo n) {
+        int L = 0, T = 0, R = 0, B = 0;
+        try { android.graphics.Rect rc = new android.graphics.Rect(); n.getBoundsInScreen(rc); L = rc.left; T = rc.top; R = rc.right; B = rc.bottom; } catch (Throwable t) { }
+        if (T > B) { int x = T; T = B; B = x; }
+        if (L > R) { int x = L; L = R; R = x; }
+        int[] cr = new int[6];
+        clipToScreen(L, T, R, B, cr);
+        boolean vu = true;
+        try { vu = n.isVisibleToUser(); } catch (Throwable t) { vu = true; }
+        if (!vu) { cr[4] = 0; cr[5] = 1; }
+        if (cr[4] == 0) { cr[0] = L; cr[1] = T; cr[2] = R; cr[3] = B; }
+        return cr;
+    }
+
+    private void clipToScreen(int L, int T, int R, int B, int[] out) {
+        if (T > B) { int x = T; T = B; B = x; }
+        if (L > R) { int x = L; L = R; R = x; }
+        int W = screenW > 0 ? screenW : 1080;
+        int H = screenH > 0 ? screenH : 2400;
+        int l = L < 0 ? 0 : L, t = T < 0 ? 0 : T;
+        int r = R > W ? W : R, b = B > H ? H : B;
+        if (r <= l || b <= t) {
+            out[0] = L; out[1] = T; out[2] = R; out[3] = B; out[4] = 0; out[5] = 1;
+            return;
+        }
+        out[0] = l; out[1] = t; out[2] = r; out[3] = b; out[4] = 1; out[5] = 0;
     }
 }
