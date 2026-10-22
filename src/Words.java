@@ -289,7 +289,7 @@ public class Words {
     public static final String MA_MSG_LIVE = "实况：";
     public static final String MA_LIVE_T = "Reticle·正在处理";
     /** ★120：原子岛胶囊上的短文本（vivo 岛宽左右槽位各固定 208px，长文案会把岛撑到 776px）。 */
-    public static final String ISLAND_CAP = "处理";
+    public static final String ISLAND_CAP = "截图";
     public static final String MA_LIVE_C = "实况通知试验（18 号）";
     public static final String MA_ITEM_TESTNOTI = "测试通知";
     public static final String MA_ITEM_TESTNOTI_D = "发一条普通通知";
@@ -425,6 +425,7 @@ public class Words {
     public static final String TL_PING = "回铃：确认 Reticle 在线";
     public static final String TL_SHELL = "以 shell 身份执行一条命令，回输出与退出码";
     public static final String TL_SHELL_CMD = "命令（例 id、ls /sdcard）";
+    public static final String TL_SHELL_NOTE = "这一句在干什么（一句话，不超过 20 字，例如：列出根目录文件）。会显示在通知上，请务必写";
     public static final String TL_SHOT = "截当前屏幕（系统级，游戏画面也不黑屏）。\n与 ocr 同时调会互撞。\n一条一条来。";
     public static final String TL_TAP = "点屏幕一点；x、y 是 0~1 比例（正中＝0.5,0.5）";
     public static final String TL_TAP_X = "0~1 比例";

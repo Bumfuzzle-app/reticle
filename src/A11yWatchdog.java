@@ -134,7 +134,10 @@ public class A11yWatchdog {
         int st = A11yLink.observe(ctx);   // 53 号单：连接态判据（含「未连接持续多久」的记账）
         // ★86：掉线就发那条会响的告警（CH_TEST）；接回来自动撤掉。主条永远静默。
         try {
-            boolean lost = (cur == null) || !hasSvc(cur) || st == A11yLink.ST_IN_LIST_NO_CONN;
+            // ★127（2026-10-22）：在册但未连接要熬过 GRACE_MS 才算真掉线。以前一判定就报警，
+            //   而 nudge 在无障碍刚连上 800ms 后就 tick、那时必然是 ST_IN_LIST_NO_CONN，于是每重连一次响一声。
+            boolean lost = (cur == null) || !hasSvc(cur)
+                    || (st == A11yLink.ST_IN_LIST_NO_CONN && A11yLink.noConnFor() >= A11yLink.GRACE_MS);
             Notifier.guardState(ctx, !lost);
         } catch (Throwable t) { }
         if (ERR.equals(cur)) { lastNote = "读不到系统设置"; return "读不到系统设置"; }

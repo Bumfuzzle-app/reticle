@@ -821,6 +821,7 @@ public class McpServer {
                 JSONObject args = params.optJSONObject("arguments");
                 if (args == null) args = new JSONObject();
                 Notifier.toolTouch(ctx, name);   // 86：26 个工具都记账（buzz 也记，中文名要能在通知里看见）
+                try { Notifier.islandTool(ctx, name, args); } catch (Throwable t2) { }   // ★123：工具一进来就把状态推上岛
                 S_CTX = ctx;
                 if (name.equals("status")) {
                     JSONObject result = new JSONObject();
@@ -1799,11 +1800,13 @@ public class McpServer {
         ssh.put("description", Words.TL_SHELL_CMD);
         JSONObject props = new JSONObject();
         props.put("command", ssh);
+        props.put("note", new JSONObject().put("type", "string").put("description", Words.TL_SHELL_NOTE));
         JSONObject schema = new JSONObject();
         schema.put("type", "object");
         schema.put("properties", props);
         JSONArray req2 = new JSONArray();
         req2.put("command");
+        req2.put("note");
         schema.put("required", req2);
         tools.put(tool("ping", Words.TL_PING, new JSONObject()));
         tools.put(tool("shell", Words.TL_SHELL, schema));

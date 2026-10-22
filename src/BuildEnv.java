@@ -38,7 +38,7 @@ public class BuildEnv {
     public static final String JAR_SHA = "4566663c3876e022b4fa4ced8c8697c4ab1688267f090114fd92d027b32e619b";
     public static final long JAR_SIZE = 27092450L;
     /** 环境自己的通知编号（与下载工具 8／形象 9 分开）。 */
-    public static final int NID = 10;
+    public static final int NID = 12;   // ★127：避开 9（大通知）／10（岛）／11（掉线告警）
 
     /** 工具链（在 apk 的 lib/arm64-v8a 里）需要的文件——名字就是安装后的 .so 名。 */
     private static final String[] LIB_FILES = {

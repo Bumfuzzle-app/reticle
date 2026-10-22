@@ -269,6 +269,39 @@ public class ToolTags {
         {"sha256sum", "计算校验"}, {"md5sum", "计算校验"}, {"base64", "计算校验"},
     };
 
+    /** ★123：岛上胶囊只用两字（气泡标签太长，会把岛撑长）。 */
+    public static String shortName(String name) {
+        if (name == null) return "动作";
+        if (name.equals("ping")) return "回铃";
+        if (name.equals("shell")) return "命令";
+        if (name.equals("shot")) return "截图";
+        if (name.equals("tap")) return "点按";
+        if (name.equals("swipe")) return "滑动";
+        if (name.equals("key")) return "按键";
+        if (name.equals("ui")) return "读屏";
+        if (name.equals("ocr")) return "认字";
+        if (name.equals("input")) return "输入";
+        if (name.equals("longpress")) return "长按";
+        if (name.equals("notify")) return "通知";
+        if (name.equals("build")) return "打包";
+        if (name.equals("download")) return "下载";
+        if (name.equals("download_status")) return "进度";
+        if (name.equals("buzz")) return "震动";
+        if (name.equals("status")) return "状态";
+        if (name.equals("help")) return "目录";
+        if (name.equals("acttest")) return "自测";
+        if (name.equals("tap_text")) return "点字";
+        if (name.equals("wait_text")) return "等字";
+        if (name.equals("wait_stable")) return "等稳";
+        if (name.equals("scroll")) return "滚动";
+        if (name.equals("paste")) return "粘贴";
+        if (name.equals("scroll_to_text")) return "找字";
+        if (name.equals("do_chain")) return "连做";
+        if (name.equals("windows")) return "窗口";
+        if (name.equals("clip")) return "剪贴";
+        if (name.equals("texts")) return "全屏";
+        return "动作";
+    }
     /** 气泡第一行：`shell—中文功能`；认不出的一律 `shell—执行命令`（回退，不报错）。 */
     public static String shellAction(String cmd) {
         String f = shellWord(cmd);

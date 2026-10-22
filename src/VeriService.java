@@ -848,50 +848,6 @@ public class VeriService extends AccessibilityService {
         return s;
     }
 
-    /** ★121：点岛展开，但先过三道闸——①通知真被提升 ②岛在显示 ③岛上这条就是自己、且还收起着。
-     *  任一不满足就放弃（点已展开的岛会收起并跳进 App；岛没显示时点是摄像头那块）。
-     *  点完 800ms 复核，还没展开就再点一次，最多两次。 */
-    static void pokeIsland(final android.content.Context ctx, final int id, final int delayMs) {
-        final VeriService s = INSTANCE;
-        if (s == null) return;
-        new Thread(new Runnable() { public void run() {
-            try { Thread.sleep(Math.max(0, delayMs)); } catch (Throwable t) { }
-            boolean promoted = false;
-            try {
-                android.app.NotificationManager nm = (android.app.NotificationManager)
-                        ctx.getSystemService(android.content.Context.NOTIFICATION_SERVICE);
-                android.service.notification.StatusBarNotification[] arr = nm.getActiveNotifications();
-                if (arr != null) for (int i = 0; i < arr.length; i++) {
-                    if (arr[i].getId() == id && (arr[i].getNotification().flags & 0x40000) != 0) promoted = true;
-                }
-            } catch (Throwable t) { s.log("pokeIsland flags err " + t); }
-            if (!promoted) { s.log("pokeIsland skip：通知没被提升（岛上没有它）"); return; }
-            String key = "live_notification-" + ctx.getPackageName() + "-" + id;
-            for (int attempt = 0; attempt < 2; attempt++) {
-                boolean vis = false, mine = false, exp = false;
-                try {
-                    String r = shxRun("dumpsys activity service com.vivo.systemuiplugin 2>/dev/null | grep -oE 'mVisible: [a-z]+|mMainIsland: id = [^,]*|mIslandExpand = [a-z]+' | head -4", 4000L);
-                    vis = r.indexOf("mVisible: true") >= 0;
-                    mine = r.indexOf(key) >= 0;
-                    exp = r.indexOf("mIslandExpand = true") >= 0;
-                } catch (Throwable t) { s.log("pokeIsland probe err " + t); return; }
-                if (!vis) { s.log("pokeIsland skip：岛没显示"); return; }
-                if (!mine) { s.log("pokeIsland skip：岛上不是自己这条"); return; }
-                if (exp) { s.log("pokeIsland skip：岛已经是展开的"); return; }
-                try {
-                    DisplayMetrics dm = s.getResources().getDisplayMetrics();
-                    final float px = dm.widthPixels / 2f;
-                    final float py = dm.heightPixels * 0.0306f;
-                    new android.os.Handler(android.os.Looper.getMainLooper()).post(new Runnable() { public void run() {
-                        try { s.runGesture(s.clickStroke(px, py, 60)); } catch (Throwable t) { }
-                    }});
-                    s.log("pokeIsland tap #" + (attempt + 1));
-                } catch (Throwable t) { s.log("pokeIsland tap err " + t); return; }
-                try { Thread.sleep(800); } catch (Throwable t) { }
-            }
-            s.log("pokeIsland 结束：点了两下仍没确认展开");
-        }}).start();
-    }
     static class GRes { boolean ok; long ms; int err = -1; }
     private void throttleShot() {
         long t = SystemClock.uptimeMillis();

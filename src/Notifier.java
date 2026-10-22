@@ -232,11 +232,30 @@ public class Notifier {
     // ==== 18 号：原生实况型通知试验（ProgressStyle＋requestPromoted；反射实现，编译期不依赖 API36）====
     /** ★120：已发过实况的 id（只第一次发时点岛展开，避免更新时反复点）。 */
     static final java.util.HashSet<Integer> sLiveIds = new java.util.HashSet<Integer>();
+    /** ★122：实况通知固定用这一条 id —— vivo 按「通知」算岛活动，两个 id 会让岛分裂成主岛＋侧岛。 */
+    public static final int ISLAND_ID = 10;
     public static String promoted(Context c, int id, String title, String content, int progress) {
+        return promoted(c, id, title, content, progress, Words.ISLAND_CAP);
+    }
+
+    /** ★123：工具调用推上岛。标题=Reticle·功能，正文=AI 写的 note（没有就退摘要），胶囊=两字。 */
+    public static String islandTool(Context c, String name, org.json.JSONObject args) {
+        try {
+            String cap = ToolTags.shortName(name);
+            String title = "Reticle·" + ToolTags.label(name);
+            String body = (args == null) ? "" : args.optString("note", "");
+            if (body.length() == 0) body = ToolTags.summary(name, args);
+            if (body.length() == 0) body = ToolTags.line(name, args);
+            return promoted(c, ISLAND_ID, title, body, 0, cap);
+        } catch (Throwable t) { return "err: " + t; }
+    }
+
+    public static String promoted(Context c, int id, String title, String content, int progress, String cap) {
+        id = ISLAND_ID;   // ★122：不管调用方传什么，实况一律共用 10 号
         // ★120·岛宽：胶囊文本用短词（vivo 岛展开后左右槽位各固定 208px，总宽下限 528px）
-        String capT = Words.ISLAND_CAP;
+        String capT = (cap == null || cap.length() == 0) ? Words.ISLAND_CAP : cap;
         boolean chipIcon = true;
-        String styMode = "";
+        String styMode = "std";
         try {
             channels(c);
             Notification.Builder b = base(c, CH_LIVE2);
@@ -261,7 +280,7 @@ public class Notifier {
                 } else if (!"std".equals(styMode)) {
                 Class<?> psC = Class.forName("android.app.Notification$ProgressStyle");
                 Object ps = psC.getDeclaredConstructor().newInstance();
-                psC.getMethod("setProgress", int.class).invoke(ps, progress);
+                // 实验:不设进度 psC.getMethod("setProgress", int.class).invoke(ps, progress);
                 try { psC.getMethod("setChipIconVisible", boolean.class).invoke(ps, chipIcon); } catch (Throwable t2) { }
                 try { psC.getMethod("setShortCriticalText", CharSequence.class).invoke(ps, capT); } catch (Throwable t2) { }
                 Class<?> stC = Class.forName("android.app.Notification$Style");
@@ -279,8 +298,7 @@ public class Notifier {
             { int pf = 0; try { pf = Notification.class.getField("FLAG_PROMOTED_ONGOING").getInt(null); } catch (Throwable t) { }
               nlog(c, "promoted flags=0x" + Integer.toHexString(n.flags) + " pf=0x" + Integer.toHexString(pf) + " hit=" + ((n.flags & pf) != 0)); }
             nm(c).notify(id, n);
-            // ���：发完立刻点一下状态栏的岛，让它展开成卡片（vivo 没公开 API，只能靠无障碍手势）
-            if (sLiveIds.add(Integer.valueOf(id))) { try { VeriService.pokeIsland(c, id, 700); } catch (Throwable t) { } }
+            // ★125（2026-10-22）：砍掉「发完用无障碍点岛展开」。坐标盲点跟用户的手打架——点已展开的岛＝收起并跳进 App（下载类工具高频更新时必中）；胶囊文字自己会更新，展开交给用户手点。
             nlog(c, "promoted ok id=" + id + " progress=" + progress);
             return "ok";
         } catch (Throwable t) { nlog(c, "promoted err " + t); return "err: " + t; }
@@ -435,7 +453,7 @@ public class Notifier {
         Notification.Builder b = base(c, CH_STAT);
         String fold = foldText();
         b.setGroup(GROUP_MAIN);   // ★87：主通知显式成组
-        b.setContentTitle(fold);
+        b.setContentTitle(Words.NT_DEF_TITLE);   // ★124：折叠标题固定 Reticle —— 当前工具已经由原子岛承担，不要再重复一条活动式标题
         String body = bodyText();
         if (body.length() > 0) b.setContentText(body);
         b.setContentIntent(openApp(c));
@@ -593,6 +611,16 @@ public class Notifier {
                 return;
             }
             if (sAlertOn) return;
+            // ★127（2026-10-22）：三道防误报。以前只有 sAlertOn 这一道，所以状态一抖就响：
+            //   ① 进程刚起来 20 秒内不报——装包/开机/强停后无障碍还没被系统接上，属正常过渡
+            //   ② 同进程内不重复（sAlertOn）
+            //   ③ 跨进程最小间隔 60 秒（存 SP，进程重启也生效）
+            long now = System.currentTimeMillis();
+            if (now - sProcStart < PROC_GRACE_MS) { nlog(c, "alert skip：启动宽限"); return; }
+            long lastAt = 0L;
+            try { lastAt = c.getSharedPreferences(PREFS, Context.MODE_PRIVATE).getLong(KEY_ALERT_AT, 0L); } catch (Throwable t) { }
+            if (lastAt > 0L && now - lastAt < ALERT_MIN_GAP_MS) { sAlertOn = true; nlog(c, "alert skip：距上次报警不足 60 秒"); return; }
+            try { c.getSharedPreferences(PREFS, Context.MODE_PRIVATE).edit().putLong(KEY_ALERT_AT, now).apply(); } catch (Throwable t) { }
             sAlertOn = true;
             channels(c);
             Notification.Builder b = base(c, CH_TEST);
@@ -607,7 +635,12 @@ public class Notifier {
             nlog(c, "alert up");
         } catch (Throwable t) { nlog(c, "alert err " + t); }
     }
-    private static final int ALERT_ID = 10;
+    private static final int ALERT_ID = 11;   // ★127：以前是 10，与 ISLAND_ID 撞号——掉线恢复时会 cancel 掉岛那条
+    /** ★127：告警防抖参数。sProcStart 在类加载时取值，等价于「进程起来那一刻」。 */
+    private static final long sProcStart = System.currentTimeMillis();
+    private static final long PROC_GRACE_MS = 20000L;
+    private static final long ALERT_MIN_GAP_MS = 60000L;
+    private static final String KEY_ALERT_AT = "alert_at";
 
     /** 72 号单 · 启动清理：撤掉旧版残留的媒体通知（id=9）＋删掉旧通知渠道 yitong_media。
      *  不然通知栏里那条划不掉、系统设置里还挂着「助手状态·媒体」＝等于砍一半。 */

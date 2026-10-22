@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="app.reticle"
-    android:versionCode="167"
-    android:versionName="0.29.0">
+    android:versionCode="169"
+    android:versionName="1.0.0">
     <uses-sdk android:minSdkVersion="30" android:targetSdkVersion="36"/>
     <!-- ★71 B 线（2026-10-15）：让位名单要列"能启动的应用" ⇒ 必须看得见全部包。
          我们**不在 Play 上架**（自装 apk／GitHub Release 分发），不受该权限的商店政策约束。 -->
