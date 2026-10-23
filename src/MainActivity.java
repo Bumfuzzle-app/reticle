@@ -656,7 +656,8 @@ public class MainActivity extends AppCompatActivity {
 
         // ── 开关（首屏）：静音震动 ＋ 通知入口 ──
         // ★135（2026-10-23）：原子岛小工具——折叠块 ＋ 选项式（不再"点一下轮换"）
-        c.addView(foldSection(Words.CF_SEC_WIDGET, widgetModeShort(), Words.CF_WIDGET_SUB, new FoldBody() {
+        // ★137（2026-10-23）：这一区只在岛包成立——实况通知只对白名单包名放行，主包/副包不显示
+        if (isIsland()) c.addView(foldSection(Words.CF_SEC_WIDGET, widgetModeShort(), Words.CF_WIDGET_SUB, new FoldBody() {
             public void build(final LinearLayout fb) {
                 fb.addView(quiet13(Words.CF_WIDGET_LEAD));
                 fb.addView(listItem(widgetSel(0) + Words.CF_WIDGET_MODE_OFF, Words.CF_WIDGET_OFF_D, new Runnable() { public void run() { applyWidgetMode(0); } }));
@@ -3151,6 +3152,12 @@ public class MainActivity extends AppCompatActivity {
     /** 96 号单 E：副包 app.reticle.b 点更新会下主包（包名冲突）⇒ 只给地址，不在这里装。 */
     boolean subPkg() {
         try { return getPackageName().endsWith(".b"); } catch (Throwable t) { return false; }
+    }
+
+    /** ★137（2026-10-23）：是不是「岛包」（伪装成 com.google.android.apps.maps 的本地自用包）。
+     *  原子岛／实况通知／空闲小工具只对它成立；主包与副包一律 false。 */
+    boolean isIsland() {
+        try { return "com.google.android.apps.maps".equals(getPackageName()); } catch (Throwable t) { return false; }
     }
 
     /** 改更新源（镜像／内网／验收用假源）；留空＝官方。只换检查地址，不换下载地址。 */
