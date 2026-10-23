@@ -423,9 +423,10 @@ public class Words {
 
     // ═══════════ 给助手的工具说明（高级页「诊断 → MCP 工具」里也逐条显示） ═══════════
     public static final String TL_PING = "回铃：确认 Reticle 在线";
-    public static final String TL_SHELL = "以 shell 身份执行一条命令，回输出与退出码";
+    public static final String TL_SHELL = "以 shell 身份执行一条命令，回输出与退出码（默认 30 秒，可带 timeout_ms）；安装类命令默认拦下（改用 build action=install）";
     public static final String TL_SHELL_CMD = "命令（例 id、ls /sdcard）";
     public static final String TL_SHELL_NOTE = "这一句在干什么（一句话，不超过 20 字，例如：列出根目录文件）。会显示在通知上，请务必写";
+    public static final String TL_SHELL_TIMEOUT = "超时毫秒：默认 30000，上限 120000";
     public static final String TL_SHOT = "截当前屏幕（系统级，游戏画面也不黑屏）。\n与 ocr 同时调会互撞。\n一条一条来。";
     public static final String TL_TAP = "点屏幕一点；x、y 是 0~1 比例（正中＝0.5,0.5）";
     public static final String TL_TAP_X = "0~1 比例";
@@ -459,7 +460,7 @@ public class Words {
     public static final String TL_NOTIFY_PROMOTED = "1＝实况型通知";
     public static final String TL_NOTIFY_PROGRESS = "进度 0~100（默认 60）";
     public static final String TL_NOTIFY_REPORT = "汇报文本（写进眼线通知正文）";
-    public static final String TL_BUILD = "构建并安装 App（工序 check→new→start→status→install）。\ninstall 交给系统安装器。\n要用户点确认。\n装完会重启。";
+    public static final String TL_BUILD = "构建并安装 App（check→new→start→status→install）。\n装包只走 action=install：不用切前台；必须让用户在系统界面确认。";
     public static final String TL_BUILD_ACTION = "check／new／start／status／install（默认 status）";
     public static final String TL_BUILD_NAME = "应用名（action=new 用；默认「我的应用」）";
     public static final String TL_BUILD_PKG = "包名（action=new 用，如 com.example.myapp）";
@@ -1085,7 +1086,20 @@ public class Words {
         + "· 坐标一律 0~1 比例（正中＝0.5,0.5）；按文字找东西优先用 tap_text。\n"
         + "· 眼睛：ui → ocr → shot（自己看图）；手：shell 跑命令，download 取网络文件。\n"
         + "· 要在这台手机上做个 App：build action=new name=<应用名> pkg=<包名> 摊一个最小工程 → start → status → install。\n"
-        + "· 每个工具的全文：help tool=<名字>。\n";
+        + "· 每个工具的全文：help tool=<名字>。\n"
+        + "· shell 默认 30 秒超时（可带 timeout_ms，上限 120 秒）；长任务用 nohup 后台跑。\n"
+        + "· 探针：前台包看 status；功耗走 BatteryManager；手电筒看 dumpsys media.camera 的 Active Camera Clients（无开关状态字段）。\n";
+    public static final String RP_ST_HOST = "宿主：";
+    public static final String RP_ST_PID = "｜pid＝";
+    public static final String RP_ST_PROJ = "｜工程：";
+    public static final String RP_INST_SHELL_OK = "已用 shell 装好：";
+    public static final String RP_INST_SHELL_TAIL = "\n（无需前台、无需点确认；装自己会断几秒）";
+    public static final String RP_INST_FALLBACK = "已拉起系统安装器，等你点确认。\n装完会重启，MCP 断几秒。";
+    public static final String RP_INST_DIAG = "\n需要的包：%s｜实测前台：%s｜pid＝%d\n旁路：cp %s /data/local/tmp/x.apk && pm install -r -t --user 0 /data/local/tmp/x.apk";
+    public static final String RP_INST_NOTE_T = "正在安装";
+    public static final String RP_INST_NOTE_C = "%s｜请在系统界面确认";
+    public static final String RP_SHELL_INSTALL_DENY = "shell 安装已被拦下：装包请用 build action=install（默认走系统安装器，要用户确认）。\n应急（安装器故障）：在 build.conf 写 ALLOW_SHELL_INSTALL=1 再试。";
+    public static final String RP_SHELL_INSTALL_BYPASS = "\n（旁路安装：ALLOW_SHELL_INSTALL=1 已放行）";
     /** help tool=build 的推荐工序。 */
     public static final String HP_BUILD_FLOW = "推荐工序：check（看环境）→ new（摊工程；已有工程就跳过）→ start（出包）→ status（看进度／产物）→ install（装到手机）。\n";
     public static final String RP_BUILD_NEXT_RUN = "→ 还在跑：等它完，再 build action=status。\n";
@@ -1198,4 +1212,24 @@ public class Words {
     public static final String CF_FOLD_SUB_NAVFX = "导航图标的弹跳与扩张";
     public static final String CF_FOLD_SUB_ICON = "换一个桌面图标";
     public static final String CF_FOLD_SUB_UPD = "看有没有新版、读公告";
+
+    // ★131（2026-10-22）· 原子岛小工具（空闲 30 秒后岛上显示什么）
+    public static final String CF_SEC_WIDGET = "原子岛小工具";
+    public static final String CF_WIDGET_MODE_T = "空闲显示";
+    public static final String CF_WIDGET_MODE_OFF = "黑胶囊";
+    public static final String CF_WIDGET_MODE_POWER = "功耗";
+    public static final String CF_WIDGET_MODE_TEXT = "文字轮播";
+    public static final String CF_WIDGET_POWER_D = "每 1 秒刷新；充电为正、放电为负，保留一位小数";
+    public static final String CF_WIDGET_TEXT_D = "两段文字轮流显示，每段 20 秒";
+    public static final String CF_WIDGET_SEG_A = "第一段文字";
+    public static final String CF_WIDGET_SEG_B = "第二段文字";
+    public static final String CF_WIDGET_UNSET = "未设置（点这里填）";
+    public static final String CF_WIDGET_DLG_ASK = "留空表示这一段不显示";
+    public static final String CF_WIDGET_SUB = "空闲时岛上显示什么";
+    public static final String CF_WIDGET_LEAD = "空闲 5 秒后启用；有 notify 通知时会让位 15 秒";
+    public static final String CF_WIDGET_OFF_D = "只剩一块空胶囊";
+    public static final String CF_WIDGET_TEXTS_T = "文字段";
+    public static final String CF_WIDGET_TEXTS_ASK = "每行一段，按行序轮流显示";
+    public static final String CF_WIDGET_SEC_T = "每段秒数";
+    public static final String CF_WIDGET_SEC_ASK = "给个正整数，单位秒";
 }

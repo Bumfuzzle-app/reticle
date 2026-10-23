@@ -953,7 +953,7 @@ public class McpServer {
                     }
                     if (action.equals("install")) {
                         String r = BuildRunner.install(ctx);
-                        boolean bad = !r.startsWith("已拉起系统安装器");
+                        boolean bad = !(r.startsWith(Words.RP_INST_SHELL_OK) || r.startsWith(Words.RP_INST_FALLBACK));
                         if (bad) failMark("build install 不成");
                         JSONObject j = new JSONObject();
                         j.put("content", content(r));
@@ -968,7 +968,7 @@ public class McpServer {
                 if (name.equals("shell")) {
                     String command = args.optString("command", "");
                     if (command.length() == 0) return err(id, -32602, "no command" + String.format(java.util.Locale.ROOT, Words.HP_POINT, "shell"));
-                    String r = execShell(ctx, command);
+                    String r = execShell(ctx, command, args.optInt("timeout_ms", 0));
                     JSONObject result = new JSONObject();
                     result.put("content", content(r));
                     result.put("isError", false);
@@ -1025,6 +1025,8 @@ public class McpServer {
                             rN = Notifier.send(ctx, nid, titleN, contN, ongN);
                             outS = "ok".equals(rN) ? (Words.RP_SEND_OK + nid) : failR(Words.RP_SEND_ERR + rN, "notify send");
                         }
+                        // ★132（2026-10-22）：notify 内容上岛并锁 15 秒，期间别的命令不覆盖
+                        try { Notifier.holdNotify(ctx, titleN, contN); } catch (Throwable t) { }
                     }
                     JSONObject result = new JSONObject();
                     result.put("content", content(outS));
@@ -1198,15 +1200,56 @@ public class McpServer {
         } catch (Throwable t) { return "{\"jsonrpc\":\"2.0\",\"id\":null}"; }
     }
 
+    /** 安装类命令（pm install／会话拼装）：默认拦下，防绕过用户确认；应急见 build.conf 的 ALLOW_SHELL_INSTALL。 */
+    private static boolean isInstallCmd(String cmd) {
+        if (cmd == null || cmd.length() == 0) return false;
+        String heredoc = null;
+        String[] ls = cmd.split("\n");
+        for (int i = 0; i < ls.length; i++) {
+            String l = ls[i].trim();
+            if (heredoc != null) {
+                if (l.equals(heredoc)) heredoc = null;
+                continue;
+            }
+            int h = l.indexOf("<<");
+            if (h >= 0) {
+                String tag = l.substring(h + 2).trim();
+                if (tag.startsWith("-")) tag = tag.substring(1).trim();
+                if (tag.length() >= 2 && (tag.charAt(0) == 39 || tag.charAt(0) == 34)) tag = tag.substring(1, tag.length() - 1);
+                if (tag.length() > 0) heredoc = tag;
+                l = l.substring(0, h);
+            }
+            String[] segs = l.split(";|&&|\\|\\||\\|");
+            for (int j = 0; j < segs.length; j++) {
+                String t = segs[j].trim();
+                if (t.startsWith("pm install") || t.startsWith("pm install-")) return true;
+                String[] tk = t.split("\\s+");   // 换写法的同一句：/system/bin/pm install、cmd package install
+                int k = 0;
+                while (k < tk.length && tk[k].length() > 1 && tk[k].indexOf('=') > 0) k++;
+                String c0 = (k < tk.length) ? tk[k] : "";
+                int sl = c0.lastIndexOf('/');
+                if (sl >= 0) c0 = c0.substring(sl + 1);
+                if (c0.equals("pm") && k + 1 < tk.length && tk[k + 1].startsWith("install")) return true;
+                if (c0.equals("cmd") && k + 2 < tk.length && tk[k + 1].equals("package") && tk[k + 2].startsWith("install")) return true;
+            }
+        }
+        return false;
+    }
+
     /** 38 号单：shell 工具（退出码原样透出；空输出回 ‹空›；带 ms/timeout，便于区分「真没内容／被杀／超时」）。 */
-    private static String execShell(Context ctx, String command) {
+    private static String execShell(Context ctx, String command, int timeoutMs) {
         try {
+            long toMs = timeoutMs > 0 ? Math.min((long) timeoutMs, 120000L) : SHELL_TIMEOUT_MS;
+            if (isInstallCmd(command)) {
+                String _allow = "";
+                try { _allow = BuildRunner.conf(ctx, "ALLOW_SHELL_INSTALL"); } catch (Throwable t) { }
+                if (!"1".equals(_allow.trim())) return Words.RP_SHELL_INSTALL_DENY;
+            }
             if (!Shizuku.pingBinder()) {
                 try { rikka.shizuku.ShizukuProvider.requestBinderForNonProviderProcess(ctx); } catch (Throwable t) { }
                 try { Thread.sleep(150); } catch (Throwable t) { }
-                if (!Shizuku.pingBinder()) return failR(Words.RP_SHX_BINDER_ERR, "shizuku binder");
             }
-            String r = VeriService.shxRun(command, SHELL_TIMEOUT_MS);
+            String r = VeriService.shxRun(command, toMs);
             JSONObject o = new JSONObject(r);
             int okv = o.optInt("ok", 0);
             int exit = o.optInt("exit", -888);
@@ -1219,8 +1262,9 @@ public class McpServer {
             if (okv != 1) return failR(Words.RP_EXEC_ERR + o.optString("err", "unknown"), "exec ok=0");
             StringBuilder sb = new StringBuilder();
             sb.append("exit=").append(exit);
-            if (timeout == 1) sb.append(String.format(java.util.Locale.ROOT, Words.RP_SHELL_TIMEOUT_FMT, SHELL_TIMEOUT_MS / 1000));
+            if (timeout == 1) sb.append(String.format(java.util.Locale.ROOT, Words.RP_SHELL_TIMEOUT_FMT, toMs / 1000));
             sb.append("  ms=").append(ms).append("\n");
+            if (isInstallCmd(command)) sb.append(Words.RP_SHELL_INSTALL_BYPASS);
             if (out.length() > 0) { sb.append("--- stdout ---\n").append(out); if (!out.endsWith("\n")) sb.append("\n"); }
             if (err.length() > 0) { sb.append("--- stderr ---\n").append(err); if (!err.endsWith("\n")) sb.append("\n"); }
             if (out.length() == 0 && err.length() == 0) sb.append("--- ").append(Words.RP_SHELL_EMPTY).append(" ---\n");
@@ -1323,6 +1367,9 @@ public class McpServer {
         StringBuilder sb = new StringBuilder();
         try {
             sb.append(Words.RP_ST_TITLE).append(pkgVerVc(ctx)).append("\n");
+            String _proj = "";
+            try { java.io.File _pd = BuildRunner.projectDir(ctx); if (_pd != null) _proj = _pd.getAbsolutePath(); } catch (Throwable t) { }
+            sb.append(Words.RP_ST_HOST).append(ctx.getPackageName()).append(Words.RP_ST_PID).append(android.os.Process.myPid()).append(Words.RP_ST_PROJ).append(_proj.length() > 0 ? _proj : Words.RP_ST_UNKNOWN).append("\n");
             boolean in = false;
             try { in = A11yWatchdog.hasSvc(A11yWatchdog.readList(ctx)); } catch (Throwable t) { }
             boolean sw = false;
@@ -1801,6 +1848,7 @@ public class McpServer {
         JSONObject props = new JSONObject();
         props.put("command", ssh);
         props.put("note", new JSONObject().put("type", "string").put("description", Words.TL_SHELL_NOTE));
+        props.put("timeout_ms", new JSONObject().put("type", "number").put("description", Words.TL_SHELL_TIMEOUT));
         JSONObject schema = new JSONObject();
         schema.put("type", "object");
         schema.put("properties", props);

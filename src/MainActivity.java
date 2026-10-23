@@ -655,6 +655,18 @@ public class MainActivity extends AppCompatActivity {
         c.addView(confBtn(Words.CF_BTN_URL, Words.CF_HINT_URL, new Runnable() { public void run() { copyUrl(); } }));
 
         // ── 开关（首屏）：静音震动 ＋ 通知入口 ──
+        // ★135（2026-10-23）：原子岛小工具——折叠块 ＋ 选项式（不再"点一下轮换"）
+        c.addView(foldSection(Words.CF_SEC_WIDGET, widgetModeShort(), Words.CF_WIDGET_SUB, new FoldBody() {
+            public void build(final LinearLayout fb) {
+                fb.addView(quiet13(Words.CF_WIDGET_LEAD));
+                fb.addView(listItem(widgetSel(0) + Words.CF_WIDGET_MODE_OFF, Words.CF_WIDGET_OFF_D, new Runnable() { public void run() { applyWidgetMode(0); } }));
+                fb.addView(listItem(widgetSel(1) + Words.CF_WIDGET_MODE_POWER, Words.CF_WIDGET_POWER_D, new Runnable() { public void run() { applyWidgetMode(1); } }));
+                fb.addView(listItem(widgetSel(2) + Words.CF_WIDGET_MODE_TEXT, Words.CF_WIDGET_TEXT_D, new Runnable() { public void run() { applyWidgetMode(2); } }));
+                fb.addView(listItem(Words.CF_WIDGET_TEXTS_T, widgetTextsDesc(), new Runnable() { public void run() { askWidgetTexts(); } }));
+                fb.addView(listItem(Words.CF_WIDGET_SEC_T, widgetSecDesc(), new Runnable() { public void run() { askWidgetSec(); } }));
+            }
+        }));
+
         c.addView(sectionTitle(Words.CF_SEC_BEHAV));
         c.addView(switchItem(Words.CF_SW_VIB_T,
                 Words.CF_SW_VIB_D,
@@ -1655,6 +1667,98 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+    // ★131（2026-10-22）· 原子岛小工具的界面辅助
+    String widgetModeDesc() {
+        int m = Notifier.widgetMode(this);
+        if (m == Notifier.WIDGET_POWER) return Words.CF_WIDGET_MODE_POWER + " · " + Words.CF_WIDGET_POWER_D;
+        if (m == Notifier.WIDGET_TEXT) return Words.CF_WIDGET_MODE_TEXT + " · " + Words.CF_WIDGET_TEXT_D;
+        return Words.CF_WIDGET_MODE_OFF + " · 30 秒无动作后岛上只留一块空胶囊";
+    }
+    String widgetSegDesc(int idx) {
+        String v = (idx == 0) ? Notifier.widgetTextA(this) : Notifier.widgetTextB(this);
+        return (v == null || v.length() == 0) ? Words.CF_WIDGET_UNSET : v;
+    }
+    /** 点一下循环：黑胶囊 → 功耗 → 文字轮播 → 黑胶囊。 */
+    // ★135（2026-10-23）· 小工具新版界面辅助（选项式 + 多段轮播）
+    String widgetModeShort() {
+        int m = Notifier.widgetMode(this);
+        if (m == Notifier.WIDGET_POWER) return Words.CF_WIDGET_MODE_POWER;
+        if (m == Notifier.WIDGET_TEXT) return Words.CF_WIDGET_MODE_TEXT;
+        return Words.CF_WIDGET_MODE_OFF;
+    }
+    String widgetSel(int m) {
+        return (Notifier.widgetMode(this) == m) ? "✓ " : "　 ";
+    }
+    void applyWidgetMode(int m) {
+        Notifier.setWidgetMode(this, m);
+        toast(Words.CF_WIDGET_MODE_T + "：" + widgetModeShort());
+        rebuildConfUi();
+    }
+    String widgetTextsDesc() {
+        try {
+            String[] segs = Notifier.widgetSegs(this);
+            if (segs.length == 0) return Words.CF_WIDGET_UNSET;
+            String first = segs[0].length() > 12 ? segs[0].substring(0, 12) + "…" : segs[0];
+            return segs.length + " 段 · " + first;
+        } catch (Throwable t) { return Words.CF_WIDGET_UNSET; }
+    }
+    String widgetSecDesc() {
+        return Notifier.widgetSegSec(this) + " 秒 / 段";
+    }
+    void askWidgetTexts() {
+        final android.widget.EditText et = new android.widget.EditText(this);
+        et.setSingleLine(false);
+        et.setMinLines(3);
+        et.setGravity(android.view.Gravity.TOP | android.view.Gravity.START);
+        et.setInputType(android.text.InputType.TYPE_CLASS_TEXT | android.text.InputType.TYPE_TEXT_FLAG_MULTI_LINE);
+        et.setText(Notifier.widgetTexts(this));
+        try { et.setSelection(et.getText().length()); } catch (Throwable t) { }
+        reticleDialog(Words.CF_WIDGET_TEXTS_T, Words.CF_WIDGET_TEXTS_ASK, et, Words.CF_DLG_CANCEL, Words.CF_DLG_OK, new Runnable() {
+            public void run() {
+                String v = et.getText() == null ? "" : et.getText().toString();
+                Notifier.setWidgetTexts(MainActivity.this, v);
+                rebuildConfUi();
+            }
+        });
+    }
+    void askWidgetSec() {
+        final android.widget.EditText et = new android.widget.EditText(this);
+        et.setSingleLine(true);
+        et.setInputType(android.text.InputType.TYPE_CLASS_NUMBER);
+        et.setText("" + Notifier.widgetSegSec(this));
+        try { et.setSelection(et.getText().length()); } catch (Throwable t) { }
+        reticleDialog(Words.CF_WIDGET_SEC_T, Words.CF_WIDGET_SEC_ASK, et, Words.CF_DLG_CANCEL, Words.CF_DLG_OK, new Runnable() {
+            public void run() {
+                try { Notifier.setWidgetSegSec(MainActivity.this, Integer.parseInt(et.getText().toString().trim())); } catch (Throwable t) { }
+                rebuildConfUi();
+            }
+        });
+    }
+    void cycleWidget() {
+        int m = (Notifier.widgetMode(this) + 1) % 3;
+        Notifier.setWidgetMode(this, m);
+        String lb = (m == Notifier.WIDGET_POWER) ? Words.CF_WIDGET_MODE_POWER
+                : (m == Notifier.WIDGET_TEXT ? Words.CF_WIDGET_MODE_TEXT : Words.CF_WIDGET_MODE_OFF);
+        toast(Words.CF_WIDGET_MODE_T + "：" + lb);
+        rebuildConfUi();
+    }
+    void askWidgetText(final int idx) {
+        final android.widget.EditText et = new android.widget.EditText(this);
+        et.setSingleLine(true);
+        et.setInputType(android.text.InputType.TYPE_CLASS_TEXT);
+        et.setText(idx == 0 ? Notifier.widgetTextA(this) : Notifier.widgetTextB(this));
+        try { et.setSelection(et.getText().length()); } catch (Throwable t) { }
+        reticleDialog(idx == 0 ? Words.CF_WIDGET_SEG_A : Words.CF_WIDGET_SEG_B,
+                Words.CF_WIDGET_DLG_ASK, et, Words.CF_DLG_CANCEL, Words.CF_DLG_OK, new Runnable() {
+                    public void run() {
+                        String v = et.getText() == null ? "" : et.getText().toString().trim();
+                        if (idx == 0) Notifier.setWidgetText(MainActivity.this, v, Notifier.widgetTextB(MainActivity.this));
+                        else Notifier.setWidgetText(MainActivity.this, Notifier.widgetTextA(MainActivity.this), v);
+                        rebuildConfUi();
+                    }
+                });
+    }
+
     /** 33 号单：一根无极滑杆（整数刻度；换算／存储／即时生效都写在 onChanged 里）。 */
     View fxSlider(String title, String hint, final int min, final int max, final int step, int cur, final String unit, final FXCB cb) {
         LinearLayout col = column();

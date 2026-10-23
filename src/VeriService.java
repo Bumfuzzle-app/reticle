@@ -73,7 +73,18 @@ public class VeriService extends AccessibilityService {
         outDir = new File(root, "out");
         mkdirs(inDir);
         mkdirs(outDir);
-        mkdirs(new File(root, "shots"));
+        File _shots = new File(root, "shots");
+        mkdirs(_shots);
+        // ★136（2026-10-23）：整个运行目录放 .nomedia —— shots／ocr／loop 全部不进用户相册
+        try { File _nm = new File(root, ".nomedia"); if (!_nm.exists()) _nm.createNewFile(); } catch (Throwable t) { }
+        // ★137（2026-10-23）：截图只留 7 天，按最后修改时间自动清
+        try {
+            long _cut = System.currentTimeMillis() - 7L * 24L * 3600L * 1000L;
+            File[] _fs = _shots.listFiles();
+            if (_fs != null) for (int _i = 0; _i < _fs.length; _i++) {
+                if (_fs[_i].isFile() && !_fs[_i].getName().startsWith(".") && _fs[_i].lastModified() < _cut) _fs[_i].delete();
+            }
+        } catch (Throwable t) { }
         mkdirs(new File(root, "loop"));
         mkdirs(new File(root, "ocr"));
         mkdirs(new File(root, "logs"));
@@ -2729,7 +2740,10 @@ public class VeriService extends AccessibilityService {
             });
         } catch (Throwable t) { }
         StringBuilder sb = new StringBuilder();
-        sb.append("{\"ok\":1,\"src\":\"").append(src).append("\",\"screen\":[").append(screenW).append(",").append(screenH).append("],\"count\":").append(lines.size()).append(",\"lines\":[");
+        String tpkg = "";
+        try { if (root != null) { CharSequence _tp = root.getPackageName(); if (_tp != null) tpkg = _tp.toString(); } } catch (Throwable t) { }
+        if (tpkg.length() == 0) { try { tpkg = foregroundPkg(); } catch (Throwable t) { } }
+        sb.append("{\"ok\":1,\"src\":\"").append(src).append("\",\"pkg\":\"").append(esc(tpkg)).append("\",\"screen\":[").append(screenW).append(",").append(screenH).append("],\"count\":").append(lines.size()).append(",\"lines\":[");
         for (int i = 0; i < lines.size(); i++) {
             Object[] L = lines.get(i);
             String t = (String) L[0];

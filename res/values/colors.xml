@@ -3,9 +3,9 @@
     <!-- 86.5 号单：启动窗口底色（冷启动第一帧就是它；夜/浅两套，别闪白） -->
     <color name="launch_bg">#FFF7F8FA</color>
     <color name="launch_bg_dark">#FF101418</color>
-    <color name="ic_launcher_background">#0F1115</color>
+    <color name="ic_launcher_background">#FFFFFF</color>   <!-- ★130（2026-10-22）：换戒指图标后改白底，黑环才看得见 -->
     <!-- 73 号单：预置图标第二~四款的底色（第一款＝上面的默认款，几何与配色一律没动） -->
-    <color name="ic_launcher_background_2">#07211F</color>
-    <color name="ic_launcher_background_3">#0F1115</color>
-    <color name="ic_launcher_background_4">#241310</color>
+    <color name="ic_launcher_background_2">#FFFFFF</color>   <!-- ★134：统一白底，黑环才看得见 -->
+    <color name="ic_launcher_background_3">#FFFFFF</color>
+    <color name="ic_launcher_background_4">#FFFFFF</color>
 </resources>

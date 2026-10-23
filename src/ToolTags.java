@@ -308,6 +308,16 @@ public class ToolTags {
         return "shell—" + (f.length() == 0 ? "执行命令" : f);
     }
 
+
+    /** ★128（2026-10-22）：原子岛胶囊专用——照抄气泡的判定（同一个 shellWord／同一张 SH 表），但压到 4 字以内。
+     *  实测 vivo 短胶囊能容 4 个汉字（岛宽约 576px＝屏宽 40%，仍在短胶囊档）。
+     *  气泡那边继续用完整文案（shellAction），两边语义一致，只是长度不同。 */
+    public static String shellCap(String cmd) {
+        String f = shellWord(cmd);
+        if (f.length() == 0) return "命令";   // 兜底：认不出时退回工具短名，跟以前一样
+        if (f.equals("读取系统状态") || f.equals("读取系统属性")) return "读取系统";   // 5 字压到 4
+        return f.length() > 4 ? f.substring(0, 4) : f;
+    }
     /** 第一个能映射的词：跳过 cd／export／env／true／set／sudo／su／nohup 与变量赋值、选项、路径前缀。 */
     static String shellWord(String cmd) {
         if (cmd == null) return "";

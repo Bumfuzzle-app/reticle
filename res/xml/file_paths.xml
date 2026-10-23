@@ -3,4 +3,6 @@
 <paths xmlns:android="http://schemas.android.com/apk/res/android">
     <external-path name="dl" path="Reticle/dl/"/>
     <external-files-path name="appdl" path="dl/"/>
+    <external-path name="runexp" path="ReticleExp/dl/"/>
+    <external-path name="runb" path="ReticleB/dl/"/>
 </paths>

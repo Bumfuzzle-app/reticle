@@ -60,7 +60,7 @@ public class Notifier {
     private static Notification.Builder base(Context c, String ch) {
         Notification.Builder b = Build.VERSION.SDK_INT >= 26
                 ? new Notification.Builder(c, ch) : new Notification.Builder(c);
-        b.setSmallIcon(R.drawable.ic_stat_notify);
+        b.setSmallIcon(R.drawable.ic_act_eye);   // ★133：默认图标（单色 alpha，系统着色；各工具另按命令分派）
         return b;
     }
 
@@ -238,15 +238,63 @@ public class Notifier {
         return promoted(c, id, title, content, progress, Words.ISLAND_CAP);
     }
 
+    // ★133（2026-10-22）· 胶囊左侧图标：按工具／命令内容选，全部是单色 alpha（系统着色）
+    static volatile int sToolIcon = 0;
+
+    static int iconFor(String name, org.json.JSONObject args) {
+        try {
+            if ("shell".equals(name) && args != null) {
+                String w = ToolTags.shellWord(args.optString("command", ""));
+                if (w.equals("读取文件")) return R.drawable.ic_act_read;
+                if (w.equals("修改文件")) return R.drawable.ic_act_write;
+                if (w.equals("运行脚本")) return R.drawable.ic_act_run;
+                if (w.equals("网络请求")) return R.drawable.ic_act_net;
+                if (w.equals("读取系统状态") || w.equals("读取系统属性") || w.equals("读取日志")
+                        || w.equals("修改设置") || w.equals("操作应用") || w.equals("管理应用")
+                        || w.equals("调用系统") || w.equals("查看进程") || w.equals("结束进程"))
+                    return R.drawable.ic_act_sys;
+                if (w.equals("解包") || w.equals("计算校验")) return R.drawable.ic_act_box;
+                if (w.equals("等待")) return R.drawable.ic_act_ecg;
+                return R.drawable.ic_act_run;
+            }
+            if (name.equals("notify")) return R.drawable.ic_act_bell;
+            if (name.equals("ping")) return R.drawable.ic_act_loop;
+            if (name.equals("shot") || name.equals("ocr") || name.equals("texts") || name.equals("ui"))
+                return R.drawable.ic_act_cam;
+            if (name.equals("tap") || name.equals("tap_text")) return R.drawable.ic_act_tap;
+            if (name.equals("swipe") || name.equals("scroll") || name.equals("scroll_to_text"))
+                return R.drawable.ic_act_slide;
+            if (name.equals("key")) return R.drawable.ic_act_key;
+            if (name.equals("input") || name.equals("paste") || name.equals("clip")) return R.drawable.ic_act_input;
+            if (name.equals("longpress")) return R.drawable.ic_act_hold;
+            if (name.equals("build") || name.equals("acttest")) return R.drawable.ic_act_box;
+            if (name.equals("download") || name.equals("download_status")) return R.drawable.ic_act_down;
+            if (name.equals("buzz")) return R.drawable.ic_act_vib;
+            if (name.equals("status") || name.equals("wait_stable")) return R.drawable.ic_act_ecg;
+            if (name.equals("help") || name.equals("windows")) return R.drawable.ic_act_list;
+            if (name.equals("do_chain")) return R.drawable.ic_act_chain;
+            if (name.equals("wait_text")) return R.drawable.ic_act_text;
+        } catch (Throwable t) { }
+        return R.drawable.ic_act_eye;
+    }
+
     /** ★123：工具调用推上岛。标题=Reticle·功能，正文=AI 写的 note（没有就退摘要），胶囊=两字。 */
     public static String islandTool(Context c, String name, org.json.JSONObject args) {
         try {
-            String cap = ToolTags.shortName(name);
+            // ★128（2026-10-22）：shell 的胶囊跟气泡同步——按命令内容判定（同一张 SH 表），压到 4 字以内；
+            //   其余工具仍用两字短名。以前 shell 永远显示「命令」，跟气泡的「修改文件」对不上。
+            if (notifyHolding()) return "hold";   // ★132：notify 保护期内，别的东西不覆盖岛
+            sToolIcon = iconFor(name, args);   // ★133：先定图标
+            String cap = ("shell".equals(name) && args != null)
+                    ? ToolTags.shellCap(args.optString("command", ""))
+                    : ToolTags.shortName(name);
             String title = "Reticle·" + ToolTags.label(name);
             String body = (args == null) ? "" : args.optString("note", "");
             if (body.length() == 0) body = ToolTags.summary(name, args);
             if (body.length() == 0) body = ToolTags.line(name, args);
-            return promoted(c, ISLAND_ID, title, body, 0, cap);
+            String r = promoted(c, ISLAND_ID, title, body, 0, cap);
+            touchIdle(c);   // ★129：30 秒没动作就把岛清成黑胶囊
+            return r;
         } catch (Throwable t) { return "err: " + t; }
     }
 
@@ -287,6 +335,7 @@ public class Notifier {
                 Notification.Builder.class.getMethod("setStyle", stC).invoke(b, ps);
                 }
             } catch (Throwable t) { nlog(c, "promoted: ProgressStyle err " + t); }
+            { int ic = sToolIcon; sToolIcon = 0; if (ic != 0) { try { b.setSmallIcon(ic); } catch (Throwable t) { } } }   // ★133：胶囊左侧图标
             Notification n = b.build();
             try { if (n.extras != null) {
                 if (!n.extras.containsKey("android.requestPromotedOngoing")) n.extras.putBoolean("android.requestPromotedOngoing", true);
@@ -302,6 +351,206 @@ public class Notifier {
             nlog(c, "promoted ok id=" + id + " progress=" + progress);
             return "ok";
         } catch (Throwable t) { nlog(c, "promoted err " + t); return "err: " + t; }
+    }
+
+    // ==== ★129（2026-10-22）· 空闲态：30 秒没动作就交给小工具／黑胶囊 ====
+    /** 多少毫秒没动作就进入空闲态。 */
+    static final long ISLAND_IDLE_MS = 5000L;   // ★132：5 秒没动作就进小工具（notify 另有 15 秒保护期）
+    private static Runnable sIdleTask = null;
+
+    // ---- ★131（2026-10-22）· 空闲小工具（本机自用）----
+    public static final int WIDGET_OFF = 0;      // 黑胶囊（全角空格）
+    public static final int WIDGET_POWER = 1;    // 功耗，1 秒刷新
+    public static final int WIDGET_TEXT = 2;     // 两段自定义文字轮播
+    static final long WIDGET_SEG_MS = 20000L;    // 每段文字显示 20 秒
+    private static Runnable sWidgetTick = null;
+    private static long sWidgetStart = 0L;
+
+    static android.content.SharedPreferences wsp(Context c) {
+        return c.getSharedPreferences(PREFS, Context.MODE_PRIVATE);
+    }
+    public static int widgetMode(Context c) {
+        try { return wsp(c).getInt("idle_widget", WIDGET_OFF); } catch (Throwable t) { return WIDGET_OFF; }
+    }
+    public static void setWidgetMode(Context c, int m) {
+        try { wsp(c).edit().putInt("idle_widget", m).apply(); } catch (Throwable t) { }
+        stopWidgetLoop();
+        // ★135（2026-10-23）：切换后必须重新起计时——原来只停循环不再起，岛会卡在最后一帧不动。
+        touchIdle(c);
+    }
+    public static String widgetTextA(Context c) {
+        try { return wsp(c).getString("idle_text_a", ""); } catch (Throwable t) { return ""; }
+    }
+    public static String widgetTextB(Context c) {
+        try { return wsp(c).getString("idle_text_b", ""); } catch (Throwable t) { return ""; }
+    }
+    public static void setWidgetText(Context c, String a, String b) {
+        try { wsp(c).edit().putString("idle_text_a", a == null ? "" : a).putString("idle_text_b", b == null ? "" : b).apply(); } catch (Throwable t) { }
+        stopWidgetLoop();
+    }
+
+    /** ★131：功耗＝电压(mV)×电流(µA)。充电为正、放电为负，一位小数。
+     *  sysfs 被 SELinux 挡死（连 shell 都 Permission denied），所以只走 BatteryManager。 */
+    public static String powerText(Context c) {
+        try {
+            android.os.BatteryManager bm = (android.os.BatteryManager) c.getSystemService(Context.BATTERY_SERVICE);
+            long uA = (bm == null) ? Long.MIN_VALUE
+                    : bm.getLongProperty(android.os.BatteryManager.BATTERY_PROPERTY_CURRENT_NOW);
+            int mV = 0;
+            try {
+                android.content.IntentFilter f = new android.content.IntentFilter(android.content.Intent.ACTION_BATTERY_CHANGED);
+                android.content.Intent bi = c.registerReceiver(null, f);
+                if (bi != null) mV = bi.getIntExtra(android.os.BatteryManager.EXTRA_VOLTAGE, 0);
+            } catch (Throwable t) { }
+            if (uA == Long.MIN_VALUE || uA == 0L || mV <= 0) return "--W";
+            double w = (mV / 1000.0) * (uA / 1000000.0);
+            return (w >= 0 ? "+" : "") + String.format(java.util.Locale.US, "%.1f", w) + "W";
+        } catch (Throwable t) { return "--W"; }
+    }
+    /** ★135：文字段（每行一段，行序＝轮播顺序）。兼容旧的 idle_text_a/b。 */
+    public static String widgetTexts(Context c) {
+        try {
+            String all = wsp(c).getString("idle_texts", null);
+            if (all != null) return all;
+            String a = widgetTextA(c), b = widgetTextB(c);
+            if (a.length() == 0 && b.length() == 0) return "";
+            return a + "\n" + b;
+        } catch (Throwable t) { return ""; }
+    }
+    public static void setWidgetTexts(Context c, String all) {
+        try { wsp(c).edit().putString("idle_texts", all == null ? "" : all).apply(); } catch (Throwable t) { }
+        stopWidgetLoop();
+        touchIdle(c);
+    }
+    public static int widgetSegSec(Context c) {
+        try { return wsp(c).getInt("idle_seg_sec", 20); } catch (Throwable t) { return 20; }
+    }
+    public static void setWidgetSegSec(Context c, int s) {
+        try { wsp(c).edit().putInt("idle_seg_sec", Math.max(1, s)).apply(); } catch (Throwable t) { }
+        stopWidgetLoop();
+        touchIdle(c);
+    }
+    static String[] widgetSegs(Context c) {
+        String all = widgetTexts(c);
+        if (all == null || all.trim().length() == 0) return new String[0];
+        String[] raw = all.split("\n");
+        java.util.ArrayList<String> out = new java.util.ArrayList<String>();
+        for (int i = 0; i < raw.length; i++) {
+            String s = raw[i].trim();
+            if (s.length() > 0) out.add(s);
+        }
+        return out.toArray(new String[0]);
+    }
+    /** ★135：按段轮播，每段秒数可配；顺序＝文本行序。 */
+    static String rotateText(Context c) {
+        String[] seg = widgetSegs(c);
+        if (seg.length == 0) return "　";
+        if (sWidgetStart == 0L) sWidgetStart = System.currentTimeMillis();
+        long ms = Math.max(1, widgetSegSec(c)) * 1000L;
+        int idx = (int) (((System.currentTimeMillis() - sWidgetStart) / ms) % seg.length);
+        String t = seg[idx];
+        return (t == null || t.length() == 0) ? "　" : t;
+    }
+
+    /** ★131：空闲期间每秒刷一次（功耗要 1 秒一跳）。 */
+    static void startWidgetLoop(final Context c) {
+        stopWidgetLoop();
+        final Context app = (c.getApplicationContext() == null) ? c : c.getApplicationContext();
+        sWidgetTick = new Runnable() {
+            public void run() {
+                try { promotedIdle(app); } catch (Throwable t) { }
+                sMT.postDelayed(this, 1000L);
+            }
+        };
+        sMT.postDelayed(sWidgetTick, 1000L);
+    }
+    static void stopWidgetLoop() {
+        if (sWidgetTick != null) { sMT.removeCallbacks(sWidgetTick); sWidgetTick = null; }
+        sWidgetStart = 0L;
+    }
+
+    /** 每次工具调用重置计时并退出小工具循环；到点进入空闲态。 */
+    // ★132（2026-10-22）· notify 保护期：有 notify 通知时，15 秒内别的东西不许覆盖岛
+    static final long NOTIFY_HOLD_MS = 15000L;
+    static volatile long sNotifyHold = 0L;
+    static boolean notifyHolding() { return System.currentTimeMillis() < sNotifyHold; }
+
+    /** notify 上岛并锁 15 秒；到期前别的工具调用不覆盖，空闲也推迟到 15 秒后。 */
+    public static void holdNotify(Context c, String title, String content) {
+        try {
+            sNotifyHold = System.currentTimeMillis() + NOTIFY_HOLD_MS;
+            promoted(c, ISLAND_ID, safe(title, "Reticle"), safe(content, ""), 0, "通知");
+            touchIdle(c, NOTIFY_HOLD_MS);
+        } catch (Throwable t) { nlog(c, "holdNotify err " + t); }
+    }
+
+    public static void touchIdle(Context c) { touchIdle(c, ISLAND_IDLE_MS); }
+    public static void touchIdle(Context c, final long delayMs) {
+        final Context app = (c.getApplicationContext() == null) ? c : c.getApplicationContext();
+        if (sIdleTask != null) { sMT.removeCallbacks(sIdleTask); sIdleTask = null; }
+        stopWidgetLoop();
+        sIdleTask = new Runnable() {
+            public void run() {
+                try { promotedIdle(app); startWidgetLoop(app); } catch (Throwable t) { }
+            }
+        };
+        sMT.postDelayed(sIdleTask, delayMs);
+    }
+
+    /** 空闲态：按小工具模式决定内容。关闭时用全角空格绕开「空串回退标题」＋ 1×1 透明图标。 */
+    public static String promotedIdle(Context c) {
+        try {
+            channels(c);
+            int mode = widgetMode(c);
+            String cap, ttl, bdy;
+            if (mode == WIDGET_POWER) {
+                String p = powerText(c);
+                cap = p; ttl = "Reticle·功耗"; bdy = p;
+            } else if (mode == WIDGET_TEXT) {
+                String tx = rotateText(c);
+                cap = tx; ttl = "Reticle"; bdy = tx;
+            } else {
+                cap = "　"; ttl = "　"; bdy = "　";
+            }
+            Notification.Builder b = base(c, CH_LIVE2);
+            b.setDefaults(0);
+            b.setContentTitle(ttl);
+            b.setContentText(bdy);
+            b.setContentIntent(openApp(c));
+            b.setOngoing(true);
+            b.setOnlyAlertOnce(true);
+            b.setShowWhen(false);
+            b.setCategory(Notification.CATEGORY_PROGRESS);
+            if (mode == WIDGET_OFF) {
+                try { b.setSmallIcon(android.graphics.drawable.Icon.createWithBitmap(blankBitmap())); }
+                catch (Throwable t) { nlog(c, "idle icon err " + t); }
+            } else if (mode == WIDGET_POWER) {
+                b.setSmallIcon(R.drawable.ic_act_bolt);
+            } else {
+                b.setSmallIcon(R.drawable.ic_act_text);
+            }
+            try { Notification.Builder.class.getMethod("setRequestPromotedOngoing", boolean.class).invoke(b, true); } catch (Throwable t) { }
+            try { Notification.Builder.class.getMethod("setShortCriticalText", CharSequence.class).invoke(b, cap); } catch (Throwable t) { }
+            Notification n = b.build();
+            try { if (n.extras != null) {
+                if (!n.extras.containsKey("android.requestPromotedOngoing")) n.extras.putBoolean("android.requestPromotedOngoing", true);
+                n.extras.putCharSequence("android.shortCriticalText", cap);
+                n.extras.putCharSequence("android.title.capsule", cap);
+            } } catch (Throwable t) { }
+            n.flags |= 0x40000;
+            nm(c).notify(ISLAND_ID, n);
+            return "ok";
+        } catch (Throwable t) { nlog(c, "idle err " + t); return "err: " + t; }
+    }
+
+    /** 1×1 全透明位图（缓存一份）。 */
+    private static android.graphics.Bitmap sBlankBmp = null;
+    private static android.graphics.Bitmap blankBitmap() {
+        if (sBlankBmp == null) {
+            sBlankBmp = android.graphics.Bitmap.createBitmap(1, 1, android.graphics.Bitmap.Config.ARGB_8888);
+            sBlankBmp.eraseColor(0);
+        }
+        return sBlankBmp;
     }
 
 

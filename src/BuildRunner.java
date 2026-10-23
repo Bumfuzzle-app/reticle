@@ -385,17 +385,16 @@ public class BuildRunner {
         return m;
     }
 
-    /** 83 号单：装包走系统安装器。先把 apk 复制到 dl/（FileProvider 允许的目录），再拉安装器，用户自己点确认。 */
+    /** 装包：默认走系统安装器（必须用户亲手确认）；INSTALL_MODE=shell 才直装。装前发通知。 */
     public static String install(Context c) {
         File[] a = apks(c);
         if (a == null || a.length == 0) return "产物目录里还没有 apk。\n先 build action=start 出包。";
         File apk = a[0];
-        String fg = "";
-        try { fg = VeriService.foregroundPkg(); } catch (Throwable t) { }
-        if (fg.length() > 0 && !fg.equals(c.getPackageName())) return "先切回 Reticle 再装。\n安装器要 Reticle 在前台。";
         File dl = new File(Home.get(c), "dl");
         if (!dl.isDirectory()) dl.mkdirs();
-        File dst = new File(dl, apk.getName());
+        String _safe = apk.getName().replaceAll("[^A-Za-z0-9._-]", "_");
+        if (_safe.startsWith("_") || _safe.length() <= 4) _safe = "build-" + System.currentTimeMillis() + ".apk";
+        File dst = new File(dl, _safe);
         try {
             java.io.FileInputStream in = new java.io.FileInputStream(apk);
             java.io.FileOutputStream fo = new java.io.FileOutputStream(dst);
@@ -408,12 +407,44 @@ public class BuildRunner {
                 try { fo.close(); } catch (Throwable t) { }
             }
         } catch (Throwable t) { return "复制安装包到 dl 失败。\n" + dst.getAbsolutePath(); }
+        String mode = conf(c, "INSTALL_MODE");
+        if (mode.length() == 0) mode = "intent";
+        try { Notifier.send(c, 13, Words.RP_INST_NOTE_T, String.format(java.util.Locale.ROOT, Words.RP_INST_NOTE_C, apk.getName()), false); } catch (Throwable t) { }
+        if ("shell".equalsIgnoreCase(mode)) {
+            String tmp = "/data/local/tmp/" + _safe;
+            String so = shx("cp " + dst.getAbsolutePath() + " " + tmp + " && pm install -r -t --user 0 " + tmp);
+            if (so != null && so.indexOf("Success") >= 0) return Words.RP_INST_SHELL_OK + apk.getName() + Words.RP_INST_SHELL_TAIL;
+        }
         String r = UpdateCheck.install(c, dst);
-        if (r != null) return r;
-        return "已拉起系统安装器。\n等你点确认。\n装完 Reticle 会重启。\nMCP 断一两分钟。";
+        boolean launched = (r == null) && installerVisible(1500);
+        if (!launched) {
+            try { shx("am start -n " + c.getPackageName() + "/.MainActivity"); } catch (Throwable t) { }
+            try { Thread.sleep(300); } catch (Throwable t) { }
+            String r2 = UpdateCheck.install(c, dst);
+            if (r2 == null) r = null; else if (r == null) r = r2;
+        }
+        if (r != null) return r + diag(c, dst);
+        return Words.RP_INST_FALLBACK;
     }
 
-    /** 走 Shizuku 以 shell 身份跑一条命令（不通＝null）。 */
+    /** 系统安装器是否已在最前（判断后台拉起是否被 BAL 拦掉）。 */
+    private static boolean installerVisible(long waitMs) {
+        long t0 = android.os.SystemClock.uptimeMillis();
+        while (android.os.SystemClock.uptimeMillis() - t0 < waitMs) {
+            String fg = "";
+            try { fg = VeriService.foregroundPkg(); } catch (Throwable t) { }
+            if (fg.length() > 0 && fg.toLowerCase(java.util.Locale.ROOT).indexOf("install") >= 0) return true;
+            try { Thread.sleep(150); } catch (Throwable t) { }
+        }
+        return false;
+    }
+
+    /** 失败诊断：谁在调、当前前台、pid、可复制的旁路命令。 */
+    private static String diag(Context c, File dst) {
+        String fg = "";
+        try { fg = VeriService.foregroundPkg(); } catch (Throwable t) { }
+        return String.format(java.util.Locale.ROOT, Words.RP_INST_DIAG, c.getPackageName(), fg.length() > 0 ? fg : "读不到", Integer.valueOf(android.os.Process.myPid()), dst.getAbsolutePath());
+    }
     private static String shx(String cmd) {
         try {
             String r = VeriService.shxRun(cmd, 180000L);

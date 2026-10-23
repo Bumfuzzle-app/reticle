@@ -698,7 +698,7 @@ public class UpdateCheck {
             c.startActivity(i);
             return null;
         } catch (Throwable t) {
-            return "没能打开系统安装器";
+            return "没能打开系统安装器：" + t;
         }
     }
 
