@@ -112,6 +112,7 @@ public class VeriService extends AccessibilityService {
         shizukuBootstrap();
         try { A11yWatchdog.start(this); } catch (Throwable t) { }
         try { WatchdogService.ensure(this); } catch (Throwable t) { }
+        try { Notifier.resumeIsland(this); } catch (Throwable t) { }
         McpServer.start(this);
         running = true;
         if (worker == null || !worker.isAlive()) {
@@ -1483,6 +1484,7 @@ public class VeriService extends AccessibilityService {
     }
 
     // ---- T1：按文字/描述/ID 点（本单正主）----
+
     private String tapText(Map<String, String> kv) {
         ensureScreen();
         String text = kv.containsKey("text") ? kv.get("text") : "";
@@ -1572,7 +1574,8 @@ public class VeriService extends AccessibilityService {
         }
         String verdict = waitVerdict(beforePkg, beforeSig, expect, parseInt(kv.get("wait_ms"), 1200));
         int retried = 0;
-        if (hit != null && via.startsWith("action_click") && verdict.indexOf("\"changed\":1") < 0) {
+        // ★154：补刀只在「调用方明说了 expect」且目标不是输入框时做——否则点了没看到画面变化就再点一次，会变成双份输入
+        if (hit != null && expect.length() > 0 && !isEditableNode(hit) && via.startsWith("action_click") && verdict.indexOf("\"changed\":1") < 0) {
             try {
                 AccessibilityNodeInfo t2 = clickableAncestor(hit);
                 if (t2 == null) t2 = hit;
@@ -1991,6 +1994,33 @@ public class VeriService extends AccessibilityService {
             screens++;
         }
         if (end.equals("found")) {
+            // ★143：树里命中 ≠ 在眼前。目标可能在屏幕外，先把滚进可视区，再决定能不能点。
+            int onScreen = 1;
+            int rollScreens = 0;
+            if (via.equals("tree")) {
+                android.graphics.Rect rcv = new android.graphics.Rect();
+                try { hit.get(index).getBoundsInScreen(rcv); } catch (Throwable t) { }
+                onScreen = inView(rcv) ? 1 : 0;
+                if (onScreen == 0) {
+                    String nd = dir;
+                    if (rcv.top >= (int) (screenH * 0.96)) nd = "down";
+                    else if (rcv.bottom <= (int) (screenH * 0.04)) nd = "up";
+                    for (int k2 = 0; k2 < 8; k2++) {
+                        String sg = sceneSig();
+                        if (scrollOnce(nd) == 0) break;
+                        sleepQuiet(320);
+                        waitStableQuiet(200, 700);
+                        if (sceneSig().equals(sg)) break;
+                        rollScreens++;
+                        List<AccessibilityNodeInfo> f2 = findNodes(text, exact, desc, id, 400);
+                        if (f2.size() > index) {
+                            hit = f2;
+                            try { f2.get(index).getBoundsInScreen(rcv); } catch (Throwable t) { }
+                            if (inView(rcv)) { onScreen = 1; break; }
+                        }
+                    }
+                }
+            }
             StringBuilder tinfo = new StringBuilder();
             if (via.equals("tree")) {
                 AccessibilityNodeInfo tgt = hit.get(index);
@@ -2008,8 +2038,16 @@ public class VeriService extends AccessibilityService {
                  .append(",\"scroll_by\":").append(scrollKind)
                  .append(",\"tree_seen\":").append(treeSeen)
                  .append(",\"target\":").append(target)
-                 .append(",\"target_text\":\"").append(esc(clipS(hitText, 60))).append("\"");
-            if (doTap) {
+                 .append(",\"target_text\":\"").append(esc(clipS(hitText, 60))).append("\"")
+                 .append(",\"on_screen\":").append(onScreen)
+                 .append(",\"roll_screens\":").append(rollScreens);
+            if (doTap && onScreen == 0) {   // ★143：看不见就别点
+                int ip0 = tinfo.indexOf("\"ok\":1");
+                if (ip0 >= 0) tinfo.replace(ip0, ip0 + 7, "\"ok\":0");
+                tinfo.append(",\"reason\":\"off_screen\",\"err\":\"")
+                     .append(esc(String.format(Words.RP_SCROLLTO_OFFSCREEN, rollScreens))).append("\"");
+            }
+            if (doTap && onScreen == 1) {
                 Map<String, String> tk = new HashMap<String, String>();
                 if (text.trim().length() > 0) tk.put("text", text);
                 if (desc.trim().length() > 0) tk.put("desc", desc);
@@ -2046,6 +2084,16 @@ public class VeriService extends AccessibilityService {
           .append(",\"ms\":").append(SystemClock.uptimeMillis() - t0)
           .append(",\"tapped\":0}");
         return sb.toString();
+    }
+    /** ★143：节点是否真的在可视区里（上下各留 4% 躲状态栏／手势条）。树里有 ≠ 在眼前。 */
+    private boolean inView(android.graphics.Rect rc) {
+        ensureScreen();
+        if (rc == null) return false;
+        int top = (int) (screenH * 0.04), bot = (int) (screenH * 0.96);
+        int h = rc.height();
+        if (h <= 0) { int cy = rc.centerY(); return cy >= top && cy <= bot; }
+        int ov = Math.min(rc.bottom, bot) - Math.max(rc.top, top);
+        return ov >= (h * 6 / 10) && rc.right > 0 && rc.left < screenW;
     }
     // ═══════════ 44.5 C：do_chain（一次提交多步；每步各带后置条件，不成立就停在那步并报屏幕现状） ═══════════
     /** 只允许"动作类"命令进链（不许从链里跑 shell／notify／build／download，防越权与递归）。 */

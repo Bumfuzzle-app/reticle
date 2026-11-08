@@ -3,7 +3,7 @@ package app.reticle;
 import org.json.JSONObject;
 
 /**
- * 65 号单 · D 线：工具显示规范（26 个工具一个不许漏）。
+ * 65 号单 · D 线：工具显示规范（24 个工具一个不许漏）。
  *
  * · 一处维护：工具名 → 图标符号 ＋ 中文短标签 ＋ 有区分度的摘要；气泡第一行＝「图标 标签 · 摘要」。
  * · 未识别工具走兜底（原名当标签、无图标符号），**不留空白**。
@@ -12,34 +12,32 @@ import org.json.JSONObject;
  */
 public class ToolTags {
 
-    /** 26 个工具：{名字, 图标, 中文短标签}——顺序与 McpServer.tools/list 对齐。 */
+    /** 24 个工具：{名字, 图标, 中文短标签}——顺序与 McpServer.tools/list 对齐。 */
     static final String[][] T = {
         {"ping",            "●", "回铃"},
         {"shell",           "⌘", "执行命令"},
         {"shot",            "◎", "截图"},
-        {"tap",             "✛", "点按"},
-        {"swipe",           "↔", "滑动"},
-        {"key",             "⎋", "系统键"},
+        {"act",            "✛", "动手"},
         {"ui",              "▤", "读界面"},
         {"ocr",             "文", "认字"},
         {"input",           "⌨", "输入文字"},
-        {"longpress",       "◉", "长按"},
         {"notify",          "✦", "通知"},
         {"build",           "⚒", "打包"},
         {"download",        "⤓", "下载"},
-        {"download_status", "⧗", "下载进度"},
         {"buzz",            "◈", "震动"},
         {"status",          "ℹ", "状态"},
         {"help",            "?", "工具目录"},
         {"acttest",         "✓", "动作自测"},
         {"tap_text",        "⌖", "按文字点"},
         {"wait_text",       "◷", "等文字"},
-        {"wait_stable",     "◌", "等画面稳"},
         {"scroll",          "↕", "滚动"},
         {"paste",           "⧉", "粘贴"},
         {"scroll_to_text",  "⇅", "滚着找"},
         {"do_chain",        "⛓", "批量动作"},
         {"windows",         "▢", "看窗口"},
+        {"render",          "▦", "出图"},
+        {"sheet",           "⊞", "表格"},
+        {"texts",           "☰", "整屏文字"},
     };
 
     /** 工具个数（与 T 的行数一致；验收 grep 对表用）。 */
@@ -80,6 +78,32 @@ public class ToolTags {
             if (name.equals("shell")) return "";   // ★89.9：命令由 line() 直出中文功能（shell—读取文件）
             if (name.equals("input")) return "内容不上屏（" + a.optString("text", "").length() + " 字）";
             if (name.equals("paste")) return "内容不上屏（" + a.optString("text", "").length() + " 字）";
+            if (name.equals("sheet")) {
+                String act = Csv.lower(a.optString("action", "info")).trim();
+                if (act.length() == 0) act = "info";
+                String fn = fileTail(a.optString("path", ""));
+                String tail = fn.length() == 0 ? "" : " " + fn;
+                if (act.equals("find")) {
+                    String n = clean(a.optString("name", ""));
+                    return n.length() == 0 ? "找表格" : "找「" + clip(n, 14) + "」";
+                }
+                if (act.equals("info")) return "看画像" + tail;
+                if (act.equals("read")) {
+                    String rg = clean(a.optString("range", ""));
+                    return "取 " + (rg.length() == 0 ? "一段" : clip(rg, 12)) + tail;
+                }
+                if (act.equals("query")) {
+                    String sql = Csv.lower(a.optString("sql", ""));
+                    String k = sql.indexOf("count(") >= 0 ? "计数" : (sql.indexOf("sum(") >= 0 ? "求和" : "查询");
+                    return k + tail;
+                }
+                if (act.equals("export")) {
+                    String fm = Csv.lower(a.optString("format", "xlsx")).trim();
+                    return "导出 " + (fm.length() == 0 ? "xlsx" : fm) + tail;
+                }
+                if (act.equals("preview")) return "画 PDF" + tail;
+                return tail.length() == 0 ? "" : tail.trim();
+            }
             if (name.equals("tap") || name.equals("longpress")) return "(" + a.optString("x", "?") + ", " + a.optString("y", "?") + ")";
             if (name.equals("swipe")) return "(" + a.optString("x1", "?") + ", " + a.optString("y1", "?") + ")→(" + a.optString("x2", "?") + ", " + a.optString("y2", "?") + ")";
             if (name.equals("tap_text") || name.equals("wait_text") || name.equals("scroll_to_text")) {
@@ -108,6 +132,17 @@ public class ToolTags {
             if (name.equals("scroll_to_text")) return "";
             return "";
         } catch (Throwable t) { return ""; }
+    }
+
+    /** sheet 摘要用：只留文件名末段（去路径去扩展名），截 18 字。 */
+    static String fileTail(String p) {
+        String s = p == null ? "" : p.trim();
+        if (s.length() == 0) return "";
+        int k = s.lastIndexOf('/');
+        if (k >= 0) s = s.substring(k + 1);
+        int d = s.lastIndexOf('.');
+        if (d > 0) s = s.substring(0, d);
+        return clip(clean(s), 18);
     }
 
     /** shell：不显命令开头（都一样），取「关键子命令 ＋ 对象」。
@@ -203,13 +238,14 @@ public class ToolTags {
     }
 
     // ═════════ 74 号单（2026-10-16）· 工具按「定位」分簇（界面列表用；簇顺序＝界面顺序） ═════════
-    /** {簇名, 工具名（逗号分隔）}——26 个工具一个不漏、一个不重。 */
+    /** {簇名, 工具名（逗号分隔）}——24 个工具一个不漏、一个不重。 */
     static final String[][] CLUSTERS = {
-        {"看屏幕",  "shot,ocr,ui,windows"},
-        {"动手",    "tap,longpress,swipe,key,input,paste,tap_text,wait_text,wait_stable,scroll,scroll_to_text,do_chain"},
+        {"看屏幕",  "shot,ocr,ui,windows,texts"},
+        {"动手",    "act,input,paste,tap_text,wait_text,scroll,scroll_to_text,do_chain"},
         {"消息与自检", "ping,status,help,buzz,notify"},
-        {"取件",    "download,download_status"},
+        {"取件",    "download"},
         {"打包 App", "build,shell,acttest"},
+        {"出图出文档", "render,sheet"},
     };
 
     /** 簇数（与 CLUSTERS 行数一致；验收 grep 对表用）。 */
@@ -275,6 +311,7 @@ public class ToolTags {
         if (name.equals("ping")) return "回铃";
         if (name.equals("shell")) return "命令";
         if (name.equals("shot")) return "截图";
+        if (name.equals("act")) return "动手";
         if (name.equals("tap")) return "点按";
         if (name.equals("swipe")) return "滑动";
         if (name.equals("key")) return "按键";

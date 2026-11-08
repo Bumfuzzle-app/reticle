@@ -41,9 +41,7 @@ public class BuildEnv {
     public static final int NID = 12;   // ★127：避开 9（大通知）／10（岛）／11（掉线告警）
 
     /** 工具链（在 apk 的 lib/arm64-v8a 里）需要的文件——名字就是安装后的 .so 名。 */
-    private static final String[] LIB_FILES = {
-        "libaapt2.so", "libecj.so", "libd8.so", "libd8_2.so", "libapksigner.so", "libbuildtool.so",
-    };
+    private static final String[] LIB_FILES = { "libaapt2.so" };
 
     public static File home(Context c) { File f = new File(c.getFilesDir(), "buildenv"); if (!f.exists()) f.mkdirs(); return f; }
     public static File jar(Context c) { return new File(home(c), "android.jar"); }
@@ -55,9 +53,111 @@ public class BuildEnv {
     /** 工具链目录＝apk 的 lib/arm64-v8a（nativeLibraryDir）。 */
     public static File lib(Context c) { return new File(c.getApplicationInfo().nativeLibraryDir); }
 
+    // ═══════════════════════ ★1104 工具链 dex（可外置，按需下载） ═══════════════════════
+    /** 这 5 个是 dex（app_process 用 CLASSPATH 加载，放哪都行）；aapt2 与依赖 so 必须随包。 */
+    public static final String[] DEX_FILES = {
+        "libecj.so", "libd8.so", "libd8_2.so", "libapksigner.so", "libbuildtool.so",
+    };
+    static final long[] DEX_SIZE = { 2771216L, 2877720L, 8519828L, 1054856L, 5056L };
+    static final String[] DEX_SHA = {
+        "de3a358b98a1637b2f92c77ac97e8c238d2e76571f674a59bfdc854a34d69619",
+        "12fca836dc8cb82ed6c64fbd2566354683f64899c688b2cc491d4a9453578cd0",
+        "680b0a7c5e6d9e866843a900688f485f9748d7aaaf39bfb5888d492e23bde104",
+        "109512d0b6507d27c4ce54646fbbc6d7e9a51c422f33e99a584fc8dd411c008e",
+        "9eb9dce17807b14d351c83b0d6779224929394a15da594ed175333cdef9dd537",
+    };
+    /** 用 API 的 asset 端点：github.com 的下载链路在某些网络不通，api.github.com 通（匿名可下公开 release）。 */
+    public static final String DEX_BASE = "https://api.github.com/repos/Bumfuzzle-app/reticle/releases/assets/";
+    static final long[] DEX_IDS = { 709768263L, 709766713L, 709767164L, 709765905L, 709766601L };   // 顺序同 DEX_FILES
+    public static volatile int DEX_PCT = -2;      // -2 未开始／-1 失败／0~100 下载中／101 完成
+    public static volatile String DEX_MSG = "";
+
+    public static File dexDir(Context c) { File d = new File(home(c), "dex"); if (!d.exists()) d.mkdirs(); return d; }
+
+    /** 5 个 dex 在哪：lib 里齐全就用 lib（旧包）；否则下载目录齐全才认；否则 null。 */
+    public static File dexHome(Context c) {
+        try {
+            File d = lib(c);
+            boolean all = true;
+            for (int i = 0; i < DEX_FILES.length; i++) if (!new File(d, DEX_FILES[i]).isFile()) { all = false; break; }
+            if (all) return d;
+            File x = dexDir(c);
+            for (int i = 0; i < DEX_FILES.length; i++) {
+                File f = new File(x, DEX_FILES[i]);
+                if (!f.isFile() || f.length() != DEX_SIZE[i]) return null;
+            }
+            return x;
+        } catch (Throwable t) { return null; }
+    }
+
+    public static String dexState() {
+        if (DEX_PCT >= 101) return "已就绪";
+        if (DEX_PCT >= 0) return "下载中 " + DEX_PCT + "%";
+        return DEX_MSG.length() > 0 ? DEX_MSG : "未下载";
+    }
+
+    /** 后台下载（界面点按钮用；工具调用有 60 秒上限，绝不能同步等）。 */
+    public static void fetchDexAsync(final Context c) {
+        if (DEX_PCT >= 0 && DEX_PCT < 101) return;
+        DEX_PCT = 0; DEX_MSG = "开始下载";
+        new Thread(new Runnable() {
+            public void run() {
+                String err = fetchDex(c.getApplicationContext());
+                DEX_MSG = err == null ? "下载完成" : err;
+                DEX_PCT = err == null ? 101 : -1;
+            }
+        }).start();
+    }
+
+    /** 同步下载 5 个 dex（gzip 解压 ＋ 大小／sha 双校验）。返回 null＝成功。 */
+    static String fetchDex(Context c) {
+        File d = dexDir(c);
+        long totalAll = 0, done = 0;
+        for (int i = 0; i < DEX_SIZE.length; i++) totalAll += DEX_SIZE[i];
+        for (int i = 0; i < DEX_FILES.length; i++) {
+            File dst = new File(d, DEX_FILES[i]);
+            if (dst.isFile() && dst.length() == DEX_SIZE[i]) { done += DEX_SIZE[i]; continue; }
+            File tmp = new File(d, DEX_FILES[i] + ".tmp");
+            try {
+                java.net.HttpURLConnection cn = (java.net.HttpURLConnection) new java.net.URL(DEX_BASE + DEX_IDS[i]).openConnection();
+                cn.setConnectTimeout(20000);
+                cn.setReadTimeout(60000);
+                cn.setInstanceFollowRedirects(true);
+                cn.setRequestProperty("Accept", "application/octet-stream");
+                cn.setRequestProperty("User-Agent", "reticle");
+                cn.connect();
+                int code = cn.getResponseCode();
+                if (code != 200) { cn.disconnect(); return "编译器下载失败：源回 HTTP " + code; }
+                InputStream in = new java.util.zip.GZIPInputStream(cn.getInputStream(), 1 << 16);
+                FileOutputStream fo = new FileOutputStream(tmp);
+                byte[] buf = new byte[262144];
+                int n;
+                try {
+                    while ((n = in.read(buf)) > 0) {
+                        fo.write(buf, 0, n);
+                        done += n;
+                        int pct = (int) (done * 100 / totalAll);
+                        if (pct > 100) pct = 100;
+                        DEX_PCT = pct;
+                    }
+                    fo.flush();
+                } finally { try { fo.close(); } catch (Throwable t) { } try { in.close(); } catch (Throwable t) { } cn.disconnect(); }
+                if (tmp.length() != DEX_SIZE[i]) { long g = tmp.length(); tmp.delete(); return "编译器不完整（" + DEX_FILES[i] + " " + g + " B）"; }
+                String sha = sha256(tmp);
+                if (sha == null || !DEX_SHA[i].equalsIgnoreCase(sha)) { tmp.delete(); return "编译器校验不过（" + DEX_FILES[i] + "）"; }
+                if (dst.exists()) dst.delete();
+                if (!tmp.renameTo(dst)) { tmp.delete(); return "编译器落盘失败（" + DEX_FILES[i] + "）"; }
+            } catch (Throwable t) {
+                try { tmp.delete(); } catch (Throwable t2) { }
+                return "编译器下载失败：" + t.getClass().getSimpleName();
+            }
+        }
+        return null;
+    }
+
     // ═══════════════════════ 就绪判据 ═══════════════════════
 
-    /** 工具链：6 个可执行/dex 都在（＋能看到 aapt2 的依赖 so）。 */
+    /** 工具链：aapt2 与依赖 so 随包；5 个 dex 在 lib 或下载目录都行。 */
     public static boolean tcOk(Context c) {
         try {
             File d = lib(c);
@@ -65,7 +165,8 @@ public class BuildEnv {
                 File f = new File(d, LIB_FILES[i]);
                 if (!f.exists() || f.length() == 0) return false;
             }
-            return new File(d, "libabsl_base.so").exists();
+            if (!new File(d, "libabsl_base.so").exists()) return false;
+            return dexHome(c) != null;
         } catch (Throwable t) { return false; }
     }
     public static boolean jarOk(Context c) { try { File f = jar(c); return f.exists() && f.length() == JAR_SIZE; } catch (Throwable t) { return false; } }
@@ -79,7 +180,10 @@ public class BuildEnv {
     /** 缺什么（空串＝齐）——人话，一句一件；给 AI 与用户共用。 */
     public static String missing(Context c) {
         StringBuilder sb = new StringBuilder();
-        if (!tcOk(c)) sb.append("· 工具链没带上（apk 的 lib/arm64-v8a 里看不到 aapt2／ECJ／d8）——本包只保证 arm64 机型\n");
+        if (!tcOk(c)) {
+            if (new File(lib(c), "libaapt2.so").exists()) sb.append("· 编译器还没下载（6.2MB）：" + dexState() + "，点『一键准备环境』补\n");
+            else sb.append("· 工具链没带上（apk 的 lib/arm64-v8a 里看不到 aapt2）——本包只保证 arm64 机型\n");
+        }
         if (!resOk(c)) sb.append("· 编译器资源没解出来（ecj-res；首次自动解，失败可重开应用或点『一键准备环境』）\n");
         if (!scriptOk(c)) sb.append("· 构建脚本没解出来（build3.sh；同上）\n");
         if (!jarOk(c)) sb.append("· android.jar 还没下载（25.8MB；SDK 条款不许随包分发，只能下载）\n");
@@ -89,7 +193,7 @@ public class BuildEnv {
     /** 一行状态（界面与 AI 共用）。 */
     public static String statusLine(Context c) {
         if (ready(c)) return "就绪：工具链 ✓　android.jar ✓（25.8MB，已校验）";
-        if (!tcOk(c)) return "未就绪：这套包里没有工具链（只有 arm64 机型带）";
+        if (!tcOk(c)) return "未就绪：缺编译器（6.2MB）——" + dexState();
         if (!jarOk(c)) return "未就绪：缺 android.jar（25.8MB，未下载）";
         return "未就绪：缺编译资源／脚本（可点『一键准备环境』补）";
     }
@@ -156,10 +260,16 @@ public class BuildEnv {
     /** 进度回调（界面弹窗与通知栏都读它）。 */
     public interface Progress { void on(int pct, String line); }
 
-    /** 一键准备环境＝解 assets 小件 ＋（缺就）下载 android.jar。返回空串＝成功。 */
+    /** 一键准备环境＝解 assets 小件 ＋ 缺编译器就下载 ＋（缺就）下载 android.jar。返回空串＝成功。 */
     public static String prepare(Context c, Progress p) {
         String u = unpack(c);
         if (u.length() > 0) return u;
+        if (dexHome(c) == null) {
+            if (DEX_PCT >= 0 && DEX_PCT < 101) return "编译器下载中 " + DEX_PCT + "%：下完再点一次";
+            if (p != null) p.on(0, "开始下载编译器（6.2MB）");
+            fetchDexAsync(c);
+            return "编译器开始下载（6.2MB，约 3 分钟）：下完再点一次『一键准备环境』";
+        }
         if (jarOk(c)) { if (p != null) p.on(100, "环境已就绪（android.jar 在）"); return ""; }
         return fetchJar(c, p);
     }

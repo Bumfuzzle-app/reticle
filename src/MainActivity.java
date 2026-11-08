@@ -63,6 +63,9 @@ public class MainActivity extends AppCompatActivity {
     static final String K_BLACK = "black_night";  // 极夜（纯黑）
     static final String Q = Character.toString((char) 34);
 
+    /** ★138：岛包包名（伪装成地图的本地自用包，原子岛等功能只对它成立）。三包同源码，出包只换包名。 */
+    static final String PKG_ISLAND = "com.google.android.apps.maps";
+
     FrameLayout root;                             // 29 号单：页面根＝玻璃条的背景采样源
     LinearLayout topBarView;
     LinearLayout contentCol;                      // 顶部标题＋内容宿主（玻璃条浮在它上面）
@@ -126,6 +129,7 @@ public class MainActivity extends AppCompatActivity {
         try { A11yWatchdog.start(this); } catch (Throwable t) { }
         // 52 号单：手动打开 App ＝「用户已停」到此为止（清掉标志 → 功能恢复）
         try { WatchdogService.setUserStopped(this, false); } catch (Throwable t) { }
+        try { Notifier.resumeIsland(this); } catch (Throwable t) { }
         // 86.6：打开 App 就把无障碍写回（划掉卡片时系统会把我们这条摘掉），并如实告诉用户成没成
         try { restoreA11yOnOpen(); } catch (Throwable t) { }
         try { MemGuard.start(this); } catch (Throwable t) { }
@@ -657,16 +661,8 @@ public class MainActivity extends AppCompatActivity {
         // ── 开关（首屏）：静音震动 ＋ 通知入口 ──
         // ★135（2026-10-23）：原子岛小工具——折叠块 ＋ 选项式（不再"点一下轮换"）
         // ★137（2026-10-23）：这一区只在岛包成立——实况通知只对白名单包名放行，主包/副包不显示
-        if (isIsland()) c.addView(foldSection(Words.CF_SEC_WIDGET, widgetModeShort(), Words.CF_WIDGET_SUB, new FoldBody() {
-            public void build(final LinearLayout fb) {
-                fb.addView(quiet13(Words.CF_WIDGET_LEAD));
-                fb.addView(listItem(widgetSel(0) + Words.CF_WIDGET_MODE_OFF, Words.CF_WIDGET_OFF_D, new Runnable() { public void run() { applyWidgetMode(0); } }));
-                fb.addView(listItem(widgetSel(1) + Words.CF_WIDGET_MODE_POWER, Words.CF_WIDGET_POWER_D, new Runnable() { public void run() { applyWidgetMode(1); } }));
-                fb.addView(listItem(widgetSel(2) + Words.CF_WIDGET_MODE_TEXT, Words.CF_WIDGET_TEXT_D, new Runnable() { public void run() { applyWidgetMode(2); } }));
-                fb.addView(listItem(Words.CF_WIDGET_TEXTS_T, widgetTextsDesc(), new Runnable() { public void run() { askWidgetTexts(); } }));
-                fb.addView(listItem(Words.CF_WIDGET_SEC_T, widgetSecDesc(), new Runnable() { public void run() { askWidgetSec(); } }));
-            }
-        }));
+        // ★139（2026-10-23）：安卓实况通知——总开关＋分层选项＋多工具轮询（岛包专属）
+        if (isIsland()) c.addView(liveSection());
 
         c.addView(sectionTitle(Words.CF_SEC_BEHAV));
         c.addView(switchItem(Words.CF_SW_VIB_T,
@@ -1345,6 +1341,11 @@ public class MainActivity extends AppCompatActivity {
         // 76 号单：打包 App 板块（原首页位置 → 高级页；标题由 buildAppSection 自带）
         c.addView(quiet(Words.MA_BUILD_ADV_LEAD));
         buildAppSection(c);
+        // ★1104：工具能力按簇（与功能页同一套渲染；未就绪的折叠、置灰、排后面）
+        c.addView(sectionTitle(Words.MA_SEC_TOOLCAP));
+        c.addView(quiet(Words.MA_SEC_TOOLCAP_D));
+        boxToolClustersAdv = column();
+        c.addView(boxToolClustersAdv);
         c.addView(sectionTitle(Words.MA_SEC_DIAG));
         c.addView(quiet(Words.MA_DIAG_TOOLS));
         tvTools = txt(Words.MA_DIAG_LOADING, 12, colVariant());
@@ -1721,6 +1722,32 @@ public class MainActivity extends AppCompatActivity {
                 rebuildConfUi();
             }
         });
+    }
+    void askCdTexts() {
+        final android.widget.EditText et = new android.widget.EditText(this);
+        et.setSingleLine(false);
+        et.setMinLines(4);
+        et.setGravity(android.view.Gravity.TOP | android.view.Gravity.START);
+        et.setInputType(android.text.InputType.TYPE_CLASS_TEXT | android.text.InputType.TYPE_TEXT_FLAG_MULTI_LINE);
+        et.setText(Notifier.cdTexts(this));
+        try { et.setSelection(et.getText().length()); } catch (Throwable t) { }
+        reticleDialog(Words.LV_CD_BODY_T, Words.LV_CD_BODY_D, et, Words.CF_DLG_CANCEL, Words.CF_DLG_OK, new Runnable() {
+            public void run() {
+                String v = et.getText() == null ? "" : et.getText().toString();
+                Notifier.setCdTexts(MainActivity.this, v);
+                rebuildConfUi();
+            }
+        });
+    }
+    void askTickSec() {
+        askInt(Words.LV_TICK_T, Words.LV_TICK_D, Notifier.tickMs(this) / 1000, 1, 10, new NotifierIntCB() {
+            public void onValue(int v) { Notifier.setTickMs(MainActivity.this, v * 1000); }
+        });
+    }
+    String cdDesc() {
+        String[] seg = Notifier.cdLines(this);
+        if (seg.length == 0) return Words.CF_WIDGET_UNSET;
+        return seg.length + " 条 · " + seg[0];
     }
     void askWidgetSec() {
         final android.widget.EditText et = new android.widget.EditText(this);
@@ -2587,6 +2614,9 @@ public class MainActivity extends AppCompatActivity {
     TextView tvBuildState = null;
     LinearLayout boxBuild = null;
     LinearLayout boxToolClusters = null;
+    LinearLayout boxToolClustersAdv = null;
+    final java.util.Set<Integer> clusterOpen = new java.util.HashSet<Integer>();
+    boolean dexTicking = false;
 
     /** 打包 App：独立成段（状态一行 ＋ 按钮贴脸）。 */
     void buildAppSection(LinearLayout c) {
@@ -2670,34 +2700,55 @@ public class MainActivity extends AppCompatActivity {
         reticleDialog("构建日志", null, sv, Words.CF_DLG_CANCEL, Words.CF_DLG_OK, null);
     }
 
-    /** 工具按簇渲染：未就绪的整簇变灰 ＋ 写清为什么 ＋ 按钮贴脸。 */
+    /** 工具按簇渲染：就绪的排前面；未就绪默认折叠、置灰、排后面；按钮与进度贴脸。 */
     void renderClusters() {
-        if (boxToolClusters == null) return;
-        boxToolClusters.removeAllViews();
+        renderClustersInto(boxToolClusters);
+        renderClustersInto(boxToolClustersAdv);
+    }
+
+    void renderClustersInto(LinearLayout box) {
+        if (box == null) return;
+        box.removeAllViews();
         boolean a11y = false;
         try { a11y = A11yLink.state(this) == A11yLink.ST_CONNECTED; } catch (Throwable t) { }
         boolean env = BuildEnv.ready(this);
         boolean shx = shxOk();
         int good = col(com.google.android.material.R.attr.colorPrimary, 0xFF6C8CFF);
         int dim = colVariant();
-        for (int i = 0; i < ToolTags.clusterCount(); i++) {
-            final int ci = i;
-            String why = ToolTags.clusterWhy(i, a11y, env, shx);
-            String[] tools = ToolTags.clusterTools(i);
+        int n = ToolTags.clusterCount();
+        int[] order = new int[n];
+        int k = 0;
+        for (int i = 0; i < n; i++) if (ToolTags.clusterWhy(i, a11y, env, shx).length() == 0) order[k++] = i;
+        for (int i = 0; i < n; i++) if (ToolTags.clusterWhy(i, a11y, env, shx).length() > 0) order[k++] = i;
+        for (int oi = 0; oi < n; oi++) {
+            final int ci = order[oi];
+            String why = ToolTags.clusterWhy(ci, a11y, env, shx);
+            String[] tools = ToolTags.clusterTools(ci);
+            boolean ok = why.length() == 0;
+            final boolean open = ok || clusterOpen.contains(Integer.valueOf(ci));
             MaterialCardView cc = card(false);
             LinearLayout in = column();
             in.setPadding(dp(14), dp(12), dp(14), dp(12));
-            TextView h = txt((why.length() == 0 ? "● " : "◌ ") + ToolTags.clusterName(i) + " · " + tools.length + " 个", 14, why.length() == 0 ? good : dim);
+            String head = (ok ? "● " : "◌ ") + ToolTags.clusterName(ci) + " · " + tools.length + " 个"
+                    + (ok ? "" : "（不可用 · " + (open ? "收起" : "展开") + "）");
+            TextView h = txt(head, 14, ok ? good : dim);
             h.setTypeface(null, Typeface.BOLD);
+            if (!ok) h.setOnClickListener(new View.OnClickListener() { public void onClick(View v) {
+                Integer key = Integer.valueOf(ci);
+                if (clusterOpen.contains(key)) clusterOpen.remove(key); else clusterOpen.add(key);
+                renderClusters();
+            } });
             in.addView(h);
-            for (int k = 0; k < tools.length; k++) {
-                String ic = ToolTags.icon(tools[k]);
-                TextView row = txt((ic.length() == 0 ? "" : ic + " ") + ToolTags.label(tools[k]), 13, why.length() == 0
-                        ? col(com.google.android.material.R.attr.colorOnSurface, 0xFFECF0F6) : dim);
-                row.setPadding(dp(2), dp(6), dp(2), 0);
-                in.addView(row);
+            if (ok || open) {
+                for (int t = 0; t < tools.length; t++) {
+                    String ic = ToolTags.icon(tools[t]);
+                    TextView row = txt((ic.length() == 0 ? "" : ic + " ") + ToolTags.label(tools[t]), 13, ok
+                            ? col(com.google.android.material.R.attr.colorOnSurface, 0xFFECF0F6) : dim);
+                    row.setPadding(dp(2), dp(6), dp(2), 0);
+                    in.addView(row);
+                }
             }
-            if (why.length() > 0) {
+            if (!ok) {
                 TextView w = txt(why, 12, dim);
                 w.setPadding(dp(2), dp(8), dp(2), 0);
                 w.setLineSpacing(dp(3), 1f);
@@ -2705,18 +2756,37 @@ public class MainActivity extends AppCompatActivity {
                 if (ci == 0 || ci == 1) {
                     in.addView(confBtn(Words.MA_TILE_A11Y_SET, null, new Runnable() { public void run() { openA11y(); } }));
                 } else if (ci == 4) {
-                    if (!BuildEnv.ready(MainActivity.this)) in.addView(confBtn(Words.MA_BUILD_BTN_PREP, null, new Runnable() { public void run() { askPrepareEnv(); } }));
+                    if (BuildEnv.dexHome(this) == null) {
+                        TextView pv = txt("编译器：" + BuildEnv.dexState() + "（6.2MB，下完就能打包）", 12, dim);
+                        pv.setPadding(dp(2), dp(6), dp(2), 0);
+                        in.addView(pv);
+                        in.addView(confBtn(Words.MA_BUILD_TD_EX, null, new Runnable() { public void run() {
+                            BuildEnv.fetchDexAsync(MainActivity.this.getApplicationContext());
+                            tickDex();
+                        } }));
+                    }
+                    if (!BuildEnv.ready(this)) in.addView(confBtn(Words.MA_BUILD_BTN_PREP, null, new Runnable() { public void run() { askPrepareEnv(); } }));
                 }
+                in.setAlpha(0.45f);
             }
-            if (why.length() > 0) in.setAlpha(0.45f);
             cc.addView(in);
             LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(-1, -2);
             lp.topMargin = dp(10);
             cc.setLayoutParams(lp);
-            boxToolClusters.addView(cc);
+            box.addView(cc);
         }
     }
 
+    /** 下载中每秒刷一次进度；下完自动停并刷一下打包板块。 */
+    void tickDex() {
+        if (dexTicking) return;
+        dexTicking = true;
+        ui.postDelayed(new Runnable() { public void run() {
+            renderClusters();
+            if (BuildEnv.DEX_PCT >= 0 && BuildEnv.DEX_PCT < 101) ui.postDelayed(this, 900);
+            else { dexTicking = false; refreshBuild(); }
+        } }, 900);
+    }
     /** shell 身份（Shizuku）通不通——装包那一步要用它。 */
     boolean shxOk() {
         try {
@@ -3154,10 +3224,10 @@ public class MainActivity extends AppCompatActivity {
         try { return getPackageName().endsWith(".b"); } catch (Throwable t) { return false; }
     }
 
-    /** ★137（2026-10-23）：是不是「岛包」（伪装成 com.google.android.apps.maps 的本地自用包）。
+    /** ★137／★138（2026-10-23）：是不是「岛包」（包名＝PKG_ISLAND，伪装成地图的本地自用包）。
      *  原子岛／实况通知／空闲小工具只对它成立；主包与副包一律 false。 */
     boolean isIsland() {
-        try { return "com.google.android.apps.maps".equals(getPackageName()); } catch (Throwable t) { return false; }
+        try { return PKG_ISLAND.equals(getPackageName()); } catch (Throwable t) { return false; }
     }
 
     /** 改更新源（镜像／内网／验收用假源）；留空＝官方。只换检查地址，不换下载地址。 */
@@ -3181,5 +3251,377 @@ public class MainActivity extends AppCompatActivity {
         if (b <= 0) return "";
         if (b >= 1048576L) return String.format(java.util.Locale.ROOT, "%.1f MB", b / 1048576.0);
         return String.format(java.util.Locale.ROOT, "%.0f KB", b / 1024.0);
+    }
+
+    // ==== ★139（2026-10-23）· 安卓实况通知（界面） ====
+
+    interface NotifierIntCB { void onValue(int v); }
+
+    /** 带右侧开关的折叠块：点标题展开，点开关只切开关、不展开。 */
+    View foldSw(final String title, String subtitle, boolean checked, final SwitchCB cb, final FoldBody body) {
+        final boolean open = Boolean.TRUE.equals(foldOpen.get(title));
+        MaterialCardView cardV = card(false);
+        LinearLayout cardCol = column();
+        cardV.addView(cardCol);
+
+        final LinearLayout header = new LinearLayout(this);
+        header.setOrientation(LinearLayout.HORIZONTAL);
+        header.setGravity(Gravity.CENTER_VERTICAL);
+        header.setPadding(dp(16), dp(11), dp(12), dp(11));
+        header.setContentDescription("折叠：" + title);
+        ripple(header);
+
+        LinearLayout titleCol = column();
+        titleCol.setLayoutParams(new LinearLayout.LayoutParams(0, -2, 1f));
+        TextView tvTitle = txt(title, 16, col(com.google.android.material.R.attr.colorOnSurface, 0xFFECF0F6));
+        tvTitle.setTypeface(null, Typeface.BOLD);
+        titleCol.addView(tvTitle);
+        if (subtitle != null && subtitle.length() > 0) {
+            TextView tvSub = txt(subtitle, 12, colVariant());
+            tvSub.setPadding(0, dp(3), 0, 0);
+            titleCol.addView(tvSub);
+        }
+        header.addView(titleCol);
+
+        header.setTag("foldhead");
+        final MaterialSwitch sw = new MaterialSwitch(this);
+        sw.setChecked(checked);
+        sw.setOnCheckedChangeListener(new android.widget.CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(android.widget.CompoundButton b, boolean v) {
+                if (cb != null) cb.onChanged(v);
+            }
+        });
+        header.addView(sw);
+
+        final ImageView arrow = new ImageView(this);
+        arrow.setImageResource(R.drawable.ic_chevron);
+        arrow.setImageTintList(ColorStateList.valueOf(colVariant()));
+        LinearLayout.LayoutParams alp = new LinearLayout.LayoutParams(dp(18), dp(18));
+        alp.leftMargin = dp(4);
+        arrow.setLayoutParams(alp);
+        arrow.setRotation(open ? 270f : 90f);
+        header.addView(arrow);
+
+        cardCol.addView(header);
+
+        final LinearLayout box = column();
+        box.setPadding(dp(14), 0, dp(14), dp(6));
+        body.build(box);
+        box.setVisibility(open ? View.VISIBLE : View.GONE);
+        cardCol.addView(box);
+
+        View.OnClickListener tog = new View.OnClickListener() {
+            public void onClick(View v) { toggleFold(header, box, arrow, title); }
+        };
+        titleCol.setOnClickListener(tog);
+        arrow.setOnClickListener(tog);
+
+        LinearLayout.LayoutParams clp = new LinearLayout.LayoutParams(-1, -2);
+        clp.bottomMargin = dp(8);
+        cardV.setLayoutParams(clp);
+        return cardV;
+    }
+
+    /** 整棵树置灰（①关闭时用）：形状还在，但点不动。 */
+    void dimTree(View v, boolean dim) {
+        if (v == null) return;
+        if ("foldhead".equals(v.getTag())) return;
+        v.setEnabled(!dim);
+        if (dim) { v.setClickable(false); v.setFocusable(false); }
+        if (v instanceof android.view.ViewGroup) {
+            android.view.ViewGroup g = (android.view.ViewGroup) v;
+            for (int i = 0; i < g.getChildCount(); i++) dimTree(g.getChildAt(i), dim);
+        }
+    }
+
+    /** 灰着的开关：点整行给一句提示（工具不足两个时）。 */
+    View lockedSwitch(String title, String desc, boolean checked, final String msg) {
+        MaterialCardView c = card(false);
+        LinearLayout in = new LinearLayout(this);
+        in.setOrientation(LinearLayout.HORIZONTAL);
+        in.setGravity(Gravity.CENTER_VERTICAL);
+        in.setPadding(dp(16), dp(10), dp(12), dp(10));
+        LinearLayout col = column();
+        col.setLayoutParams(new LinearLayout.LayoutParams(0, -2, 1f));
+        col.addView(txt(title, 15, col(com.google.android.material.R.attr.colorOnSurface, 0xFFECF0F6)));
+        TextView d = txt(desc, 12, colVariant());
+        d.setPadding(0, dp(3), dp(6), 0);
+        col.addView(d);
+        in.addView(col);
+        MaterialSwitch sw = new MaterialSwitch(this);
+        sw.setChecked(checked);
+        sw.setEnabled(false);
+        in.addView(sw);
+        c.addView(in);
+        c.setAlpha(0.5f);
+        c.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) { toast(msg); }
+        });
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(-1, -2);
+        lp.bottomMargin = dp(8);
+        c.setLayoutParams(lp);
+        return c;
+    }
+
+    /** 通用整数输入框：越界夹到边界再存。 */
+    void askInt(String title, String msg, final int cur, final int lo, final int hi, final NotifierIntCB cb) {
+        final android.widget.EditText et = new android.widget.EditText(this);
+        et.setSingleLine(true);
+        et.setInputType(android.text.InputType.TYPE_CLASS_NUMBER);
+        et.setText("" + cur);
+        try { et.setSelection(et.getText().length()); } catch (Throwable t) { }
+        final NotifierIntCB fcb = cb;
+        reticleDialog(title, msg, et, Words.CF_DLG_CANCEL, Words.CF_DLG_OK, new Runnable() {
+            public void run() {
+                int v = cur;
+                try { v = Integer.parseInt(et.getText().toString().trim()); } catch (Throwable t) { return; }
+                if (v < lo) v = lo;
+                if (v > hi) v = hi;
+                fcb.onValue(v);
+                rebuildConfUi();
+            }
+        });
+    }
+
+    /** 功耗更新间隔：支持 0.5 秒，存毫秒。 */
+    void askPowerSec() {
+        final android.widget.EditText et = new android.widget.EditText(this);
+        et.setSingleLine(true);
+        et.setInputType(android.text.InputType.TYPE_CLASS_NUMBER | android.text.InputType.TYPE_NUMBER_FLAG_DECIMAL);
+        et.setText(String.format(java.util.Locale.US, "%.1f", Notifier.powerMs(this) / 1000f));
+        try { et.setSelection(et.getText().length()); } catch (Throwable t) { }
+        reticleDialog(Words.LV_POWER_SEC_T, Words.LV_POWER_SEC_D, et, Words.CF_DLG_CANCEL, Words.CF_DLG_OK, new Runnable() {
+            public void run() {
+                float s = 1f;
+                try { s = Float.parseFloat(et.getText().toString().trim()); } catch (Throwable t) { return; }
+                if (s < 0.5f) s = 0.5f;
+                if (s > 60f) s = 60f;
+                Notifier.setPowerMs(MainActivity.this, Math.round(s * 1000f));
+                rebuildConfUi();
+            }
+        });
+    }
+
+    String textLinesDesc() {
+        try {
+            String[] seg = Notifier.widgetSegs(this);
+            if (seg.length == 0) return Words.CF_WIDGET_UNSET;
+            String first = seg[0].length() > 10 ? seg[0].substring(0, 10) + "…" : seg[0];
+            return seg.length + " 条 · " + first;
+        } catch (Throwable t) { return Words.CF_WIDGET_UNSET; }
+    }
+
+    /** ★139：配置页「安卓实况通知」整块。 */
+    View liveSection() {
+        final boolean keep = Notifier.keepIdle(this);
+        final int tools = Notifier.toolCount(this);
+
+        return foldSw(Words.LV_SEC_TITLE, Words.LV_SEC_SUB, Notifier.liveEnabled(this), new SwitchCB() {
+            public void onChanged(boolean v) {
+                Notifier.setLiveEnabled(MainActivity.this, v);
+                toast(v ? Words.LV_SET_ON : Words.LV_SET_OFF);
+                rebuildConfUi();
+            }
+        }, new FoldBody() {
+            public void build(final LinearLayout fb) {
+                fb.addView(quiet13(Words.LV_LEAD));
+                fb.addView(switchItem(Words.LV_KEEP_T, Words.LV_KEEP_D, keep, true, new SwitchCB() {
+                    public void onChanged(boolean v) {
+                        Notifier.setKeepIdle(MainActivity.this, v);
+                        rebuildConfUi();
+                    }
+                }));
+                fb.addView(listItem(Words.LV_LAST_T, Notifier.lastSec(MainActivity.this) + Words.LV_SEC_UNIT, new Runnable() {
+                    public void run() {
+                        askInt(Words.LV_LAST_T, Words.LV_LAST_D, Notifier.lastSec(MainActivity.this), 1, 3600, new NotifierIntCB() {
+                            public void onValue(int v) { Notifier.setLastSec(MainActivity.this, v); }
+                        });
+                    }
+                }));
+
+                LinearLayout g = column();
+                fb.addView(g);
+
+                g.addView(switchItem(Words.LV_BLACK_T, Words.LV_BLACK_D, Notifier.blackIdle(MainActivity.this), true, new SwitchCB() {
+                    public void onChanged(boolean v) {
+                        Notifier.setBlackIdle(MainActivity.this, v);
+                        rebuildConfUi();
+                    }
+                }));
+                g.addView(listItem(Words.LV_IDLE_T, Notifier.idleSec(MainActivity.this) + Words.LV_SEC_UNIT, new Runnable() {
+                    public void run() {
+                        askInt(Words.LV_IDLE_T, Words.LV_IDLE_D, Notifier.idleSec(MainActivity.this), 1, 600, new NotifierIntCB() {
+                            public void onValue(int v) { Notifier.setIdleSec(MainActivity.this, v); }
+                        });
+                    }
+                }));
+
+                if (tools >= 2) {
+                    g.addView(listItem(Words.LV_ROT_T, Notifier.rotSec(MainActivity.this) + Words.LV_SEC_UNIT, new Runnable() {
+                        public void run() {
+                            askInt(Words.LV_ROT_T, Words.LV_ROT_D, Notifier.rotSec(MainActivity.this), 5, 600, new NotifierIntCB() {
+                                public void onValue(int v) { Notifier.setRotSec(MainActivity.this, v); }
+                            });
+                        }
+                    }));
+                    g.addView(switchItem(Words.LV_RAND_T, Words.LV_RAND_D, Notifier.rotRand(MainActivity.this), true, new SwitchCB() {
+                        public void onChanged(boolean v) {
+                            Notifier.setRotRand(MainActivity.this, v);
+                            rebuildConfUi();
+                        }
+                    }));
+                } else {
+                    g.addView(listItem(Words.LV_ROT_T, Words.LV_NEED2, new Runnable() {
+                        public void run() { toast(Words.LV_NEED2); }
+                    }));
+                    g.addView(lockedSwitch(Words.LV_RAND_T, Words.LV_NEED2, Notifier.rotRand(MainActivity.this), Words.LV_NEED2));
+                }
+
+                g.addView(foldSw(Words.LV_CPU_T, Notifier.cpuOn(MainActivity.this) ? Words.LV_ON : Words.LV_OFF,
+                        Notifier.cpuOn(MainActivity.this), new SwitchCB() {
+                    public void onChanged(boolean v) {
+                        Notifier.setCpuOn(MainActivity.this, v);
+                        rebuildConfUi();
+                    }
+                }, new FoldBody() {
+                    public void build(LinearLayout bx) {
+                        bx.addView(quiet13(Words.LV_CPU_D));
+                        bx.addView(listItem(Words.LV_TICK_T,
+                                String.format(java.util.Locale.US, "%.1f 秒", Notifier.tickMs(MainActivity.this) / 1000f),
+                                new Runnable() { public void run() { askTickSec(); } }));
+                    }
+                }));
+
+                g.addView(foldSw(Words.LV_CTEMP_T, Notifier.ctempOn(MainActivity.this) ? Words.LV_ON : Words.LV_OFF,
+                        Notifier.ctempOn(MainActivity.this), new SwitchCB() {
+                    public void onChanged(boolean v) {
+                        Notifier.setCtempOn(MainActivity.this, v);
+                        rebuildConfUi();
+                    }
+                }, new FoldBody() {
+                    public void build(LinearLayout bx) {
+                        bx.addView(quiet13(Words.LV_CTEMP_D));
+                        bx.addView(listItem(Words.LV_TICK_T,
+                                String.format(java.util.Locale.US, "%.1f 秒", Notifier.tickMs(MainActivity.this) / 1000f),
+                                new Runnable() { public void run() { askTickSec(); } }));
+                    }
+                }));
+
+                g.addView(foldSw(Words.LV_GPU_T, Notifier.gpuOn(MainActivity.this) ? Words.LV_ON : Words.LV_OFF,
+                        Notifier.gpuOn(MainActivity.this), new SwitchCB() {
+                    public void onChanged(boolean v) {
+                        Notifier.setGpuOn(MainActivity.this, v);
+                        rebuildConfUi();
+                    }
+                }, new FoldBody() {
+                    public void build(LinearLayout bx) {
+                        bx.addView(quiet13(Words.LV_GPU_D));
+                        bx.addView(listItem(Words.LV_TICK_T,
+                                String.format(java.util.Locale.US, "%.1f 秒", Notifier.tickMs(MainActivity.this) / 1000f),
+                                new Runnable() { public void run() { askTickSec(); } }));
+                    }
+                }));
+
+                g.addView(foldSw(Words.LV_MEM_T, Notifier.memOn(MainActivity.this) ? Words.LV_ON : Words.LV_OFF,
+                        Notifier.memOn(MainActivity.this), new SwitchCB() {
+                    public void onChanged(boolean v) {
+                        Notifier.setMemOn(MainActivity.this, v);
+                        rebuildConfUi();
+                    }
+                }, new FoldBody() {
+                    public void build(LinearLayout bx) {
+                        bx.addView(quiet13(Words.LV_MEM_D));
+                        bx.addView(listItem(Words.LV_TICK_T,
+                                String.format(java.util.Locale.US, "%.1f 秒", Notifier.tickMs(MainActivity.this) / 1000f),
+                                new Runnable() { public void run() { askTickSec(); } }));
+                    }
+                }));
+
+                g.addView(foldSw(Words.LV_CD_T, Notifier.cdOn(MainActivity.this) ? Words.LV_ON : Words.LV_OFF,
+                        Notifier.cdOn(MainActivity.this), new SwitchCB() {
+                    public void onChanged(boolean v) {
+                        Notifier.setCdOn(MainActivity.this, v);
+                        rebuildConfUi();
+                    }
+                }, new FoldBody() {
+                    public void build(LinearLayout bx) {
+                        bx.addView(quiet13(Words.LV_CD_D));
+                        bx.addView(listItem(Words.LV_CD_BODY_T,
+                                Notifier.cdTexts(MainActivity.this).length() == 0 ? Words.CF_WIDGET_UNSET : cdDesc(),
+                                new Runnable() { public void run() { askCdTexts(); } }));
+                        bx.addView(listItem(Words.LV_CD_N_T, Notifier.cdN(MainActivity.this) + " 条", new Runnable() {
+                            public void run() {
+                                askInt(Words.LV_CD_N_T, Words.LV_CD_N_D, Notifier.cdN(MainActivity.this), 1, 20, new NotifierIntCB() {
+                                    public void onValue(int v) { Notifier.setCdN(MainActivity.this, v); }
+                                });
+                            }
+                        }));
+                        bx.addView(listItem(Words.LV_CD_SEC_T, Notifier.cdSec(MainActivity.this) + Words.LV_SEC_UNIT, new Runnable() {
+                            public void run() {
+                                askInt(Words.LV_CD_SEC_T, Words.LV_CD_SEC_D, Notifier.cdSec(MainActivity.this), 1, 600, new NotifierIntCB() {
+                                    public void onValue(int v) { Notifier.setCdSec(MainActivity.this, v); }
+                                });
+                            }
+                        }));
+                    }
+                }));
+
+                g.addView(foldSw(Words.LV_POWER_T, Notifier.powerOn(MainActivity.this) ? Words.LV_ON : Words.LV_OFF,
+                        Notifier.powerOn(MainActivity.this), new SwitchCB() {
+                    public void onChanged(boolean v) {
+                        Notifier.setPowerOn(MainActivity.this, v);
+                        rebuildConfUi();
+                    }
+                }, new FoldBody() {
+                    public void build(LinearLayout bx) {
+                        bx.addView(quiet13(Words.LV_POWER_D));
+                        bx.addView(listItem(Words.LV_POWER_SEC_T,
+                                String.format(java.util.Locale.US, "%.1f 秒", Notifier.powerMs(MainActivity.this) / 1000f),
+                                new Runnable() { public void run() { askPowerSec(); } }));
+                    }
+                }));
+
+                g.addView(foldSw(Words.LV_TEXT_T, Notifier.textOn(MainActivity.this) ? Words.LV_ON : Words.LV_OFF,
+                        Notifier.textOn(MainActivity.this), new SwitchCB() {
+                    public void onChanged(boolean v) {
+                        Notifier.setTextOn(MainActivity.this, v);
+                        rebuildConfUi();
+                    }
+                }, new FoldBody() {
+                    public void build(LinearLayout bx) {
+                        bx.addView(quiet13(Words.LV_TEXT_D));
+                        bx.addView(listItem(Words.LV_TEXT_BODY_T,
+                                Notifier.widgetTexts(MainActivity.this).length() == 0 ? Words.CF_WIDGET_UNSET : textLinesDesc(),
+                                new Runnable() { public void run() { askWidgetTexts(); } }));
+                        bx.addView(listItem(Words.LV_TEXT_N_T, Notifier.textN(MainActivity.this) + " 条", new Runnable() {
+                            public void run() {
+                                askInt(Words.LV_TEXT_N_T, Words.LV_TEXT_N_D, Notifier.textN(MainActivity.this), 1, 20, new NotifierIntCB() {
+                                    public void onValue(int v) { Notifier.setTextN(MainActivity.this, v); }
+                                });
+                            }
+                        }));
+                        bx.addView(listItem(Words.LV_TEXT_SEC_T, Notifier.textSec(MainActivity.this) + Words.LV_SEC_UNIT, new Runnable() {
+                            public void run() {
+                                askInt(Words.LV_TEXT_SEC_T, Words.LV_TEXT_SEC_D, Notifier.textSec(MainActivity.this), 1, 600, new NotifierIntCB() {
+                                    public void onValue(int v) { Notifier.setTextSec(MainActivity.this, v); }
+                                });
+                            }
+                        }));
+                        if (tools >= 2) {
+                            bx.addView(switchItem(Words.LV_TEXT_RAND_T, Words.LV_TEXT_RAND_D, Notifier.textRand(MainActivity.this), true, new SwitchCB() {
+                                public void onChanged(boolean v) {
+                                    Notifier.setTextRand(MainActivity.this, v);
+                                    rebuildConfUi();
+                                }
+                            }));
+                        } else {
+                            bx.addView(lockedSwitch(Words.LV_TEXT_RAND_T, Words.LV_TEXT_RAND_D, Notifier.textRand(MainActivity.this), Words.LV_NEED2));
+                        }
+                    }
+                }));
+
+                if (!keep) { g.setAlpha(0.42f); dimTree(g, true); }
+            }
+        });
     }
 }

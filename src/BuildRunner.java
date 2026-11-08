@@ -161,6 +161,8 @@ public class BuildRunner {
                 pb.redirectOutput(ProcessBuilder.Redirect.to(log));
                 java.util.Map<String, String> e = pb.environment();
                 e.put("LIB", BuildEnv.lib(c).getAbsolutePath());
+                File dexHome = BuildEnv.dexHome(c);
+                e.put("TDEX", (dexHome == null ? BuildEnv.lib(c) : dexHome).getAbsolutePath());
                 e.put("RES", BuildEnv.res(c).getAbsolutePath());
                 e.put("JAR", BuildEnv.jar(c).getAbsolutePath());
                 e.put("SB", sb.getAbsolutePath());

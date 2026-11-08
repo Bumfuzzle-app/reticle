@@ -375,7 +375,7 @@ public class Words {
             {"shot", NT_TOOL_SHOT}, {"tap", NT_TOOL_TAP}, {"swipe", NT_TOOL_SWIPE}, {"key", NT_TOOL_KEY},
             {"ui", NT_TOOL_UI}, {"ocr", NT_TOOL_OCR}, {"input", NT_TOOL_INPUT}, {"longpress", NT_TOOL_LONGPRESS},
             {"shell", NT_TOOL_SHELL}, {"notify", NT_TOOL_NOTIFY}, {"build", NT_TOOL_BUILD},
-            {"download", NT_TOOL_DL}, {"download_status", NT_TOOL_DL}, {"ping", NT_TOOL_PING},
+            {"download", NT_TOOL_DL}, {"ping", NT_TOOL_PING},
             {"buzz", NT_TOOL_BUZZ}, {"status", NT_TOOL_STATUS}, {"help", NT_TOOL_HELP},
             {"acttest", NT_TOOL_ACTTEST}, {"tap_text", NT_TOOL_TAP_TEXT}, {"wait_text", NT_TOOL_WAIT_TEXT},
             {"wait_stable", NT_TOOL_WAIT_STABLE}, {"scroll", NT_TOOL_SCROLL}, {"paste", NT_TOOL_PASTE},
@@ -422,50 +422,56 @@ public class Words {
     // ═══════════ 系统设置里露出的字都放在 res/values/strings.xml（app_name／a11y_desc／a11y_summary／fgs_watchdog_desc） ═══════════
 
     // ═══════════ 给助手的工具说明（高级页「诊断 → MCP 工具」里也逐条显示） ═══════════
-    public static final String TL_PING = "回铃：确认 Reticle 在线";
-    public static final String TL_SHELL = "以 shell 身份执行一条命令，回输出与退出码（默认 30 秒，可带 timeout_ms）；安装类命令默认拦下（改用 build action=install）";
-    public static final String TL_SHELL_CMD = "命令（例 id、ls /sdcard）";
-    public static final String TL_SHELL_NOTE = "这一句在干什么（一句话，不超过 20 字，例如：列出根目录文件）。会显示在通知上，请务必写";
-    public static final String TL_SHELL_TIMEOUT = "超时毫秒：默认 30000，上限 120000";
-    public static final String TL_SHOT = "截当前屏幕（系统级，游戏画面也不黑屏）。\n与 ocr 同时调会互撞。\n一条一条来。";
-    public static final String TL_TAP = "点屏幕一点；x、y 是 0~1 比例（正中＝0.5,0.5）";
-    public static final String TL_TAP_X = "0~1 比例";
-    public static final String TL_TAP_Y = "0~1 比例";
-    public static final String TL_TAP_MS = "按住毫秒（默认 60）";
-    public static final String TL_SWIPE = "从一点滑到另一点（坐标 0~1 比例）";
-    public static final String TL_SWIPE_X1 = "0~1 比例";
-    public static final String TL_SWIPE_Y1 = "0~1 比例";
-    public static final String TL_SWIPE_X2 = "0~1 比例";
-    public static final String TL_SWIPE_Y2 = "0~1 比例";
-    public static final String TL_SWIPE_MS = "毫秒（默认 300）";
-    public static final String TL_KEY = "按系统键：back／home／recents";
-    public static final String TL_KEY_VALUE = "back／home／recents";
-    public static final String TL_UI = "读当前界面控件（文字/描述/边界/可点）";
-    public static final String TL_UI_MAX = "最多几个（默认 120）";
-    public static final String TL_OCR = "离线中文认字（整屏或指定区域）";
-    public static final String TL_OCR_REGION = "0~1 的 x,y,w,h（不填＝整屏）";
-    public static final String TL_OCR_SRC = "图片路径（不填＝当场截屏）";
-    public static final String TL_INPUT = "往当前聚焦的输入框写文字（中文也行）";
+    public static final String TL_PING = "回铃，确认 Reticle 在线";
+    public static final String TL_SHELL = "以 shell 身份执行命令，返回输出与退出码，默认 30 秒，安装类命令默认拦下，改用 build action=install，手机是 toybox 不是 GNU，多模式用 grep -E，find /sdcard 少了 -L 会静默只回路径，没有 sort -h 和 cat -n";
+    public static final String TL_SHELL_CMD = "要执行的命令，例如 id，ls /sdcard";
+    public static final String TL_SHELL_NOTE = "这一句在干什么，20 字以内，会显示在通知上，务必写";
+    public static final String TL_SHELL_TIMEOUT = "超时毫秒，默认 30000，上限 60000，更长的任务用 nohup 后台跑再读结果";
+    /** render 工具（45 号单 · 出图/出文档）：一句话说清「给内容，得成品」。 */
+    public static final String TL_RENDER = "把 md 或 html 渲染成 png 网页或 pdf，pdf 为 A4 多页文字可搜索，自动套中文排版主题，长图自动加高，一张出全，超长按内存上限截断并说明";
+    public static final String TL_RENDER_MD = "Markdown 原文，最常用，支持标题，列表，表格，代码块，引用，图片";
+    public static final String TL_RENDER_HTML = "完整 HTML 页面，要精细版式时用，与 md 二选一";
+    public static final String TL_RENDER_FORMAT = "输出格式，png 默认，或 html，或 pdf，A4 多页，文字可搜索可复制，链接可点击";
+    public static final String TL_RENDER_WIDTH = "CSS 像素宽度，默认 794，A4 竖版约 96dpi，长图自动加高";
+    public static final String TL_RENDER_SCALE = "位图倍率 1 到 4，默认 2，约 192dpi";
+    public static final String TL_RENDER_OUT = "文件名，不含扩展名，默认按时间戳";
+    public static final String TL_RENDER_THEME = "版式主题，default 素文档，poster 海报，invoice 单据，pdf 与 png 都生效，format 为 html 时原样落盘";
+    public static final String RP_RENDER_NOSTART = "渲染窗口没起来：App 现在在后台，系统拦了后台启动界面。把 Reticle 拉到前台再调 render（只要文档不要图就用 format=pdf，它离屏渲染不需要窗口）。";
+    public static final String TL_SHOT = "截当前屏幕，系统级，游戏画面也不黑屏，别和 ocr 同时调，一条一条来";
+    public static final String TL_ACT = "四合一动作，tap 或 longpress 用 x y，swipe 用 x1 y1 x2 y2，key 用 key，坐标 0 到 1 比例";
+    public static final String TL_ACT_ACTION = "tap 默认，或 longpress，或 swipe，或 key";
+    public static final String TL_ACT_MS = "按住或滑动毫秒，tap 默认 60，longpress 默认 800，swipe 默认 300";
+    public static final String TL_TAP_X = "0 到 1 比例";
+    public static final String TL_TAP_Y = "0 到 1 比例";
+    public static final String TL_SWIPE_X1 = "0 到 1 比例";
+    public static final String TL_SWIPE_Y1 = "0 到 1 比例";
+    public static final String TL_SWIPE_X2 = "0 到 1 比例";
+    public static final String TL_SWIPE_Y2 = "0 到 1 比例";
+    public static final String TL_KEY_VALUE = "back 或 home 或 recents";
+    public static final String TL_UI = "读当前界面控件，文字，描述，边界，可点";
+    public static final String TL_UI_MAX = "最多几个，默认 120";
+    public static final String TL_OCR = "离线中文认字，整屏或指定区域";
+    public static final String TL_OCR_REGION = "区域 0 到 1 的 x y w h，不填为整屏";
+    public static final String TL_OCR_SRC = "图片路径，不填为当场截屏";
+    public static final String TL_INPUT = "往当前聚焦的输入框写文字，中文也行";
     public static final String TL_INPUT_TEXT = "要写的文字";
-    public static final String TL_LONGPRESS = "长按某点（坐标 0~1 比例）";
-    public static final String TL_LONGPRESS_MS = "按住毫秒（默认 800）";
-    public static final String TL_NOTIFY = "发／更新／清一条通知；report= 可同时回助手";
-    public static final String TL_NOTIFY_TITLE = "标题（默认 Reticle）";
+    public static final String TL_NOTIFY = "发或更新或清一条通知，report 可同时回助手";
+    public static final String TL_NOTIFY_TITLE = "标题，默认 Reticle";
     public static final String TL_NOTIFY_CONTENT = "正文";
-    public static final String TL_NOTIFY_ID = "编号（同号＝更新，默认 1）";
-    public static final String TL_NOTIFY_ONGOING = "1＝不可划掉（默认 1）";
-    public static final String TL_NOTIFY_CLEAR = "1＝清除该条";
+    public static final String TL_NOTIFY_ID = "编号，同号为更新，默认 1";
+    public static final String TL_NOTIFY_ONGOING = "1 为不可划掉，默认 1";
+    public static final String TL_NOTIFY_CLEAR = "1 为清除该条";
     public static final String TL_NOTIFY_ISLAND = "原子岛场景名";
-    public static final String TL_NOTIFY_OP = "原子岛：0 建／1 改／2 结（默认 0）";
-    public static final String TL_NOTIFY_PROMOTED = "1＝实况型通知";
-    public static final String TL_NOTIFY_PROGRESS = "进度 0~100（默认 60）";
-    public static final String TL_NOTIFY_REPORT = "汇报文本（写进眼线通知正文）";
-    public static final String TL_BUILD = "构建并安装 App（check→new→start→status→install）。\n装包只走 action=install：不用切前台；必须让用户在系统界面确认。";
-    public static final String TL_BUILD_ACTION = "check／new／start／status／install（默认 status）";
-    public static final String TL_BUILD_NAME = "应用名（action=new 用；默认「我的应用」）";
-    public static final String TL_BUILD_PKG = "包名（action=new 用，如 com.example.myapp）";
-    public static final String TL_BUZZ = "震动一次（纯震动：不发声、不弹通知、不亮屏）";
-    public static final String TL_BUZZ_MS = "毫秒（默认 300，上限 10000）";
+    public static final String TL_NOTIFY_OP = "原子岛操作，0 建，1 改，2 结，默认 0";
+    public static final String TL_NOTIFY_PROMOTED = "1 为实况型通知";
+    public static final String TL_NOTIFY_PROGRESS = "进度 0 到 100，默认 60";
+    public static final String TL_NOTIFY_REPORT = "汇报文本，写进眼线通知正文";
+    public static final String TL_BUILD = "构建并安装 App，action 可为 check new start status install，装包只走 action=install，不用切前台，必须让用户在系统界面确认";
+    public static final String TL_BUILD_ACTION = "check，new，start，status，install，env，默认 status";
+    public static final String TL_BUILD_NAME = "应用名，action=new 用，默认 我的应用";
+    public static final String TL_BUILD_PKG = "包名，action=new 用，如 com.example.myapp";
+    public static final String TL_BUZZ = "震动一次，纯震动，不发声，不弹通知，不亮屏";
+    public static final String TL_BUZZ_MS = "毫秒，默认 300，上限 10000";
     public static final String CF_LOG_SEC = " 秒前";
     public static final String CF_LOG_MIN = " 分钟前";
     public static final String CF_LOG_HOUR = " 小时前";
@@ -480,7 +486,7 @@ public class Words {
     public static final String RP_BUZZ_OFF = "关";
     public static final String RP_BUZZ_NO_VIB = "震动失败：本机没有震动器";
     public static final String RP_BUZZ_ERR = "震动异常：";
-    public static final String TL_BUZZ_DRY = "1＝只验通路不震（默认 0）";
+    public static final String TL_BUZZ_DRY = "1 为只验通路不震，默认 0";
     public static final String RP_BUZZ_DRY = "自检 dry：通路 ok，未震动（%dms）——只有助手显式 buzz 才会真震";
 
     // 通知 / 原子岛 / 实况 / 汇报（★媒体路线已于 72 号单整体移除）
@@ -569,11 +575,18 @@ public class Words {
     public static final String RP_DIAG_FMT = "第%d位最像'%s'/次'%s'，两位差%s";
 
     // ═══════════ 38 号单（2026-10-10）· 新增：状态可见性 / 自测 / 帮助 ═══════════
-    public static final String TL_STATUS = "报状态：版本／三件套／看门狗／前台包／MCP 端口";
-    public static final String TL_HELP = "工具用法：不带参数＝先知道的事＋目录；tool=<名>＝单个工具全文";
-    public static final String TL_ACTTEST = "动作自测靶：依次试 tap／长按／输入／滑动／返回";
+    public static final String TL_STATUS = "报状态，版本，三件套，看门狗，前台包，端口";
+    public static final String TL_HELP = "工具用法，不带参数为目录，tool 为名回单个工具全文";
+    public static final String TL_ACTTEST = "动作自测靶，依次试 tap，长按，输入，滑动，返回";
 
     public static final String RP_SHELL_EMPTY = "‹空›（命令没有任何输出）";
+
+    /** ★156：踩中 toybox 方言时主动说一句怎么改——不指望模型先去读 help。 */
+    public static final String HINT_GREP_ALT = "toybox 的 grep 不认「竖线转义」当交替（会静默回空、看着像没匹配），多模式请改 grep -E '甲|乙'";
+    public static final String HINT_FIND_L = "find 默认不跟随符号链接：在 /sdcard 或 /storage/emulated/0 上要加 -L，否则只回路径本身、退出码还是 0";
+    public static final String HINT_SORT_H = "toybox 的 sort 没有 -h，按数值排请用 sort -n";
+    public static final String HINT_CAT_N = "toybox 没有 cat -n，要行号用 grep -n \"\" 文件 或 awk '{print NR\": \"$0}' 文件";
+    public static final String HINT_REV = "toybox 没有 rev，字符反转得用 awk 或 sed 自己拼";
     public static final String RP_SHELL_TIMEOUT_FMT = "  timeout=1（%d 秒没跑完，进程已叫停）";
     public static final String RP_BUILD_MISSING = "缺件（补齐再出包）：";
     public static final String RP_BUILD_ENVOK = "环境齐 ✓（aapt2／android.jar／物料关键 jar 都在）";
@@ -618,16 +631,15 @@ public class Words {
     public static final String RP_ST_UNKNOWN = "（读不到）";
 
     // ═══════════ 41 号单（2026-10-10）· 内置下载工具（download / download_status） ═══════════
-    public static final String TL_DOWNLOAD = "下载文件到手机（≤8MB 当场完，大的转后台）";
-    public static final String TL_DOWNLOAD_URL = "http/https 完整网址";
-    public static final String TL_DOWNLOAD_DIR = "存哪（默认 Reticle 的 dl 目录）";
-    public static final String TL_DOWNLOAD_NAME = "文件名（默认取网址末段）";
-    public static final String TL_DOWNLOAD_SHA = "给校验值则核对";
-    public static final String TL_DOWNLOAD_HEADERS = "请求头（如 Referer）";
-    public static final String TL_DOWNLOAD_UNZIP = "1＝顺带解包（默认 0）";
-    public static final String TL_DOWNLOAD_FORCE = "1＝覆盖／破 2GB（默认 0）";
-    public static final String TL_DOWNLOAD_STATUS = "查下载进度／列出下载任务";
-    public static final String TL_DOWNLOAD_STATUS_ID = "任务 id（不填＝列全部）";
+    public static final String TL_DOWNLOAD = "下载文件到手机，只给 id 为查进度，8MB 以内当场完成，大的转后台";
+    public static final String TL_DOWNLOAD_ID = "下载任务 id，只查进度，不新建";
+    public static final String TL_DOWNLOAD_URL = "完整 http 或 https 网址";
+    public static final String TL_DOWNLOAD_DIR = "存哪，默认 Reticle 的 dl 目录";
+    public static final String TL_DOWNLOAD_NAME = "文件名，默认取网址末段";
+    public static final String TL_DOWNLOAD_SHA = "给了校验值就核对";
+    public static final String TL_DOWNLOAD_HEADERS = "请求头，如 Referer";
+    public static final String TL_DOWNLOAD_UNZIP = "1 为顺带解包，默认 0";
+    public static final String TL_DOWNLOAD_FORCE = "1 为覆盖或破 2GB，默认 0";
 
     // 下载进度那条通知（实况进度样式）
     public static final String DL_NT_TITLE = "正在下载 ";
@@ -651,8 +663,8 @@ public class Words {
     public static final String RP_DL_SHA_UNCHECKED = "sha256：没给校验值，未核对（上面那串就是实际值）";
     public static final String RP_DL_SHA_BAD_FMT = "sha256 不一致（实际 %s，给定 %s）";
     public static final String RP_DL_SHA_BAD_LINE_FMT = "没下对：%s（%s，%d 秒）\n实际 sha256=%s\n给定 sha256=%s\n——文件留在原处，别当成功用";
-    public static final String RP_DL_START_FMT = "已后台下载：任务 %s（%s）\n进度看通知栏；查进度：download_status id=%s";
-    public static final String RP_DL_TO_BG_FMT = "这份偏大或下得慢（已下 %s），已转后台继续：任务 %s\n进度看通知栏；查进度：download_status id=%s";
+    public static final String RP_DL_START_FMT = "已后台下载：任务 %s（%s）\n进度看通知栏；查进度：download id=%s";
+    public static final String RP_DL_TO_BG_FMT = "这份偏大或下得慢（已下 %s），已转后台继续：任务 %s\n进度看通知栏；查进度：download id=%s";
     public static final String RP_DL_ERR_FMT = "下载失败：%s";
     public static final String RP_DL_LEN_FMT = "长度不符（实收 %s，源站声明 %s）";
     public static final String RP_DL_NOT_APK_FMT = "这不是 apk：文件头不是 zip 包（可能下到了错误页）。文件留在 %s，可删掉重下";
@@ -661,7 +673,7 @@ public class Words {
     public static final String RP_DL_UNZIP_ERR_FMT = "文件下好了，但解包失败：%s";
     public static final String RP_DLS_TITLE = "下载任务（最近的在前）：\n";
     public static final String RP_DLS_NONE = "还没有下载任务。";
-    public static final String RP_DLS_NOID_FMT = "没有这个任务号：%s（download_status 不带 id 可看全部）";
+    public static final String RP_DLS_NOID_FMT = "没有这个任务号：%s（download 不带 id 可看全部）";
     public static final String RP_DLS_DONE = "已完成";
     public static final String RP_DLS_ERR = "失败";
     public static final String RP_DLS_RUN = "进行中";
@@ -670,7 +682,7 @@ public class Words {
 
     // ═══════════ 46 号单（2026-10-11）· help 精简分层：无参＝目录；tool=<名>＝单工具详情 ═══════════
     // 口径：本页只管「怎么用」；每个工具的说明以它自己的 TL_* 常量为唯一来源（一处定义、多处引用）。
-    public static final String TL_HELP_TOOL = "工具名（不填＝目录）";
+    public static final String TL_HELP_TOOL = "工具名，不填为目录";
     public static final String HP_INDEX_HEAD = "Reticle 工具（共 %d 个，一行一个）：\n";
     public static final String HP_INDEX_POINT = "某工具详情：help tool=<名字>（例 help tool=scroll_to_text）\n";
     public static final String HP_INDEX_TAIL = "另一条路：在手机上做 App 的工序＝build action=new（摊工程）→ start（出包）→ status（看进度）→ install（装到手机）；工程目录默认 /sdcard/Reticle/工程（也可 build.conf 写 PROJECT_DIR=）。\n";
@@ -685,29 +697,27 @@ public class Words {
     public static final String HP_POINT = "\n" + HP_POINT_PLAIN;
 
     // ═══════════ 44 号单（2026-10-11）· 按文字点 / 等页面 / 滚动：工具说明与回话 ═══════════
-    public static final String TL_TAP_TEXT = "按文字/描述/ID 找控件并点它（找不到不乱点）";
-    public static final String TL_TAP_TEXT_TEXT = "文字（默认包含匹配）";
+    public static final String TL_TAP_TEXT = "按文字或描述或 ID 找控件并点它，找不到不乱点";
+    public static final String TL_TAP_TEXT_TEXT = "文字，默认包含匹配";
     public static final String TL_TAP_TEXT_DESC = "content-desc";
-    public static final String TL_TAP_TEXT_ID = "控件 ID（可只写后半段）";
-    public static final String TL_TAP_TEXT_INDEX = "第几个（默认 0）";
-    public static final String TL_TAP_TEXT_TIMEOUT = "毫秒（默认 1500）";
-    public static final String TL_TAP_TEXT_DURATION = "毫秒（默认 80）";
-    public static final String TL_TAP_TEXT_EXACT = "1＝完全相等";
+    public static final String TL_TAP_TEXT_ID = "控件 ID，可只写后半段";
+    public static final String TL_TAP_TEXT_INDEX = "第几个，默认 0";
+    public static final String TL_TAP_TEXT_TIMEOUT = "毫秒，默认 1500";
+    public static final String TL_TAP_TEXT_DURATION = "毫秒，默认 80";
+    public static final String TL_TAP_TEXT_EXACT = "1 为完全相等";
     public static final String TL_TAP_TEXT_EXPECT = "点后等这段字出现";
-    public static final String TL_TAP_TEXT_EXPECT_PKG = "前台校验（不是就拒绝）";
-    public static final String TL_TAP_TEXT_OCR = "0＝关认字兜底";
-    public static final String TL_TAP_TEXT_WAIT = "点后等反应毫秒（默认 900）";
-    public static final String TL_WAIT_TEXT = "等文字出现／消失（替代 sleep+反复截图）";
+    public static final String TL_TAP_TEXT_EXPECT_PKG = "前台校验，不是就拒绝";
+    public static final String TL_TAP_TEXT_OCR = "0 为关认字兜底";
+    public static final String TL_TAP_TEXT_WAIT = "点后等反应毫秒，默认 900";
+    public static final String TL_WAIT_TEXT = "等文字出现或消失，mode 为 stable 时等画面静默";
+    public static final String TL_WAIT_MODE = "text 默认等文字，或 stable 等画面静默";
     public static final String TL_WAIT_TEXT_TEXT = "等的文字";
-    public static final String TL_WAIT_TEXT_STATE = "appear（默认）／disappear";
-    public static final String TL_WAIT_TEXT_TIMEOUT = "毫秒（默认 5000）";
-    public static final String TL_WAIT_STABLE = "等画面稳定（控件树静默若干毫秒）";
-    public static final String TL_WAIT_STABLE_QUIET = "静默毫秒（默认 600）";
-    public static final String TL_WAIT_STABLE_TIMEOUT = "毫秒（默认 5000）";
-    public static final String TL_SCROLL = "滚动列表/页面（走屏幕中段，避开手势区）";
-    public static final String TL_SCROLL_DIR = "down（默认）／up／left／right";
-    public static final String TL_SCROLL_DIST = "0.05~0.6（默认 0.5）";
-    public static final String TL_SCROLL_PKG = "前台校验（不是就拒绝）";
+    public static final String TL_WAIT_TEXT_STATE = "appear 默认，或 disappear";
+    public static final String TL_WAIT_TEXT_TIMEOUT = "毫秒，默认 5000";
+    public static final String TL_SCROLL = "滚动列表或页面，走屏幕中段，避开手势区";
+    public static final String TL_SCROLL_DIR = "down 默认，或 up，或 left，或 right";
+    public static final String TL_SCROLL_DIST = "0.05 到 0.6，默认 0.5";
+    public static final String TL_SCROLL_PKG = "前台校验，不是就拒绝";
 
     public static final String RP_TT_NEED = "要给我 text／desc／id 里至少一个，我才知道点哪儿";
     public static final String RP_TT_NOTFOUND = "没找到『%s』：等了 %dms，控件树里没有、截图认字也没认到——我没点，先不乱点";
@@ -737,39 +747,39 @@ public class Words {
     public static final String RP_VIA_GESTURE = "控件中心手势点";
     public static final String RP_VIA_GESTURE_ANC = "父控件中心手势点";
     public static final String RP_VIA_OCR = "截图认字定位后点中心（这类界面没有控件树）";
-    public static final String TL_INPUT_X = "先点这里（0~1，可选）";
-    public static final String TL_INPUT_Y = "先点这里的 y（0~1，可选）";
-    public static final String TL_INPUT_PKG = "前台校验（不是就拒绝）";
+    public static final String TL_INPUT_X = "先点这里，0 到 1，可选";
+    public static final String TL_INPUT_Y = "先点这里的 y，0 到 1，可选";
+    public static final String TL_INPUT_PKG = "前台校验，不是就拒绝";
     public static final String RP_INPUT_FMT2 = "已写入 %d 字。\n目标：前台应用的输入框。\n界面读不到回显；方式 %s";
 
     // ═══════════ 44.5 号单（2026-10-11）· 剪贴板直贴 / 滚找目标 / 批量动作 / 窗口探针 ═══════════
-    public static final String TL_PASTE = "剪贴板直贴到当前输入框（治微信这类应用）";
+    public static final String TL_PASTE = "粘贴到输入框，action 为 read 时只读剪贴板";
+    public static final String TL_PASTE_ACTION = "paste 默认，或 read 只读剪贴板";
     public static final String TL_PASTE_TEXT = "要贴的文字";
-    public static final String TL_PASTE_X = "先点这里（0~1，可选）";
-    public static final String TL_PASTE_Y = "先点这里的 y（0~1，可选）";
-    public static final String TL_PASTE_RESTORE = "1＝还原剪贴板（默认 1）";
-    public static final String TL_PASTE_PKG = "前台校验（不是就拒绝）";
+    public static final String TL_PASTE_X = "先点这里，0 到 1，可选";
+    public static final String TL_PASTE_Y = "先点这里的 y，0 到 1，可选";
+    public static final String TL_PASTE_RESTORE = "1 为还原剪贴板，默认 1";
+    public static final String TL_PASTE_PKG = "前台校验，不是就拒绝";
 
-    public static final String TL_SCROLL_TO_TEXT = "边滚边找目标（tap=1 顺手点它）";
-    public static final String TL_SCROLLTO_TEXT = "文字（默认包含匹配）";
+    public static final String TL_SCROLL_TO_TEXT = "边滚边找目标，tap 为 1 时顺手点它";
+    public static final String TL_SCROLLTO_TEXT = "文字，默认包含匹配";
     public static final String TL_SCROLLTO_DESC = "content-desc";
     public static final String TL_SCROLLTO_ID = "控件 ID";
-    public static final String TL_SCROLLTO_EXACT = "1＝完全相等";
-    public static final String TL_SCROLLTO_INDEX = "第几个（默认 0）";
-    public static final String TL_SCROLLTO_DIR = "down（默认）／up";
-    public static final String TL_SCROLLTO_MAX = "最多几屏（默认 10，上限 40）";
-    public static final String TL_SCROLLTO_TIMEOUT = "毫秒（默认 12000）";
-    public static final String TL_SCROLLTO_TAP = "1＝找到就点（默认 0）";
-    public static final String TL_SCROLLTO_PKG = "前台校验（不是就拒绝）";
+    public static final String TL_SCROLLTO_EXACT = "1 为完全相等";
+    public static final String TL_SCROLLTO_INDEX = "第几个，默认 0";
+    public static final String TL_SCROLLTO_DIR = "down 默认，或 up";
+    public static final String TL_SCROLLTO_MAX = "最多几屏，默认 10，上限 40";
+    public static final String TL_SCROLLTO_TIMEOUT = "毫秒，默认 12000";
+    public static final String TL_SCROLLTO_TAP = "1 为找到就点，默认 0";
+    public static final String TL_SCROLLTO_PKG = "前台校验，不是就拒绝";
 
-    public static final String TL_DO_CHAIN = "批量动作：一次提交多步，每步可带 expect（顶层 ok=0＝有步失败）";
-    public static final String TL_DO_CHAIN_STEPS = "步骤数组 [{act,参数…,expect,timeout_ms}]";
-    public static final String TL_DO_CHAIN_STOP = "1＝出错即停（默认 1）";
-    public static final String TL_DO_CHAIN_OBSERVE = "第 N 步后回屏上现状（0＝不回）";
+    public static final String TL_DO_CHAIN = "批量动作，一次提交多步，每步可带 expect，顶层 ok 为 0 表示有步失败";
+    public static final String TL_DO_CHAIN_STEPS = "步骤数组，每步为 act 参数 expect timeout_ms";
+    public static final String TL_DO_CHAIN_STOP = "1 为出错即停，默认 1";
+    public static final String TL_DO_CHAIN_OBSERVE = "第 N 步后回屏上现状，0 为不回";
 
-    public static final String TL_WINDOWS = "列出可见窗口（查分屏／小窗／悬浮窗）";
-    public static final String TL_CLIP = "读剪贴板（只读）：拿到文字与长度；读不到会明说";
-    public static final String TL_TEXTS = "整屏文字行＋坐标（不依赖可点性；树读不到就截图认字）";
+    public static final String TL_WINDOWS = "列出可见窗口，含分屏，小窗，悬浮窗";
+    public static final String TL_TEXTS = "整屏文字行加坐标，不依赖可点性，树读不到就截图认字";
 
     public static final String RP_PASTE_NEEDTEXT = "要给我 text（要贴进去的内容）";
     public static final String RP_PASTE_NOFOCUS = "没找到输入框：这次没动手。可给我输入框的位置（x/y，屏幕比例 0~1）让我先点一下再贴";
@@ -784,6 +794,8 @@ public class Words {
     public static final String RP_SCROLLTO_MAXSCROLL = "滚满了 %d 屏";
     public static final String RP_SCROLLTO_NOSCROLL = "这个界面滚不动（下发滚动没成功）";
     public static final String RP_SCROLLTO_FMT = "滚了 %d 屏找到了『%s』（%s）%s";
+    public static final String RP_SCROLLTO_ROLLED = "；它在屏幕外，已顺手滚进可视区（多滚 %d 屏）";
+    public static final String RP_SCROLLTO_OFFSCREEN = "；但它不在可视区内，滚了 %d 屏也没能带进来（可能不在当前可滚动的列表里）";
 
     public static final String RP_CHAIN_NEED = "要给我 steps（步骤数组），我才能连着走";
     public static final String RP_CHAIN_BAD = "steps 不是合法的 JSON 数组：每步写成 {\"act\":\"tap_text\",\"text\":\"发送\",\"expect\":\"已发送\"}";
@@ -943,6 +955,9 @@ public class Words {
     public static final String MA_BUILD_ADV_LEAD = "本机可把安卓工程编成 apk。\n首次要下载平台文件，约 26 MB。\n一般由 AI 调用。";
     public static final String MA_BUILD_NOTREADY = "环境还没齐";
     public static final String MA_BUILD_BTN_PREP = "一键准备环境";
+    public static final String MA_BUILD_TD_EX = "下载编译器";
+    public static final String MA_SEC_TOOLCAP = "工具能力";
+    public static final String MA_SEC_TOOLCAP_D = "按簇列出：不可用的（缺无障碍／缺编译器）默认折叠、置灰，并排在可用簇后面。点标题展开。";
     public static final String MA_BUILD_BTN_PREP_D = "要下载 android.jar，约 25.8MB。\n下完校验 sha256。";
     public static final String MA_BUILD_BTN_GO = "打包 App";
     public static final String MA_BUILD_BTN_GO_D = "把「工程」编成 apk，约 1 到 3 分钟。";
@@ -972,7 +987,7 @@ public class Words {
 
     // ═══════════ 77 号单（2026-10-16）· 工具全文（tools/list 只留一行，全文挪到这里，help tool=X 取用） ═══════════
     public static final String TD_PING = "回铃测试：确认 Reticle 在线（返回一句 hello）";
-    public static final String TD_SHELL = "在你的手机上以 shell 身份执行一条命令，返回输出和退出码。exit=真实退出码；30 秒没跑完＝叫停进程并回 timeout=1；stdout／stderr 都空时回 ‹空›。★本机（实测环境）常遇到的坑：settings put 常不落地（改用 content insert，且值里不能带冒号）；cat -n 不可用（用 sed -n '1,$p' | nl 或 awk）。";
+    public static final String TD_SHELL = "在你的手机上以 shell 身份执行一条命令，返回输出和退出码。exit=真实退出码；30 秒没跑完＝叫停进程并回 timeout=1；stdout／stderr 都空时回 ‹空›。\n★Android 用的是 toybox，不是 GNU（任何机型都成立）：①多模式一律 grep -E——写成 grep 'a|b' 那种竖线交替会静默回空，看着像「没有匹配」；②在 /sdcard 上 find 必须加 -L，否则只回路径本身、退出码还是 0；③sort 没有 -h（用 -n）；④awk 没有 /i 正则标志（用 tolower()）；⑤没有 cat -n、没有 rev。\n★工具本身的硬限制：①单条 60 秒硬超时，更长的用 nohup sh 脚本.sh > 日志 2>&1 & 后台跑，再另发一条读结果；②别用 nohup sh -c '……' & 包一层（会被连进程组收掉，留下半成品）；③别写 cd A && CMD &——cd 会进后台子 shell、前台仍在原地，写 cd A; CMD &；④写动作互斥：长命令占着锁时后续 tap／swipe 会被拒，返回里会说还要等几秒。\n★其它常踩：settings put 常不落地（改 content insert，且值里不能带冒号）；pm install 读不到 /sdcard 上的 apk（先 cp 到 /data/local/tmp）；启动 App 用 am start -n <组件>，别用 monkey（实测会把系统方向锁定关掉）；判断某个 /sys 节点能不能用要直接按路径试读，别先 ls（目录被拒不等于单文件不可读）；拿 sysfs／proc 计数器当数据源前，先连读两次确认数字在变。";
     public static final String TD_SHELL_CMD = "要执行的命令，例如 id、ls /sdcard";
     public static final String TD_SHOT = "截取当前屏幕（系统级截图，游戏画面也不黑屏）。返回图片与保存路径。";
     public static final String TD_TAP = "在屏幕上点一下。x、y 用 0~1 的比例（相对屏幕宽高）：屏幕正中＝0.5,0.5。";
@@ -990,11 +1005,11 @@ public class Words {
     public static final String TD_UI = "读取当前界面的控件（文字/描述/边界/是否可点），用于定位要点哪里；读不到会如实说明（游戏等自绘界面读不到）。";
     public static final String TD_CLIP = "只读剪贴板里的文字。用于验证「点复制」到底复制进去了什么（自己点、自己读）。非前台／系统限制读不到时会明说读不到，不会拿空串冒充成功。";
     public static final String TD_TEXTS = "把当前屏幕上的文字按行读出来，每行给文字、中心坐标、边界（像素）。不依赖控件能不能点，页面内提示（App 自己画的 TextView）也能读到；控件树里一行都没有时用离线认字兜底（src=ocr）。";
-    public static final String TD_TEXTS_MAX = "最多返回几行（可选，默认 400）";
+    public static final String TD_TEXTS_MAX = "最多返回几行，默认 400";
     public static final String TD_UI_MAX = "最多返回几个控件（可选，默认 120）";
     public static final String TD_OCR = "识别屏幕上或指定区域的文字（离线中文）；region 用 0~1 比例 x,y,w,h，可选。";
     public static final String TD_OCR_REGION = "区域 0~1 比例：x,y,w,h（可选，不填＝整屏）";
-    public static final String TD_OCR_SRC = "指定图片路径（可选，默认当场截屏）";
+    public static final String TD_OCR_SRC = "指定图片路径（可选，默认当场截屏）；★只认工作区、运行目录下的图，别的路径（如 Android/data/<包>/）先 cp 到工作区再读";
     public static final String TD_INPUT = "往当前聚焦的输入框写入文字（中文也行）。输入框读不到回显时会走剪贴板粘贴，并尽量把你原来的剪贴板还原；微信这类界面可先给 x/y 让它点一下输入框。";
     public static final String TD_INPUT_TEXT = "要输入的文字";
     public static final String TD_LONGPRESS = "长按屏幕上某点（坐标 0~1 比例）。";
@@ -1018,7 +1033,7 @@ public class Words {
     public static final String TD_STATUS = "一句话报状态：版本、三件套（无障碍在册＋连接态／所有文件访问／自检结论）、看门狗累计救回次数与最近时间、前台包名、MCP 端口、日志尾几行。";
     public static final String TD_HELP = "工具目录与用法（只回助手，界面上不显示）：不带参数＝目录（一行一个工具，名字 ＋ 半句用途）；tool=<名字>＝这一个工具的完整说明与参数。工具失败时，回话末尾会带 help tool=<名> 的指路。";
     public static final String TD_ACTTEST = "动作类自测靶：开 Reticle 自己的小窗口，依次试 tap／长按／输入／滑动／返回并回报每步结果（会短暂占用前台，只在需要自测动作时用）。";
-    public static final String TD_DOWNLOAD = "下载一个文件到手机（不用开浏览器，也不依赖 Shizuku）。小文件（默认 8MB 以内）当场下完并回报路径＋sha256；大文件立刻返回任务号，下载转后台继续，进度显示在通知栏，用 download_status 查。只能存到 Reticle 的 dl 目录或 /sdcard/Download（别的目录写不进去，会当面回人话）。";
+    public static final String TD_DOWNLOAD = "下载一个文件到手机（不用开浏览器，也不依赖 Shizuku）。小文件（默认 8MB 以内）当场下完并回报路径＋sha256；大文件立刻返回任务号，下载转后台继续，进度显示在通知栏，用 download 查。只能存到 Reticle 的 dl 目录或 /sdcard/Download（别的目录写不进去，会当面回人话）。";
     public static final String TD_DOWNLOAD_URL = "下载地址（http/https 完整网址）";
     public static final String TD_DOWNLOAD_DIR = "存到哪个目录（可选，默认 Reticle 的 dl 目录；只允许 Reticle 的 dl 目录、/sdcard/Download）";
     public static final String TD_DOWNLOAD_NAME = "存成什么文件名（可选，默认取网址最后一段）";
@@ -1079,7 +1094,7 @@ public class Words {
     public static final String TD_WINDOWS = "列出当前无障碍看得见的窗口（类型/包名/边界/是否整屏/是否活动），用来查分屏·小窗·悬浮窗——也是分屏下坐标排查的探针。split=1 表示当前可能是分屏/多窗口。★多窗口时 ui 只给「有焦点的那个窗口」的节点：要操作另一个窗口，先点它一下，或用 tap_text 的认字兜底。";
     // ═══════════ 77 号单（2026-10-16）· 起项目 ＋ 自解释 ＋ 瘦身 ═══════════
     /** 工程目录＝写进 build 描述（陌生 AI 不必翻现场就知道往哪儿放手写工程）。 */
-    public static final String TL_BUILD_WHERE = "工程目录默认 /sdcard/Reticle/工程（也可在 /sdcard/Reticle/build.conf 写 PROJECT_DIR= 指走）";
+    public static final String TL_BUILD_WHERE = "工程目录默认 /sdcard/Reticle/工程，也可在 /sdcard/Reticle/build.conf 写 PROJECT_DIR 指走";
     /** help 不带参数时先说的话（面向陌生用户：这机器怎么用、要干嘛先看哪）。 */
     public static final String HP_FIRST = "你该先知道的几件事：\n"
         + "· 你在一台真手机上：tap／swipe／input 都是真动手。动手前先用 ui（控件树）或 ocr（认字）看清屏幕，别盲点。\n"
@@ -1121,9 +1136,9 @@ public class Words {
     public static final String RP_REASON_PKG = "（下一步：确认前台包名——status 看「前台包」，或用 windows 看窗口）";
     public static final String RP_REASON_WRITE = "（下一步：把目标目录恢复成目录——清目录要「清内容留目录」）";
     /** 裸动作（tap／swipe／key／longpress）的 expect_pkg 参数说明（共用一处）。 */
-    public static final String TL_ACT_PKG = "前台校验：不是这个包名就拒绝动手（可选，传了才校验）";
+    public static final String TL_ACT_PKG = "前台校验，不是这个包名就拒绝动手，可选";
     /** 每个工具短描述末尾的指路（tools/list 素化：一行一个，不展开全文）。 */
-    public static final String HP_TOOL_SUFFIX = "（详见 help tool=%s）";
+    public static final String HP_TOOL_SUFFIX = "";
     /** help 无参：目录地图（东西都在，只指路；不写长）。 */
     public static final String HP_MAP = "东西都在哪（目录地图）：\n"
         + "· 工程／产物：工程目录＝/sdcard/Reticle/工程（build.conf 的 PROJECT_DIR= 可指走）；出包产物＝/sdcard/Reticle/out/。\n"
@@ -1228,8 +1243,148 @@ public class Words {
     public static final String CF_WIDGET_SUB = "空闲时岛上显示什么";
     public static final String CF_WIDGET_LEAD = "空闲 5 秒后启用；有 notify 通知时会让位 15 秒";
     public static final String CF_WIDGET_OFF_D = "只剩一块空胶囊";
+
+    // ★141（2026-10-24）· 新工具：CPU／CPU 温度／GPU／可用内存／倒计时
+    public static final String LV_CPU_T = "CPU 使用率";
+    public static final String LV_CPU_D = "读 /proc/stat 算出来的真值；拿不到时退化为频率估算（数字前有 ~）";
+    public static final String LV_CTEMP_T = "CPU 温度";
+    public static final String LV_CTEMP_D = "取各 CPU 核温度里最高的；已排除 105℃ 那几个阈值常量";
+    public static final String LV_GPU_T = "GPU 使用率";
+    public static final String LV_GPU_D = "读 kgsl 的 busy/total；这台机器读不到 GPU 频率";
+    public static final String LV_MEM_T = "可用内存";
+    public static final String LV_MEM_D = "MemAvailable，保留一位小数";
+    public static final String LV_TICK_T = "工具刷新间隔";
+    public static final String LV_TICK_D = "CPU／温度／GPU／内存共用；机器上最短 0.5 秒";
+    public static final String LV_CD_T = "倒计时 / 纪念日";
+    public static final String LV_CD_D = "多件事轮流显示";
+    public static final String LV_CD_BODY_T = "倒计时内容";
+    public static final String LV_CD_BODY_D = "一行一条：名称|日期。写 2027-02-06 是一次性，写 02-06 是每年重复";
+    public static final String LV_CD_BODY_ASK = "例：生日|02-06　见面|2027-02-06";
+    public static final String LV_CD_N_T = "倒计时条数";
+    public static final String LV_CD_N_D = "个";
+    public static final String LV_CD_SEC_T = "条数间轮播间隔";
+    public static final String LV_CD_SEC_D = "秒；一条换到下一条";
+
+    // ★139（2026-10-23）· 安卓实况通知（V2）：总开关＋分层选项＋多工具轮询
+    public static final String LV_SEC_TITLE = "安卓实况通知";
+    public static final String LV_SEC_SUB = "空闲与工具展示";
+    public static final String LV_LEAD = "总开关关掉＝收回当前通知，之后一切都不走实况";
+    public static final String LV_SET_ON = "已开启实况通知";
+    public static final String LV_SET_OFF = "已关闭实况通知，并收回当前岛";
+    public static final String LV_KEEP_T = "助手空闲后实况通知是否继续展示";
+    public static final String LV_KEEP_D = "关掉＝最后一条消息显示一会儿就收回";
+    public static final String LV_LAST_T = "助手空闲后最后一条消息的持续时间";
+    public static final String LV_LAST_D = "秒；只在上一项关闭时生效";
+    public static final String LV_BLACK_T = "是否以完全黑色胶囊形式继续展示";
+    public static final String LV_BLACK_D = "只留一块空胶囊，不显示工具内容";
+    public static final String LV_IDLE_T = "助手空闲后切换为工具显示时间";
+    public static final String LV_IDLE_D = "秒；最后一次动作后多久切到工具";
+    public static final String LV_ROT_T = "工具显示间轮询时间";
+    public static final String LV_ROT_D = "秒；一个工具显示多久后换下一个";
+    public static final String LV_RAND_T = "是否启用随机展示";
+    public static final String LV_RAND_D = "开＝随机换下一个；关＝按列表顺序";
+    public static final String LV_NEED2 = "至少增添两个工具显示";
+    public static final String LV_POWER_T = "功耗";
+    public static final String LV_POWER_D = "电压×电流；充电为正、放电为负";
+    public static final String LV_POWER_SEC_T = "更新间隔";
+    public static final String LV_POWER_SEC_D = "秒；最短 0.5";
+    public static final String LV_TEXT_T = "自定义文字轮播";
+    public static final String LV_TEXT_D = "自己写的几句话";
+    public static final String LV_TEXT_BODY_T = "自定义文字内容";
+    public static final String LV_TEXT_BODY_D = "一行一条；“条数”决定取前几条";
+    public static final String LV_TEXT_N_T = "自定义文字条数";
+    public static final String LV_TEXT_N_D = "个";
+    public static final String LV_TEXT_SEC_T = "条数间轮播间隔";
+    public static final String LV_TEXT_SEC_D = "秒；一条换到下一条";
+    public static final String LV_TEXT_RAND_T = "随机插入整体轮询";
+    public static final String LV_TEXT_RAND_D = "每条文字各占一个时隙；至少两个工具才可用";
+    public static final String LV_SEC_UNIT = " 秒";
+    public static final String LV_OFF = "已关";
+    public static final String LV_ON = "已开";
     public static final String CF_WIDGET_TEXTS_T = "文字段";
     public static final String CF_WIDGET_TEXTS_ASK = "每行一段，按行序轮流显示";
     public static final String CF_WIDGET_SEC_T = "每段秒数";
     public static final String CF_WIDGET_SEC_ASK = "给个正整数，单位秒";
+
+    // ═════════ M1 表格数据面（2026-11-08）：sheet 工具文案 ═════════
+    public static final String TL_SHEET = "读 xlsx 与 csv 表格，info 看画像，read 按区域取数，query 用 SQL 聚合与统计，export 把结果导成 xlsx 或 csv，preview 把结果画成 PDF，find 找文件，不用解压也不把全表搬进上下文";
+    public static final String TL_SHEET_ACTION = "动作，info 看工作簿画像，read 按区域读成 TSV，query 用 SQL 查与聚合，export 把结果导成 xlsx 或 csv，preview 把结果画成 PDF，find 按文件名找表格";
+    public static final String TL_SHEET_PATH = "文件路径，可绝对路径，也可只写文件名，只写文件名会在下载与文档与运行目录里找";
+    public static final String TL_SHEET_SHEET = "工作表，序号从 1 起，也可写名字片段，默认第 1 个";
+    public static final String TL_SHEET_RANGE = "区域，形如 A1:AF30，省略则从第 1 行第 1 列起，按 max_rows 截断";
+    public static final String TL_SHEET_NAME = "文件名片段，可用星号通配，如 *2610月*，只在下载与文档目录里找";
+    public static final String TL_SHEET_MAX_ROWS = "最多返回多少行，默认 200，不要一次要全表";
+    public static final String TL_SHEET_HEADER_ROW = "表头在第几行，默认 1，只影响列名映射";
+    public static final String TL_SHEET_SKIP_HIDDEN = "1 为跳过隐藏行，默认 0 照常返回并在首行注明";
+    public static final String TL_SHEET_FORMAT = "export 的格式，xlsx 默认，也可 csv";
+    public static final String TL_SHEET_OUT = "输出文件名，可带路径，默认运行目录 out 下按时间命名";
+    public static final String TL_SHEET_MAX_COLS = "preview 最多画几列，默认 8，多了只画前几列";
+
+    public static final String TD_SHEET = "xlsx 与 csv 都走这一条。info 返回工作簿画像，含每个表的行列数、隐藏行、合并数、公式数，以及选中表的列类型与前 8 行原始网格。read 按 range 取一段成 TSV，行号在最左，列字母在首行。find 只在下载与文档目录里按文件名找，支持星号通配。日期按单元格格式判断，不按内容猜；金额保留原始数值，不做币种格式化；公式只信缓存值，没有缓存就显示公式原文并标不可计算。不认 xls 与 ods，先用 WPS 另存为 xlsx。别用 read 一次要全表，按 range 分次取，默认只给 200 行。action 可省略，省了按 info 处理。query 把整表导进 SQLite 再查，表名固定 t1，列是 c1 到 cN，表头文字只存在返回的列映射里；数值列另给 cN_v 原始数值与 cN_c 整数分，金额求和一定用 cN_c 再除 100，避开双精度误差。只放一条 SELECT 或 WITH，禁写、禁 ATTACH 与 PRAGMA，默认只回 200 行。同一个文件第二次查走缓存，不重导。export 与 preview 吃同一个 sql 或 range：给 sql 走 SQLite，给 range 就按区域取并把区域首行当表头。export 写 xlsx 或 csv 到运行目录 out 下，数值写成真数字，带表头底色、细边框、冻结首行与自动筛选，默认最多 5000 行。preview 只把结果前 200 行前 8 列画成 A4 PDF，列多或行多会明说，要全量请用 export。";
+
+    public static final String RP_SHEET_BADACT = "！action 只认 info read query export preview find，收到的是 %s";
+    public static final String RP_SHEET_NOPATH = "！要 path，例如 path=/sdcard/Download/WeiXin/月度报表.xlsx，不知道路径就先 find name=*月*";
+    public static final String RP_SHEET_NOFILE = "！找不到这个文件：%s，只写文件名时会在下载与文档与运行目录里找，也可以先 find";
+    public static final String RP_SHEET_EXT = "！这版只读 xlsx 与 csv：%s，xls 请先用 WPS 另存为 xlsx";
+    public static final String RP_SHEET_NOSHEET = "！没有第 %d 个工作表，这个工作簿只有 %d 个：%s";
+    public static final String RP_SHEET_NONAME = "！没有名字含 %s 的工作表，有：%s";
+    public static final String RP_SHEET_BADRANGE = "！区域写法不对：%s，要像 A1:AF30";
+    public static final String RP_SHEET_FAIL = "！读表失败：%s";
+    public static final String RP_SHEET_EMPTY = "！这张表是空的，一行数据都没有";
+    public static final String RP_SHEET_FIND_NONE = "！没找到匹配 %s 的表格，搜过下载与文档目录";
+    public static final String RP_SHEET_FIND_HEAD = "找到 %d 个，新的在前";
+    public static final String RP_SHEET_FIND_LINE = "%d. %s｜%s｜%s";
+    public static final String RP_SHEET_FIND_MORE = "还有 %d 个没列，收窄关键字再看";
+    public static final String RP_SHEET_FIND_HINT = "接着 sheet action=info path=上面的绝对路径";
+    public static final String RP_SHEET_FIND_XLS = "其中 xls 这版读不了，先用 WPS 另存为 xlsx";
+    public static final String RP_SHEET_ROWCOL = "行";
+    public static final String RP_SHEET_META = "# %s %d｜%s｜区域 %s｜行 %d 到 %d，共 %d 行";
+    public static final String RP_SHEET_HIDDEN = "# 隐藏行 %s，已照常返回，要跳过用 skip_hidden=1";
+    public static final String RP_SHEET_SKIPPED = "# 已按 skip_hidden 跳过 %d 个隐藏行";
+    public static final String RP_SHEET_SKIPPED2 = "# 已跳过范围内 %d 个隐藏行，本表共 %d 个隐藏行";
+    public static final String RP_SHEET_NOCACHE = "# 有 %d 个公式没有缓存值，显示成公式原文";
+    public static final String RP_SHEET_TRUNC = "# 只到第 %d 行，下面还有 %d 行，用 range=%s%d 或加大 max_rows 续读";
+    public static final String RP_SHEET_W_HIDDEN = "工作表 %d 有 %d 个隐藏行，read 默认照常返回";
+    public static final String RP_SHEET_W_HIDDENCOL = "工作表 %d 有 %d 个隐藏列";
+    public static final String RP_SHEET_W_DUP = "工作表 %s 与 %s 名字前缀相同，选表用序号更稳";
+    public static final String RP_SHEET_W_HEADMERGE = "表头行有合并单元格，列名可能只在左上角那一格";
+    public static final String RP_SHEET_W_BIG = "这张表 %d 行，别一次 read 要全表，按 range 分次取";
+    public static final String RP_SHEET_CSVNOTE = "csv 没有格式信息，列类型按内容猜";
+    public static final String RP_SHEET_CSV_ONE = "！csv 只有一个表，sheet 参数不用给，收到的是 %s";
+    public static final String RP_SHEET_PREVIEW_CAP = "# 只给前 %d 行前 %d 列，全表共 %d 行 %d 列";
+    public static final String RP_SHEET_HINT = "接着用 read 取明细，range=%s1:%s%d";
+    public static final String RP_SHEET_KIND_XLSX = "工作表";
+    public static final String RP_SHEET_KIND_CSV = "csv";
+    public static final String RP_SHEET_ERR = "！";
+    public static final String RP_SHEET_NOCACHE2 = "有 %d 个公式没有缓存值，算不了，别按 0 处理";
+
+    // ═════════ M3（2026-11-08）：sheet query 文案 ═════════
+    public static final String TL_SHEET_SQL = "查询语句，只允许 SELECT 与 WITH，表名固定 t1，列是 c1 到 cN，金额用 cN_c 整数分";
+    public static final String TL_SHEET_DATA_ROW = "数据从第几行开始，默认表头下一行，表头有两行时用它跳过小标题";
+    public static final String RP_SHEET_NOSQL = "！要 sql，例如 SELECT c1, SUM(c5_c)/100.0 FROM t1 GROUP BY c1";
+    public static final String RP_SHEET_SQL_EMPTY = "语句是空的";
+    public static final String RP_SHEET_SQL_ONLY = "只允许一条 SELECT 或 WITH";
+    public static final String RP_SHEET_SQL_ONE = "只允许一条语句，别用分号叠多条";
+    public static final String RP_SHEET_SQL_BAN = "不许用 %s";
+    public static final String RP_SHEET_SQL_BAD = "！SQL 不合规：%s";
+    public static final String RP_SHEET_SQL_ERR = "！查询出错：%s（表名 t1，列 c1 到 cN，金额用 cN_c，数值用 cN_v）";
+    public static final String RP_SHEET_IMP = "# 已导入第 %d 个表 %s｜%d 行 × %d 列%s";
+    public static final String RP_SHEET_IMP_CACHE = "（缓存）";
+    public static final String RP_SHEET_DBFAIL = "临时库文件写不进去（检查运行目录是否可写）";
+    public static final String RP_SHEET_QMAP = "# 列 %s";
+    public static final String RP_SHEET_MORE_COLS = " / …共 %d 列";
+    public static final String RP_SHEET_MONEY_HINT = "# 金额求和用 cN_c（整数分）再除 100，比例用 cN_v（原始数值）";
+    public static final String RP_SHEET_QROWS = "# 返回 %d 行";
+    public static final String RP_SHEET_QFULL = "# 只回 %d 行，结果被截断，请聚合成几行或加 LIMIT";
+
+    // ── M4：export / preview 的文案（1.1.45） ──
+    public static final String RP_SHEET_EXPORT_OK = "已导出 %d 行 × %d 列\n路径：%s\n大小：%d KB";
+    public static final String RP_SHEET_EXPORT_TRUNC = "截断：结果还有更多行，加大 max_rows 或先用 SQL 聚合";
+    public static final String RP_SHEET_FMT = "！format 只认 xlsx 或 csv，收到的是 %s";
+    public static final String RP_SHEET_NEEDQ = "！export 与 preview 要 sql 或 range，例如 sql=SELECT c1, SUM(c5_c)/100.0 FROM t1 GROUP BY c1";
+    public static final String RP_SHEET_GRID_NONE = "！没有可导出的结果行，先改 SQL 看有没有数据";
+    public static final String RP_SHEET_PDF_OK = "已生成 PDF\n路径：%s\n页数：%d（A4 竖版）\n大小：%d KB\n内容：%d 行 × %d 列\n耗时：%d ms";
+    public static final String RP_SHEET_PDF_FAIL = "！生成 PDF 失败：%s";
+    public static final String RP_SHEET_PDF_CUTCOL = "列太多，只画了前 %d 列，要全量请用 export";
+    public static final String RP_SHEET_PDF_CUTROW = "行太多，只画了前 %d 行，要全量请用 export";
 }

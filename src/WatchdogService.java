@@ -134,6 +134,7 @@ public class WatchdogService extends Service {
         try { A11yWatchdog.start(this); } catch (Throwable t) { }
         try { MemGuard.start(this); } catch (Throwable t) { }
         try { McpServer.start(this); } catch (Throwable t) { }
+        try { Notifier.resumeIsland(this); } catch (Throwable t) { }
     }
 
     /** 86 号单：前台服务不再自己画通知——大通知那份（折叠＋列表＋守护）由 Notifier 统一构建，

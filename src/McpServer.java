@@ -472,6 +472,7 @@ public class McpServer {
             String tool;
             long at;
             int cls;
+            long ttl;   // ★143：这条在途最多算多久（到点强制放开，别让挂住的命令拖死后面的 tap）
         }
 
         /** 一次请求的判定结果：ok=0 时 why 是拒绝原因（不含 ok:0 前缀）；mark／audit 只在放行且此刻有别的调用时非空。 */
@@ -567,7 +568,12 @@ public class McpServer {
             synchronized (LIVE) {
                 Item w = null;
                 Item any = null;
-                for (int i = LIVE.size() - 1; i >= 0; i--) { if (now - LIVE.get(i).at > 120000L) LIVE.remove(i); }   // 防泄漏：在途超过 120 秒的一律算挂了
+                // ★143：按工具分级的在途上限。原来一刀切 120 秒——命令早超时、锁还占着，tap 被拒两分钟
+                for (int i = LIVE.size() - 1; i >= 0; i--) {
+                    Item it0 = LIVE.get(i);
+                    long ttl0 = it0.ttl > 0 ? it0.ttl : 60000L;
+                    if (now - it0.at > ttl0) LIVE.remove(i);
+                }
                 for (int i = LIVE.size() - 1; i >= 0; i--) {
                     Item it = LIVE.get(i);
                     if (any == null) any = it;
@@ -588,6 +594,7 @@ public class McpServer {
                 me.tool = tool;
                 me.at = now;
                 me.cls = cls;
+                me.ttl = ttlFor(tool, argsJson);
                 LIVE.add(me);
             }
             return d;
@@ -602,6 +609,25 @@ public class McpServer {
                 }
             }
         }
+        /** ★143：这条在途最多算多久。shell 跟着它自己的 timeout_ms（上限 60 秒，再给 15 秒收尾）；
+         *  其余按工具类型给。超过就当作「进程还在但请求早挂了」，强制放开写锁。 */
+        private static long ttlFor(String tool, String argsJson) {
+            if (tool == null) return 45000L;
+            if (tool.equals("shell")) {
+                long t = 30000L;
+                try {
+                    String s = optStr(argsJson, "timeout_ms");
+                    if (s != null && s.trim().length() > 0) t = Long.parseLong(s.trim());
+                } catch (Throwable th) { }
+                if (t <= 0) t = 30000L;
+                if (t > 60000L) t = 60000L;
+                return t + 15000L;
+            }
+            if (tool.equals("do_chain")) return 180000L;
+            if (tool.equals("download")) return 300000L;
+            if (tool.equals("build")) return 300000L;
+            return 45000L;
+        }
 
         private static String sec(Item it, long now) {
             double s = (now - it.at) / 1000.0;
@@ -611,10 +637,13 @@ public class McpServer {
         /** 拒的理由：说清是谁在跑、几秒前开始、下一步怎么走；不许出现「另一个对话」。 */
         private static String reject(String tool, Item w, long now) {
             String who = "另一条写动作 " + w.tool + " 在 " + sec(w, now) + " 秒前开始";
+            long left = (w.ttl > 0 ? w.ttl : 60000L) - (now - w.at);
+            if (left < 0) left = 0;
+            String wait = "；它要是已经挂住（命令早超时了），最多再 " + ((left + 999) / 1000) + " 秒自动放开";
             if (tool.equals("do_chain"))   // ★82：整条链被拒＝一步都没跑，别让助手以为已经跑了几步
-                return "ok:0 并发冲突：这条 do_chain 被拒——整条链一步都没跑（" + who + "）。等它回来再发；连做多步仍然一次发一条 do_chain（链内各步互不拒）。";
+                return "ok:0 并发冲突：这条 do_chain 被拒——整条链一步都没跑（" + who + "）" + wait + "。等它回来再发；连做多步仍然一次发一条 do_chain（链内各步互不拒）。";
             return "ok:0 并发冲突：这条 " + tool + " 没执行——此刻还有另一条写动作 " + w.tool
-                    + " 在跑（" + sec(w, now) + " 秒前开始）。等它回来再发；要连做多步用 do_chain。";
+                    + " 在跑（" + sec(w, now) + " 秒前开始）" + wait + "。等它回来再发；要连做多步用 do_chain。";
         }
 
         /** 放行时的并发标记：工具名 ＋ 距今几秒。 */
@@ -820,6 +849,8 @@ public class McpServer {
                 String name = params.optString("name", "");
                 JSONObject args = params.optJSONObject("arguments");
                 if (args == null) args = new JSONObject();
+                Notifier.beginTool(ctx);   // ★142：先记一笔在途，期间不计空闲
+                try {
                 Notifier.toolTouch(ctx, name);   // 86：26 个工具都记账（buzz 也记，中文名要能在通知里看见）
                 try { Notifier.islandTool(ctx, name, args); } catch (Throwable t2) { }   // ★123：工具一进来就把状态推上岛
                 S_CTX = ctx;
@@ -879,17 +910,9 @@ public class McpServer {
                 }
                 if (name.equals("download")) {
                     JSONObject result = new JSONObject();
-                    String dlt = Downloader.download(ctx, args);
+                    String dlt = args.optString("url", "").trim().length() > 0 ? Downloader.download(ctx, args) : (args.has("id") ? Downloader.status(ctx, args) : Downloader.download(ctx, args));
                     if (Downloader.LAST_FAIL) failMark("download failed");
                     result.put("content", content(dlt));
-                    result.put("isError", false);
-                    return ok(id, result);
-                }
-                if (name.equals("download_status")) {
-                    JSONObject result = new JSONObject();
-                    String dst = Downloader.status(ctx, args);
-                    if (Downloader.LAST_FAIL) failMark("download_status failed");
-                    result.put("content", content(dst));
                     result.put("isError", false);
                     return ok(id, result);
                 }
@@ -974,6 +997,22 @@ public class McpServer {
                     result.put("isError", false);
                     return ok(id, result);
                 }
+                if (name.equals("sheet")) {
+                    String rs = SheetTool.run(ctx, args);
+                    JSONObject rj = new JSONObject();
+                    rj.put("content", content(rs));
+                    rj.put("isError", rs.startsWith(Words.RP_SHEET_ERR));
+                    return ok(id, rj);
+                }
+                if (name.equals("render")) {
+                    String rr = Render.run(ctx, args);
+                    JSONObject rj = new JSONObject();
+                    JSONArray ct = content(rr);
+                    try { if (Render.lastRel != null) addImage(ctx, ct, Render.lastRel); } catch (Throwable t) { }
+                    rj.put("content", ct);
+                    rj.put("isError", rr.startsWith("失败") || rr.startsWith("渲染失败") || rr.startsWith("缺内容") || rr.startsWith("主题只认"));
+                    return ok(id, rj);
+                }
                 if (name.equals("shot")) {
                     String rs = VeriService.mcpDispatch("shot", argsToKv(args));
                     JSONArray ct = new JSONArray();
@@ -1039,9 +1078,10 @@ public class McpServer {
                     result.put("isError", false);
                     return ok(id, result);
                 }
-                if (name.equals("tap") || name.equals("swipe") || name.equals("key") || name.equals("ui") || name.equals("ocr") || name.equals("longpress") || name.equals("tap_text") || name.equals("wait_text") || name.equals("wait_stable") || name.equals("scroll") || name.equals("paste") || name.equals("scroll_to_text") || name.equals("clip") || name.equals("texts") || name.equals("do_chain") || name.equals("windows")) {
+                if (name.equals("act") || name.equals("ui") || name.equals("ocr") || name.equals("tap_text") || name.equals("wait_text") || name.equals("scroll") || name.equals("paste") || name.equals("scroll_to_text") || name.equals("texts") || name.equals("do_chain") || name.equals("windows")) {
                     String cmd;
-                    if (name.equals("key")) {
+                    String homo = name; if (name.equals("act")) { String a = args.optString("action", "tap").trim(); if (a.length() == 0) a = "tap"; if (a.equals("tap") || a.equals("longpress") || a.equals("swipe") || a.equals("key")) homo = a; else return err(id, -32602, "act.action 只能是 tap/longpress/swipe/key"); } else if (name.equals("paste") && "read".equals(args.optString("action", "").trim())) { homo = "clip"; } else if (name.equals("wait_text") && "stable".equals(args.optString("mode", "").trim())) { homo = "wait_stable"; }
+                    if (homo.equals("key")) {
                         String k = args.optString("key", "").trim();
                         if (k.equals("back") || k.equals("返回")) cmd = "gback";
                         else if (k.equals("home") || k.equals("主页")) cmd = "ghome";
@@ -1049,14 +1089,15 @@ public class McpServer {
                         else return err(id, -32602, Words.RP_KEY_BAD + String.format(java.util.Locale.ROOT, Words.HP_POINT, "key"));
                     } else if (name.equals("ui")) { cmd = "ui";
                     } else if (name.equals("ocr")) { cmd = "ocr";
-                    } else { cmd = name; }
+                    } else { cmd = homo; }
                     String rr = VeriService.mcpDispatch(cmd, argsToKv(args));
                     JSONObject result = new JSONObject();
-                    result.put("content", content(humanize(name, rr)));
+                    result.put("content", content(humanize(homo, rr)));
                     result.put("isError", false);
                     return ok(id, result);
                 }
                 return err(id, -32602, "unknown tool " + name + String.format(java.util.Locale.ROOT, Words.HP_POINT, "help"));
+                } finally { Notifier.endTool(ctx); }   // ★142：这条工具彻底结束了才起空闲计时
             }
             return err(id, -32601, "no method " + method);
         } catch (Throwable t) {
@@ -1201,7 +1242,11 @@ public class McpServer {
     }
 
     /** 安装类命令（pm install／会话拼装）：默认拦下，防绕过用户确认；应急见 build.conf 的 ALLOW_SHELL_INSTALL。 */
-    private static boolean isInstallCmd(String cmd) {
+    private static boolean isInstallCmd(String cmd) { return isInstallCmd(cmd, 0); }
+
+    /** ★143：depth 只用于 sh -c 递归（防套娃）。 */
+    private static boolean isInstallCmd(String cmd, int depth) {
+        if (depth > 3) return false;
         if (cmd == null || cmd.length() == 0) return false;
         String heredoc = null;
         String[] ls = cmd.split("\n");
@@ -1231,13 +1276,64 @@ public class McpServer {
                 if (sl >= 0) c0 = c0.substring(sl + 1);
                 if (c0.equals("pm") && k + 1 < tk.length && tk[k + 1].startsWith("install")) return true;
                 if (c0.equals("cmd") && k + 2 < tk.length && tk[k + 1].equals("package") && tk[k + 2].startsWith("install")) return true;
+                // ★143：sh -c "pm install …" 换个壳子也能绕过——只认 sh 这一层，别把 grep -c 的正文误伤
+                if (c0.equals("sh") || c0.equals("bash") || c0.equals("ash") || c0.equals("msh")) {
+                    String inner = afterDashC(t);
+                    if (inner.length() > 0 && isInstallCmd(inner, depth + 1)) return true;
+                }
             }
         }
         return false;
     }
 
+    /** ★143：取 sh -c 后面那段命令正文（剥最外层引号）；不是 -c 写法就回空。 */
+    private static String afterDashC(String seg) {
+        int i = seg.indexOf(" -c");
+        if (i < 0) return "";
+        String r = seg.substring(i + 3).trim();
+        if (r.length() >= 2) {
+            char q0 = r.charAt(0), q1 = r.charAt(r.length() - 1);
+            if ((q0 == 34 || q0 == 39) && q1 == q0) r = r.substring(1, r.length() - 1);
+        }
+        return r.trim();
+    }
+
     /** 38 号单：shell 工具（退出码原样透出；空输出回 ‹空›；带 ms/timeout，便于区分「真没内容／被杀／超时」）。 */
+    /** ★156：踩中 toybox 方言时主动提示怎么改（命中才加一句，正常输出不受影响）。 */
+    private static String toyboxHint(String cmd, String out, String err, int exit) {
+        String c = cmd == null ? "" : cmd;
+        String o = out == null ? "" : out.trim();
+        String e = err == null ? "" : err;
+        if (o.length() == 0 && e.length() == 0 && c.indexOf("grep") >= 0 && c.indexOf("\\|") >= 0)
+            return Words.HINT_GREP_ALT;
+        if (exit == 0 && c.indexOf("find") >= 0 && c.indexOf(" -L") < 0 && o.length() > 0 && o.equals(findRoot(c)))
+            return Words.HINT_FIND_L;
+        if (c.indexOf("sort") >= 0 && e.indexOf("Unknown option 'h'") >= 0)
+            return Words.HINT_SORT_H;
+        if (c.indexOf("cat") >= 0 && e.indexOf("Unknown option 'n'") >= 0)
+            return Words.HINT_CAT_N;
+        if (c.indexOf("rev") >= 0 && e.indexOf("not found") >= 0)
+            return Words.HINT_REV;
+        return "";
+    }
+
+    /** 命令里 find 之后的第一个绝对路径（＝find 的搜索起点），用来判断「输出是不是只回了起点」。 */
+    private static String findRoot(String c) {
+        int fi = c.indexOf("find");
+        if (fi < 0) return "";
+        int sl = c.indexOf('/', fi);
+        if (sl < 0) return "";
+        int en = sl;
+        while (en < c.length()) {
+            char ch = c.charAt(en);
+            if (ch == ' ' || ch == '\t' || ch == '\n' || ch == '"' || ch == '\'') break;
+            en++;
+        }
+        return c.substring(sl, en);
+    }
+
     private static String execShell(Context ctx, String command, int timeoutMs) {
+
         try {
             long toMs = timeoutMs > 0 ? Math.min((long) timeoutMs, 120000L) : SHELL_TIMEOUT_MS;
             if (isInstallCmd(command)) {
@@ -1268,6 +1364,8 @@ public class McpServer {
             if (out.length() > 0) { sb.append("--- stdout ---\n").append(out); if (!out.endsWith("\n")) sb.append("\n"); }
             if (err.length() > 0) { sb.append("--- stderr ---\n").append(err); if (!err.endsWith("\n")) sb.append("\n"); }
             if (out.length() == 0 && err.length() == 0) sb.append("--- ").append(Words.RP_SHELL_EMPTY).append(" ---\n");
+            String hint = toyboxHint(command, out, err, exit);
+            if (hint.length() > 0) sb.append("--- 提示 ---\n").append(hint).append("\n");
             return sb.toString();
         } catch (Throwable t) {
             return failR(Words.RP_EXEC_EXC + t, "exec exception");
@@ -1283,10 +1381,10 @@ public class McpServer {
         total++; String r2 = httpReq(ctx, token, "{\"jsonrpc\":\"2.0\",\"id\":2,\"method\":\"initialize\",\"params\":{\"protocolVersion\":\"2024-11-05\",\"clientInfo\":{\"name\":\"selftest\",\"version\":\"1\"}}}");
         if (r2.contains("\"serverInfo\"")) { pass++; sb.append("init=ok "); } else { sb.append("init=[").append(clipHead(r2)).append("] "); }
         total++; String r3 = httpReq(ctx, token, "{\"jsonrpc\":\"2.0\",\"id\":3,\"method\":\"tools/list\",\"params\":{}}");
-        if (r3.contains("\"ping\"") && r3.contains("\"shell\"") && r3.contains("\"shot\"") && r3.contains("\"tap\"") && r3.contains("\"swipe\"") && r3.contains("\"key\"") && r3.contains("\"ui\"") && r3.contains("\"input\"") && r3.contains("\"longpress\"") && r3.contains("\"buzz\"")) { pass++; sb.append("toollist=ok "); } else { sb.append("toollist=[").append(clipHead(r3)).append("] "); }
+        if (r3.contains((char)34 + "ping" + (char)34) && r3.contains((char)34 + "shell" + (char)34) && r3.contains((char)34 + "shot" + (char)34) && r3.contains((char)34 + "act" + (char)34) && r3.contains((char)34 + "ui" + (char)34) && r3.contains((char)34 + "ocr" + (char)34) && r3.contains((char)34 + "input" + (char)34) && r3.contains((char)34 + "build" + (char)34) && r3.contains((char)34 + "render" + (char)34) && r3.contains((char)34 + "buzz" + (char)34)) { pass++; sb.append("toollist=ok "); } else { sb.append("toollist=[").append(clipHead(r3)).append("] "); }
         // 41 号单：确认新工具确实注册上了（/selfcheck 免 token 也能看到这条结论）
         total++; String r3b = httpReq(ctx, token, "{\"jsonrpc\":\"2.0\",\"id\":31,\"method\":\"tools/list\",\"params\":{}}");
-        if (r3b.contains("\"download\"") && r3b.contains("\"download_status\"")) { pass++; sb.append("tooldl=ok "); } else { sb.append("tooldl=[").append(clipHead(r3b)).append("] "); }
+        if (r3b.contains((char)34 + "download" + (char)34)) { pass++; sb.append("tooldl=ok "); } else { sb.append("tooldl=[").append(clipHead(r3b)).append("] "); }
         // 42 单 C：把已注册的工具全名列出来（助手不必重启 RikkaHub 也能核对「注册了没、叫什么名」）；只作可核对信息，不计入 pass/total。
         sb.append("tlsize=").append(r3.length()).append(" ");
         sb.append("tools=").append(toolNames(r3b)).append(" ");
@@ -1707,6 +1805,10 @@ public class McpServer {
                 if (o.optInt("found", 0) != 1) return failText(name, o, r);
                 if (o.optInt("ok", 0) != 1) return failText(name, o, r);   // ★77.6：找到了但内嵌 tap 没成（含 expect 未满足）
                 String tail = o.has("tap") ? Words.RP_SCROLLTO_TAPPED : Words.RP_SCROLLTO_NOTAP;
+                // ★143：命中但在屏幕外／是滚进去的，都要说清（原来一律「找到了」，看不出目标在不在眼前）
+                int rs = o.optInt("roll_screens", 0);
+                if (o.optInt("on_screen", 1) == 0) tail = tail + String.format(java.util.Locale.ROOT, Words.RP_SCROLLTO_OFFSCREEN, rs);
+                else if (rs > 0) tail = tail + String.format(java.util.Locale.ROOT, Words.RP_SCROLLTO_ROLLED, rs);
                 return String.format(java.util.Locale.ROOT, Words.RP_SCROLLTO_FMT, o.optInt("screens"), o.optString("target_text", ""), viaCn(o.optString("via", "")), tail);
             }
             if (name.equals("do_chain")) {
@@ -1831,11 +1933,21 @@ public class McpServer {
     private static String buildDesc(Context c) {
         if (c == null) return Words.TL_BUILD;
         try {
-            if (BuildEnv.ready(c)) return Words.TL_BUILD + Words.TL_BUILD_WHERE + " ｜ 环境就绪（工具链内置＋android.jar 已 sha256 校验）：可直接 action=new 摊工程，或 action=start 出包。";
-            String miss = BuildEnv.missing(c).replace("\n", " ").trim();
-            return Words.TL_BUILD + Words.TL_BUILD_WHERE + " ｜ ★环境未就绪，还不能出包 —— " + miss
-                 + " 补法：①用户在应用里点『打包 App → 一键准备环境』（弹窗里会写为什么、多大、从哪来）；②或调 build action=env 让 Reticle 自己下（官方 dl.google.com，下完自动校验）。";
+            if (BuildEnv.ready(c)) return Words.TL_BUILD + "，" + Words.TL_BUILD_WHERE + "，环境就绪，工具链内置且 android.jar 已校验，可直接 action=new 摊工程或 action=start 出包";
+            String miss = cleanPunct(BuildEnv.missing(c));
+            return Words.TL_BUILD + "，" + Words.TL_BUILD_WHERE + "，环境未就绪，还不能出包，" + miss
+                 + "，补法一，在应用里点打包 App 的一键准备环境，补法二，调 build action=env 让 Reticle 自己下，官方 dl.google.com，下完自动校验";
         } catch (Throwable t) { return Words.TL_BUILD; }
+    }
+
+    /** 描述只留逗号：诊断文案里的其它标点一律折成逗号，连续逗号并一个。 */
+    private static String cleanPunct(String s) {
+        if (s == null) return "";
+        s = s.replace("\n", "，").replace("· ", "").replace("：", "，").replace("（", "，").replace("）", "")
+             .replace("；", "，").replace("。", "，").replace("——", "，").replace("、", "，");
+        while (s.indexOf("，，") >= 0) s = s.replace("，，", "，");
+        if (s.startsWith("，")) s = s.substring(1);
+        return s.trim();
     }
 
     /** 46 号单：工具注册表——tools/list 与 help 共用这一处（避免里外两套说明）。 */
@@ -1859,30 +1971,26 @@ public class McpServer {
         tools.put(tool("ping", Words.TL_PING, new JSONObject()));
         tools.put(tool("shell", Words.TL_SHELL, schema));
         tools.put(tool("shot", Words.TL_SHOT, objSchema(new String[]{}, new String[]{}, new String[]{}, null)));
-        tools.put(tool("tap", Words.TL_TAP, objSchema(new String[]{"x", "y", "ms", "expect_pkg"}, new String[]{"number", "number", "number", "string"}, new String[]{Words.TL_TAP_X, Words.TL_TAP_Y, Words.TL_TAP_MS, Words.TL_ACT_PKG}, new String[]{"x", "y"})));
-        tools.put(tool("swipe", Words.TL_SWIPE, objSchema(new String[]{"x1", "y1", "x2", "y2", "ms", "expect_pkg"}, new String[]{"number", "number", "number", "number", "number", "string"}, new String[]{Words.TL_SWIPE_X1, Words.TL_SWIPE_Y1, Words.TL_SWIPE_X2, Words.TL_SWIPE_Y2, Words.TL_SWIPE_MS, Words.TL_ACT_PKG}, new String[]{"x1", "y1", "x2", "y2"})));
-        tools.put(tool("key", Words.TL_KEY, objSchema(new String[]{"key", "expect_pkg"}, new String[]{"string", "string"}, new String[]{Words.TL_KEY_VALUE, Words.TL_ACT_PKG}, new String[]{"key"})));
+        tools.put(tool("act", Words.TL_ACT, objSchema(new String[]{"action", "x", "y", "ms", "x1", "y1", "x2", "y2", "key", "expect_pkg"}, new String[]{"string", "number", "number", "number", "number", "number", "number", "number", "string", "string"}, new String[]{Words.TL_ACT_ACTION, Words.TL_TAP_X, Words.TL_TAP_Y, Words.TL_ACT_MS, Words.TL_SWIPE_X1, Words.TL_SWIPE_Y1, Words.TL_SWIPE_X2, Words.TL_SWIPE_Y2, Words.TL_KEY_VALUE, Words.TL_ACT_PKG}, null)));
         tools.put(tool("ui", Words.TL_UI, objSchema(new String[]{"max"}, new String[]{"number"}, new String[]{Words.TL_UI_MAX}, null)));
         tools.put(tool("ocr", Words.TL_OCR, objSchema(new String[]{"region", "src"}, new String[]{"string", "string"}, new String[]{Words.TL_OCR_REGION, Words.TL_OCR_SRC}, null)));
         tools.put(tool("input", Words.TL_INPUT, objSchema(new String[]{"text", "x", "y", "expect_pkg", "duration"}, new String[]{"string", "number", "number", "string", "number"}, new String[]{Words.TL_INPUT_TEXT, Words.TL_INPUT_X, Words.TL_INPUT_Y, Words.TL_INPUT_PKG, Words.TL_TAP_TEXT_DURATION}, new String[]{"text"})));
-        tools.put(tool("longpress", Words.TL_LONGPRESS, objSchema(new String[]{"x", "y", "ms", "expect_pkg"}, new String[]{"number", "number", "number", "string"}, new String[]{Words.TL_TAP_X, Words.TL_TAP_Y, Words.TL_LONGPRESS_MS, Words.TL_ACT_PKG}, new String[]{"x", "y"})));
         tools.put(tool("notify", Words.TL_NOTIFY, objSchema(new String[]{"title", "content", "id", "ongoing", "clear", "island", "op", "promoted", "progress", "report"}, new String[]{"string", "string", "number", "number", "number", "string", "number", "number", "number", "string"}, new String[]{Words.TL_NOTIFY_TITLE, Words.TL_NOTIFY_CONTENT, Words.TL_NOTIFY_ID, Words.TL_NOTIFY_ONGOING, Words.TL_NOTIFY_CLEAR, Words.TL_NOTIFY_ISLAND, Words.TL_NOTIFY_OP, Words.TL_NOTIFY_PROMOTED, Words.TL_NOTIFY_PROGRESS, Words.TL_NOTIFY_REPORT}, null)));
         tools.put(tool("build", buildDesc(S_CTX), objSchema(new String[]{"action", "name", "pkg"}, new String[]{"string", "string", "string"}, new String[]{Words.TL_BUILD_ACTION, Words.TL_BUILD_NAME, Words.TL_BUILD_PKG}, null)));
-        tools.put(tool("download", Words.TL_DOWNLOAD, objSchema(new String[]{"url", "dir", "name", "sha256", "headers", "unzip", "force"}, new String[]{"string", "string", "string", "string", "string", "number", "number"}, new String[]{Words.TL_DOWNLOAD_URL, Words.TL_DOWNLOAD_DIR, Words.TL_DOWNLOAD_NAME, Words.TL_DOWNLOAD_SHA, Words.TL_DOWNLOAD_HEADERS, Words.TL_DOWNLOAD_UNZIP, Words.TL_DOWNLOAD_FORCE}, new String[]{"url"})));
-        tools.put(tool("download_status", Words.TL_DOWNLOAD_STATUS, objSchema(new String[]{"id"}, new String[]{"string"}, new String[]{Words.TL_DOWNLOAD_STATUS_ID}, null)));
+        tools.put(tool("download", Words.TL_DOWNLOAD, objSchema(new String[]{"url", "dir", "name", "sha256", "headers", "unzip", "force", "id"}, new String[]{"string", "string", "string", "string", "string", "number", "number", "string"}, new String[]{Words.TL_DOWNLOAD_URL, Words.TL_DOWNLOAD_DIR, Words.TL_DOWNLOAD_NAME, Words.TL_DOWNLOAD_SHA, Words.TL_DOWNLOAD_HEADERS, Words.TL_DOWNLOAD_UNZIP, Words.TL_DOWNLOAD_FORCE, Words.TL_DOWNLOAD_ID}, null)));
         tools.put(tool("buzz", Words.TL_BUZZ, objSchema(new String[]{"duration_ms", "dry"}, new String[]{"number"}, new String[]{Words.TL_BUZZ_MS, Words.TL_BUZZ_DRY}, null)));
         tools.put(tool("status", Words.TL_STATUS, objSchema(new String[]{}, new String[]{}, new String[]{}, null)));
-        tools.put(tool("help", Words.TL_HELP, objSchema(new String[]{}, new String[]{}, new String[]{}, null)));
+        tools.put(tool("help", Words.TL_HELP, objSchema(new String[]{"tool"}, new String[]{"string"}, new String[]{Words.TL_HELP_TOOL}, null)));
         tools.put(tool("acttest", Words.TL_ACTTEST, objSchema(new String[]{}, new String[]{}, new String[]{}, null)));
         tools.put(tool("tap_text", Words.TL_TAP_TEXT, objSchema(new String[]{"text", "desc", "id", "index", "timeout_ms", "duration", "exact", "expect", "expect_pkg", "ocr", "wait_ms"}, new String[]{"string", "string", "string", "number", "number", "number", "number", "string", "string", "number", "number"}, new String[]{Words.TL_TAP_TEXT_TEXT, Words.TL_TAP_TEXT_DESC, Words.TL_TAP_TEXT_ID, Words.TL_TAP_TEXT_INDEX, Words.TL_TAP_TEXT_TIMEOUT, Words.TL_TAP_TEXT_DURATION, Words.TL_TAP_TEXT_EXACT, Words.TL_TAP_TEXT_EXPECT, Words.TL_TAP_TEXT_EXPECT_PKG, Words.TL_TAP_TEXT_OCR, Words.TL_TAP_TEXT_WAIT}, null)));
-        tools.put(tool("wait_text", Words.TL_WAIT_TEXT, objSchema(new String[]{"text", "desc", "id", "state", "timeout_ms"}, new String[]{"string", "string", "string", "string", "number"}, new String[]{Words.TL_WAIT_TEXT_TEXT, Words.TL_TAP_TEXT_DESC, Words.TL_TAP_TEXT_ID, Words.TL_WAIT_TEXT_STATE, Words.TL_WAIT_TEXT_TIMEOUT}, null)));
-        tools.put(tool("wait_stable", Words.TL_WAIT_STABLE, objSchema(new String[]{"quiet_ms", "timeout_ms"}, new String[]{"number", "number"}, new String[]{Words.TL_WAIT_STABLE_QUIET, Words.TL_WAIT_STABLE_TIMEOUT}, null)));
+        tools.put(tool("wait_text", Words.TL_WAIT_TEXT, objSchema(new String[]{"text", "desc", "id", "state", "timeout_ms", "mode"}, new String[]{"string", "string", "string", "string", "number", "string"}, new String[]{Words.TL_WAIT_TEXT_TEXT, Words.TL_TAP_TEXT_DESC, Words.TL_TAP_TEXT_ID, Words.TL_WAIT_TEXT_STATE, Words.TL_WAIT_TEXT_TIMEOUT, Words.TL_WAIT_MODE}, null)));
         tools.put(tool("scroll", Words.TL_SCROLL, objSchema(new String[]{"direction", "distance", "expect_pkg", "duration"}, new String[]{"string", "number", "string", "number"}, new String[]{Words.TL_SCROLL_DIR, Words.TL_SCROLL_DIST, Words.TL_SCROLL_PKG, Words.TL_TAP_TEXT_DURATION}, null)));
-        tools.put(tool("paste", Words.TL_PASTE, objSchema(new String[]{"text", "x", "y", "restore", "expect_pkg"}, new String[]{"string", "number", "number", "number", "string"}, new String[]{Words.TL_PASTE_TEXT, Words.TL_PASTE_X, Words.TL_PASTE_Y, Words.TL_PASTE_RESTORE, Words.TL_PASTE_PKG}, new String[]{"text"})));
+        tools.put(tool("paste", Words.TL_PASTE, objSchema(new String[]{"text", "x", "y", "restore", "expect_pkg", "action"}, new String[]{"string", "number", "number", "number", "string", "string"}, new String[]{Words.TL_PASTE_TEXT, Words.TL_PASTE_X, Words.TL_PASTE_Y, Words.TL_PASTE_RESTORE, Words.TL_PASTE_PKG, Words.TL_PASTE_ACTION}, null)));
         tools.put(tool("scroll_to_text", Words.TL_SCROLL_TO_TEXT, objSchema(new String[]{"text", "desc", "id", "exact", "index", "direction", "max_scroll", "timeout_ms", "tap", "expect", "expect_pkg", "ocr"}, new String[]{"string", "string", "string", "number", "number", "string", "number", "number", "number", "string", "string", "number"}, new String[]{Words.TL_SCROLLTO_TEXT, Words.TL_SCROLLTO_DESC, Words.TL_SCROLLTO_ID, Words.TL_SCROLLTO_EXACT, Words.TL_SCROLLTO_INDEX, Words.TL_SCROLLTO_DIR, Words.TL_SCROLLTO_MAX, Words.TL_SCROLLTO_TIMEOUT, Words.TL_SCROLLTO_TAP, Words.TL_TAP_TEXT_EXPECT, Words.TL_SCROLLTO_PKG, Words.TL_TAP_TEXT_OCR}, null)));
         tools.put(tool("do_chain", Words.TL_DO_CHAIN, objSchema(new String[]{"steps", "stop_on_error", "observe"}, new String[]{"string", "number", "number"}, new String[]{Words.TL_DO_CHAIN_STEPS, Words.TL_DO_CHAIN_STOP, Words.TL_DO_CHAIN_OBSERVE}, new String[]{"steps"})));
         tools.put(tool("windows", Words.TL_WINDOWS, objSchema(new String[]{}, new String[]{}, new String[]{}, null)));
-        tools.put(tool("clip", Words.TL_CLIP, objSchema(new String[]{}, new String[]{}, new String[]{}, null)));
+        tools.put(tool("render", Words.TL_RENDER, objSchema(new String[]{"md","html","format","width","scale","out","theme"}, new String[]{"string","string","string","number","number","string","string"}, new String[]{Words.TL_RENDER_MD, Words.TL_RENDER_HTML, Words.TL_RENDER_FORMAT, Words.TL_RENDER_WIDTH, Words.TL_RENDER_SCALE, Words.TL_RENDER_OUT, Words.TL_RENDER_THEME}, null)));
+        tools.put(tool("sheet", Words.TL_SHEET, objSchema(new String[]{"action","path","sheet","range","name","sql","max_rows","header_row","data_row","skip_hidden","format","out","max_cols"}, new String[]{"string","string","string","string","string","string","number","number","number","number","string","string","number"}, new String[]{Words.TL_SHEET_ACTION, Words.TL_SHEET_PATH, Words.TL_SHEET_SHEET, Words.TL_SHEET_RANGE, Words.TL_SHEET_NAME, Words.TL_SHEET_SQL, Words.TL_SHEET_MAX_ROWS, Words.TL_SHEET_HEADER_ROW, Words.TL_SHEET_DATA_ROW, Words.TL_SHEET_SKIP_HIDDEN, Words.TL_SHEET_FORMAT, Words.TL_SHEET_OUT, Words.TL_SHEET_MAX_COLS}, null)));
         tools.put(tool("texts", Words.TL_TEXTS, objSchema(new String[]{"max"}, new String[]{"number"}, new String[]{Words.TD_TEXTS_MAX}, null)));
         } catch (Throwable t) { }
         return tools;
@@ -1939,7 +2047,7 @@ public class McpServer {
     private static String brief(String d) {
         if (d == null) return "";
         String s = d.trim();
-        int ip = s.indexOf("（详见 help tool=");
+        int ip = s.indexOf("，help tool=");
         if (ip > 0) s = s.substring(0, ip);   // ★77.6：目录行不带"详见"后缀（那截半句难看）
         return s.length() > 44 ? s.substring(0, 44) : s;   // ★78：34→44（好让 build 那行工序写全 check→new→start→status→install）
     }

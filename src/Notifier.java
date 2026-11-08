@@ -293,7 +293,7 @@ public class Notifier {
             if (body.length() == 0) body = ToolTags.summary(name, args);
             if (body.length() == 0) body = ToolTags.line(name, args);
             String r = promoted(c, ISLAND_ID, title, body, 0, cap);
-            touchIdle(c);   // ★129：30 秒没动作就把岛清成黑胶囊
+            touchIdle(c);   // ★140：重置空闲定时器（idleSec 秒后进工具态，notify 另有 15 秒保护期）
             return r;
         } catch (Throwable t) { return "err: " + t; }
     }
@@ -355,7 +355,6 @@ public class Notifier {
 
     // ==== ★129（2026-10-22）· 空闲态：30 秒没动作就交给小工具／黑胶囊 ====
     /** 多少毫秒没动作就进入空闲态。 */
-    static final long ISLAND_IDLE_MS = 5000L;   // ★132：5 秒没动作就进小工具（notify 另有 15 秒保护期）
     private static Runnable sIdleTask = null;
 
     // ---- ★131（2026-10-22）· 空闲小工具（本机自用）----
@@ -452,17 +451,52 @@ public class Notifier {
         return (t == null || t.length() == 0) ? "　" : t;
     }
 
+    /** ★151（2026-11-01）· 岛保活：进程/服务一起来就先推一次，不等工具调用；之后心跳每 5 秒强制重发。 */
+    static long sLastForce = 0L;
+    static final long ISLAND_HEART_MS = 5000L;
+
+    /** ★151：是不是岛包（伪装成地图的本地自用包）。 */
+    public static boolean islandPkg(Context c) {
+        try { return "com.google.android.apps.maps".equals(c.getPackageName()); } catch (Throwable t) { return false; }
+    }
+
+    /** ★151：服务/界面启动时恢复岛——清去重、立刻进空闲态并开始循环。 */
+    public static void resumeIsland(Context c) {
+        try {
+            if (!islandPkg(c)) return;
+            final Context app = (c.getApplicationContext() == null) ? c : c.getApplicationContext();
+            if (!liveEnabled(app)) return;
+            sMT.postDelayed(new Runnable() {
+                public void run() {
+                    try {
+                        if (!liveEnabled(app)) return;
+                        if (notifyHolding()) { touchIdle(app, NOTIFY_HOLD_MS); return; }
+                        if (sInFlight > 0) { touchIdle(app); return; }
+                        sLiveLast = null;
+                        sWidgetStart = 0L;
+                        if (keepIdle(app)) { promotedIdle(app); startWidgetLoop(app); }
+                        else touchIdle(app);
+                    } catch (Throwable t) { }
+                }
+            }, 800L);
+        } catch (Throwable t) { }
+    }
+
     /** ★131：空闲期间每秒刷一次（功耗要 1 秒一跳）。 */
     static void startWidgetLoop(final Context c) {
         stopWidgetLoop();
         final Context app = (c.getApplicationContext() == null) ? c : c.getApplicationContext();
         sWidgetTick = new Runnable() {
             public void run() {
-                try { promotedIdle(app); } catch (Throwable t) { }
-                sMT.postDelayed(this, 1000L);
+                try {
+                    long now = System.currentTimeMillis();
+                    if (now - sLastForce >= ISLAND_HEART_MS) { sLastForce = now; sLiveLast = null; }
+                    promotedIdle(app);
+                } catch (Throwable t) { }
+                sMT.postDelayed(this, 500L);
             }
         };
-        sMT.postDelayed(sWidgetTick, 1000L);
+        sMT.postDelayed(sWidgetTick, 500L);
     }
     static void stopWidgetLoop() {
         if (sWidgetTick != null) { sMT.removeCallbacks(sWidgetTick); sWidgetTick = null; }
@@ -484,21 +518,68 @@ public class Notifier {
         } catch (Throwable t) { nlog(c, "holdNotify err " + t); }
     }
 
-    public static void touchIdle(Context c) { touchIdle(c, ISLAND_IDLE_MS); }
+    static int sInFlight = 0;
+    static long sInFlightAt = 0L;
+
+    /** ★142（2026-10-24）：工具开始。期间不开始空闲计时——一条命令跑完才算"空闲"。 */
+    public static void beginTool(Context c) {
+        synchronized (Notifier.class) {
+            if (sInFlight > 0 && sInFlightAt > 0 && System.currentTimeMillis() - sInFlightAt > 600000L) {
+                sInFlight = 0;   // 兜底：某次工具异常没配对 endTool，超过 10 分钟强制归零
+            }
+            if (sInFlight == 0) sInFlightAt = System.currentTimeMillis();
+            sInFlight++;
+        }
+        try {
+            if (sIdleTask != null) { sMT.removeCallbacks(sIdleTask); sIdleTask = null; }
+            stopWidgetLoop();
+        } catch (Throwable t) { }
+    }
+
+    /** ★142：工具结束。并行调用时，最后一个结束时才开始计时。 */
+    public static void endTool(Context c) {
+        boolean zero = false;
+        synchronized (Notifier.class) {
+            if (sInFlight > 0) sInFlight--;
+            if (sInFlight == 0) { zero = true; sInFlightAt = 0L; }
+        }
+        if (zero) touchIdle(c);
+    }
+
+    public static void touchIdle(Context c) {   // ★140：⑤设置项接线（之前硬编码 5 秒）
+        if (sInFlight > 0) {   // ★142：还有工具在跑，只取消计时、不排新的
+            if (sIdleTask != null) { sMT.removeCallbacks(sIdleTask); sIdleTask = null; }
+            stopWidgetLoop();
+            return;
+        }
+        touchIdle(c, idleSec(c) * 1000L);
+    }
     public static void touchIdle(Context c, final long delayMs) {
         final Context app = (c.getApplicationContext() == null) ? c : c.getApplicationContext();
         if (sIdleTask != null) { sMT.removeCallbacks(sIdleTask); sIdleTask = null; }
         stopWidgetLoop();
+        // ★139：总开关关闭 → 不发并收回；①关闭 → 只留最后一条，到点收回
+        if (!liveEnabled(app)) { cancel(app, ISLAND_ID); return; }
+        if (!keepIdle(app)) {
+            final long after = Math.max(1, lastSec(app)) * 1000L;
+            sIdleTask = new Runnable() {
+                public void run() {
+                    try { if (liveEnabled(app) && !keepIdle(app)) cancel(app, ISLAND_ID); } catch (Throwable t) { }
+                }
+            };
+            sMT.postDelayed(sIdleTask, after);
+            return;
+        }
         sIdleTask = new Runnable() {
             public void run() {
-                try { promotedIdle(app); startWidgetLoop(app); } catch (Throwable t) { }
+                try { sLiveStart = System.currentTimeMillis(); sLiveLast = ""; promotedIdle(app); startWidgetLoop(app); } catch (Throwable t) { }
             }
         };
         sMT.postDelayed(sIdleTask, delayMs);
     }
 
     /** 空闲态：按小工具模式决定内容。关闭时用全角空格绕开「空串回退标题」＋ 1×1 透明图标。 */
-    public static String promotedIdle(Context c) {
+    public static String promotedIdleLegacy(Context c) {   // ★139：旧三选一渲染，保留兜底，不再调用
         try {
             channels(c);
             int mode = widgetMode(c);
@@ -926,5 +1007,529 @@ public class Notifier {
     }
     private static String safe(String s, String dft) {
         return (s == null || s.length() == 0) ? dft : s;
+    }
+
+    // ==== ★139（2026-10-23）· 安卓实况通知 V2：总开关、分层设置、多工具轮询 ====
+    static final String P_LIVE = "live_on";
+    static final String P_KEEP = "live_keep_idle";
+    static final String P_LAST = "live_last_sec";
+    static final String P_BLACK = "live_black";
+    static final String P_IDLE = "live_idle_sec";
+    static final String P_ROT = "live_rot_sec";
+    static final String P_ROT_RAND = "live_rot_rand";
+    static final String P_PON = "live_power_on";
+    static final String P_PSEC = "live_power_ms";
+    static final String P_TON = "live_text_on";
+    static final String P_TN = "live_text_n";
+    static final String P_TSEC = "live_text_sec";
+    static final String P_TRAND = "live_text_rand";
+    static final String P_MIG = "live_migrated";
+
+    static boolean bGet(Context c, String k, boolean d) {
+        try { return wsp(c).getBoolean(k, d); } catch (Throwable t) { return d; }
+    }
+    static void bSet(Context c, String k, boolean v) {
+        try { wsp(c).edit().putBoolean(k, v).apply(); } catch (Throwable t) { }
+    }
+    static int iGet(Context c, String k, int d) {
+        try { return wsp(c).getInt(k, d); } catch (Throwable t) { return d; }
+    }
+    static void iSet(Context c, String k, int v) {
+        try { wsp(c).edit().putInt(k, v).apply(); } catch (Throwable t) { }
+    }
+    static int clamp(int v, int lo, int hi) { return v < lo ? lo : (v > hi ? hi : v); }
+
+    /** 旧版三选一（idle_widget）迁移到新开关；只跑一次。 */
+    public static void migrateLive(Context c) {
+        try {
+            if (bGet(c, P_MIG, false)) return;
+            int old = widgetMode(c);
+            if (old == WIDGET_POWER) { bSet(c, P_PON, true); bSet(c, P_TON, false); bSet(c, P_BLACK, false); }
+            else if (old == WIDGET_TEXT) { bSet(c, P_PON, false); bSet(c, P_TON, true); bSet(c, P_BLACK, false); }
+            else { bSet(c, P_PON, true); bSet(c, P_TON, false); bSet(c, P_BLACK, true); }
+            iSet(c, P_TSEC, widgetSegSec(c));
+            bSet(c, P_MIG, true);
+        } catch (Throwable t) { }
+    }
+
+    public static boolean liveEnabled(Context c) { migrateLive(c); return bGet(c, P_LIVE, true); }
+    public static void setLiveEnabled(Context c, boolean v) {
+        bSet(c, P_LIVE, v);
+        if (!v) {
+            stopWidgetLoop();
+            if (sIdleTask != null) { sMT.removeCallbacks(sIdleTask); sIdleTask = null; }
+            sNotifyHold = 0L;
+            cancel(c, ISLAND_ID);
+        } else touchIdle(c);
+    }
+    public static boolean keepIdle(Context c) { migrateLive(c); return bGet(c, P_KEEP, true); }
+    public static void setKeepIdle(Context c, boolean v) { bSet(c, P_KEEP, v); touchIdle(c); }
+    public static int lastSec(Context c) { return clamp(iGet(c, P_LAST, 15), 1, 3600); }
+    public static void setLastSec(Context c, int v) { iSet(c, P_LAST, clamp(v, 1, 3600)); touchIdle(c); }
+    public static boolean blackIdle(Context c) { return bGet(c, P_BLACK, true); }
+    public static void setBlackIdle(Context c, boolean v) { bSet(c, P_BLACK, v); touchIdle(c); }
+    public static int idleSec(Context c) { return clamp(iGet(c, P_IDLE, 5), 1, 600); }
+    public static void setIdleSec(Context c, int v) { iSet(c, P_IDLE, clamp(v, 1, 600)); touchIdle(c); }
+    public static int rotSec(Context c) { return clamp(iGet(c, P_ROT, 20), 5, 600); }
+    public static void setRotSec(Context c, int v) { iSet(c, P_ROT, clamp(v, 5, 600)); touchIdle(c); }
+    public static boolean rotRand(Context c) { return bGet(c, P_ROT_RAND, false); }
+    public static void setRotRand(Context c, boolean v) { bSet(c, P_ROT_RAND, v); touchIdle(c); }
+    public static boolean powerOn(Context c) { return bGet(c, P_PON, true); }
+    public static void setPowerOn(Context c, boolean v) { bSet(c, P_PON, v); touchIdle(c); }
+    public static int powerMs(Context c) { return clamp(iGet(c, P_PSEC, 1000), 500, 60000); }
+    public static void setPowerMs(Context c, int v) { iSet(c, P_PSEC, clamp(v, 500, 60000)); touchIdle(c); }
+    public static boolean textOn(Context c) { return bGet(c, P_TON, false); }
+    public static void setTextOn(Context c, boolean v) { bSet(c, P_TON, v); touchIdle(c); }
+    public static int textN(Context c) { return clamp(iGet(c, P_TN, 2), 1, 20); }
+    public static void setTextN(Context c, int v) { iSet(c, P_TN, clamp(v, 1, 20)); touchIdle(c); }
+    public static int textSec(Context c) { migrateLive(c); return clamp(iGet(c, P_TSEC, 20), 1, 600); }
+    public static void setTextSec(Context c, int v) { iSet(c, P_TSEC, clamp(v, 1, 600)); touchIdle(c); }
+    public static boolean textRand(Context c) { return bGet(c, P_TRAND, false); }
+    public static void setTextRand(Context c, boolean v) { bSet(c, P_TRAND, v); touchIdle(c); }
+    public static int toolCount(Context c) { int n = 0; if (powerOn(c)) n++; if (cpuOn(c)) n++; if (ctempOn(c)) n++; if (gpuOn(c)) n++; if (memOn(c)) n++; if (cdOn(c)) n++; if (textOn(c)) n++; return n; }
+
+    /** 参与轮播的文字条（按“条数”截断）。 */
+    static String[] textLines(Context c) {
+        String[] seg = widgetSegs(c);
+        int n = textN(c);
+        if (seg.length <= n) return seg;
+        String[] out = new String[n];
+        System.arraycopy(seg, 0, out, 0, n);
+        return out;
+    }
+
+    /** 轮询单元：P＝功耗；T＝文字整体；T0/T1…＝拆开的文字条目（随机插入时）。 */
+    // ==== ★141（2026-10-24）· 新工具：CPU／CPU 温度／GPU／可用内存／倒计时 ====
+    static final String P_CPU = "live_cpu_on";
+    static final String P_CTEMP = "live_cputemp_on";
+    static final String P_GPU = "live_gpu_on";
+    static final String P_MEM = "live_mem_on";
+    static final String P_CD = "live_cd_on";
+    static final String P_CDTXT = "live_cd_texts";
+    static final String P_CDN = "live_cd_n";
+    static final String P_CDSEC = "live_cd_sec";
+    static final String P_TICK = "live_tick_ms";
+
+    public static boolean cpuOn(Context c) { return bGet(c, P_CPU, false); }
+    public static void setCpuOn(Context c, boolean v) { bSet(c, P_CPU, v); touchIdle(c); }
+    public static boolean ctempOn(Context c) { return bGet(c, P_CTEMP, false); }
+    public static void setCtempOn(Context c, boolean v) { bSet(c, P_CTEMP, v); touchIdle(c); }
+    public static boolean gpuOn(Context c) { return bGet(c, P_GPU, false); }
+    public static void setGpuOn(Context c, boolean v) { bSet(c, P_GPU, v); touchIdle(c); }
+    public static boolean memOn(Context c) { return bGet(c, P_MEM, false); }
+    public static void setMemOn(Context c, boolean v) { bSet(c, P_MEM, v); touchIdle(c); }
+    public static boolean cdOn(Context c) { return bGet(c, P_CD, false); }
+    public static void setCdOn(Context c, boolean v) { bSet(c, P_CD, v); touchIdle(c); }
+    public static int tickMs(Context c) { return clamp(iGet(c, P_TICK, 2000), 500, 10000); }
+    public static void setTickMs(Context c, int v) { iSet(c, P_TICK, clamp(v, 500, 10000)); touchIdle(c); }
+    public static int cdN(Context c) { return clamp(iGet(c, P_CDN, 3), 1, 20); }
+    public static void setCdN(Context c, int v) { iSet(c, P_CDN, clamp(v, 1, 20)); touchIdle(c); }
+    public static int cdSec(Context c) { return clamp(iGet(c, P_CDSEC, 10), 1, 600); }
+    public static void setCdSec(Context c, int v) { iSet(c, P_CDSEC, clamp(v, 1, 600)); touchIdle(c); }
+    public static String cdTexts(Context c) {
+        try { String s = wsp(c).getString(P_CDTXT, ""); return s == null ? "" : s; } catch (Throwable t) { return ""; }
+    }
+    public static void setCdTexts(Context c, String v) {
+        try { wsp(c).edit().putString(P_CDTXT, v == null ? "" : v).apply(); } catch (Throwable t) { }
+        touchIdle(c);
+    }
+
+    static String rdS(String p) {
+        try {
+            java.io.BufferedReader r = new java.io.BufferedReader(new java.io.FileReader(p));
+            StringBuilder o = new StringBuilder();
+            String l;
+            int n = 0;
+            while ((l = r.readLine()) != null && n < 8) { if (o.length() > 0) o.append('\n'); o.append(l); n++; }
+            r.close();
+            return o.toString();
+        } catch (Throwable t) { return null; }
+    }
+
+    static long rdl(String p) {
+        try {
+            String s = rdS(p);
+            if (s == null) return -1;
+            return Long.parseLong(s.trim().split("\\s+")[0]);
+        } catch (Throwable t) { return -1; }
+    }
+
+    /** ★141：以 shell 域起一条短命令；不可用返回 null（不是"没数据"，是"这条路断了"）。 */
+    static String shExec(String cmd, long timeoutMs) {
+        try {
+            java.lang.reflect.Method npx = rikka.shizuku.Shizuku.class.getDeclaredMethod("newProcess", String[].class, String[].class, String.class);
+            npx.setAccessible(true);
+            Object p = npx.invoke(null, new String[]{"sh", "-c", cmd}, null, null);
+            java.io.InputStream in = (java.io.InputStream) p.getClass().getMethod("getInputStream").invoke(p);
+            java.io.ByteArrayOutputStream bo = new java.io.ByteArrayOutputStream();
+            byte[] buf = new byte[4096];
+            long end = System.currentTimeMillis() + Math.max(200, timeoutMs);
+            int n;
+            while ((n = in.read(buf)) > 0) {
+                bo.write(buf, 0, n);
+                if (bo.size() > 8192 || System.currentTimeMillis() > end) break;
+            }
+            try { in.close(); } catch (Throwable t) { }
+            try { p.getClass().getMethod("destroy").invoke(p); } catch (Throwable t) { }
+            return new String(bo.toByteArray(), "UTF-8");
+        } catch (Throwable t) { return null; }
+    }
+
+    static long sCpuB = 0L, sCpuT = 0L, sCpuAt = 0L, sShFailAt = 0L;
+    static int sShFail = 0;
+    static String sCpuVal = "CPU --";
+
+    /** ★141：CPU 使用率。shell 域读 /proc/stat 是真值；拿不到就退化为频率估算（前面加 ~）。 */
+    static String cpuText(Context c) {
+        long now = System.currentTimeMillis();
+        if (now - sCpuAt < tickMs(c)) return sCpuVal;
+        sCpuAt = now;
+        if (now >= sShFailAt) {
+            String s = shExec("cat /proc/stat", 1200);
+            if (s == null || s.length() == 0) {
+                sShFail++;
+                sShFailAt = now + (sShFail >= 3 ? 60000L : 8000L);   // 连错三次就歇一分钟
+            } else {
+                sShFail = 0;
+                try {
+                    String line = s.split("\n")[0];
+                    String[] f = line.trim().split("\\s+");
+                    long u = Long.parseLong(f[1]), ni = Long.parseLong(f[2]), sy = Long.parseLong(f[3]);
+                    long id = Long.parseLong(f[4]), io = Long.parseLong(f[5]);
+                    long irq = Long.parseLong(f[6]), sirq = Long.parseLong(f[7]);
+                    long st = f.length > 8 ? Long.parseLong(f[8]) : 0L;
+                    long busy = u + ni + sy + irq + sirq + st;
+                    long total = busy + id + io;
+                    if (sCpuB > 0 && total > sCpuT) {
+                        double p = (busy - sCpuB) * 100.0 / (total - sCpuT);
+                        if (p < 0) p = 0;
+                        if (p > 100) p = 100;
+                        sCpuVal = "CPU " + Math.round(p) + "%";
+                    } else if (sCpuVal == null || sCpuVal.length() == 0) sCpuVal = "CPU --";
+                    sCpuB = busy;
+                    sCpuT = total;
+                } catch (Throwable t) { }
+            }
+        }
+        if (sCpuB == 0L) { String e = cpuEst(c); if (e != null) sCpuVal = e; }
+        return sCpuVal;
+    }
+
+    /** 频率估算：App 域自己就能读（不需要 shell），只是精度差，前面加 ~ 标明。 */
+    static String cpuEst(Context c) {
+        try {
+            double sum = 0;
+            int n = 0;
+            for (int i = 0; i < 8; i++) {
+                String base = "/sys/devices/system/cpu/cpu" + i + "/cpufreq/";
+                long cur = rdl(base + "scaling_cur_freq");
+                long mx = rdl(base + "cpuinfo_max_freq");
+                long mn = rdl(base + "cpuinfo_min_freq");
+                if (cur <= 0 || mx <= mn) continue;
+                double v = (cur - mn) * 1.0 / (mx - mn);
+                if (v < 0) v = 0;
+                if (v > 1) v = 1;
+                sum += v;
+                n++;
+            }
+            if (n == 0) return "CPU --";
+            return "CPU ~" + Math.round(sum / n * 100) + "%";
+        } catch (Throwable t) { return "CPU --"; }
+    }
+
+    static String[] sTzPaths = null;
+    static long sHeatAt = 0L;
+    static String sHeatVal = "--℃";
+
+    static String[] scanTz() {
+        try {
+            java.io.File[] fs = new java.io.File("/sys/class/thermal").listFiles();
+            if (fs == null) return new String[0];
+            java.util.ArrayList<String> out = new java.util.ArrayList<String>();
+            for (int i = 0; i < fs.length; i++) {
+                String ty = rdS(new java.io.File(fs[i], "type").getPath());
+                if (ty == null) continue;
+                ty = ty.trim();
+                if (!(ty.startsWith("cpu-") || ty.startsWith("cpullc"))) continue;
+                if (ty.indexOf("trip") >= 0) continue;   // cpu-hw-trip-* 是 105℃ 阈值常量，不是实测
+                out.add(new java.io.File(fs[i], "temp").getPath());
+            }
+            return out.toArray(new String[0]);
+        } catch (Throwable t) { return new String[0]; }
+    }
+
+    static String heatText(Context c) {
+        long now = System.currentTimeMillis();
+        if (now - sHeatAt < tickMs(c)) return sHeatVal;
+        sHeatAt = now;
+        if (sTzPaths == null) sTzPaths = scanTz();
+        long mx = -1;
+        for (int i = 0; i < sTzPaths.length; i++) {
+            long v = rdl(sTzPaths[i]);
+            if (v > mx) mx = v;
+        }
+        if (mx <= 0) { sHeatVal = "--℃"; return sHeatVal; }
+        sHeatVal = Math.round(mx / 1000.0) + "℃";
+        return sHeatVal;
+    }
+
+    static long sGpuAt = 0L;
+    static String sGpuVal = "GPU --";
+
+    static String gpuText(Context c) {
+        long now = System.currentTimeMillis();
+        if (now - sGpuAt < tickMs(c)) return sGpuVal;
+        sGpuAt = now;
+        String s = rdS("/sys/class/kgsl/kgsl-3d0/gpubusy");
+        if (s == null) { sGpuVal = "GPU --"; return sGpuVal; }
+        try {
+            String[] f = s.trim().split("\\s+");
+            double b = Double.parseDouble(f[0]);
+            double t = f.length > 1 ? Double.parseDouble(f[1]) : 0;
+            if (t <= 0) { sGpuVal = "GPU --"; return sGpuVal; }
+            double p = b * 100.0 / t;
+            if (p < 0) p = 0;
+            if (p > 100) p = 100;
+            sGpuVal = "GPU " + Math.round(p) + "%";
+        } catch (Throwable t) { sGpuVal = "GPU --"; }
+        return sGpuVal;
+    }
+
+    static long sMemAt = 0L;
+    static String sMemVal = "可用 --";
+
+    static String memText(Context c) {
+        long now = System.currentTimeMillis();
+        if (now - sMemAt < tickMs(c)) return sMemVal;
+        sMemAt = now;
+        try {
+            java.io.BufferedReader r = new java.io.BufferedReader(new java.io.FileReader("/proc/meminfo"));
+            String l;
+            while ((l = r.readLine()) != null) {
+                if (l.startsWith("MemAvailable:")) {
+                    String[] f = l.trim().split("\\s+");
+                    long kb = Long.parseLong(f[1]);
+                    double g = kb / 1048576.0;
+                    sMemVal = "可用 " + String.format(java.util.Locale.US, "%.1f", g) + "G";
+                    r.close();
+                    return sMemVal;
+                }
+            }
+            r.close();
+            sMemVal = "可用 --";
+        } catch (Throwable t) { sMemVal = "可用 --"; }
+        return sMemVal;
+    }
+
+    /** 倒计时/纪念日：每行「名称|日期」，日期 2027-02-06 为一次性、02-06 为每年重复。 */
+    static String[] cdLines(Context c) {
+        String all = cdTexts(c);
+        if (all == null || all.trim().length() == 0) return new String[0];
+        String[] raw = all.split("\n");
+        java.util.ArrayList<String> out = new java.util.ArrayList<String>();
+        for (int i = 0; i < raw.length && out.size() < cdN(c); i++) {
+            String s = raw[i].trim();
+            if (s.length() > 0) out.add(s);
+        }
+        return out.toArray(new String[0]);
+    }
+
+    static long dayStart(long t) {
+        java.util.Calendar c = java.util.Calendar.getInstance();
+        c.setTimeInMillis(t);
+        c.set(java.util.Calendar.HOUR_OF_DAY, 0);
+        c.set(java.util.Calendar.MINUTE, 0);
+        c.set(java.util.Calendar.SECOND, 0);
+        c.set(java.util.Calendar.MILLISECOND, 0);
+        return c.getTimeInMillis();
+    }
+
+    static long mk(int y, int m, int d) {
+        java.util.Calendar c = java.util.Calendar.getInstance();
+        c.set(java.util.Calendar.YEAR, y);
+        c.set(java.util.Calendar.MONTH, m - 1);
+        c.set(java.util.Calendar.DAY_OF_MONTH, d);
+        c.set(java.util.Calendar.HOUR_OF_DAY, 0);
+        c.set(java.util.Calendar.MINUTE, 0);
+        c.set(java.util.Calendar.SECOND, 0);
+        c.set(java.util.Calendar.MILLISECOND, 0);
+        return c.getTimeInMillis();
+    }
+
+    static String cdOne(String raw) {
+        try {
+            String name = raw, ds = "";
+            int bar = raw.lastIndexOf('|');
+            if (bar >= 0) {
+                name = raw.substring(0, bar).trim();
+                ds = raw.substring(bar + 1).trim();
+            } else {
+                // 没写「名称|」时，也认「生日 02-06」这种空格写法
+                int sp2 = raw.lastIndexOf(' ');
+                if (sp2 > 0 && raw.substring(sp2 + 1).matches("\\d{1,4}-\\d{1,2}(-\\d{1,2})?")) {
+                    name = raw.substring(0, sp2).trim();
+                    ds = raw.substring(sp2 + 1).trim();
+                }
+            }
+            if (name.length() == 0) name = "倒计时";
+            if (ds.length() == 0) return name;
+            String[] p = ds.split("-");
+            long now = System.currentTimeMillis();
+            long t0;
+            if (p.length == 3) {
+                t0 = mk(Integer.parseInt(p[0].trim()), Integer.parseInt(p[1].trim()), Integer.parseInt(p[2].trim()));
+            } else if (p.length == 2) {
+                int m = Integer.parseInt(p[0].trim()), d = Integer.parseInt(p[1].trim());
+                java.util.Calendar c = java.util.Calendar.getInstance();
+                int y = c.get(java.util.Calendar.YEAR);
+                t0 = mk(y, m, d);
+                if (t0 < dayStart(now)) t0 = mk(y + 1, m, d);
+            } else return name;
+            long days = Math.round((dayStart(t0) - dayStart(now)) / 86400000.0);
+            if (days > 0) return name + " " + days + "天";
+            if (days == 0) return "今天 " + name;
+            return name + " 过" + (-days) + "天";
+        } catch (Throwable t) { return raw; }
+    }
+
+    static String cdText(Context c) {
+        String[] seg = cdLines(c);
+        if (seg.length == 0) return "　";
+        if (sWidgetStart == 0L) sWidgetStart = System.currentTimeMillis();
+        long ms = Math.max(1, cdSec(c)) * 1000L;
+        int idx = (int) (((System.currentTimeMillis() - sWidgetStart) / ms) % seg.length);
+        return cdOne(seg[idx]);
+    }
+
+    static int iconOfUnit(String u) {
+        if ("P".equals(u)) return R.drawable.ic_act_bolt;
+        if ("C".equals(u)) return R.drawable.ic_act_cpu;
+        if ("H".equals(u)) return R.drawable.ic_act_temp;
+        if ("G".equals(u)) return R.drawable.ic_act_gpu;
+        if ("M".equals(u)) return R.drawable.ic_act_mem;
+        if ("D".equals(u)) return R.drawable.ic_act_timer;
+        return R.drawable.ic_act_text;
+    }
+
+    static java.util.ArrayList<String> liveUnits(Context c) {
+        java.util.ArrayList<String> u = new java.util.ArrayList<String>();
+        if (powerOn(c)) u.add("P");
+        if (cpuOn(c)) u.add("C");
+        if (ctempOn(c)) u.add("H");
+        if (gpuOn(c)) u.add("G");
+        if (memOn(c)) u.add("M");
+        if (cdOn(c) && cdLines(c).length > 0) u.add("D");
+        if (textOn(c)) {
+            if (textRand(c) && u.size() >= 1) {
+                String[] seg = textLines(c);
+                for (int i = 0; i < seg.length; i++) u.add("T" + i);
+            } else u.add("T");
+        }
+        return u;
+    }
+
+    static long sLiveStart = 0L;
+    static String sLiveLast = "";
+    static long sPWAt = 0L;
+    static String sPWVal = "--W";
+
+    /** 当前时隙（随机时用确定性伪随机，保证不在相邻两格重复）。 */
+    static int liveSlot(Context c, int n) {
+        long rotMs = Math.max(1, rotSec(c)) * 1000L;
+        long seq = (System.currentTimeMillis() - sLiveStart) / rotMs;
+        int idx = (int) (seq % n);
+        if (rotRand(c) && n > 1) {
+            long h = Math.abs(seq * 1103515245L + 12345L);
+            idx = (int) ((h / 65536L) % n);
+            long h2 = Math.abs((seq - 1) * 1103515245L + 12345L);
+            int prev = (int) ((h2 / 65536L) % n);
+            if (idx == prev) idx = (idx + 1) % n;
+        }
+        return idx;
+    }
+
+    static String powerCached(Context c) {
+        long now = System.currentTimeMillis();
+        if (now - sPWAt >= powerMs(c) || sPWVal == null) { sPWVal = powerText(c); sPWAt = now; }
+        return sPWVal;
+    }
+
+    static String liveUnitText(Context c, String u) {
+        if ("P".equals(u)) return powerCached(c);
+        if ("C".equals(u)) return cpuText(c);
+        if ("H".equals(u)) return heatText(c);
+        if ("G".equals(u)) return gpuText(c);
+        if ("M".equals(u)) return memText(c);
+        if ("D".equals(u)) return cdText(c);
+        if ("T".equals(u)) {
+            String[] seg = textLines(c);
+            if (seg.length == 0) return "　";
+            long ms = Math.max(1, textSec(c)) * 1000L;
+            int i = (int) (((System.currentTimeMillis() - sLiveStart) / ms) % seg.length);
+            String t = seg[i];
+            return (t == null || t.length() == 0) ? "　" : t;
+        }
+        if (u.startsWith("T")) {
+            try {
+                int k = Integer.parseInt(u.substring(1));
+                String[] seg = textLines(c);
+                if (k >= 0 && k < seg.length && seg[k] != null && seg[k].length() > 0) return seg[k];
+            } catch (Throwable t) { }
+            return "　";
+        }
+        return "　";
+    }
+
+    /** ★139：空闲态渲染（V2）：总开关／继续展示／黑胶囊／多工具轮询。 */
+    public static String promotedIdle(Context c) {
+        try {
+            if (!liveEnabled(c)) { cancel(c, ISLAND_ID); return "off"; }
+            if (!keepIdle(c)) return "hold";
+            if (sLiveStart == 0L) sLiveStart = System.currentTimeMillis();
+            channels(c);
+            boolean black = blackIdle(c);
+            String cap, ttl, bdy;
+            int icon = 0;
+            if (black) {
+                cap = "　"; ttl = "　"; bdy = "　";
+            } else {
+                java.util.ArrayList<String> u = liveUnits(c);
+                if (u.isEmpty()) return "hold";
+                String unit = u.get(liveSlot(c, u.size()));
+                cap = liveUnitText(c, unit);
+                ttl = "Reticle·实况";
+                bdy = cap;
+                icon = iconOfUnit(unit);
+            }
+            String key = (black ? "B" : cap + "|" + bdy);
+            if (key.equals(sLiveLast)) return "same";
+            sLiveLast = key;
+            Notification.Builder b = base(c, CH_LIVE2);
+            b.setDefaults(0);
+            b.setContentTitle(ttl);
+            b.setContentText(bdy);
+            b.setContentIntent(openApp(c));
+            b.setOngoing(true);
+            b.setOnlyAlertOnce(true);
+            b.setShowWhen(false);
+            b.setCategory(Notification.CATEGORY_PROGRESS);
+            if (black) {
+                try { b.setSmallIcon(android.graphics.drawable.Icon.createWithBitmap(blankBitmap())); }
+                catch (Throwable t) { nlog(c, "idle icon err " + t); }
+            } else if (icon != 0) {
+                try { b.setSmallIcon(icon); } catch (Throwable t) { }
+            }
+            try { Notification.Builder.class.getMethod("setRequestPromotedOngoing", boolean.class).invoke(b, true); } catch (Throwable t) { }
+            try { Notification.Builder.class.getMethod("setShortCriticalText", CharSequence.class).invoke(b, cap); } catch (Throwable t) { }
+            Notification n = b.build();
+            try { if (n.extras != null) {
+                if (!n.extras.containsKey("android.requestPromotedOngoing")) n.extras.putBoolean("android.requestPromotedOngoing", true);
+                n.extras.putCharSequence("android.shortCriticalText", cap);
+                n.extras.putCharSequence("android.title.capsule", cap);
+            } } catch (Throwable t) { }
+            n.flags |= 0x40000;
+            nm(c).notify(ISLAND_ID, n);
+            return "ok";
+        } catch (Throwable t) { nlog(c, "idle err " + t); return "err: " + t; }
     }
 }
